@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- CORRECCIÓN: una sola fuente — Barlow Condensed es suficiente para todo el sistema Stellantis -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   :root {
+  --acento:      #2E6B3E;
+  --fondo-inv:   #F0F7F2;
+  --borde-inv:   #b8dcc4;
+  --gris-suave:  #F4F4F4;
+  --gris-texto:  #666666;
+  --texto-minimo:#999999;
+  --fuente:      'Barlow Condensed', sans-serif;
+}
+
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: transparent; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+/* GRID — 2 columnas desktop / 1 columna móvil */
+.grid-promos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 10px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .grid-promos { grid-template-columns: 1fr; }
+}
+
+/* TARJETA — sin transition, sin box-shadow, sin efectos pasivos */
+.card {
+  background: #fff;
+  border: 1px solid #E0E0E0;
+  border-top: 5px solid var(--acento);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CORRECCIÓN: padding-top 75% = proporción 4:3 exacta para artes 1200x900
+   El código original usaba 56.25% (16:9) que dejaba franjas vacías */
+.img-container {
+  width: 100%;
+  padding-top: 75%;
+  position: relative;
+  background: #f5f5f5;
+}
+.card-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  background: #f5f5f5;
+}
+
+/* CABECERA: nombre + precio + botón */
+.card-header {
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  gap: 8px;
+}
+.model-name {
+  font-family: var(--fuente);
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  color: #111;
+}
+.model-price {
+  font-family: var(--fuente);
+  font-size: 0.9rem;
+  color: var(--acento);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* BOTÓN WHATSAPP — sin transition */
+.btn-wa {
+  background: var(--acento);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fuente);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-wa svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* CUERPO DE LA CARD */
+.promo-body {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* DESCRIPCIÓN FIJA — siempre visible, sin acordeón
+   Elimina el recálculo de layout que pausaba el scroll en móvil */
+.promo-main {
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.4;
+  background: var(--gris-suave);
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* BENEFICIOS */
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  font-family: var(--fuente);
+}
+.benefits-list li {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: var(--gris-texto);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.benefits-list li::before {
+  content: "✓";
+  color: var(--acento);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* INVENTARIO ESPECIAL — oculto por defecto via comentario HTML */
+.inventario-especial {
+  background: var(--fondo-inv);
+  border: 1px dashed var(--acento);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-family: var(--fuente);
+}
+.inventario-titulo {
+  font-size: 0.82rem;
+  color: var(--acento);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 4px;
+}
+.inventario-detalle {
+  font-size: 0.88rem;
+  color: var(--gris-texto);
+  margin: 0 0 4px;
+}
+.inventario-precio {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 3px;
+}
+.inventario-nota {
+  font-size: 0.72rem;
+  color: var(--texto-minimo);
+  margin: 0;
+}
+
+/* TEXTO LEGAL */
+.legal {
+  font-size: 0.72rem;
+  color: var(--texto-minimo);
+  margin-top: auto;
+  padding-top: 10px;
+  font-family: var(--fuente);
+  line-height: 1.4;
+}
+
+.embed-footer { height: 12px; }
+  </style>
+ </head>
+ <body>
+  <div class="grid-promos">
+   <!-- ══ JEEP RENEGADE ══════════════════════════════════════════════════════
+       Cambia: src de la imagen, precio, href WhatsApp,
+       texto de promo-main, beneficios y legal cada mes.
+  ═══════════════════════════════════════════════════════════════════════ -->
+   <article class="card">
+    <div class="img-container">
+     <img alt="Promoci&oacute;n Jeep Renegade" class="card-img" decoding="async" height="450" loading="lazy" sizes="(max-width: 700px) 100vw, 50vw" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/renegade_ijsu48.jpg" srcset="https://res.cloudinary.com/dbxa0pozm/image/upload/w_400,q_auto,f_auto/renegade_ijsu48.jpg 400w, https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/renegade_ijsu48.jpg 600w" width="600"/>
+    </div>
+    <div class="card-header">
+     <div class="model-info">
+      <h2 class="model-name">
+       Jeep Renegade
+      </h2>
+      <!-- Cambia el precio aquí -->
+      <div class="model-price">
+       <strong style="font-size:1.25em;">
+        Desde $456,900*
+       </strong>
+      </div>
+     </div>
+     <!-- Cambia 52TUNUMERO por tu número y el text= por el modelo -->
+     <a aria-label="Cotizar Jeep Renegade por WhatsApp" class="btn-wa" href="https://wa.me/52TUNUMERO?text=Hola%2C%20me%20interesa%20el%20Jeep%20Renegade" rel="noopener" target="_blank">
+      <svg viewbox="0 0 24 24">
+       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+       </path>
+      </svg>
+      <span>
+       Cotizar
+      </span>
+     </a>
+    </div>
+    <div class="promo-body">
+     <!-- DESCRIPCIÓN FIJA — cambia este texto cada mes según la promo -->
+     <div class="promo-main">
+      <span>
+       No dejes pasar la oportunidad de estrenar un Jeep Renegade Latitude y pregunta por las unidades disponibles con mensualidades desde
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $5,999
+       </strong>
+      </span>
+     </div>
+     <!-- BENEFICIOS — agrega o quita <li> según la promo del mes -->
+     <ul class="benefits-list">
+      <li>
+       Incluye:
+      </li>
+      <li>
+       Bono de
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $40,000
+       </strong>
+      </li>
+      <li>
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       comisi&oacute;n de apertura
+      </li>
+      <li>
+       Tasa hasta del 9.99
+      </li>
+      <li>
+       4 a&ntilde;os de garant&iacute;a
+      </li>
+      <li>
+       Protecci&oacute;n de llantas
+      </li>
+     </ul>
+     <!-- INVENTARIO ESPECIAL — quita los comentarios para activar,
+           vuelve a comentar cuando no tengas unidad disponible -->
+     <!--
+      <div class="inventario-especial">
+        <p class="inventario-titulo">Unidad disponible</p>
+        <p class="inventario-detalle">Jeep Renegade AÑO · Color: XXX · 0 km</p>
+        <p class="inventario-precio">$XXX,XXX <small style="font-size:0.75rem;color:var(--texto-minimo)">precio de contado</small></p>
+        <p class="inventario-nota">* Unidad única. Sujeto a disponibilidad. Aplica restricciones.</p>
+      </div>
+      -->
+     <!-- LEGAL — modifica según las condiciones específicas del mes -->
+     <p class="legal">
+      * Promoci&oacute;n v&aacute;lida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Im&aacute;genes ilustrativas. Consulta versiones disponibles.
+     </p>
+    </div>
+   </article>
+   <!-- ══ JEEP COMPASS ══════════════════════════════════════════════════════
+       Cambia: src de la imagen, precio, href WhatsApp,
+       texto de promo-main, beneficios y legal cada mes.
+  ═══════════════════════════════════════════════════════════════════════ -->
+   <article class="card">
+    <div class="img-container">
+     <img alt="Promoci&oacute;n Jeep Compass" class="card-img" decoding="async" height="450" loading="lazy" sizes="(max-width: 700px) 100vw, 50vw" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/compass_zm5c1n.jpg" srcset="https://res.cloudinary.com/dbxa0pozm/image/upload/w_400,q_auto,f_auto/compass_zm5c1n.jpg 400w, https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/compass_zm5c1n.jpg 600w" width="600"/>
+    </div>
+    <div class="card-header">
+     <div class="model-info">
+      <h2 class="model-name">
+       Jeep Compass
+      </h2>
+      <!-- Cambia el precio aquí -->
+      <div class="model-price">
+       <strong style="font-size:1.25em;">
+        Desde $541,900
+       </strong>
+      </div>
+     </div>
+     <!-- Cambia 52TUNUMERO por tu número y el text= por el modelo -->
+     <a aria-label="Cotizar Jeep Compass por WhatsApp" class="btn-wa" href="https://wa.me/52TUNUMERO?text=Hola%2C%20me%20interesa%20el%20Jeep%20Compass" rel="noopener" target="_blank">
+      <svg viewbox="0 0 24 24">
+       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+       </path>
+      </svg>
+      <span>
+       Cotizar
+      </span>
+     </a>
+    </div>
+    <div class="promo-body">
+     <!-- DESCRIPCIÓN FIJA — cambia este texto cada mes según la promo -->
+     <div class="promo-main">
+      <span>
+       Eleva tu experiencia de manejo con el dise&ntilde;o premium y la tecnolog&iacute;a superior de Jeep Compass Limited por mensualidades desde
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $6,899
+       </strong>
+      </span>
+     </div>
+     <!-- BENEFICIOS — agrega o quita <li> según la promo del mes -->
+     <ul class="benefits-list">
+      <li>
+       Bonos hasta de
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $70,000
+       </strong>
+      </li>
+      <li>
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       comisi&oacute;n por apertura
+      </li>
+      <li>
+       Tasa hasta del 9.99
+      </li>
+      <li>
+       incluye:
+      </li>
+      <li>
+       4 a&ntilde;os de garant&iacute;a
+      </li>
+      <li>
+       Protecci&oacute;n de llantas
+      </li>
+     </ul>
+     <!-- INVENTARIO ESPECIAL — quita los comentarios para activar,
+           vuelve a comentar cuando no tengas unidad disponible -->
+     <!--
+      <div class="inventario-especial">
+        <p class="inventario-titulo">Unidad disponible</p>
+        <p class="inventario-detalle">Jeep Compass AÑO · Color: XXX · 0 km</p>
+        <p class="inventario-precio">$XXX,XXX <small style="font-size:0.75rem;color:var(--texto-minimo)">precio de contado</small></p>
+        <p class="inventario-nota">* Unidad única. Sujeto a disponibilidad. Aplica restricciones.</p>
+      </div>
+      -->
+     <!-- LEGAL — modifica según las condiciones específicas del mes -->
+     <p class="legal">
+      * Promoci&oacute;n v&aacute;lida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Im&aacute;genes ilustrativas. Consulta versiones disponibles.
+     </p>
+    </div>
+   </article>
+   <!-- ══ JEEP WRANGLER ══════════════════════════════════════════════════════
+       Cambia: src de la imagen, precio, href WhatsApp,
+       texto de promo-main, beneficios y legal cada mes.
+  ═══════════════════════════════════════════════════════════════════════ -->
+   <article class="card">
+    <div class="img-container">
+     <img alt="Promoci&oacute;n Jeep Renegade" class="card-img" decoding="async" height="450" loading="lazy" sizes="(max-width: 700px) 100vw, 50vw" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg" srcset="https://res.cloudinary.com/dbxa0pozm/image/upload/w_400,q_auto,f_auto/grand_cherokee_vkpfac.jpg 400w, https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg 600w" width="600"/>
+    </div>
+    <div class="card-header">
+     <div class="model-info">
+      <h2 class="model-name">
+       Grand Cherokee
+      </h2>
+      <!-- Cambia el precio aquí -->
+      <div class="model-price">
+       <strong style="font-size:1.25em;">
+        Desde $1,189,900
+       </strong>
+      </div>
+     </div>
+     <!-- Cambia 52TUNUMERO por tu número y el text= por el modelo -->
+     <a aria-label="Cotizar Jeep Renegade por WhatsApp" class="btn-wa" href="https://wa.me/52TUNUMERO?text=Hola%2C%20me%20interesa%20el%20Jeep%20Renegade" rel="noopener" target="_blank">
+      <svg viewbox="0 0 24 24">
+       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+       </path>
+      </svg>
+      <span>
+       Cotizar
+      </span>
+     </a>
+    </div>
+    <div class="promo-body">
+     <!-- DESCRIPCIÓN FIJA — cambia este texto cada mes según la promo -->
+     <div class="promo-main">
+      <span>
+       Disfruta la distinci&oacute;n y el confort inigualable que solo una Grand Cherokee Altitude puede ofrecerte por mensualidades desde
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $19,299
+       </strong>
+      </span>
+     </div>
+     <!-- BENEFICIOS — agrega o quita <li> según la promo del mes -->
+     <ul class="benefits-list">
+      <li>
+       Tasa del 13.99
+      </li>
+      <li>
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       comisi&oacute;n de apertura
+      </li>
+      <li>
+       Contamos con planes de arrendamiento
+      </li>
+     </ul>
+     <!-- INVENTARIO ESPECIAL — quita los comentarios para activar,
+           vuelve a comentar cuando no tengas unidad disponible -->
+     <!--
+      <div class="inventario-especial">
+        <p class="inventario-titulo">Unidad disponible</p>
+        <p class="inventario-detalle">Jeep Renegade AÑO · Color: XXX · 0 km</p>
+        <p class="inventario-precio">$XXX,XXX <small style="font-size:0.75rem;color:var(--texto-minimo)">precio de contado</small></p>
+        <p class="inventario-nota">* Unidad única. Sujeto a disponibilidad. Aplica restricciones.</p>
+      </div>
+      -->
+     <!-- LEGAL — modifica según las condiciones específicas del mes -->
+     <p class="legal">
+      * Promoci&oacute;n v&aacute;lida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Im&aacute;genes ilustrativas. Consulta versiones disponibles.
+     </p>
+    </div>
+   </article>
+   <article class="card">
+    <div class="img-container">
+     <img alt="Promoci&oacute;n Jeep Renegade" class="card-img" decoding="async" height="450" loading="lazy" sizes="(max-width: 700px) 100vw, 50vw" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jeep_rubicon_cadups.jpg" srcset="https://res.cloudinary.com/dbxa0pozm/image/upload/w_400,q_auto,f_auto/jeep_rubicon_cadups.jpg 400w, https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jeep_rubicon_cadups.jpg 600w" width="600"/>
+    </div>
+    <div class="card-header">
+     <div class="model-info">
+      <h2 class="model-name">
+       Rubicon Unlimited
+      </h2>
+      <!-- Cambia el precio aquí -->
+      <div class="model-price">
+       <strong style="font-size:1.25em;">
+        Desde $1,576,900
+       </strong>
+      </div>
+     </div>
+     <!-- Cambia 52TUNUMERO por tu número y el text= por el modelo -->
+     <a aria-label="Cotizar Jeep Renegade por WhatsApp" class="btn-wa" href="https://wa.me/52TUNUMERO?text=Hola%2C%20me%20interesa%20el%20Jeep%20Renegade" rel="noopener" target="_blank">
+      <svg viewbox="0 0 24 24">
+       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+       </path>
+      </svg>
+      <span>
+       Cotizar
+      </span>
+     </a>
+    </div>
+    <div class="promo-body">
+     <!-- DESCRIPCIÓN FIJA — cambia este texto cada mes según la promo -->
+     <div class="promo-main">
+      <span>
+       Supera cualquier obst&aacute;culo y vive la libertad todoterreno al mando de tu Jeep Unlimited Rubicon por mensualidades desde
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $19,399
+       </strong>
+      </span>
+     </div>
+     <!-- BENEFICIOS — agrega o quita <li> según la promo del mes -->
+     <ul class="benefits-list">
+      <li>
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       comisi&oacute;n por apertura
+      </li>
+      <li>
+       O plazos con 24 meses
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       intereses
+      </li>
+     </ul>
+     <!-- INVENTARIO ESPECIAL — quita los comentarios para activar,
+           vuelve a comentar cuando no tengas unidad disponible -->
+     <!--
+      <div class="inventario-especial">
+        <p class="inventario-titulo">Unidad disponible</p>
+        <p class="inventario-detalle">Jeep Renegade AÑO · Color: XXX · 0 km</p>
+        <p class="inventario-precio">$XXX,XXX <small style="font-size:0.75rem;color:var(--texto-minimo)">precio de contado</small></p>
+        <p class="inventario-nota">* Unidad única. Sujeto a disponibilidad. Aplica restricciones.</p>
+      </div>
+      -->
+     <!-- LEGAL — modifica según las condiciones específicas del mes -->
+     <p class="legal">
+      * Promoci&oacute;n v&aacute;lida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Im&aacute;genes ilustrativas. Consulta versiones disponibles.
+     </p>
+    </div>
+   </article>
+   <article class="card">
+    <div class="img-container">
+     <img alt="Promoci&oacute;n Jeep Renegade" class="card-img" decoding="async" height="450" loading="lazy" sizes="(max-width: 700px) 100vw, 50vw" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jt_euowfk.jpg" srcset="https://res.cloudinary.com/dbxa0pozm/image/upload/w_400,q_auto,f_auto/jt_euowfk.jpg 400w, https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jt_euowfk.jpg 600w" width="600"/>
+    </div>
+    <div class="card-header">
+     <div class="model-info">
+      <h2 class="model-name">
+       JT Rubicon
+      </h2>
+      <!-- Cambia el precio aquí -->
+      <div class="model-price">
+       <strong style="font-size:1.25em;">
+        Desde $1,576,900
+       </strong>
+      </div>
+     </div>
+     <!-- Cambia 52TUNUMERO por tu número y el text= por el modelo -->
+     <a aria-label="Cotizar Jeep Renegade por WhatsApp" class="btn-wa" href="https://wa.me/52TUNUMERO?text=Hola%2C%20me%20interesa%20el%20Jeep%20Renegade" rel="noopener" target="_blank">
+      <svg viewbox="0 0 24 24">
+       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+       </path>
+      </svg>
+      <span>
+       Cotizar
+      </span>
+     </a>
+    </div>
+    <div class="promo-body">
+     <!-- DESCRIPCIÓN FIJA — cambia este texto cada mes según la promo -->
+     <div class="promo-main">
+      <span>
+       Combina la potencia de un todoterreno con la utilidad del Jeep JT para cualquier aventura por mensualidades desde
+       <strong style="font-size:1.4em;color:var(--acento);">
+        $21,899
+       </strong>
+      </span>
+     </div>
+     <!-- BENEFICIOS — agrega o quita <li> según la promo del mes -->
+     <ul class="benefits-list">
+      <li>
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       comisi&oacute;n por apertura
+      </li>
+      <li>
+       Tasa hasta del 13.99
+      </li>
+      <li>
+       O 24 meses
+       <strong style="font-size:1.4em;color:var(--acento);">
+        0%
+       </strong>
+       inter&eacute;s
+      </li>
+     </ul>
+     <!-- INVENTARIO ESPECIAL — quita los comentarios para activar,
+           vuelve a comentar cuando no tengas unidad disponible -->
+     <!--
+      <div class="inventario-especial">
+        <p class="inventario-titulo">Unidad disponible</p>
+        <p class="inventario-detalle">Jeep Renegade AÑO · Color: XXX · 0 km</p>
+        <p class="inventario-precio">$XXX,XXX <small style="font-size:0.75rem;color:var(--texto-minimo)">precio de contado</small></p>
+        <p class="inventario-nota">* Unidad única. Sujeto a disponibilidad. Aplica restricciones.</p>
+      </div>
+      -->
+     <!-- LEGAL — modifica según las condiciones específicas del mes -->
+     <p class="legal">
+      * Promoci&oacute;n v&aacute;lida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Im&aacute;genes ilustrativas. Consulta versiones disponibles.
+     </p>
+    </div>
+   </article>
+  </div>
+  <div class="embed-footer">
+  </div>
+  <!--
+═══════════════════════════════════════════════════════════════
+GUÍA DE ACTUALIZACIÓN MENSUAL — cambia solo esto por tarjeta:
+  1. src / srcset     → nombre del archivo en Cloudinary
+  2. model-price      → precio desde del mes
+  3. wa.me/?text=     → texto del mensaje WhatsApp
+  4. promo-main       → descripción de la promo del mes
+  5. benefits-list    → beneficios incluidos del mes
+  6. legal            → condiciones legales específicas
+
+INVENTARIO ESPECIAL:
+  Para activar  → quita los comentarios que rodean el bloque
+  Para desactivar → vuelve a envolver con comentarios
+
+ALTURA DEL EMBED EN GOOGLE SITES:
+  720px recomendado para 3 tarjetas
+  (ajusta +100px si activas inventario especial en alguna card)
+═══════════════════════════════════════════════════════════════
+-->
+ </body>
+</html>

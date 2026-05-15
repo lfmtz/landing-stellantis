@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellantis | Promociones Exclusivas</title>
+    <meta name="description" content="Descubre las mejores promociones en vehículos de la familia Stellantis.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-uppercase tracking-wide" href="#">
+                <span class="text-primary">Stellantis</span> Promos
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#promociones">Ofertas Destacadas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#modelos">Modelos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section position-relative">
+        <!-- Carousel -->
+        <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-pause="false">
+            <div class="carousel-inner h-100">
+                <!-- INSTRUCCIONES PARA CAMBIAR IMÁGENES DEL HERO:
+                     1. Reemplaza el enlace dentro de `url('...')` por tu propia imagen.
+                     2. Puedes usar enlaces locales (ej. 'imagenes/tu_foto.jpg') o enlaces de Cloudinary (ej. 'https://res.cloudinary.com/...').
+                     3. Tamaño recomendado: 1920x1080 píxeles (formato horizontal 16:9) para que cubra bien la pantalla.
+                -->
+                <!-- EJEMPLO DE CLOUDINARY PARA EL HERO:
+                     Para usar Cloudinary, elimina la línea de abajo que dice "imagenes/..." y descomenta (borra los < ! - - y - - >) la línea siguiente:
+                -->
+                <!-- <div class="carousel-item active h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg');"></div> -->
+                
+                <div class="carousel-item active h-100 bg-cover" style="background-image: url('imagenes/my26-jeep-compass-inicio-galeria06-full-mx.jpg');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('imagenes/3008.jpg');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('imagenes/ABARTH.jpg');"></div>
+            </div>
+            <div class="overlay"></div>
+        </div>
+
+        <div class="hero-content position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+            <h1 class="display-2 fw-bold text-white mb-4 text-glow">Impulsa tu Camino</h1>
+            <p class="lead text-light mb-5 fs-4">Descubre promociones exclusivas en la gama de vehículos Stellantis.</p>
+            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-glow btn-lg px-5 py-3 rounded-pill text-uppercase fw-bold shadow-lg">
+                <i class="fa-solid fa-car-side me-2"></i> Ver Promociones Especiales
+            </a>
+        </div>
+    </header>
+
+    <!-- Promociones Destacadas -->
+    <section id="promociones" class="py-5 tech-blue-gradient">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-white mb-3">Ofertas Imparables</h2>
+                <div class="heading-line mx-auto"></div>
+                <p class="text-muted mt-3">Las mejores oportunidades para estrenar el vehículo de tus sueños.</p>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <!-- Promo 1 -->
+                <div class="col-md-5">
+                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                        <img src="promociones_img/RAM 1200 VERTICAL.png" class="card-img-top promo-img" alt="RAM 1200">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="card-title fw-bold text-white">RAM 1200</h3>
+                            <p class="card-text text-light opacity-75">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-light rounded-pill mt-2">Me interesa</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Promo 2 -->
+                <div class="col-md-5">
+                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                        <img src="promociones_img/RAM 4000 VERTICAL.png" class="card-img-top promo-img" alt="RAM 4000">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="card-title fw-bold text-white">RAM 4000</h3>
+                            <p class="card-text text-light opacity-75">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-light rounded-pill mt-2">Me interesa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modelos Destacados -->
+    <section id="modelos" class="py-5 dark-gradient">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-white mb-3">Explora Nuestra Gama</h2>
+                <div class="heading-line mx-auto"></div>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- INSTRUCCIONES PARA CAMBIAR LAS IMÁGENES DE LAS MARCAS:
+                     1. Cambia el atributo `src="..."` de la etiqueta `<img>` por tu enlace de Cloudinary o imagen local.
+                     2. Tamaño recomendado: 800x600 píxeles (formato 4:3) o 800x800 píxeles (cuadrado).
+                -->
+                
+                <!-- 1. RAM -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="model-card position-relative overflow-hidden rounded-4 shadow-lg">
+                        <!-- EJEMPLO CLOUDINARY PARA MARCAS:
+                             Para usar Cloudinary, comenta la línea de abajo (< ! - - ... - - >) y usa la siguiente (borrando los < ! - - y - - >):
+                        -->
+                        <!-- <img src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="RAM" class="w-100 h-100 object-fit-cover"> -->
+                        <img src="promociones_img/RAM 1200 VERTICAL.png" alt="RAM" class="w-100 h-100 object-fit-cover">
+                        <div class="model-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="text-white fw-bold mb-1">RAM</h3>
+                                <p class="text-light mb-0">Poder absoluto.</p>
+                            </div>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-primary rounded-circle btn-icon">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2. Dodge -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="model-card position-relative overflow-hidden rounded-4 shadow-lg">
+                        <img src="imagenes/attitude.jpg" alt="Dodge" class="w-100 h-100 object-fit-cover">
+                        <div class="model-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="text-white fw-bold mb-1">Dodge</h3>
+                                <p class="text-light mb-0">Rendimiento y actitud.</p>
+                            </div>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-primary rounded-circle btn-icon">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. Jeep -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="model-card position-relative overflow-hidden rounded-4 shadow-lg">
+                        <img src="imagenes/my26-jeep-compass-inicio-galeria06-full-mx.jpg" alt="Jeep" class="w-100 h-100 object-fit-cover">
+                        <div class="model-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="text-white fw-bold mb-1">Jeep</h3>
+                                <p class="text-light mb-0">Aventura sin límites.</p>
+                            </div>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-primary rounded-circle btn-icon">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 4. Fiat -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="model-card position-relative overflow-hidden rounded-4 shadow-lg">
+                        <img src="imagenes/ABARTH.jpg" alt="Fiat" class="w-100 h-100 object-fit-cover">
+                        <div class="model-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="text-white fw-bold mb-1">Fiat</h3>
+                                <p class="text-light mb-0">Diseño que enamora.</p>
+                            </div>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-primary rounded-circle btn-icon">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5. Peugeot -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="model-card position-relative overflow-hidden rounded-4 shadow-lg">
+                        <img src="imagenes/3008.jpg" alt="Peugeot" class="w-100 h-100 object-fit-cover">
+                        <div class="model-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h3 class="text-white fw-bold mb-1">Peugeot</h3>
+                                <p class="text-light mb-0">Atracción y emoción.</p>
+                            </div>
+                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-primary rounded-circle btn-icon">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-4 text-center">
+        <div class="container">
+            <p class="mb-0 opacity-50">&copy; 2026 Stellantis. Todos los derechos reservados.</p>
+            <small class="opacity-25">Las imágenes y promociones son ilustrativas y pueden estar sujetas a cambios.</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
