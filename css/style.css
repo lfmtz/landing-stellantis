@@ -12,7 +12,7 @@ body {
     background-color: var(--dark-bg);
     
     /* Fondo base (escritorio por defecto) */
-    background-image: url('../imagenes/fondo_escritorio.jpg');
+    background-image: url('../imagenes/fondo_escritorio.png');
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
@@ -26,7 +26,7 @@ body {
 /* Regla para teléfonos móviles */
 @media (max-width: 768px) {
     body {
-        background-image: url('../imagenes/fondo_movil.jpg');
+        background-image: url('../imagenes/fondo_movil.png');
         /* Para intentar esconder el menú hamburguesa desde el código, movemos la imagen un poco hacia arriba */
         background-position: center -60px; 
     }
