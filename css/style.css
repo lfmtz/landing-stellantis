@@ -66,6 +66,10 @@ a, button, .btn {
 .hero-section {
     height: 100vh;
     min-height: 600px;
+    position: relative;
+    /* Difuminar la parte de abajo para integración suave con la página */
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .bg-cover {
