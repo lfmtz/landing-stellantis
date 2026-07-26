@@ -168,3 +168,52 @@ a, button, .btn {
     color: #000;
     transform: translateX(5px);
 }
+
+/* AI Tech Background for Brands */
+.bg-ia {
+    background-image: url('../imagenes/fondo_ia_marcas.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+.bg-ia::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 15, 25, 0.7); /* Dark overlay to make logos pop */
+    z-index: 0;
+}
+.bg-ia > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* 1080x1080 Brand Upload Module */
+.brand-module-card {
+    aspect-ratio: 1 / 1; /* Forces perfect square */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+    transition: all 0.4s ease;
+}
+.brand-module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+    border-color: rgba(0, 229, 255, 0.8);
+}
+.brand-module-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+.brand-module-card:hover .brand-module-img {
+    transform: scale(1.05);
+}
+.brand-module-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+}
