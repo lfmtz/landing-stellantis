@@ -75,32 +75,80 @@
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold text-dark mb-3">Ofertas Imparables</h2>
                 <div class="heading-line mx-auto"></div>
-                <p class="text-dark opacity-75 mt-3">Las mejores oportunidades para estrenar el vehículo de tus sueños.</p>
+                <p class="text-dark opacity-100 mt-3 fw-bold" style="background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 20px; display: inline-block;">Las mejores oportunidades para estrenar el vehículo de tus sueños.</p>
             </div>
             
-            <div class="row g-4 justify-content-center">
-                <!-- Promo 1 -->
-                <div class="col-md-5">
-                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
-                        <img src="imagenes/oferta_1.png" class="card-img-top promo-img" alt="RAM 1200">
-                        <div class="card-body p-4 text-center">
-                            <h3 class="card-title fw-bold text-dark">RAM 1200</h3>
-                            <p class="card-text text-dark opacity-75">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
-                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+            <!-- Carrusel de Ofertas -->
+            <div id="ofertasCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-inner pb-4">
+                    <!-- Primer Slide (2 Tarjetas) -->
+                    <div class="carousel-item active">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Promo 1 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="imagenes/oferta_1.png" class="card-img-top promo-img" alt="RAM 1200">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">RAM 1200</h3>
+                                        <p class="card-text text-dark opacity-75">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
+                                        <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Promo 2 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="imagenes/oferta_2.png" class="card-img-top promo-img" alt="RAM 4000">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">RAM 4000</h3>
+                                        <p class="card-text text-dark opacity-75">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
+                                        <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Segundo Slide (2 Tarjetas Adicionales) -->
+                    <div class="carousel-item">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Promo 3 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <!-- Puedes subir oferta_3.png a la carpeta de imágenes -->
+                                    <img src="imagenes/oferta_3.png" class="card-img-top promo-img" alt="Nueva Oferta" onerror="this.src='imagenes/carrusel_2.jpg'">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">Nueva Oferta 3</h3>
+                                        <p class="card-text text-dark opacity-75">Sube la imagen oferta_3.png para mostrar tu siguiente gran promoción.</p>
+                                        <a href="#" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Promo 4 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <!-- Puedes subir oferta_4.png a la carpeta de imágenes -->
+                                    <img src="imagenes/oferta_4.png" class="card-img-top promo-img" alt="Nueva Oferta" onerror="this.src='imagenes/carrusel_3.jpg'">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">Nueva Oferta 4</h3>
+                                        <p class="card-text text-dark opacity-75">Sube la imagen oferta_4.png para completar el segundo slide de ofertas.</p>
+                                        <a href="#" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Promo 2 -->
-                <div class="col-md-5">
-                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
-                        <img src="imagenes/oferta_2.png" class="card-img-top promo-img" alt="RAM 4000">
-                        <div class="card-body p-4 text-center">
-                            <h3 class="card-title fw-bold text-dark">RAM 4000</h3>
-                            <p class="card-text text-dark opacity-75">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
-                            <a href="https://sites.google.com/view/stellantis-promos/promo_stellantis?utm_source=web_autos&utm_medium=web_qr&utm_campaign=promo_qr&utm_content=stellantis_qr" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
-                        </div>
-                    </div>
-                </div>
+                
+                <!-- Controles del Carrusel (Aparecerán a los lados) -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="prev" style="width: 5%;">
+                    <i class="fa-solid fa-chevron-left text-dark fs-2"></i>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="next" style="width: 5%;">
+                    <i class="fa-solid fa-chevron-right text-dark fs-2"></i>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
         </div>
     </section>
