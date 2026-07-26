@@ -2,7 +2,7 @@
     --primary-color: #0d6efd;
     --primary-glow: rgba(13, 110, 253, 0.6);
     --accent-color: #00e5ff;
-    --dark-bg: #0f1115;
+    --dark-bg: #07101e; /* Color corporativo profundo */
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
 }
@@ -10,6 +10,13 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--dark-bg);
+    /* Patrón de tecnología corporativa sutil para el fondo sólido */
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.03), transparent 50%),
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 30px 30px;
+    background-attachment: fixed;
     color: #fff;
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>') 12 12, auto;
     overflow-x: hidden;
@@ -126,13 +133,14 @@ a, button, .btn {
 }
 
 .tech-blue-gradient {
-    background-color: #050a11;
+    /* Fondo traslúcido para ver el fondo corporativo */
+    background-color: rgba(7, 16, 30, 0.2); 
+    backdrop-filter: blur(5px); /* Efecto vidrio ligero */
+    -webkit-backdrop-filter: blur(5px);
     background-image: 
-        radial-gradient(circle at 50% 0%, rgba(13, 110, 253, 0.15), transparent 50%),
-        radial-gradient(circle at 80% 90%, rgba(0, 229, 255, 0.1), transparent 40%),
-        linear-gradient(rgba(13, 110, 253, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(13, 110, 253, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+        radial-gradient(circle at 50% 0%, rgba(13, 110, 253, 0.1), transparent 50%),
+        radial-gradient(circle at 80% 90%, rgba(0, 229, 255, 0.05), transparent 40%);
+    background-size: 100% 100%, 100% 100%;
 }
 
 /* Model Cards */
