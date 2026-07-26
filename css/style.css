@@ -10,16 +10,26 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--dark-bg);
-    /* Patrón de tecnología corporativa sutil para el fondo sólido */
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.03), transparent 50%),
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 30px 30px, 30px 30px;
+    
+    /* Fondo base (escritorio por defecto) */
+    background-image: url('../imagenes/fondo_escritorio.jpg');
+    background-size: cover;
+    background-position: center top;
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    
     color: #fff;
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>') 12 12, auto;
     overflow-x: hidden;
+}
+
+/* Regla para teléfonos móviles */
+@media (max-width: 768px) {
+    body {
+        background-image: url('../imagenes/fondo_movil.jpg');
+        /* Para intentar esconder el menú hamburguesa desde el código, movemos la imagen un poco hacia arriba */
+        background-position: center -60px; 
+    }
 }
 
 /* Links also get custom cursor */
@@ -107,6 +117,12 @@ a, button, .btn {
     transform: translateY(-10px);
     border-color: rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.carousel-item {
+    min-height: 100vh;
+    transition: transform 1.5s ease-in-out;
+    filter: brightness(1.2); /* Aumento de brillo solicitado */
 }
 
 .promo-img {
