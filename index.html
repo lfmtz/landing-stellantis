@@ -55,6 +55,7 @@
                 <div class="carousel-item active h-100 bg-cover" style="background-image: url('imagenes/carrusel_1.png');"></div>
                 <div class="carousel-item h-100 bg-cover" style="background-image: url('imagenes/carrusel_2.jpg');"></div>
                 <div class="carousel-item h-100 bg-cover" style="background-image: url('imagenes/carrusel_3.jpg');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('imagenes/carrusel_4.jpg');"></div>
             </div>
             <div class="overlay"></div>
         </div>
@@ -284,5 +285,52 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Image Extension Fallback Handler (.png <-> .jpg) -->
+    <script>
+        (function() {
+            // 1. Fallback for <img> tags
+            document.addEventListener('error', function(e) {
+                var target = e.target;
+                if (target.tagName === 'IMG' && !target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    var src = target.src;
+                    if (src.endsWith('.png')) {
+                        target.src = src.slice(0, -4) + '.jpg';
+                    } else if (src.endsWith('.jpg')) {
+                        target.src = src.slice(0, -4) + '.png';
+                    }
+                }
+            }, true); // Use capture phase to catch loading errors early
+
+            // 2. Fallback for elements with background-image styles (body & carousel items)
+            window.addEventListener('load', function() {
+                var bgElements = [document.body].concat(Array.from(document.querySelectorAll('.carousel-item')));
+                bgElements.forEach(function(el) {
+                    if (!el) return;
+                    var style = window.getComputedStyle(el);
+                    var bgUrl = style.backgroundImage;
+                    if (bgUrl && bgUrl !== 'none') {
+                        var match = bgUrl.match(/url\("?([^"\)]+)"?\)/);
+                        if (match && match[1]) {
+                            var imgUrl = match[1];
+                            if (imgUrl.includes('imagenes/')) {
+                                var tempImg = new Image();
+                                tempImg.src = imgUrl;
+                                tempImg.onerror = function() {
+                                    var extension = imgUrl.endsWith('.png') ? '.png' : (imgUrl.endsWith('.jpg') ? '.jpg' : '');
+                                    if (extension) {
+                                        var newExtension = extension === '.png' ? '.jpg' : '.png';
+                                        var newUrl = imgUrl.slice(0, -extension.length) + newExtension;
+                                        el.style.backgroundImage = "url('" + newUrl + "')";
+                                    }
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
