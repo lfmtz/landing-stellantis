@@ -217,9 +217,9 @@ a, button, .btn {
 }
 
 .promo-img {
-    height: 350px;
-    object-fit: contain; /* Changed from cover to contain to fit vertical RAM properly */
-    padding: 1rem;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
 

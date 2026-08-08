@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Stellantis | Editor de Promociones</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation & Actions -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <i class="fa-solid fa-sliders"></i>
+        <span>STELLANTIS <small>Admin Panel</small></span>
+      </div>
+      <div class="actions">
+        <button id="gitSyncBtn" class="btn btn-primary btn-glow">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Publicar Cambios (Git Sync)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    
+    <!-- Sidebar / Brand Selector -->
+    <aside class="sidebar">
+      <h3>Marcas Stellantis</h3>
+      <nav class="brand-nav">
+        <button class="brand-tab-btn active" data-brand="ram">
+          <span class="brand-badge badge-ram"></span> RAM
+        </button>
+        <button class="brand-tab-btn" data-brand="dodge">
+          <span class="brand-badge badge-dodge"></span> Dodge
+        </button>
+        <button class="brand-tab-btn" data-brand="jeep">
+          <span class="brand-badge badge-jeep"></span> Jeep
+        </button>
+        <button class="brand-tab-btn" data-brand="fiat">
+          <span class="brand-badge badge-fiat"></span> Fiat
+        </button>
+        <button class="brand-tab-btn" data-brand="peugeot">
+          <span class="brand-badge badge-peugeot"></span> Peugeot
+        </button>
+        <button class="brand-tab-btn" data-brand="leapmotor">
+          <span class="brand-badge badge-leapmotor"></span> Leapmotor
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <section class="content-area">
+      <div class="content-header">
+        <h2 id="currentBrandTitle">Promociones RAM</h2>
+        <button id="openAddModalBtn" class="btn btn-success">
+          <i class="fa-solid fa-plus"></i> Agregar Auto
+        </button>
+      </div>
+
+      <!-- Cars Gallery -->
+      <div id="promosGrid" class="promos-grid">
+        <!-- Dynmic content will be rendered here -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Add/Edit Modal -->
+  <div id="promoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Agregar Nueva Promoción</h3>
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+      </div>
+      <form id="promoForm">
+        <input type="hidden" id="promoId">
+        <input type="hidden" id="promoBrand">
+        <input type="hidden" id="existingImage">
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="name">Nombre del Auto / Modelo</label>
+            <input type="text" id="name" required placeholder="Ej. Dodge Attitude SXT">
+          </div>
+          <div class="form-group col-6">
+            <label for="price">Precio desde / Mensualidad</label>
+            <input type="text" id="price" required placeholder="Ej. Desde $379,900 o Mensualidades de $5,499">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="whatsapp">Enlace Personalizado de WhatsApp</label>
+            <input type="url" id="whatsapp" placeholder="https://wa.me/...">
+          </div>
+          <div class="form-group col-6">
+            <label for="accentColor">Color de Acento (Hex)</label>
+            <div class="color-picker-wrapper">
+              <input type="color" id="accentColor" value="#CC4400">
+              <input type="text" id="accentColorHex" value="#CC4400" placeholder="#CC4400">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Imagen del Auto</label>
+          <div id="dropZone" class="drop-zone">
+            <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+            <p class="drop-text">Arrastra tu imagen aquí o haz clic para buscar</p>
+            <input type="file" id="imageFile" accept="image/*" style="display: none;">
+            <div id="filePreview" class="file-preview"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descripción Principal / Mensaje de la Promo</label>
+          <textarea id="description" rows="3" required placeholder="Ej. ¡Domina la ciudad con el sedán más eficiente! Estrena con el 46.5% de enganche."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="descriptionSize">Tamaño de Letra</label>
+            <select id="descriptionSize">
+              <option value="0.9rem">Pequeña (0.9rem)</option>
+              <option value="1.0rem" selected>Normal (1.0rem)</option>
+              <option value="1.1rem">Mediana (1.1rem)</option>
+              <option value="1.25rem">Grande (1.25rem)</option>
+              <option value="1.4rem">Muy Grande (1.4rem)</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="underlineStyle">Estilo de Subrayado en Título</label>
+            <select id="underlineStyle">
+              <option value="solid" selected>Línea Continua</option>
+              <option value="dashed">Línea Discontinua (Guiones)</option>
+              <option value="dotted">Puntos</option>
+              <option value="none">Sin Subrayado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Beneficios Incluidos (Bullets)</label>
+          <div id="benefitsContainer">
+            <!-- Dynamic benefits inputs -->
+          </div>
+          <button type="button" id="addBenefitBtn" class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-plus"></i> Añadir Beneficio
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="legal">Texto Legal / Restricciones</label>
+          <input type="text" id="legal" placeholder="Ej. * Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Status / Loading Overlay -->
+  <div id="statusOverlay" class="overlay-status">
+    <div class="overlay-card">
+      <div id="overlaySpinner" class="spinner"></div>
+      <div id="overlayIcon" class="overlay-icon" style="display: none;">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 id="overlayTitle">Sincronizando...</h3>
+      <p id="overlayMessage">Guardando cambios e interactuando con Git. Por favor espera.</p>
+      <button id="closeOverlayBtn" class="btn btn-secondary" style="display: none;">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    let currentBrand = 'ram';
+    let database = {};
+
+    // Elements
+    const brandTabs = document.querySelectorAll('.brand-tab-btn');
+    const currentBrandTitle = document.getElementById('currentBrandTitle');
+    const promosGrid = document.getElementById('promosGrid');
+    const gitSyncBtn = document.getElementById('gitSyncBtn');
+    
+    // Modal Elements
+    const promoModal = document.getElementById('promoModal');
+    const openAddModalBtn = document.getElementById('openAddModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const promoForm = document.getElementById('promoForm');
+    const benefitsContainer = document.getElementById('benefitsContainer');
+    const addBenefitBtn = document.getElementById('addBenefitBtn');
+    
+    // Drop Zone Elements
+    const dropZone = document.getElementById('dropZone');
+    const imageFileInput = document.getElementById('imageFile');
+    const filePreview = document.getElementById('filePreview');
+
+    // Color Picker Sync
+    const accentColorInput = document.getElementById('accentColor');
+    const accentColorHexInput = document.getElementById('accentColorHex');
+    accentColorInput.addEventListener('input', (e) => {
+      accentColorHexInput.value = e.target.value.toUpperCase();
+    });
+    accentColorHexInput.addEventListener('change', (e) => {
+      accentColorInput.value = e.target.value;
+    });
+
+    // Overlay Elements
+    const statusOverlay = document.getElementById('statusOverlay');
+    const overlaySpinner = document.getElementById('overlaySpinner');
+    const overlayIcon = document.getElementById('overlayIcon');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlayMessage = document.getElementById('overlayMessage');
+    const closeOverlayBtn = document.getElementById('closeOverlayBtn');
+
+    // Show Overlay
+    function showOverlay(title, msg, isSuccess = null) {
+      statusOverlay.classList.add('active');
+      overlayTitle.textContent = title;
+      overlayMessage.textContent = msg;
+      
+      if (isSuccess === null) {
+        overlaySpinner.style.display = 'block';
+        overlayIcon.style.display = 'none';
+        closeOverlayBtn.style.display = 'none';
+      } else {
+        overlaySpinner.style.display = 'none';
+        overlayIcon.style.display = 'block';
+        overlayIcon.className = isSuccess ? 'overlay-icon success' : 'overlay-icon error';
+        overlayIcon.innerHTML = isSuccess 
+          ? '<i class="fa-solid fa-circle-check"></i>' 
+          : '<i class="fa-solid fa-circle-xmark"></i>';
+        closeOverlayBtn.style.display = 'inline-block';
+      }
+    }
+
+    closeOverlayBtn.addEventListener('click', () => {
+      statusOverlay.classList.remove('active');
+    });
+
+    // Fetch Database
+    async function loadPromos() {
+      try {
+        const res = await fetch('/api/promos');
+        database = await res.json();
+        renderCurrentBrand();
+      } catch (err) {
+        console.error('Error loading data:', err);
+      }
+    }
+
+    // Render Grid
+    function renderCurrentBrand() {
+      currentBrandTitle.textContent = `Promociones ${currentBrand.toUpperCase()}`;
+      promosGrid.innerHTML = '';
+      
+      const promos = database[currentBrand] || [];
+      
+      if (promos.length === 0) {
+        promosGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-car-rear"></i>
+            <p>No hay autos registrados para esta marca.</p>
+          </div>
+        `;
+        return;
+      }
+
+      promos.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'promo-admin-card';
+        card.style.borderTopColor = p.accentColor || '#CC4400';
+        
+        let benefitsHtml = (p.benefits || []).map(b => `<li><i class="fa-solid fa-check"></i> ${b}</li>`).join('');
+        
+        card.innerHTML = `
+          <div class="card-image-wrapper">
+            <img src="${p.image ? '../' + p.image : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
+          </div>
+          <div class="card-details">
+            <div class="card-main-info">
+              <h4>${p.name}</h4>
+              <span class="price-badge" style="background-color: ${p.accentColor || '#CC4400'}">${p.price}</span>
+            </div>
+            <p class="desc-preview">${p.description}</p>
+            <ul class="benefits-preview">
+              ${benefitsHtml}
+            </ul>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm" onclick="editPromo('${p.id}')">
+                <i class="fa-solid fa-pen-to-square"></i> Editar
+              </button>
+              <button class="btn btn-danger btn-sm" onclick="deletePromo('${p.id}')">
+                <i class="fa-solid fa-trash-can"></i> Quitar
+              </button>
+            </div>
+          </div>
+        `;
+        promosGrid.appendChild(card);
+      });
+    }
+
+    // Brand navigation clicks
+    brandTabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        brandTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentBrand = tab.dataset.brand;
+        renderCurrentBrand();
+      });
+    });
+
+    // Delete Promotion
+    async function deletePromo(id) {
+      if (!confirm('¿Estás seguro de que deseas eliminar esta promoción?')) return;
+      
+      showOverlay('Eliminando...', 'Quitando la promoción y regenerando la página...');
+      try {
+        const res = await fetch(`/api/promos/${currentBrand}/${id}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          showOverlay('Completado', 'Auto removido correctamente.', true);
+          await loadPromos();
+        } else {
+          showOverlay('Error', 'No se pudo eliminar el auto.', false);
+        }
+      } catch (err) {
+        showOverlay('Error', 'Ocurrió un error de red.', false);
+      }
+    }
+
+    // Edit Promo Trigger
+    window.editPromo = function(id) {
+      const p = database[currentBrand].find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById('modalTitle').textContent = `Editar Promoción: ${p.name}`;
+      document.getElementById('promoId').value = p.id;
+      document.getElementById('promoBrand').value = currentBrand;
+      document.getElementById('existingImage').value = p.image;
+      document.getElementById('name').value = p.name;
+      document.getElementById('price').value = p.price;
+      document.getElementById('whatsapp').value = p.whatsapp || '';
+      document.getElementById('description').value = p.description || '';
+      document.getElementById('descriptionSize').value = p.descriptionSize || '1.0rem';
+      document.getElementById('underlineStyle').value = p.underlineStyle || 'solid';
+      document.getElementById('accentColor').value = p.accentColor || '#CC4400';
+      document.getElementById('accentColorHex').value = (p.accentColor || '#CC4400').toUpperCase();
+      document.getElementById('legal').value = p.legal || '';
+
+      // Preview Image
+      if (p.image) {
+        filePreview.innerHTML = `<img src="../${p.image}" class="preview-img"><p class="preview-text">Imagen cargada anteriormente</p>`;
+      } else {
+        filePreview.innerHTML = '';
+      }
+
+      // Benefits
+      benefitsContainer.innerHTML = '';
+      p.benefits.forEach(b => addBenefitInput(b));
+      if (p.benefits.length === 0) addBenefitInput();
+
+      promoModal.classList.add('active');
+    };
+
+    // Open Add Modal
+    openAddModalBtn.addEventListener('click', () => {
+      document.getElementById('modalTitle').textContent = 'Agregar Nueva Promoción';
+      document.getElementById('promoId').value = '';
+      document.getElementById('promoBrand').value = currentBrand;
+      document.getElementById('existingImage').value = '';
+      document.getElementById('name').value = '';
+      document.getElementById('price').value = '';
+      document.getElementById('whatsapp').value = `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20${currentBrand}`;
+      document.getElementById('description').value = '';
+      document.getElementById('descriptionSize').value = '1.0rem';
+      document.getElementById('underlineStyle').value = 'solid';
+      
+      const defaultColors = {
+        ram: '#000000',
+        dodge: '#CC4400',
+        jeep: '#4A7729',
+        fiat: '#B30000',
+        peugeot: '#001E62',
+        leapmotor: '#3B93A9'
+      };
+      
+      const brandColor = defaultColors[currentBrand] || '#CC4400';
+      document.getElementById('accentColor').value = brandColor;
+      document.getElementById('accentColorHex').value = brandColor.toUpperCase();
+      document.getElementById('legal').value = '* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.';
+      
+      filePreview.innerHTML = '';
+      benefitsContainer.innerHTML = '';
+      addBenefitInput();
+      
+      promoModal.classList.add('active');
+    });
+
+    // Close Modals
+    function closeModal() {
+      promoModal.classList.remove('active');
+    }
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelModalBtn.addEventListener('click', closeModal);
+
+    // Dynamic Benefit Field Handler
+    function addBenefitInput(value = '') {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'benefit-input-row';
+      
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'benefit-field';
+      input.value = value;
+      input.placeholder = 'Ej. 0% Comisión por Apertura';
+      
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'btn btn-icon btn-danger btn-sm';
+      removeBtn.innerHTML = '<i class="fa-solid fa-minus"></i>';
+      removeBtn.onclick = () => wrapper.remove();
+      
+      wrapper.appendChild(input);
+      wrapper.appendChild(removeBtn);
+      benefitsContainer.appendChild(wrapper);
+    }
+    addBenefitBtn.addEventListener('click', () => addBenefitInput());
+
+    // File Drop Zone handler
+    dropZone.addEventListener('click', () => imageFileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        imageFileInput.files = e.dataTransfer.files;
+        handleFilePreview(e.dataTransfer.files[0]);
+      }
+    });
+    imageFileInput.addEventListener('change', () => {
+      if (imageFileInput.files.length) {
+        handleFilePreview(imageFileInput.files[0]);
+      }
+    });
+
+    function handleFilePreview(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        filePreview.innerHTML = `<img src="${e.target.result}" class="preview-img"><p class="preview-text">${file.name}</p>`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Submit Form
+    promoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const brand = document.getElementById('promoBrand').value;
+      const formData = new FormData();
+      
+      formData.append('id', document.getElementById('promoId').value);
+      formData.append('name', document.getElementById('name').value);
+      formData.append('price', document.getElementById('price').value);
+      formData.append('whatsapp', document.getElementById('whatsapp').value);
+      formData.append('accentColor', document.getElementById('accentColor').value);
+      formData.append('description', document.getElementById('description').value);
+      formData.append('descriptionSize', document.getElementById('descriptionSize').value);
+      formData.append('underlineStyle', document.getElementById('underlineStyle').value);
+      formData.append('existingImage', document.getElementById('existingImage').value);
+      formData.append('legal', document.getElementById('legal').value);
+      
+      // Benefits collection
+      const benefits = [];
+      document.querySelectorAll('.benefit-field').forEach(field => {
+        if (field.value.trim()) benefits.push(field.value.trim());
+      });
+      formData.append('benefits', JSON.stringify(benefits));
+      
+      if (imageFileInput.files[0]) {
+        formData.append('image', imageFileInput.files[0]);
+      }
+      
+      closeModal();
+      showOverlay('Guardando...', 'Compilando información de la promoción...');
+      
+      try {
+        const res = await fetch(`/api/promos/${brand}`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (res.ok) {
+          showOverlay('Completado', 'Promoción guardada y página compilada correctamente.', true);
+          await loadPromos();
+        } else {
+          showOverlay('Error', 'No se pudo guardar la promoción.', false);
+        }
+      } catch (err) {
+        showOverlay('Error', 'Error de conexión con el servidor local.', false);
+      }
+    });
+
+    // Git Sync Trigger
+    gitSyncBtn.addEventListener('click', async () => {
+      showOverlay('Git Sync', 'Conectando con GitHub, agregando archivos y empujando cambios...');
+      try {
+        const res = await fetch('/api/git-sync', { method: 'POST' });
+        const result = await res.json();
+        if (res.ok) {
+          showOverlay('Publicado', result.message || 'Sincronizado con éxito!', true);
+        } else {
+          showOverlay('Error', result.error || 'Ocurrió un error en la sincronización.', false);
+        }
+      } catch (err) {
+        showOverlay('Error', 'Error de conexión con el servidor local.', false);
+      }
+    });
+
+    // Init
+    loadPromos();
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+  "ram": [
+    {
+      "id": "ram-700",
+      "name": "RAM 700",
+      "price": "Desde $314,900",
+      "image": "imagenes/oferta_1.png",
+      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20RAM%20700",
+      "description": "¡La pickup pequeña más capaz para el trabajo y el día a día!",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Planes de financiamiento especiales",
+        "Garantía de fábrica Stellantis",
+        "Eficiencia de combustible insuperable"
+      ],
+      "legal": "* Sujeto a aprobación de crédito. Vigente al fin de mes.",
+      "accentColor": "#000000",
+      "underlineStyle": "solid"
+    }
+  ],
+  "dodge": [
+    {
+      "id": "dodge-attitude",
+      "name": "Dodge Attitude",
+      "price": "Desde $379,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/attitude_j6dsid.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20Dodge%20Attitude",
+      "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades especiales.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono de hasta $57,000",
+        "0% comisión por apertura",
+        "4 años de garantía",
+        "Protección de llantas"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#CC4400",
+      "underlineStyle": "solid"
+    }
+  ],
+  "jeep": [
+    {
+      "id": "jeep-renegade",
+      "name": "Jeep Renegade",
+      "price": "Desde $459,900",
+      "image": "imagenes/oferta_2.png",
+      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20Jeep%20Renegade",
+      "description": "El auténtico espíritu Jeep para la aventura urbana.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono de financiamiento exclusivo",
+        "Seguro gratis por el primer año",
+        "0% comisión por apertura"
+      ],
+      "legal": "* Consulta términos y condiciones en distribuidor.",
+      "accentColor": "#4A7729",
+      "underlineStyle": "solid"
+    }
+  ],
+  "fiat": [],
+  "peugeot": [],
+  "leapmotor": []
+}

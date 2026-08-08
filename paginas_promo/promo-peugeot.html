@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <title>Promociones PEUGEOT</title>
+  <style>
+    :root {
+      --acento: #001E62;
+      --fondo-inv: #FFF6F2;
+      --borde-inv: #ffd9c7;
+      --gris-suave: #F4F4F4;
+      --gris-texto: #666666;
+      --texto-minimo: #999999;
+      --fuente: 'Barlow Condensed', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .grid-promos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 10px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) {
+      .grid-promos {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-top: 5px solid var(--acento);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .img-container {
+      width: 100%;
+      padding-top: 75%;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .card-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #f5f5f5;
+    }
+
+    .card-header {
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      gap: 8px;
+    }
+
+    .model-name {
+      font-family: var(--fuente);
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      color: #111;
+    }
+
+    .model-price {
+      font-family: var(--fuente);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .btn-wa {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--fuente);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .promo-body {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      box-sizing: border-box;
+      flex-direction: column;
+    }
+
+    .promo-main {
+      font-family: var(--fuente);
+      line-height: 1.4;
+      background: var(--gris-suave);
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px 0;
+      font-family: var(--fuente);
+    }
+
+    .benefits-list li {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: var(--gris-texto);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .benefits-list li::before {
+      content: "✓";
+      color: var(--acento-list, var(--acento));
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .legal {
+      font-size: 0.72rem;
+      color: var(--texto-minimo);
+      margin-top: auto;
+      padding-top: 10px;
+      font-family: var(--fuente);
+      line-height: 1.4;
+    }
+
+    .embed-footer {
+      height: 12px;
+    }
+
+    .no-promos {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      font-family: var(--fuente);
+      font-size: 1.2rem;
+      color: var(--gris-texto);
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+    }
+  </style>
+ </head>
+ <body>
+  <div class="grid-promos">
+    <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
+  </div>
+  <div class="embed-footer"></div>
+ </body>
+</html>
