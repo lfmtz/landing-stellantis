@@ -180,5 +180,131 @@
     <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
   </div>
   <div class="embed-footer"></div>
+
+  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
+  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
+    <div class="leasing-popup-content">
+      <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
+      <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink">
+        <!-- Para cambiar la imagen del popup cambia la ruta de abajo -->
+        <img src="../imagenes/popup_arrendamiento.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+      </a>
+    </div>
+  </div>
+
+  <style>
+    /* Estilos del Popup de Arrendamiento */
+    .leasing-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .leasing-popup-overlay.show {
+      opacity: 1;
+    }
+    .leasing-popup-content {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 229, 255, 0.3);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      background: #000;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .leasing-popup-overlay.show .leasing-popup-content {
+      transform: scale(1);
+    }
+    .leasing-popup-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .leasing-popup-img:hover {
+      transform: scale(1.02);
+    }
+    .leasing-popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-size: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.3s, color 0.3s;
+    }
+    .leasing-popup-close:hover {
+      background: #00e5ff;
+      color: #000;
+      border-color: #00e5ff;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var wasShown = localStorage.getItem('leasing_popup_shown');
+      var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
+
+      if (!wasShown && !wasDismissed) {
+        setTimeout(function() {
+          var popup = document.getElementById('leasingPopup');
+          if (popup) {
+            popup.style.display = 'flex';
+            setTimeout(function() {
+              popup.classList.add('show');
+            }, 50);
+
+            document.getElementById('closeLeasingPopup').addEventListener('click', function() {
+              closePopup();
+            });
+
+            popup.addEventListener('click', function(e) {
+              if (e.target === popup) {
+                closePopup();
+              }
+            });
+
+            document.getElementById('leasingPopupLink').addEventListener('click', function() {
+              localStorage.setItem('leasing_popup_shown', 'true');
+            });
+          }
+        }, 2000);
+      }
+
+      function closePopup() {
+        var popup = document.getElementById('leasingPopup');
+        if (popup) {
+          popup.classList.remove('show');
+          setTimeout(function() {
+            popup.style.display = 'none';
+            sessionStorage.setItem('leasing_popup_dismissed', 'true');
+          }, 400);
+        }
+      }
+    });
+  </script>
  </body>
 </html>

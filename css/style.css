@@ -417,4 +417,42 @@ a, button, .btn {
     }
 }
 
+/* Newsletter Modal Premium Glassmorphism */
+.newsletter-modal-content {
+    background: rgba(10, 16, 30, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 229, 255, 0.25) !important;
+    border-radius: 1.5rem;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+}
+.newsletter-modal-content .modal-header,
+.newsletter-modal-content .modal-footer {
+    border: none;
+}
+.newsletter-modal-content .form-control {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-radius: 0.5rem;
+}
+.newsletter-modal-content .form-control:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    color: #fff;
+}
+.newsletter-modal-img-container {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.newsletter-modal-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 

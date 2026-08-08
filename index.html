@@ -294,6 +294,41 @@
         </div>
     </footer>
 
+    <!-- Newsletter Modal (Suscripción) -->
+    <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content newsletter-modal-content">
+                <div class="modal-header pb-0 position-relative">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <!-- Contenedor para imagen opcional. Para agregar una imagen descomenta la línea de abajo y pon su ruta -->
+                    <div class="newsletter-modal-img-container" id="newsletterModalImgContainer" style="display: none;">
+                        <img src="" class="newsletter-modal-img" alt="Promoción especial" id="newsletterModalImg">
+                    </div>
+                    
+                    <i class="fa-solid fa-paper-plane text-primary display-5 mb-3" style="filter: drop-shadow(0 0 10px var(--primary-glow));"></i>
+                    <h3 class="fw-bold mb-2 text-white">¿Quieres recibir ofertas exclusivas?</h3>
+                    <p class="text-white-50 small mb-4">Suscríbete a nuestro newsletter mensual y sé el primero en enterarte de las mejores promociones de Stellantis.</p>
+                    
+                    <form id="newsletterForm" novalidate>
+                        <div class="mb-3 text-start">
+                            <label for="newsletterName" class="form-label small text-white-50">Nombre completo</label>
+                            <input type="text" class="form-control" id="newsletterName" placeholder="Ej. Juan Pérez" required>
+                            <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="newsletterEmail" class="form-label small text-white-50">Correo electrónico</label>
+                            <input type="email" class="form-control" id="newsletterEmail" placeholder="juan@ejemplo.com" required>
+                            <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
+                        </div>
+                        <button type="submit" class="btn btn-glow w-100 rounded-pill py-2.5 mt-2 text-uppercase fw-bold">Suscribirme</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -341,6 +376,71 @@
                     }
                 });
             });
+
+            // 3. Control de Popup de Newsletter en la Landing Principal
+            window.addEventListener('load', function() {
+                var isSubscribed = localStorage.getItem('newsletter_subscribed');
+                var isDismissed = sessionStorage.getItem('newsletter_dismissed');
+                
+                // Si ya se suscribió o ya descartó el modal en esta sesión, no se muestra
+                if (!isSubscribed && !isDismissed) {
+                    setTimeout(function() {
+                        var newsletterModalEl = document.getElementById('newsletterModal');
+                        if (newsletterModalEl) {
+                            var nModal = new bootstrap.Modal(newsletterModalEl, {
+                                keyboard: true
+                            });
+                            
+                            // Configuración de imagen opcional (descomentar / agregar ruta si se desea)
+                            var imgUrl = ""; // Escribe aquí la ruta de la imagen, ej: "imagenes/popup_promo.jpg"
+                            var imgEl = document.getElementById('newsletterModalImg');
+                            var imgContainer = document.getElementById('newsletterModalImgContainer');
+                            if (imgUrl && imgEl && imgContainer) {
+                                imgEl.src = imgUrl;
+                                imgContainer.style.display = 'block';
+                            }
+                            
+                            nModal.show();
+                            
+                            // Al cerrar el modal se registra que se descartó en esta sesión de navegación
+                            newsletterModalEl.addEventListener('hidden.bs.modal', function () {
+                                if (!localStorage.getItem('newsletter_subscribed')) {
+                                    sessionStorage.setItem('newsletter_dismissed', 'true');
+                                }
+                            });
+                        }
+                    }, 2500); // 2.5 segundos de retraso
+                }
+            });
+
+            // Manejador del formulario de suscripción
+            var form = document.getElementById('newsletterForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (!form.checkValidity()) {
+                        e.stopPropagation();
+                        form.classList.add('was-validated');
+                        return;
+                    }
+                    
+                    var name = document.getElementById('newsletterName').value;
+                    var email = document.getElementById('newsletterEmail').value;
+                    
+                    // Almacenamos de forma local
+                    localStorage.setItem('newsletter_subscribed', 'true');
+                    localStorage.setItem('newsletter_name', name);
+                    localStorage.setItem('newsletter_email', email);
+                    
+                    var modalEl = document.getElementById('newsletterModal');
+                    if (modalEl) {
+                        var modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                    }
+                    
+                    alert('¡Gracias por registrarte, ' + name + '! Te enviaremos nuestras ofertas mensuales.');
+                });
+            }
         })();
     </script>
 </body>
