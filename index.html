@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Google Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stellantis | Promociones Exclusivas</title>
@@ -448,6 +457,14 @@
                         body: JSON.stringify(datos)
                     })
                     .then(function() {
+                        // Enviar evento de Google Analytics
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'generate_lead', {
+                                'event_category': 'Engagement',
+                                'event_label': 'Newsletter Subscription'
+                            });
+                        }
+
                         // Almacenamos de forma local
                         localStorage.setItem('newsletter_subscribed', 'true');
                         localStorage.setItem('newsletter_name', name);
