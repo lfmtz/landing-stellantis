@@ -418,6 +418,9 @@ a, button, .btn {
 }
 
 /* Newsletter Modal Premium Glassmorphism */
+#newsletterModal .modal-dialog {
+    max-width: 440px; /* Más estilizado y vertical para flyers e invitaciones */
+}
 .newsletter-modal-content {
     background: rgba(10, 16, 30, 0.95);
     backdrop-filter: blur(15px);
