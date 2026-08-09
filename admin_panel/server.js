@@ -630,17 +630,17 @@ function generateHtmlForBrand(brand, vehicles) {
         display: none;
         flex-direction: column;
         width: 100%;
-        position: absolute;
-        top: 100%;
+        position: fixed; /* Fijo al viewport para evitar pérdidas de scroll */
+        top: 55px; /* Altura de la barra del logo */
+        bottom: 0;
         left: 0;
         background: rgba(10, 15, 25, 0.98);
         border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-        padding: 15px 0;
-        gap: 12px;
+        padding: 20px 0 80px 0; /* Padding inferior extra para evitar que el botón Inicio se oculte */
+        gap: 15px;
         align-items: center;
         box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        max-height: calc(100vh - 70px); /* Limitación de altura para pantallas pequeñas */
-        overflow-y: auto; /* Permite scroll interno si la lista es muy larga */
+        overflow-y: auto; /* Scroll vertical */
         -webkit-overflow-scrolling: touch;
       }
       .nav-links.open {

@@ -291,7 +291,7 @@
     }
     .leasing-popup-content {
       position: relative;
-      max-width: 420px; /* Ajustado para imágenes verticales / alargadas */
+      max-width: 420px;
       width: 100%;
       border-radius: 16px;
       overflow: hidden;
@@ -347,17 +347,17 @@
         display: none;
         flex-direction: column;
         width: 100%;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 55px;
+        bottom: 0;
         left: 0;
         background: rgba(10, 15, 25, 0.98);
         border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-        padding: 15px 0;
-        gap: 12px;
+        padding: 20px 0 80px 0;
+        gap: 15px;
         align-items: center;
         box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        max-height: calc(100vh - 70px); /* Limitación de altura para pantallas pequeñas */
-        overflow-y: auto; /* Permite scroll interno si la lista es muy larga */
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
       .nav-links.open {
@@ -372,7 +372,6 @@
   </style>
  </head>
  <body>
-  <!-- BARRA DE NAVEGACIÓN -->
   <nav class="brand-navbar">
     <div class="brand-nav-container">
       <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
@@ -438,7 +437,6 @@
   </div>
   <div class="embed-footer"></div>
 
-  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
   <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
     <div class="leasing-popup-content">
       <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
@@ -450,7 +448,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      // Lógica de Menú Hamburguesa Responsivo
       var navToggle = document.getElementById("navToggle");
       var navLinks = document.getElementById("navLinks");
       if (navToggle && navLinks) {
@@ -467,7 +464,6 @@
         });
       }
 
-      // Lógica de Popup de Arrendamiento
       var wasShown = localStorage.getItem('leasing_popup_shown');
       var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
 
