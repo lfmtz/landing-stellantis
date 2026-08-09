@@ -21,7 +21,10 @@
         <i class="fa-solid fa-sliders"></i>
         <span>STELLANTIS <small>Admin Panel</small></span>
       </div>
-      <div class="actions">
+      <div class="actions" style="display: flex; gap: 10px;">
+        <button id="openCsvBtn" class="btn btn-secondary">
+          <i class="fa-solid fa-file-csv"></i> Actualizar Precios (CSV)
+        </button>
         <button id="gitSyncBtn" class="btn btn-primary btn-glow">
           <i class="fa-solid fa-cloud-arrow-up"></i> Publicar Cambios (Git Sync)
         </button>
@@ -165,6 +168,31 @@
         <div class="modal-footer">
           <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancelar</button>
           <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CSV Upload Modal -->
+  <div id="csvModal" class="modal">
+    <div class="modal-content" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3>Actualización Masiva de Precios</h3>
+        <span class="close-btn" id="closeCsvModalBtn">&times;</span>
+      </div>
+      <form id="csvForm">
+        <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height: 1.4;">
+          Sube un archivo <strong>CSV</strong> delimitado por comas o punto y coma con el formato: <br>
+          <code style="display: block; background: #eee; padding: 5px; margin-top: 5px; border-radius: 4px; font-family: monospace;">marca, modelo, nuevo_precio</code>
+          <small style="color: #888;">* Solo actualiza los carros publicados.</small>
+        </p>
+        <div class="form-group">
+          <label for="csvFileInput">Seleccionar Archivo CSV</label>
+          <input type="file" id="csvFileInput" accept=".csv" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+        </div>
+        <div class="modal-footer" style="margin-top: 20px;">
+          <button type="button" id="cancelCsvModalBtn" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Subir y Actualizar</button>
         </div>
       </form>
     </div>
@@ -531,6 +559,55 @@
         }
       } catch (err) {
         showOverlay('Error', 'Error de conexión con el servidor local.', false);
+      }
+    });
+
+    // CSV Modal Elements
+    const csvModal = document.getElementById('csvModal');
+    const openCsvBtn = document.getElementById('openCsvBtn');
+    const closeCsvModalBtn = document.getElementById('closeCsvModalBtn');
+    const cancelCsvModalBtn = document.getElementById('cancelCsvModalBtn');
+    const csvForm = document.getElementById('csvForm');
+    const csvFileInput = document.getElementById('csvFileInput');
+
+    openCsvBtn.addEventListener('click', () => {
+      csvFileInput.value = '';
+      csvModal.style.display = 'block';
+    });
+
+    closeCsvModalBtn.addEventListener('click', () => {
+      csvModal.style.display = 'none';
+    });
+
+    cancelCsvModalBtn.addEventListener('click', () => {
+      csvModal.style.display = 'none';
+    });
+
+    csvForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!csvFileInput.files || csvFileInput.files.length === 0) return;
+
+      const formData = new FormData();
+      formData.append('csvFile', csvFileInput.files[0]);
+
+      csvModal.style.display = 'none';
+      showOverlay('Cargando CSV...', 'Procesando actualización masiva de precios...');
+
+      try {
+        const response = await fetch('/api/upload-csv', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        if (result.success) {
+          showOverlay('¡Completado!', `Se actualizaron los precios de ${result.updatedCount} vehículos.`, true);
+          // Recargar las promociones visibles
+          loadPromos();
+        } else {
+          showOverlay('Error', result.error || 'Ocurrió un error al procesar el archivo.', false);
+        }
+      } catch (error) {
+        showOverlay('Error', 'No se pudo conectar con el servidor local.', false);
       }
     });
 

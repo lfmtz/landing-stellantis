@@ -34,6 +34,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
+const csvUpload = multer({ storage: multer.memoryStorage() });
 
 const DATA_FILE = path.join(__dirname, 'data.json');
 
@@ -126,6 +127,55 @@ app.delete('/api/promos/:brand/:id', (req, res) => {
   }
 
   res.status(404).json({ error: 'Brand not found' });
+});
+
+// CSV Mass Price Upload Endpoint (Excel generated CSV)
+app.post('/api/upload-csv', csvUpload.single('csvFile'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se subió ningún archivo' });
+  }
+
+  const csvData = req.file.buffer.toString('utf8');
+  const lines = csvData.split(/\r?\n/);
+  const dbData = readData();
+  let updatedCount = 0;
+
+  lines.forEach(line => {
+    if (!line.trim()) return;
+    
+    // Parse CSV line (Brand,CarName,Price)
+    let parts = [];
+    if (line.includes(';')) {
+      parts = line.split(';');
+    } else {
+      parts = line.split(',');
+    }
+
+    if (parts.length < 3) return;
+
+    const csvBrand = parts[0].trim().toLowerCase();
+    const csvCarName = parts[1].trim();
+    const csvPrice = parts[2].trim();
+
+    if (dbData[csvBrand]) {
+      // Find the vehicle by name (case-insensitive)
+      const vehicle = dbData[csvBrand].find(v => v.name.trim().toLowerCase() === csvCarName.toLowerCase());
+      if (vehicle) {
+        vehicle.price = csvPrice;
+        updatedCount++;
+      }
+    }
+  });
+
+  if (updatedCount > 0) {
+    writeData(dbData);
+    // Regenerate HTML for all updated brands
+    Object.keys(dbData).forEach(b => {
+      generateHtmlForBrand(b, dbData[b]);
+    });
+  }
+
+  res.json({ success: true, updatedCount });
 });
 
 // Git Sync Endpoint
@@ -222,6 +272,13 @@ function generateHtmlForBrand(brand, vehicles) {
       </div>
     </article>
     `;
+  }).join('');
+
+  // Generar enlaces de navegación dinámicos (marcando el activo)
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  const navLinksHtml = brands.map(b => {
+    const activeClass = b === brand ? 'active' : '';
+    return `<li><a href="promo-${b}.html" class="nav-item-link ${activeClass}" id="link-${b}">${b.toUpperCase()}</a></li>`;
   }).join('');
 
   const fullHtml = `<!DOCTYPE html>
@@ -399,13 +456,302 @@ function generateHtmlForBrand(brand, vehicles) {
       border: 1px dashed #ccc;
       border-radius: 8px;
     }
+
+    /* Estilos de la Barra de Navegación */
+    .brand-navbar {
+      background: rgba(15, 20, 30, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      font-family: var(--fuente);
+    }
+    .brand-nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+    }
+    .brand-logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .brand-logo .accent-text {
+      color: #00e5ff;
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+    .nav-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-item-link {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-item-link:hover, .nav-item-link.active {
+      color: #00e5ff;
+    }
+    .btn-back-home {
+      background: linear-gradient(45deg, #0d6efd, #00e5ff);
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-back-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px #00e5ff;
+      color: #000;
+    }
+
+    /* Animación del menú hamburguesa */
+    .nav-toggle.open .bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.open .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.open .bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Estilos del Popup de Arrendamiento */
+    .leasing-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .leasing-popup-overlay.show {
+      opacity: 1;
+    }
+    .leasing-popup-content {
+      position: relative;
+      max-width: 420px; /* Ajustado para imágenes verticales / alargadas */
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 229, 255, 0.3);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      background: #000;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .leasing-popup-overlay.show .leasing-popup-content {
+      transform: scale(1);
+    }
+    .leasing-popup-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .leasing-popup-img:hover {
+      transform: scale(1.02);
+    }
+    .leasing-popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999 !important;
+      pointer-events: auto !important;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .leasing-popup-close:hover {
+      background: #00e5ff;
+      color: #000;
+      border-color: #00e5ff;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(10, 15, 25, 0.98);
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        padding: 15px 0;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        max-height: calc(100vh - 70px); /* Limitación de altura para pantallas pequeñas */
+        overflow-y: auto; /* Permite scroll interno si la lista es muy larga */
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .btn-back-home {
+        margin-top: 5px;
+        width: 80%;
+        text-align: center;
+      }
+    }
   </style>
  </head>
  <body>
-  <div class="grid-promos">
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="brand-navbar">
+    <div class="brand-nav-container">
+      <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        ${navLinksHtml}
+        <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="grid-promos" style="margin-top: 20px;">
     ${cardsHtml.length > 0 ? cardsHtml : '<div class="no-promos">No hay promociones activas actualmente para esta marca.</div>'}
   </div>
   <div class="embed-footer"></div>
+
+  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
+  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
+    <div class="leasing-popup-content">
+      <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
+      <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink">
+        <img src="../imagenes/popup_arrendamiento.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Lógica de Menú Hamburguesa Responsivo
+      var navToggle = document.getElementById("navToggle");
+      var navLinks = document.getElementById("navLinks");
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", function(e) {
+          e.stopPropagation();
+          navToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
+        });
+        document.addEventListener("click", function(e) {
+          if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+            navToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+          }
+        });
+      }
+
+      // Lógica de Popup de Arrendamiento
+      var wasShown = localStorage.getItem('leasing_popup_shown');
+      var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
+
+      if (!wasShown && !wasDismissed) {
+        setTimeout(function() {
+          var popup = document.getElementById('leasingPopup');
+          if (popup) {
+            popup.style.display = 'flex';
+            setTimeout(function() {
+              popup.classList.add('show');
+            }, 50);
+
+            var closeBtn = document.getElementById('closeLeasingPopup');
+            if (closeBtn) {
+              closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closePopup();
+              });
+            }
+
+            popup.addEventListener('click', function(e) {
+              if (e.target === popup) {
+                closePopup();
+              }
+            });
+
+            document.getElementById('leasingPopupLink').addEventListener('click', function() {
+              localStorage.setItem('leasing_popup_shown', 'true');
+            });
+          }
+        }, 2000);
+      }
+
+      function closePopup() {
+        var popup = document.getElementById('leasingPopup');
+        if (popup) {
+          popup.classList.remove('show');
+          setTimeout(function() {
+            popup.style.display = 'none';
+            sessionStorage.setItem('leasing_popup_dismissed', 'true');
+          }, 400);
+        }
+      }
+    });
+  </script>
  </body>
 </html>`;
 

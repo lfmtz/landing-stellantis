@@ -268,74 +268,6 @@
       transform: translateY(-8px) rotate(-45deg);
     }
 
-    @media (max-width: 768px) {
-      .nav-toggle {
-        display: flex;
-      }
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: rgba(10, 15, 25, 0.98);
-        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-        padding: 15px 0;
-        gap: 12px;
-        align-items: center;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-      }
-      .nav-links.open {
-        display: flex;
-      }
-      .btn-back-home {
-        margin-top: 5px;
-        width: 80%;
-        text-align: center;
-      }
-    }
-  </style>
- </head>
- <body>
-  <!-- BARRA DE NAVEGACIÓN -->
-  <nav class="brand-navbar">
-    <div class="brand-nav-container">
-      <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="promo-ram.html" class="nav-item-link" id="link-ram">RAM</a></li>
-        <li><a href="promo-dodge.html" class="nav-item-link" id="link-dodge">DODGE</a></li>
-        <li><a href="promo-jeep.html" class="nav-item-link" id="link-jeep">JEEP</a></li>
-        <li><a href="promo-fiat.html" class="nav-item-link active" id="link-fiat">FIAT</a></li>
-        <li><a href="promo-peugeot.html" class="nav-item-link" id="link-peugeot">PEUGEOT</a></li>
-        <li><a href="promo-leapmotor.html" class="nav-item-link" id="link-leapmotor">LEAPMOTOR</a></li>
-        <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="grid-promos" style="margin-top: 20px;">
-    <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
-  </div>
-  <div class="embed-footer"></div>
-
-  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
-  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
-    <div class="leasing-popup-content">
-      <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
-      <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink">
-        <!-- Para cambiar la imagen del popup cambia la ruta de abajo -->
-        <img src="../imagenes/popup_arrendamiento.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
-      </a>
-    </div>
-  </div>
-
-  <style>
     /* Estilos del Popup de Arrendamiento */
     .leasing-popup-overlay {
       position: fixed;
@@ -406,10 +338,91 @@
       color: #000;
       border-color: #00e5ff;
     }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(10, 15, 25, 0.98);
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        padding: 15px 0;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        max-height: calc(100vh - 70px); /* Limitación de altura para pantallas pequeñas */
+        overflow-y: auto; /* Permite scroll interno si la lista es muy larga */
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .btn-back-home {
+        margin-top: 5px;
+        width: 80%;
+        text-align: center;
+      }
+    }
   </style>
+ </head>
+ <body>
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="brand-navbar">
+    <div class="brand-nav-container">
+      <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="promo-ram.html" class="nav-item-link " id="link-ram">RAM</a></li><li><a href="promo-dodge.html" class="nav-item-link " id="link-dodge">DODGE</a></li><li><a href="promo-jeep.html" class="nav-item-link " id="link-jeep">JEEP</a></li><li><a href="promo-fiat.html" class="nav-item-link active" id="link-fiat">FIAT</a></li><li><a href="promo-peugeot.html" class="nav-item-link " id="link-peugeot">PEUGEOT</a></li><li><a href="promo-leapmotor.html" class="nav-item-link " id="link-leapmotor">LEAPMOTOR</a></li>
+        <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="grid-promos" style="margin-top: 20px;">
+    <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
+  </div>
+  <div class="embed-footer"></div>
+
+  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
+  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
+    <div class="leasing-popup-content">
+      <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
+      <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink">
+        <img src="../imagenes/popup_arrendamiento.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+      </a>
+    </div>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      // Lógica de Menú Hamburguesa Responsivo
+      var navToggle = document.getElementById("navToggle");
+      var navLinks = document.getElementById("navLinks");
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", function(e) {
+          e.stopPropagation();
+          navToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
+        });
+        document.addEventListener("click", function(e) {
+          if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+            navToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+          }
+        });
+      }
+
+      // Lógica de Popup de Arrendamiento
       var wasShown = localStorage.getItem('leasing_popup_shown');
       var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
 
@@ -453,23 +466,6 @@
             sessionStorage.setItem('leasing_popup_dismissed', 'true');
           }, 400);
         }
-      }
-
-      // Lógica de Menú Hamburguesa Responsivo
-      var navToggle = document.getElementById("navToggle");
-      var navLinks = document.getElementById("navLinks");
-      if (navToggle && navLinks) {
-        navToggle.addEventListener("click", function(e) {
-          e.stopPropagation();
-          navToggle.classList.toggle("open");
-          navLinks.classList.toggle("open");
-        });
-        document.addEventListener("click", function(e) {
-          if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
-            navToggle.classList.remove("open");
-            navLinks.classList.remove("open");
-          }
-        });
       }
     });
   </script>
