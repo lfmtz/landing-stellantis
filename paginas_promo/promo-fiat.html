@@ -173,10 +173,153 @@
       border: 1px dashed #ccc;
       border-radius: 8px;
     }
+
+    /* Estilos de la Barra de Navegación */
+    .brand-navbar {
+      background: rgba(15, 20, 30, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      font-family: var(--fuente);
+    }
+    .brand-nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+    }
+    .brand-logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .brand-logo .accent-text {
+      color: #00e5ff;
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+    .nav-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-item-link {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-item-link:hover, .nav-item-link.active {
+      color: #00e5ff;
+    }
+    .btn-back-home {
+      background: linear-gradient(45deg, #0d6efd, #00e5ff);
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-back-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px #00e5ff;
+      color: #000;
+    }
+
+    /* Animación del menú hamburguesa */
+    .nav-toggle.open .bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.open .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.open .bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(10, 15, 25, 0.98);
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        padding: 15px 0;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .btn-back-home {
+        margin-top: 5px;
+        width: 80%;
+        text-align: center;
+      }
+    }
   </style>
  </head>
  <body>
-  <div class="grid-promos">
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="brand-navbar">
+    <div class="brand-nav-container">
+      <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="promo-ram.html" class="nav-item-link" id="link-ram">RAM</a></li>
+        <li><a href="promo-dodge.html" class="nav-item-link" id="link-dodge">DODGE</a></li>
+        <li><a href="promo-jeep.html" class="nav-item-link" id="link-jeep">JEEP</a></li>
+        <li><a href="promo-fiat.html" class="nav-item-link active" id="link-fiat">FIAT</a></li>
+        <li><a href="promo-peugeot.html" class="nav-item-link" id="link-peugeot">PEUGEOT</a></li>
+        <li><a href="promo-leapmotor.html" class="nav-item-link" id="link-leapmotor">LEAPMOTOR</a></li>
+        <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="grid-promos" style="margin-top: 20px;">
     <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
   </div>
   <div class="embed-footer"></div>
@@ -310,6 +453,23 @@
             sessionStorage.setItem('leasing_popup_dismissed', 'true');
           }, 400);
         }
+      }
+
+      // Lógica de Menú Hamburguesa Responsivo
+      var navToggle = document.getElementById("navToggle");
+      var navLinks = document.getElementById("navLinks");
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", function(e) {
+          e.stopPropagation();
+          navToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
+        });
+        document.addEventListener("click", function(e) {
+          if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+            navToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+          }
+        });
       }
     });
   </script>
