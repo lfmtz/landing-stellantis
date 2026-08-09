@@ -427,18 +427,48 @@
                     var name = document.getElementById('newsletterName').value;
                     var email = document.getElementById('newsletterEmail').value;
                     
-                    // Almacenamos de forma local
-                    localStorage.setItem('newsletter_subscribed', 'true');
-                    localStorage.setItem('newsletter_name', name);
-                    localStorage.setItem('newsletter_email', email);
-                    
-                    var modalEl = document.getElementById('newsletterModal');
-                    if (modalEl) {
-                        var modal = bootstrap.Modal.getInstance(modalEl);
-                        if (modal) modal.hide();
+                    // Deshabilitar botón de envío
+                    var submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'Enviando...';
                     }
-                    
-                    alert('¡Gracias por registrarte, ' + name + '! Te enviaremos nuestras ofertas mensuales.');
+
+                    var datos = {
+                        nombre: name,
+                        email: email
+                    };
+
+                    fetch("https://script.google.com/macros/s/AKfycbzKpyk1CqQMqxWrrALiC8JbDnEpuGdDrBSnsYr8NjZ8-aaOC2G691lw2JcydA0Vkm2G/exec", {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(datos)
+                    })
+                    .then(function() {
+                        // Almacenamos de forma local
+                        localStorage.setItem('newsletter_subscribed', 'true');
+                        localStorage.setItem('newsletter_name', name);
+                        localStorage.setItem('newsletter_email', email);
+                        
+                        var modalEl = document.getElementById('newsletterModal');
+                        if (modalEl) {
+                            var modal = bootstrap.Modal.getInstance(modalEl);
+                            if (modal) modal.hide();
+                        }
+                        
+                        alert('¡Gracias por registrarte, ' + name + '! Tus datos se han guardado con éxito.');
+                    })
+                    .catch(function(error) {
+                        console.error("Error al guardar en Google Sheets:", error);
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = 'Suscribirme';
+                        }
+                        alert('Hubo un problema al guardar tus datos. Por favor inténtalo de nuevo.');
+                    });
                 });
             }
         })();
