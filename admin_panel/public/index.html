@@ -92,138 +92,195 @@
           </button>
         </div>
 
-        <div class="landing-config-form" style="background: #151d2a; padding: 25px; border-radius: 8px; border: 1px solid #233143; margin-top: 20px;">
-          <!-- 1. Popups Config -->
-          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-bottom: 20px;">Imágenes de Popups</h3>
-          <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <div class="form-group col-6" style="flex: 1;">
-              <label for="newsletterPopupImage">Popup de Registro (Newsletter / Invitaciones)</label>
-              <input type="url" id="newsletterPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
-            </div>
-            <div class="form-group col-6" style="flex: 1;">
-              <label for="leasingPopupImage">Popup de Arrendamiento (Global para Marcas)</label>
-              <input type="url" id="leasingPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
-            </div>
-          </div>
-
-          <!-- 2. Hero Background Carousel -->
-          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px;">Carrusel de Fondo (Hero)</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-            <div class="form-group">
-              <label for="carousel1">Imagen 1</label>
-              <input type="url" id="carousel1" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-            </div>
-            <div class="form-group">
-              <label for="carousel2">Imagen 2</label>
-              <input type="url" id="carousel2" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-            </div>
-            <div class="form-group">
-              <label for="carousel3">Imagen 3</label>
-              <input type="url" id="carousel3" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-            </div>
-            <div class="form-group">
-              <label for="carousel4">Imagen 4</label>
-              <input type="url" id="carousel4" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-            </div>
-          </div>
-
-          <!-- 3. Featured Promotional Cards -->
-          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px;">Carrusel de Ofertas (Las 4 Tarjetas Destacadas)</h3>
+        <div class="landing-config-form" style="margin-top: 20px;">
           
-          <div id="landingPromosList" style="display: flex; flex-direction: column; gap: 25px;">
-            <!-- Card 1 -->
-            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
-              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 1</h4>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                <div class="form-group">
-                  <label>Nombre del Modelo</label>
-                  <input type="text" id="offer1Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. RAM 700">
+          <!-- Accordion 1: Popups -->
+          <div class="accordion-section">
+            <div class="accordion-header active-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-window-restore"></i> 1. Imágenes de Popups</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content" style="display: block;">
+              <div class="form-row" style="display: flex; gap: 15px;">
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="newsletterPopupImage">Popup de Registro (Newsletter / Invitaciones)</label>
+                  <input type="url" id="newsletterPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
                 </div>
-                <div class="form-group">
-                  <label>Imagen (Cloudinary)</label>
-                  <input type="url" id="offer1Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="leasingPopupImage">Popup de Arrendamiento (Global para Marcas)</label>
+                  <input type="url" id="leasingPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
                 </div>
-              </div>
-              <div class="form-group" style="margin-bottom: 10px;">
-                <label>Descripción Corta de la Oferta</label>
-                <input type="text" id="offer1Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-              <div class="form-group">
-                <label>Enlace de WhatsApp</label>
-                <input type="url" id="offer1Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
               </div>
             </div>
-
-            <!-- Card 2 -->
-            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
-              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 2</h4>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                <div class="form-group">
-                  <label>Nombre del Modelo</label>
-                  <input type="text" id="offer2Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-                <div class="form-group">
-                  <label>Imagen (Cloudinary)</label>
-                  <input type="url" id="offer2Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-              </div>
-              <div class="form-group" style="margin-bottom: 10px;">
-                <label>Descripción Corta de la Oferta</label>
-                <input type="text" id="offer2Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-              <div class="form-group">
-                <label>Enlace de WhatsApp</label>
-                <input type="url" id="offer2Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
-              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 3</h4>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                <div class="form-group">
-                  <label>Nombre del Modelo</label>
-                  <input type="text" id="offer3Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-                <div class="form-group">
-                  <label>Imagen (Cloudinary)</label>
-                  <input type="url" id="offer3Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-              </div>
-              <div class="form-group" style="margin-bottom: 10px;">
-                <label>Descripción Corta de la Oferta</label>
-                <input type="text" id="offer3Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-              <div class="form-group">
-                <label>Enlace de WhatsApp</label>
-                <input type="url" id="offer3Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
-              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 4</h4>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-                <div class="form-group">
-                  <label>Nombre del Modelo</label>
-                  <input type="text" id="offer4Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-                <div class="form-group">
-                  <label>Imagen (Cloudinary)</label>
-                  <input type="url" id="offer4Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-                </div>
-              </div>
-              <div class="form-group" style="margin-bottom: 10px;">
-                <label>Descripción Corta de la Oferta</label>
-                <input type="text" id="offer4Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-              <div class="form-group">
-                <label>Enlace de WhatsApp</label>
-                <input type="url" id="offer4Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
-              </div>
-            </div>
-
           </div>
+
+          <!-- Accordion 2: Hero Carousel -->
+          <div class="accordion-section">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-images"></i> 2. Carrusel de Fondo (Hero)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                  <label for="carousel1">Imagen 1</label>
+                  <input type="url" id="carousel1" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="carousel2">Imagen 2</label>
+                  <input type="url" id="carousel2" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="carousel3">Imagen 3</label>
+                  <input type="url" id="carousel3" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="carousel4">Imagen 4</label>
+                  <input type="url" id="carousel4" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion 3: Offers -->
+          <div class="accordion-section">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-tags"></i> 3. Carrusel de Ofertas (Las 4 Tarjetas Destacadas)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div id="landingPromosList" style="display: flex; flex-direction: column; gap: 25px;">
+                <!-- Card 1 -->
+                <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+                  <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 1</h4>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="form-group">
+                      <label>Nombre del Modelo</label>
+                      <input type="text" id="offer1Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. RAM 700">
+                    </div>
+                    <div class="form-group">
+                      <label>Imagen (Cloudinary)</label>
+                      <input type="url" id="offer1Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Descripción Corta de la Oferta</label>
+                    <input type="text" id="offer1Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                  <div class="form-group">
+                    <label>Enlace de WhatsApp</label>
+                    <input type="url" id="offer1Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+                  <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 2</h4>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="form-group">
+                      <label>Nombre del Modelo</label>
+                      <input type="text" id="offer2Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                      <label>Imagen (Cloudinary)</label>
+                      <input type="url" id="offer2Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Descripción Corta de la Oferta</label>
+                    <input type="text" id="offer2Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                  <div class="form-group">
+                    <label>Enlace de WhatsApp</label>
+                    <input type="url" id="offer2Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+                  <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 3</h4>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="form-group">
+                      <label>Nombre del Modelo</label>
+                      <input type="text" id="offer3Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                      <label>Imagen (Cloudinary)</label>
+                      <input type="url" id="offer3Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Descripción Corta de la Oferta</label>
+                    <input type="text" id="offer3Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                  <div class="form-group">
+                    <label>Enlace de WhatsApp</label>
+                    <input type="url" id="offer3Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+                  <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 4</h4>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="form-group">
+                      <label>Nombre del Modelo</label>
+                      <input type="text" id="offer4Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                      <label>Imagen (Cloudinary)</label>
+                      <input type="url" id="offer4Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Descripción Corta de la Oferta</label>
+                    <input type="text" id="offer4Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                  <div class="form-group">
+                    <label>Enlace de WhatsApp</label>
+                    <input type="url" id="offer4Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion 4: Brand cover images -->
+          <div class="accordion-section">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-car"></i> 4. Portadas de Nuestras Marcas (1080x1080)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                  <label for="brandImageRam">RAM (1080x1080)</label>
+                  <input type="url" id="brandImageRam" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="brandImageDodge">Dodge (1080x1080)</label>
+                  <input type="url" id="brandImageDodge" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="brandImageJeep">Jeep (1080x1080)</label>
+                  <input type="url" id="brandImageJeep" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="brandImageFiat">Fiat (1080x1080)</label>
+                  <input type="url" id="brandImageFiat" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="brandImagePeugeot">Peugeot (1080x1080)</label>
+                  <input type="url" id="brandImagePeugeot" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label for="brandImageLeapmotor">Leapmotor (1080x1080)</label>
+                  <input type="url" id="brandImageLeapmotor" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -529,6 +586,23 @@
       loadLandingConfigToForm();
     });
 
+    // Accordion Toggle Helper Function in Global Scope
+    window.toggleAccordion = function(headerEl) {
+      const contentEl = headerEl.nextElementSibling;
+      const isActive = headerEl.classList.contains('active-header');
+      
+      const allHeaders = document.querySelectorAll('.accordion-header');
+      const allContents = document.querySelectorAll('.accordion-content');
+      
+      allHeaders.forEach(h => h.classList.remove('active-header'));
+      allContents.forEach(c => c.style.display = 'none');
+      
+      if (!isActive) {
+        headerEl.classList.add('active-header');
+        contentEl.style.display = 'block';
+      }
+    };
+
     function loadLandingConfigToForm() {
       const landing = database.landing || {};
       
@@ -552,6 +626,15 @@
         document.getElementById(`offer${i}Desc`).value = p.description || '';
         document.getElementById(`offer${i}Whatsapp`).value = p.whatsapp || '';
       }
+
+      // Brand Images
+      const brandsImages = landing.brandsImages || {};
+      document.getElementById('brandImageRam').value = brandsImages.ram || '';
+      document.getElementById('brandImageDodge').value = brandsImages.dodge || '';
+      document.getElementById('brandImageJeep').value = brandsImages.jeep || '';
+      document.getElementById('brandImageFiat').value = brandsImages.fiat || '';
+      document.getElementById('brandImagePeugeot').value = brandsImages.peugeot || '';
+      document.getElementById('brandImageLeapmotor').value = brandsImages.leapmotor || '';
     }
 
     // Save Landing Page Config
@@ -573,12 +656,22 @@
           whatsapp: document.getElementById(`offer${i}Whatsapp`).value.trim()
         });
       }
+
+      const brandsImages = {
+        ram: document.getElementById('brandImageRam').value.trim(),
+        dodge: document.getElementById('brandImageDodge').value.trim(),
+        jeep: document.getElementById('brandImageJeep').value.trim(),
+        fiat: document.getElementById('brandImageFiat').value.trim(),
+        peugeot: document.getElementById('brandImagePeugeot').value.trim(),
+        leapmotor: document.getElementById('brandImageLeapmotor').value.trim()
+      };
       
       const landingConfig = {
         carousel,
         promos,
         newsletterPopupImage: document.getElementById('newsletterPopupImage').value.trim(),
-        leasingPopupImage: document.getElementById('leasingPopupImage').value.trim()
+        leasingPopupImage: document.getElementById('leasingPopupImage').value.trim(),
+        brandsImages
       };
       
       showOverlay('Guardando...', 'Actualizando configuración de la landing page...');

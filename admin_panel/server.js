@@ -858,6 +858,14 @@ function generateIndexHtml(dbData) {
     html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_WA\\}\\}`, 'g'), wa);
   }
   
+  // Brand modules images
+  const brandsImages = landing.brandsImages || {};
+  const brandKeys = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  brandKeys.forEach(bk => {
+    const val = brandsImages[bk] || `imagenes/marca_${bk}.jpg`;
+    html = html.replace(new RegExp(`\\{\\{BRAND_IMAGE_${bk.toUpperCase()}\\}\\}`, 'g'), val);
+  });
+  
   fs.writeFileSync(outputPath, html, 'utf8');
   console.log('index.html successfully generated.');
 }

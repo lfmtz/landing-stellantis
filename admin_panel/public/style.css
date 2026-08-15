@@ -647,3 +647,45 @@ input[type="color"] {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* ACCORDION STYLES */
+.accordion-section {
+  margin-bottom: 15px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.accordion-header {
+  background-color: var(--bg-secondary);
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: var(--transition);
+}
+.accordion-header:hover {
+  background-color: var(--bg-tertiary);
+}
+.accordion-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #00e5ff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.accordion-header .accordion-icon {
+  transition: transform 0.3s ease;
+  color: var(--text-secondary);
+}
+.accordion-header.active-header .accordion-icon {
+  transform: rotate(180deg);
+}
+.accordion-content {
+  padding: 20px;
+  background-color: #0d1424;
+  display: none;
+  border-top: 1px solid var(--border);
+}
