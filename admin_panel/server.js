@@ -78,7 +78,7 @@ app.post('/api/promos/:brand', upload.single('image'), (req, res) => {
   const benefits = req.body.benefits ? JSON.parse(req.body.benefits) : [];
   
   // Base image path
-  let imgPath = req.body.existingImage || '';
+  let imgPath = req.body.imageURL || req.body.existingImage || '';
   if (req.file) {
     // Save relative image path for HTML rendering (relative to root)
     imgPath = `imagenes/${brand}/${req.file.filename}`;

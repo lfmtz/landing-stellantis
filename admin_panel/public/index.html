@@ -114,7 +114,12 @@
         </div>
 
         <div class="form-group">
-          <label>Imagen del Auto</label>
+          <label for="imageURL">URL de la Imagen (Cloudinary / Externa)</label>
+          <input type="url" id="imageURL" placeholder="Ej. https://res.cloudinary.com/... (Si usas Cloudinary, pega el link aquí)">
+        </div>
+
+        <div class="form-group">
+          <label>O Cargar Imagen Local (Git)</label>
           <div id="dropZone" class="drop-zone">
             <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
             <p class="drop-text">Arrastra tu imagen aquí o haz clic para buscar</p>
@@ -389,6 +394,15 @@
       document.getElementById('accentColorHex').value = (p.accentColor || '#CC4400').toUpperCase();
       document.getElementById('legal').value = p.legal || '';
 
+      // Check if image is an external URL or local
+      if (p.image && (p.image.startsWith('http://') || p.image.startsWith('https://'))) {
+        document.getElementById('imageURL').value = p.image;
+        document.getElementById('existingImage').value = '';
+      } else {
+        document.getElementById('imageURL').value = '';
+        document.getElementById('existingImage').value = p.image || '';
+      }
+
       // Preview Image
       if (p.image) {
         filePreview.innerHTML = `<img src="../${p.image}" class="preview-img"><p class="preview-text">Imagen cargada anteriormente</p>`;
@@ -410,6 +424,7 @@
       document.getElementById('promoId').value = '';
       document.getElementById('promoBrand').value = currentBrand;
       document.getElementById('existingImage').value = '';
+      document.getElementById('imageURL').value = '';
       document.getElementById('name').value = '';
       document.getElementById('price').value = '';
       document.getElementById('whatsapp').value = `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20${currentBrand}`;
@@ -513,6 +528,7 @@
       formData.append('descriptionSize', document.getElementById('descriptionSize').value);
       formData.append('underlineStyle', document.getElementById('underlineStyle').value);
       formData.append('existingImage', document.getElementById('existingImage').value);
+      formData.append('imageURL', document.getElementById('imageURL').value);
       formData.append('legal', document.getElementById('legal').value);
       
       // Benefits collection

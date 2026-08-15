@@ -3,18 +3,84 @@
     {
       "id": "ram-700",
       "name": "RAM 700",
-      "price": "Desde $314,900",
-      "image": "imagenes/oferta_1.png",
-      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20RAM%20700",
-      "description": "¡La pickup pequeña más capaz para el trabajo y el día a día!",
+      "price": "Desde $334,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/ram_700_gemini_bbsrvd.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%20700",
+      "description": "Lleva tu productividad al siguiente nivel con la versatilidad y resistencia que ofrece la RAM 700 por mensualidades desde $5,449, aplica para ram 700 regular cab.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Planes de financiamiento especiales",
-        "Garantía de fábrica Stellantis",
-        "Eficiencia de combustible insuperable"
+        "Bonos hasta de $15,000",
+        "0% comisión por apertura",
+        "Incluye 3 años de valor factura"
       ],
-      "legal": "* Sujeto a aprobación de crédito. Vigente al fin de mes.",
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#000000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "ram-1200",
+      "name": "RAM 1200",
+      "price": "Desde $399,000",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/RAM_1200_FACEBOOK_cgnks7.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%201200",
+      "description": "Aprovecha las últimas unidades 2026 de RAM 1200 Tradesman doble cabina y pregunta por existencia antes de que se agoten por precio de flotilla $399,000 o mensualidades desde $5,099",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Planes con tasas preferenciales"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#000000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "ram-1200-chasis",
+      "name": "RAM 1200 Chasis",
+      "price": "Desde $408,400",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/1200_chasis_rsmwah.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%201200%20Chasis",
+      "description": "Adapta la RAM 1200 Chasis a tus necesidades de carga y mantén tu operación activa por mensualidades desde $6,169",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "0% comisión apertura",
+        "Tasa preferente"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#000000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "ram-4000",
+      "name": "RAM 4000",
+      "price": "Desde $790,000",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/RAM_4000_FACE_dfonal.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%204000",
+      "description": "Estrena este mes y pon a trabajar una RAM 4000 aprovechando la promoción vigente con mensualidades desde $10,699, aplica para Ram 4000 PL",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono precio de flotilla incluido de: $264,900"
+      ],
+      "legal": "* Consulta equipamiento según versión disponible.",
+      "accentColor": "#000000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "ram-promaster",
+      "name": "Promaster",
+      "price": "Desde $1,044,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/promaster_k3rw42.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20Promaster",
+      "description": "Optimiza tus rutas y logística con el amplio espacio de carga que ofrece la RAM Promaster por mensualidades desde $13,299",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Tasa preferencial",
+        "También contamos con Arrendamiento, pregunta por la cotización"
+      ],
+      "legal": "* Consulta equipamiento según versión disponible.",
       "accentColor": "#000000",
       "underlineStyle": "solid"
     }
@@ -25,14 +91,14 @@
       "name": "Dodge Attitude",
       "price": "Desde $379,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/attitude_j6dsid.jpg",
-      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20Dodge%20Attitude",
-      "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades especiales.",
+      "whatsapp": "https://wa.me/5521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
+      "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades de $5,499, incluyendo un bono exclusivo para la versión SXT con solo el 46.5% de enganche.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
         "Bono de hasta $57,000",
         "0% comisión por apertura",
-        "4 años de garantía",
+        "4 años de garantia",
         "Protección de llantas"
       ],
       "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
@@ -44,23 +110,269 @@
     {
       "id": "jeep-renegade",
       "name": "Jeep Renegade",
-      "price": "Desde $459,900",
-      "image": "imagenes/oferta_2.png",
-      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20Jeep%20Renegade",
-      "description": "El auténtico espíritu Jeep para la aventura urbana.",
+      "price": "Desde $456,900*",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/renegade_ijsu48.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Jeep%20Renegade",
+      "description": "No dejes pasar la oportunidad de estrenar un Jeep Renegade Latitude y pregunta por las unidades disponibles con mensualidades desde $5,999",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Bono de financiamiento exclusivo",
-        "Seguro gratis por el primer año",
-        "0% comisión por apertura"
+        "Incluye:",
+        "Bono de $40,000",
+        "0% comisión de apertura",
+        "Tasa hasta del 9.99",
+        "4 años de garantía",
+        "Protección de llantas"
       ],
-      "legal": "* Consulta términos y condiciones en distribuidor.",
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#4A7729",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "jeep-compass",
+      "name": "Jeep Compass",
+      "price": "Desde $541,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/compass_zm5c1n.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Jeep%20Compass",
+      "description": "Eleva tu experiencia de manejo con el diseño premium y la tecnología superior de Jeep Compass Limited por mensualidades desde $6,899",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bonos hasta de $70,000",
+        "0% comisión por apertura",
+        "Tasa hasta del 9.99",
+        "incluye:",
+        "4 años de garantía",
+        "Protección de llantas"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#4A7729",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "jeep-grand-cherokee",
+      "name": "Grand Cherokee",
+      "price": "Desde $1,189,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20Grand%20Cherokee",
+      "description": "Disfruta la distinción y el confort inigualable que solo una Grand Cherokee Altitude puede ofrecerte por mensualidades desde $19,299",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Tasa del 13.99",
+        "0% comisión de apertura",
+        "Contamos con planes de arrendamiento"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#4A7729",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "jeep-rubicon",
+      "name": "Rubicon Unlimited",
+      "price": "Desde $1,576,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jeep_rubicon_cadups.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Rubicon%20Unlimited",
+      "description": "Supera cualquier obstáculo y vive la libertad todoterreno al mando de tu Jeep Unlimited Rubicon por mensualidades desde $19,399",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "0% comisión por apertura",
+        "O plazos con 24 meses 0% intereses"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#4A7729",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "jeep-jt",
+      "name": "JT Rubicon",
+      "price": "Desde $1,576,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/jt_euowfk.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20JT%20Rubicon",
+      "description": "Combina la potencia de un todoterreno con la utilidad del Jeep JT para cualquier aventura por mensualidades desde $21,899",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "0% comisión por apertura",
+        "Tasa hasta del 13.99",
+        "O 24 meses 0% interés"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Pregunta con tu asesor de ventas.Imágenes ilustrativas. Consulta versiones disponibles.",
       "accentColor": "#4A7729",
       "underlineStyle": "solid"
     }
   ],
-  "fiat": [],
-  "peugeot": [],
+  "fiat": [
+    {
+      "id": "fiat-pulse",
+      "name": "Fiat PULSE",
+      "price": "Desde $388,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/PULSE_FIAT_vjqiti.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20PULSE",
+      "description": "Recorre la ciudad con el diseño vanguardista del Fiat Pulse integrando tecnología y confort en cada trayecto por mensualidades desde $4,990.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Incluye:",
+        "Garantía de 4 años",
+        "0% comisión de apertura",
+        "Tasa de interés preferencial"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#B30000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "fiat-fastback",
+      "name": "Fiat Fastback",
+      "price": "Desde $524,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/FASTBACK_upwqyw.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20Fastback",
+      "description": "Experimenta la potencia y el diseño deportivo del Fastback Impetus 2025 elevando tu presencia en el camino por mensualidades desde $5,900.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Incluye:",
+        "Garantía de 4 años",
+        "0% comisión de apertura",
+        "Bono de $72,000"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
+      "accentColor": "#B30000",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "fiat-abarth",
+      "name": "Fiat Abarth",
+      "price": "Desde $512,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/ABARTH_hgrcsu.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20Abarth",
+      "description": "Domina cada curva con la adrenalina y el sonido legendario del Fiat Abarth transformando tu conducción por mensualidades desde $6,890.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Incluye:",
+        "Garantía de 4 años",
+        "0% comisión de apertura",
+        "Tasa de interés preferencial"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#B30000",
+      "underlineStyle": "solid"
+    }
+  ],
+  "peugeot": [
+    {
+      "id": "peugeot-2008",
+      "name": "Peugeot 2008",
+      "price": "Desde $448,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/2008_mijfsh.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
+      "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde $5,999 y protección total para tu camino.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono hasta $62,000",
+        "3 años de mantenimiento gratis",
+        "0% comisión por apertura",
+        "Incluye 4 años de garantía",
+        "Incluye protección de llantas"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "peugeot-3008",
+      "name": "Peugeot 3008",
+      "price": "Desde $639,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/3008_ww9qj0.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%203008",
+      "description": "Sofisticación y potencia en cada detalle. Lévatelo con mensualidades desde $7,850 y beneficios exclusivos de mantenimiento.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono hasta $15,000",
+        "3 años de mantenimiento gratis",
+        "0% comisión por apertura",
+        "Incluye 4 años de garantía",
+        "Incluye protección de llantas"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "peugeot-rifter",
+      "name": "Rifter",
+      "price": "Desde $469,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/rifter_urtt7g.png",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Rifter",
+      "description": "Versatilidad sin límites para tu familia o negocio. Mensualidades desde $6,990",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Incluye:",
+        "4 años de garantía",
+        "Protección de llantas"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "peugeot-expert",
+      "name": "Expert Furgon",
+      "price": "Desde $705,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/expert_m8jdws.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Expert%20Furgon",
+      "description": "La herramienta de trabajo más eficiente. Aprovecha un bono histórico y mensualidades de $9,199",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono hasta $100,000",
+        "0% comisión por apertura"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "peugeot-partner-maxi",
+      "name": "Partner maxi",
+      "price": "Desde $452,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/PARTNER_MAXI_PACK_ospi8q.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Partner%20maxi",
+      "description": "Capacidad máxima para tus proyectos. Estrena con mensualidades de $7,499",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono hasta $25,000",
+        "0% comisión por apertura",
+        "2 años de mantenimiento gratis"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "peugeot-manager",
+      "name": "Manager",
+      "price": "Desde $777,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/Manager_vsvhm0.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Manager",
+      "description": "Grande en espacio, grande en beneficios. La solución logística ideal con mensualidades de $11,700.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bono hasta $50,000",
+        "0% comisión por apertura"
+      ],
+      "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
+      "accentColor": "#001E62",
+      "underlineStyle": "solid"
+    }
+  ],
   "leapmotor": []
 }
