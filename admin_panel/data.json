@@ -374,5 +374,45 @@
       "underlineStyle": "solid"
     }
   ],
-  "leapmotor": []
+  "leapmotor": [],
+  "landing": {
+    "carousel": [
+      "imagenes/carrusel_1.jpg",
+      "imagenes/carrusel_2.jpg",
+      "imagenes/carrusel_3.jpg",
+      "imagenes/carrusel_4.jpg"
+    ],
+    "promos": [
+      {
+        "id": "lp-1",
+        "name": "RAM 700",
+        "image": "imagenes/oferta_1.png",
+        "description": "Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%20700."
+      },
+      {
+        "id": "lp-2",
+        "name": "RAM 4000",
+        "image": "imagenes/oferta_2.png",
+        "description": "El máximo poder para tu negocio. Descubre los beneficios exclusivos.",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%204000."
+      },
+      {
+        "id": "lp-3",
+        "name": "RAM 1200 Chasis",
+        "image": "imagenes/oferta_3.png",
+        "description": "Robustez y versatilidad para llevar tu negocio al siguiente nivel. ¡Descubre sus planes de financiamiento!",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis."
+      },
+      {
+        "id": "lp-4",
+        "name": "Expert Furgon",
+        "image": "imagenes/oferta_4.png",
+        "description": "Tu socio de negocios ideal con el mayor espacio y rendimiento de combustible.",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20Expert%20Furgon."
+      }
+    ],
+    "newsletterPopupImage": "imagenes/popup_promo.jpg",
+    "leasingPopupImage": "imagenes/popup_arrendamiento.jpg"
+  }
 }

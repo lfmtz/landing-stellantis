@@ -178,6 +178,44 @@ app.post('/api/upload-csv', csvUpload.single('csvFile'), (req, res) => {
   res.json({ success: true, updatedCount });
 });
 
+// CSV Mass Price Download Endpoint
+app.get('/api/download-csv', (req, res) => {
+  const dbData = readData();
+  let csvContent = 'Marca;Auto;Precio\n';
+  
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  brands.forEach(b => {
+    const vehicles = dbData[b] || [];
+    vehicles.forEach(v => {
+      const cleanName = v.name.replace(/;/g, ',').replace(/"/g, '""');
+      const cleanPrice = v.price.replace(/;/g, ',').replace(/"/g, '""');
+      csvContent += `${b};${cleanName};${cleanPrice}\n`;
+    });
+  });
+  
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename=precios_stellantis.csv');
+  res.status(200).send('\uFEFF' + csvContent); // BOM UTF-8
+});
+
+// Landing Config Endpoint
+app.post('/api/landing-config', (req, res) => {
+  const dbData = readData();
+  dbData.landing = req.body;
+  writeData(dbData);
+  
+  // Regenerate index.html
+  generateIndexHtml(dbData);
+  
+  // Regenerate all brand pages too since leasingPopupImage might have changed!
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  brands.forEach(b => {
+    generateHtmlForBrand(b, dbData[b] || []);
+  });
+  
+  res.json({ success: true });
+});
+
 // Git Sync Endpoint
 app.post('/api/git-sync', (req, res) => {
   const rootDir = path.join(__dirname, '..');
@@ -280,6 +318,13 @@ function generateHtmlForBrand(brand, vehicles) {
     const activeClass = b === brand ? 'active' : '';
     return `<li><a href="promo-${b}.html" class="nav-item-link ${activeClass}" id="link-${b}">${b.toUpperCase()}</a></li>`;
   }).join('');
+  
+  const dbDataLocal = readData();
+  const landingConfigLocal = dbDataLocal.landing || {};
+  let leasingPopupImgSrc = landingConfigLocal.leasingPopupImage || '../imagenes/popup_arrendamiento.jpg';
+  if (leasingPopupImgSrc && !leasingPopupImgSrc.startsWith('http') && !leasingPopupImgSrc.startsWith('../')) {
+    leasingPopupImgSrc = `../${leasingPopupImgSrc}`;
+  }
 
   const fullHtml = `<!DOCTYPE html>
 <html lang="es">
@@ -696,7 +741,7 @@ function generateHtmlForBrand(brand, vehicles) {
     <div class="leasing-popup-content">
       <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
       <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': '${brand}' }); }">
-        <img src="../imagenes/popup_arrendamiento.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+        <img src="${leasingPopupImgSrc}" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
       </a>
     </div>
   </div>
@@ -774,11 +819,57 @@ function generateHtmlForBrand(brand, vehicles) {
   fs.writeFileSync(path.join(promoDir, fileName), fullHtml, 'utf8');
 }
 
+// Generate index.html dynamically from template
+function generateIndexHtml(dbData) {
+  const templatePath = path.join(__dirname, '..', 'index_template.html');
+  const outputPath = path.join(__dirname, '..', 'index.html');
+  
+  if (!fs.existsSync(templatePath)) {
+    console.error('index_template.html not found!');
+    return;
+  }
+  
+  let html = fs.readFileSync(templatePath, 'utf8');
+  const landing = dbData.landing || {};
+  
+  // Carousel background images
+  const carousel = landing.carousel || [];
+  for (let i = 0; i < 4; i++) {
+    const val = carousel[i] || `imagenes/carrusel_${i + 1}.jpg`;
+    html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}\\}\\}`, 'g'), val);
+  }
+  
+  // Newsletter registration popup
+  const popupImg = landing.newsletterPopupImage || '';
+  html = html.replace(/\{\{NEWSLETTER_POPUP_IMAGE\}\}/g, popupImg);
+  
+  // Featured promos
+  const promos = landing.promos || [];
+  for (let i = 0; i < 4; i++) {
+    const p = promos[i] || {};
+    const img = p.image || '';
+    const name = p.name || '';
+    const desc = p.description || '';
+    const wa = p.whatsapp || '';
+    
+    html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_IMAGE\\}\\}`, 'g'), img);
+    html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_NAME\\}\\}`, 'g'), name);
+    html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_DESC\\}\\}`, 'g'), desc);
+    html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_WA\\}\\}`, 'g'), wa);
+  }
+  
+  fs.writeFileSync(outputPath, html, 'utf8');
+  console.log('index.html successfully generated.');
+}
+
 // Generate all initial HTMLs on startup if database has info
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
   const data = readData();
+  generateIndexHtml(data);
   Object.keys(data).forEach(brand => {
-    generateHtmlForBrand(brand, data[brand]);
+    if (brand !== 'landing') {
+      generateHtmlForBrand(brand, data[brand]);
+    }
   });
 });

@@ -22,6 +22,9 @@
         <span>STELLANTIS <small>Admin Panel</small></span>
       </div>
       <div class="actions" style="display: flex; gap: 10px;">
+        <a href="/api/download-csv" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-file-excel"></i> Descargar Precios (Excel)
+        </a>
         <button id="openCsvBtn" class="btn btn-secondary">
           <i class="fa-solid fa-file-csv"></i> Actualizar Precios (CSV)
         </button>
@@ -56,21 +59,172 @@
         <button class="brand-tab-btn" data-brand="leapmotor">
           <span class="brand-badge badge-leapmotor"></span> Leapmotor
         </button>
+        <div style="border-top: 1px solid #233143; margin: 15px 0;"></div>
+        <button class="brand-tab-btn" id="landingConfigTabBtn" style="display: flex; align-items: center; gap: 8px; width: 100%;">
+          <i class="fa-solid fa-house-laptop"></i> Configuración Landing
+        </button>
       </nav>
     </aside>
 
     <!-- Main Content Area -->
     <section class="content-area">
-      <div class="content-header">
-        <h2 id="currentBrandTitle">Promociones RAM</h2>
-        <button id="openAddModalBtn" class="btn btn-success">
-          <i class="fa-solid fa-plus"></i> Agregar Auto
-        </button>
+      <!-- Promos Management View -->
+      <div id="promosView">
+        <div class="content-header">
+          <h2 id="currentBrandTitle">Promociones RAM</h2>
+          <button id="openAddModalBtn" class="btn btn-success">
+            <i class="fa-solid fa-plus"></i> Agregar Auto
+          </button>
+        </div>
+
+        <!-- Cars Gallery -->
+        <div id="promosGrid" class="promos-grid">
+          <!-- Dynamic content will be rendered here -->
+        </div>
       </div>
 
-      <!-- Cars Gallery -->
-      <div id="promosGrid" class="promos-grid">
-        <!-- Dynmic content will be rendered here -->
+      <!-- Landing Page Config View -->
+      <div id="landingView" style="display: none;">
+        <div class="content-header">
+          <h2>Configuración de la Landing Page</h2>
+          <button id="saveLandingBtn" class="btn btn-success">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+          </button>
+        </div>
+
+        <div class="landing-config-form" style="background: #151d2a; padding: 25px; border-radius: 8px; border: 1px solid #233143; margin-top: 20px;">
+          <!-- 1. Popups Config -->
+          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-bottom: 20px;">Imágenes de Popups</h3>
+          <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <div class="form-group col-6" style="flex: 1;">
+              <label for="newsletterPopupImage">Popup de Registro (Newsletter / Invitaciones)</label>
+              <input type="url" id="newsletterPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+            </div>
+            <div class="form-group col-6" style="flex: 1;">
+              <label for="leasingPopupImage">Popup de Arrendamiento (Global para Marcas)</label>
+              <input type="url" id="leasingPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+            </div>
+          </div>
+
+          <!-- 2. Hero Background Carousel -->
+          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px;">Carrusel de Fondo (Hero)</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div class="form-group">
+              <label for="carousel1">Imagen 1</label>
+              <input type="url" id="carousel1" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            </div>
+            <div class="form-group">
+              <label for="carousel2">Imagen 2</label>
+              <input type="url" id="carousel2" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            </div>
+            <div class="form-group">
+              <label for="carousel3">Imagen 3</label>
+              <input type="url" id="carousel3" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            </div>
+            <div class="form-group">
+              <label for="carousel4">Imagen 4</label>
+              <input type="url" id="carousel4" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            </div>
+          </div>
+
+          <!-- 3. Featured Promotional Cards -->
+          <h3 style="color: #00e5ff; border-bottom: 1px solid #233143; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px;">Carrusel de Ofertas (Las 4 Tarjetas Destacadas)</h3>
+          
+          <div id="landingPromosList" style="display: flex; flex-direction: column; gap: 25px;">
+            <!-- Card 1 -->
+            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 1</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div class="form-group">
+                  <label>Nombre del Modelo</label>
+                  <input type="text" id="offer1Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. RAM 700">
+                </div>
+                <div class="form-group">
+                  <label>Imagen (Cloudinary)</label>
+                  <input type="url" id="offer1Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label>Descripción Corta de la Oferta</label>
+                <input type="text" id="offer1Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+              <div class="form-group">
+                <label>Enlace de WhatsApp</label>
+                <input type="url" id="offer1Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 2</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div class="form-group">
+                  <label>Nombre del Modelo</label>
+                  <input type="text" id="offer2Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label>Imagen (Cloudinary)</label>
+                  <input type="url" id="offer2Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label>Descripción Corta de la Oferta</label>
+                <input type="text" id="offer2Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+              <div class="form-group">
+                <label>Enlace de WhatsApp</label>
+                <input type="url" id="offer2Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 3</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div class="form-group">
+                  <label>Nombre del Modelo</label>
+                  <input type="text" id="offer3Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label>Imagen (Cloudinary)</label>
+                  <input type="url" id="offer3Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label>Descripción Corta de la Oferta</label>
+                <input type="text" id="offer3Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+              <div class="form-group">
+                <label>Enlace de WhatsApp</label>
+                <input type="url" id="offer3Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="offer-edit-box" style="border: 1px solid #233143; padding: 15px; border-radius: 6px; background: #0b1019;">
+              <h4 style="margin-top: 0; color: #fff;">Tarjeta Destacada 4</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div class="form-group">
+                  <label>Nombre del Modelo</label>
+                  <input type="text" id="offer4Name" class="offer-name form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+                <div class="form-group">
+                  <label>Imagen (Cloudinary)</label>
+                  <input type="url" id="offer4Image" class="offer-image form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label>Descripción Corta de la Oferta</label>
+                <input type="text" id="offer4Desc" class="offer-desc form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+              <div class="form-group">
+                <label>Enlace de WhatsApp</label>
+                <input type="url" id="offer4Whatsapp" class="offer-whatsapp form-control" style="width:100%; background:#151d2a; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </section>
 
@@ -345,14 +499,107 @@
       });
     }
 
+    const landingConfigTabBtn = document.getElementById('landingConfigTabBtn');
+    const promosView = document.getElementById('promosView');
+    const landingView = document.getElementById('landingView');
+
     // Brand navigation clicks
     brandTabs.forEach(tab => {
       tab.addEventListener('click', (e) => {
         brandTabs.forEach(t => t.classList.remove('active'));
+        landingConfigTabBtn.classList.remove('active');
         tab.classList.add('active');
+        
+        promosView.style.display = 'block';
+        landingView.style.display = 'none';
+        
         currentBrand = tab.dataset.brand;
         renderCurrentBrand();
       });
+    });
+
+    // Landing Config Tab Click
+    landingConfigTabBtn.addEventListener('click', () => {
+      brandTabs.forEach(t => t.classList.remove('active'));
+      landingConfigTabBtn.classList.add('active');
+      
+      promosView.style.display = 'none';
+      landingView.style.display = 'block';
+      
+      loadLandingConfigToForm();
+    });
+
+    function loadLandingConfigToForm() {
+      const landing = database.landing || {};
+      
+      // Popups
+      document.getElementById('newsletterPopupImage').value = landing.newsletterPopupImage || '';
+      document.getElementById('leasingPopupImage').value = landing.leasingPopupImage || '';
+      
+      // Carousel backgrounds
+      const carousel = landing.carousel || [];
+      document.getElementById('carousel1').value = carousel[0] || '';
+      document.getElementById('carousel2').value = carousel[1] || '';
+      document.getElementById('carousel3').value = carousel[2] || '';
+      document.getElementById('carousel4').value = carousel[3] || '';
+      
+      // Promos
+      const promos = landing.promos || [];
+      for (let i = 1; i <= 4; i++) {
+        const p = promos[i - 1] || {};
+        document.getElementById(`offer${i}Name`).value = p.name || '';
+        document.getElementById(`offer${i}Image`).value = p.image || '';
+        document.getElementById(`offer${i}Desc`).value = p.description || '';
+        document.getElementById(`offer${i}Whatsapp`).value = p.whatsapp || '';
+      }
+    }
+
+    // Save Landing Page Config
+    document.getElementById('saveLandingBtn').addEventListener('click', async () => {
+      const carousel = [
+        document.getElementById('carousel1').value.trim(),
+        document.getElementById('carousel2').value.trim(),
+        document.getElementById('carousel3').value.trim(),
+        document.getElementById('carousel4').value.trim()
+      ];
+      
+      const promos = [];
+      for (let i = 1; i <= 4; i++) {
+        promos.push({
+          id: `lp-${i}`,
+          name: document.getElementById(`offer${i}Name`).value.trim(),
+          image: document.getElementById(`offer${i}Image`).value.trim(),
+          description: document.getElementById(`offer${i}Desc`).value.trim(),
+          whatsapp: document.getElementById(`offer${i}Whatsapp`).value.trim()
+        });
+      }
+      
+      const landingConfig = {
+        carousel,
+        promos,
+        newsletterPopupImage: document.getElementById('newsletterPopupImage').value.trim(),
+        leasingPopupImage: document.getElementById('leasingPopupImage').value.trim()
+      };
+      
+      showOverlay('Guardando...', 'Actualizando configuración de la landing page...');
+      try {
+        const res = await fetch('/api/landing-config', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(landingConfig)
+        });
+        
+        if (res.ok) {
+          showOverlay('Completado', 'Landing page actualizada y recompilada con éxito.', true);
+          await loadPromos(); // refresh db in memory
+        } else {
+          showOverlay('Error', 'No se pudo guardar la configuración.', false);
+        }
+      } catch (err) {
+        showOverlay('Error', 'Error de conexión con el servidor.', false);
+      }
     });
 
     // Delete Promotion
