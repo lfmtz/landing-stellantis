@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XRDWZPQ4WT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XRDWZPQ4WT');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellantis | Promociones Exclusivas</title>
+    <meta name="description" content="Descubre las mejores promociones en vehículos de la familia Stellantis.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-uppercase tracking-wide" href="#">
+                <span class="text-primary">Stellantis</span> Promos
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#promociones">Ofertas Destacadas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#modelos">Modelos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section position-relative">
+        <!-- Carousel -->
+        <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-pause="false">
+            <div class="carousel-inner h-100">
+                <!-- INSTRUCCIONES PARA CAMBIAR IMÁGENES DEL HERO:
+                     1. Reemplaza el enlace dentro de `url('...')` por tu propia imagen.
+                     2. Puedes usar enlaces locales (ej. 'imagenes/tu_foto.jpg') o enlaces de Cloudinary (ej. 'https://res.cloudinary.com/...').
+                     3. Tamaño recomendado: 1920x1080 píxeles (formato horizontal 16:9) para que cubra bien la pantalla.
+                -->
+                <!-- EJEMPLO DE CLOUDINARY PARA EL HERO:
+                     Para usar Cloudinary, elimina la línea de abajo que dice "imagenes/..." y descomenta (borra los < ! - - y - - >) la línea siguiente:
+                -->
+                <!-- <div class="carousel-item active h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg');"></div> -->
+                <div class="carousel-item active h-100 bg-cover" style="background-image: url('{{CAROUSEL_1}}');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_2}}');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_3}}');"></div>
+                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_4}}');"></div>
+            </div>
+            <div class="overlay"></div>
+        </div>
+
+        <div class="hero-content position-absolute top-0 start-50 translate-middle-x text-center w-100 h-100 d-flex flex-column justify-content-between py-5 px-3">
+            <h1 class="display-2 fw-bold mt-1" style="color: #07101e; text-shadow: 2px 2px 10px rgba(255,255,255,0.8);">Impulsa tu Camino</h1>
+            <div class="d-flex flex-column align-items-center mb-3">
+                <a href="https://wa.me/525521787900?text=Hola,%20solicito%20informes%20sobre%20las%20promociones%20vigentes." target="_blank" class="btn btn-glow btn-lg px-5 py-3 rounded-pill text-uppercase fw-bold shadow-lg mb-3">
+                    <i class="fa-solid fa-car-side me-2"></i> Ver Promociones Especiales
+                </a>
+                <div class="scroll-down-indicator">
+                    <a href="#promociones" class="scroll-down-link">
+                        <i class="fa-solid fa-chevron-down bounce-arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+ 
+    <!-- Promociones Destacadas -->
+    <section id="promociones" class="py-5 tech-blue-gradient">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark mb-3">Ofertas Imparables</h2>
+                <div class="heading-line mx-auto"></div>
+                <p class="text-dark opacity-100 mt-3 fw-bold mb-2" style="background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 20px; display: inline-block;">Las mejores oportunidades para estrenar el vehículo de tus sueños.</p>
+                <div class="d-md-none mt-2 scroll-hint-container">
+                    <span class="scroll-hint-text">Desliza para ver más <i class="fa-solid fa-chevron-right scroll-hint-arrow"></i></span>
+                </div>
+            </div>
+            
+            <!-- Carrusel de Ofertas -->
+            <div id="ofertasCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-inner pb-4">
+                    <!-- Primer Slide (2 Tarjetas) -->
+                    <div class="carousel-item active">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Promo 1 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="{{OFFER_1_IMAGE}}" class="card-img-top promo-img" alt="{{OFFER_1_NAME}}">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">{{OFFER_1_NAME}}</h3>
+                                        <p class="card-text text-dark opacity-75">{{OFFER_1_DESC}}</p>
+                                        <a href="{{OFFER_1_WA}}" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Promo 2 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="{{OFFER_2_IMAGE}}" class="card-img-top promo-img" alt="{{OFFER_2_NAME}}">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">{{OFFER_2_NAME}}</h3>
+                                        <p class="card-text text-dark opacity-75">{{OFFER_2_DESC}}</p>
+                                        <a href="{{OFFER_2_WA}}" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Segundo Slide (2 Tarjetas Adicionales) -->
+                    <div class="carousel-item">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Promo 3 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="{{OFFER_3_IMAGE}}" class="card-img-top promo-img" alt="{{OFFER_3_NAME}}" onerror="this.src='imagenes/carrusel_2.jpg'">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">{{OFFER_3_NAME}}</h3>
+                                        <p class="card-text text-dark opacity-75">{{OFFER_3_DESC}}</p>
+                                        <a href="{{OFFER_3_WA}}" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Promo 4 -->
+                            <div class="col-md-5">
+                                <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                    <img src="{{OFFER_4_IMAGE}}" class="card-img-top promo-img" alt="{{OFFER_4_NAME}}" onerror="this.src='imagenes/carrusel_3.jpg'">
+                                    <div class="card-body p-4 text-center">
+                                        <h3 class="card-title fw-bold text-dark">{{OFFER_4_NAME}}</h3>
+                                        <p class="card-text text-dark opacity-75">{{OFFER_4_DESC}}</p>
+                                        <a href="{{OFFER_4_WA}}" target="_blank" class="btn btn-outline-dark rounded-pill mt-2">Me interesa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controles del Carrusel (Aparecerán a los lados) -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="prev" style="width: 5%;">
+                    <i class="fa-solid fa-chevron-left text-dark fs-2"></i>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="next" style="width: 5%;">
+                    <i class="fa-solid fa-chevron-right text-dark fs-2"></i>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modelos Destacados -->
+    <!-- Modelos Destacados (MÓDULO DE IMÁGENES 1080x1080) -->
+    <section id="modelos" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark mb-3 text-glow">Nuestras Marcas</h2>
+                <div class="heading-line mx-auto"></div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+                <!-- INSTRUCCIONES MÓDULO IMÁGENES 1080x1080:
+                     Reemplaza el `src` de las imágenes con tus URLs de Cloudinary o locales de las imágenes IA que me mostraste.
+                          <!-- 1. RAM -->
+                <div class="col">
+                    <a href="paginas_promo/promo-ram.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de RAM IA -->
+                            <img src="{{BRAND_IMAGE_RAM}}" alt="RAM" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">RAM</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 2. Dodge -->
+                <div class="col">
+                    <a href="paginas_promo/promo-dodge.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de DODGE IA -->
+                            <img src="{{BRAND_IMAGE_DODGE}}" alt="Dodge" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">Dodge</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 3. Jeep -->
+                <div class="col">
+                    <a href="paginas_promo/promo-jeep.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de JEEP IA -->
+                            <img src="{{BRAND_IMAGE_JEEP}}" alt="Jeep" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">Jeep</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 4. Fiat -->
+                <div class="col">
+                    <a href="paginas_promo/promo-fiat.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de FIAT IA -->
+                            <img src="{{BRAND_IMAGE_FIAT}}" alt="Fiat" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">Fiat</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 5. Peugeot -->
+                <div class="col">
+                    <a href="paginas_promo/promo-peugeot.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de PEUGEOT IA -->
+                            <img src="{{BRAND_IMAGE_PEUGEOT}}" alt="Peugeot" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">Peugeot</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+ 
+                <!-- 6. Leapmotor -->
+                <div class="col">
+                    <a href="paginas_promo/promo-leapmotor.html" class="text-decoration-none">
+                        <div class="brand-module-card">
+                            <!-- Reemplazar src con imagen de LEAPMOTOR IA -->
+                            <img src="{{BRAND_IMAGE_LEAPMOTOR}}" alt="Leapmotor" class="brand-module-img">
+                            <div class="model-overlay brand-module-overlay position-absolute bottom-0 start-0 w-100 p-4 d-flex justify-content-between align-items-end">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <h3 class="text-white fw-bold mb-0">Leapmotor</h3>
+                                    <span class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        Ingresar <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-dark py-4 text-center" style="background: transparent; position: relative; z-index: 2;">
+        <div class="container">
+            <p class="mb-0 opacity-50">&copy; 2026 Stellantis. Todos los derechos reservados.</p>
+            <small class="opacity-25">Las imágenes y promociones son ilustrativas y pueden estar sujetas a cambios.</small>
+        </div>
+    </footer>
+
+    <!-- Newsletter Modal (Suscripción) -->
+    <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content newsletter-modal-content">
+                <div class="modal-header pb-0 position-relative">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <!-- Contenedor para imagen opcional. Para agregar una imagen descomenta la línea de abajo y pon su ruta -->
+                    <div class="newsletter-modal-img-container" id="newsletterModalImgContainer" style="display: none;">
+                        <img src="" class="newsletter-modal-img" alt="Promoción especial" id="newsletterModalImg">
+                    </div>
+                    
+                    <i class="fa-solid fa-paper-plane text-primary display-5 mb-3" style="filter: drop-shadow(0 0 10px var(--primary-glow));"></i>
+                    <h3 class="fw-bold mb-2 text-white">¿Quieres recibir ofertas exclusivas?</h3>
+                    <p class="text-white-50 small mb-4">Suscríbete a nuestro newsletter mensual y sé el primero en enterarte de las mejores promociones de Stellantis.</p>
+                    
+                    <form id="newsletterForm" novalidate>
+                        <div class="mb-3 text-start">
+                            <label for="newsletterName" class="form-label small text-white-50">Nombre completo</label>
+                            <input type="text" class="form-control" id="newsletterName" placeholder="Ej. Juan Pérez" required>
+                            <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="newsletterEmail" class="form-label small text-white-50">Correo electrónico</label>
+                            <input type="email" class="form-control" id="newsletterEmail" placeholder="juan@ejemplo.com" required>
+                            <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
+                        </div>
+                        <button type="submit" class="btn btn-glow w-100 rounded-pill py-2.5 mt-2 text-uppercase fw-bold">Suscribirme</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Image Extension Fallback Handler (.png <-> .jpg) -->
+    <script>
+        (function() {
+            // 1. Fallback for <img> tags
+            document.addEventListener('error', function(e) {
+                var target = e.target;
+                if (target.tagName === 'IMG' && !target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    var src = target.src;
+                    if (src.endsWith('.png')) {
+                        target.src = src.slice(0, -4) + '.jpg';
+                    } else if (src.endsWith('.jpg')) {
+                        target.src = src.slice(0, -4) + '.png';
+                    }
+                }
+            }, true); // Use capture phase to catch loading errors early
+
+            // 2. Fallback for elements with background-image styles (body & carousel items)
+            window.addEventListener('load', function() {
+                var bgElements = [document.body].concat(Array.from(document.querySelectorAll('.carousel-item')));
+                bgElements.forEach(function(el) {
+                    if (!el) return;
+                    var style = window.getComputedStyle(el);
+                    var bgUrl = style.backgroundImage;
+                    if (bgUrl && bgUrl !== 'none') {
+                        var match = bgUrl.match(/url\("?([^"\)]+)"?\)/);
+                        if (match && match[1]) {
+                            var imgUrl = match[1];
+                            if (imgUrl.includes('imagenes/')) {
+                                var tempImg = new Image();
+                                tempImg.src = imgUrl;
+                                tempImg.onerror = function() {
+                                    var extension = imgUrl.endsWith('.png') ? '.png' : (imgUrl.endsWith('.jpg') ? '.jpg' : '');
+                                    if (extension) {
+                                        var newExtension = extension === '.png' ? '.jpg' : '.png';
+                                        var newUrl = imgUrl.slice(0, -extension.length) + newExtension;
+                                        el.style.backgroundImage = "url('" + newUrl + "')";
+                                    }
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+
+            // 3. Control de Popup de Newsletter en la Landing Principal
+            window.addEventListener('load', function() {
+                var isSubscribed = localStorage.getItem('newsletter_subscribed');
+                var isDismissed = sessionStorage.getItem('newsletter_dismissed');
+                
+                // Si ya se suscribió o ya descartó el modal en esta sesión, no se muestra
+                if (!isSubscribed && !isDismissed) {
+                    setTimeout(function() {
+                        var newsletterModalEl = document.getElementById('newsletterModal');
+                        if (newsletterModalEl) {
+                            var nModal = new bootstrap.Modal(newsletterModalEl, {
+                                keyboard: true
+                            });
+                            
+                            // Configuración de imagen opcional (descomentar / agregar ruta si se desea)
+                            var imgUrl = "{{NEWSLETTER_POPUP_IMAGE}}"; // Escribe aquí la ruta de la imagen, ej: "imagenes/popup_promo.jpg"
+                            var imgEl = document.getElementById('newsletterModalImg');
+                            var imgContainer = document.getElementById('newsletterModalImgContainer');
+                            if (imgUrl && imgEl && imgContainer) {
+                                imgEl.src = imgUrl;
+                                imgContainer.style.display = 'block';
+                            }
+                            
+                            nModal.show();
+                            
+                            // Al cerrar el modal se registra que se descartó en esta sesión de navegación
+                            newsletterModalEl.addEventListener('hidden.bs.modal', function () {
+                                if (!localStorage.getItem('newsletter_subscribed')) {
+                                    sessionStorage.setItem('newsletter_dismissed', 'true');
+                                }
+                            });
+                        }
+                    }, 2500); // 2.5 segundos de retraso
+                }
+            });
+
+            // Manejador del formulario de suscripción
+            var form = document.getElementById('newsletterForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (!form.checkValidity()) {
+                        e.stopPropagation();
+                        form.classList.add('was-validated');
+                        return;
+                    }
+                    
+                    var name = document.getElementById('newsletterName').value;
+                    var email = document.getElementById('newsletterEmail').value;
+                    
+                    // Deshabilitar botón de envío
+                    var submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'Enviando...';
+                    }
+
+                    var datos = {
+                        nombre: name,
+                        email: email
+                    };
+
+                    fetch("https://script.google.com/macros/s/AKfycbzKpyk1CqQMqxWrrALiC8JbDnEpuGdDrBSnsYr8NjZ8-aaOC2G691lw2JcydA0Vkm2G/exec", {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(datos)
+                    })
+                    .then(function() {
+                        // Enviar evento de Google Analytics
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'generate_lead', {
+                                'event_category': 'Engagement',
+                                'event_label': 'Newsletter Subscription'
+                            });
+                        }
+
+                        // Almacenamos de forma local
+                        localStorage.setItem('newsletter_subscribed', 'true');
+                        localStorage.setItem('newsletter_name', name);
+                        localStorage.setItem('newsletter_email', email);
+                        
+                        var modalEl = document.getElementById('newsletterModal');
+                        if (modalEl) {
+                            var modal = bootstrap.Modal.getInstance(modalEl);
+                            if (modal) modal.hide();
+                        }
+                        
+                        alert('¡Gracias por registrarte, ' + name + '! Tus datos se han guardado con éxito.');
+                    })
+                    .catch(function(error) {
+                        console.error("Error al guardar en Google Sheets:", error);
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = 'Suscribirme';
+                        }
+                        alert('Hubo un problema al guardar tus datos. Por favor inténtalo de nuevo.');
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

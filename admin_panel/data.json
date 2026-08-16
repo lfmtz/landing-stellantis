@@ -267,7 +267,7 @@
       "id": "peugeot-2008",
       "name": "Peugeot 2008",
       "price": "Desde $448,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/2008_mijfsh.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786898195/2008_mijfsh_kokaaa.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
       "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde $5,999 y protección total para tu camino.",
       "descriptionSize": "1.0rem",
@@ -280,7 +280,7 @@
         "Incluye protección de llantas"
       ],
       "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     },
     {
