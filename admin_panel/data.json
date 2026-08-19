@@ -405,10 +405,10 @@
   "leapmotor": [],
   "landing": {
     "carousel": [
-      "imagenes/carrusel_1.jpg",
-      "imagenes/carrusel_2.jpg",
-      "imagenes/carrusel_3.jpg",
-      "imagenes/carrusel_4.jpg"
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_ram_a3zc3a.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_jeep_hmix1p.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg"
     ],
     "promos": [
       {
