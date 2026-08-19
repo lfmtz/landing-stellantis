@@ -737,9 +737,9 @@ function generateHtmlForBrand(brand, vehicles) {
   <div class="embed-footer"></div>
 
   <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
-  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;">
-    <div class="leasing-popup-content">
-      <button class="leasing-popup-close" id="closeLeasingPopup" aria-label="Cerrar">&times;</button>
+  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;" onclick="closeLeasingPopupOverlay(event)">
+    <div class="leasing-popup-content" onclick="event.stopPropagation()">
+      <button class="leasing-popup-close" id="closeLeasingPopup" onclick="closeLeasingPopupOverlay(event)" aria-label="Cerrar">&times;</button>
       <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': '${brand}' }); }">
         <img src="${leasingPopupImgSrc}" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
       </a>
@@ -766,6 +766,21 @@ function generateHtmlForBrand(brand, vehicles) {
       }
 
       // Lógica de Popup de Arrendamiento
+      window.closeLeasingPopupOverlay = function(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        var popup = document.getElementById('leasingPopup');
+        if (popup) {
+          popup.classList.remove('show');
+          setTimeout(function() {
+            popup.style.display = 'none';
+            sessionStorage.setItem('leasing_popup_dismissed', 'true');
+          }, 400);
+        }
+      };
+
       var wasShown = localStorage.getItem('leasing_popup_shown');
       var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
 
@@ -778,37 +793,11 @@ function generateHtmlForBrand(brand, vehicles) {
               popup.classList.add('show');
             }, 50);
 
-            var closeBtn = document.getElementById('closeLeasingPopup');
-            if (closeBtn) {
-              closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                closePopup();
-              });
-            }
-
-            popup.addEventListener('click', function(e) {
-              if (e.target === popup) {
-                closePopup();
-              }
-            });
-
             document.getElementById('leasingPopupLink').addEventListener('click', function() {
               localStorage.setItem('leasing_popup_shown', 'true');
             });
           }
         }, 2000);
-      }
-
-      function closePopup() {
-        var popup = document.getElementById('leasingPopup');
-        if (popup) {
-          popup.classList.remove('show');
-          setTimeout(function() {
-            popup.style.display = 'none';
-            sessionStorage.setItem('leasing_popup_dismissed', 'true');
-          }, 400);
-        }
       }
     });
   </script>
