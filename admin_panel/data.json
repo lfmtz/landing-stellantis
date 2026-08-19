@@ -90,7 +90,7 @@
       "id": "dodge-attitude",
       "name": "Dodge Attitude",
       "price": "Desde $379,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/attitude_j6dsid.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/attitude_8_26_uhds1g.jpg",
       "whatsapp": "https://wa.me/5521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
       "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades de $5,499, incluyendo un bono exclusivo para la versión SXT con solo el 46.5% de enganche.",
       "descriptionSize": "1.0rem",
@@ -102,7 +102,35 @@
         "Protección de llantas"
       ],
       "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
-      "accentColor": "#CC4400",
+      "accentColor": "#cc4400",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "dodge-1787102237711",
+      "name": "Dodge Charger",
+      "price": "1",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787108976/charger_x8p3vq.png",
+      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20dodge",
+      "description": "c",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#cc4400",
+      "underlineStyle": "solid"
+    },
+    {
+      "id": "dodge-1787109067140",
+      "name": "Dodge Durango",
+      "price": "1",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787108976/durango_kl1h52.png",
+      "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20dodge",
+      "description": "m",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#cc4400",
       "underlineStyle": "solid"
     }
   ],
