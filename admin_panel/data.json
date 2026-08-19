@@ -267,7 +267,7 @@
       "id": "peugeot-2008",
       "name": "Peugeot 2008",
       "price": "Desde $448,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786898195/2008_mijfsh_kokaaa.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787101159/2008_8_26_pxluch.png",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
       "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde $5,999 y protección total para tu camino.",
       "descriptionSize": "1.0rem",
@@ -287,7 +287,7 @@
       "id": "peugeot-3008",
       "name": "Peugeot 3008",
       "price": "Desde $639,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/3008_ww9qj0.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/3008_8_26_nteftv.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%203008",
       "description": "Sofisticación y potencia en cada detalle. Lévatelo con mensualidades desde $7,850 y beneficios exclusivos de mantenimiento.",
       "descriptionSize": "1.0rem",
@@ -300,14 +300,14 @@
         "Incluye protección de llantas"
       ],
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     },
     {
       "id": "peugeot-rifter",
       "name": "Rifter",
       "price": "Desde $469,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/rifter_urtt7g.png",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995377/rifter_8_26_dnnkon.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Rifter",
       "description": "Versatilidad sin límites para tu familia o negocio. Mensualidades desde $6,990",
       "descriptionSize": "1.0rem",
@@ -318,14 +318,14 @@
         "Protección de llantas"
       ],
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     },
     {
       "id": "peugeot-expert",
       "name": "Expert Furgon",
       "price": "Desde $705,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/expert_m8jdws.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/expert_8_26_a5zm9n.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Expert%20Furgon",
       "description": "La herramienta de trabajo más eficiente. Aprovecha un bono histórico y mensualidades de $9,199",
       "descriptionSize": "1.0rem",
@@ -335,14 +335,14 @@
         "0% comisión por apertura"
       ],
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     },
     {
       "id": "peugeot-partner-maxi",
       "name": "Partner maxi",
       "price": "Desde $452,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/PARTNER_MAXI_PACK_ospi8q.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/partner_8_26_u5bdbu.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Partner%20maxi",
       "description": "Capacidad máxima para tus proyectos. Estrena con mensualidades de $7,499",
       "descriptionSize": "1.0rem",
@@ -353,14 +353,14 @@
         "2 años de mantenimiento gratis"
       ],
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     },
     {
       "id": "peugeot-manager",
       "name": "Manager",
       "price": "Desde $777,900",
-      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/w_600,q_auto,f_auto/Manager_vsvhm0.jpg",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/manager_8_26_fomr0w.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Manager",
       "description": "Grande en espacio, grande en beneficios. La solución logística ideal con mensualidades de $11,700.",
       "descriptionSize": "1.0rem",
@@ -370,7 +370,7 @@
         "0% comisión por apertura"
       ],
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
-      "accentColor": "#001E62",
+      "accentColor": "#001e62",
       "underlineStyle": "solid"
     }
   ],
