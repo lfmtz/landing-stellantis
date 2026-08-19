@@ -832,11 +832,14 @@ function generateIndexHtml(dbData) {
   let html = fs.readFileSync(templatePath, 'utf8');
   const landing = dbData.landing || {};
   
-  // Carousel background images
+  // Carousel background images (desktop & mobile)
   const carousel = landing.carousel || [];
+  const carouselMobile = landing.carouselMobile || [];
   for (let i = 0; i < 4; i++) {
     const val = carousel[i] || `imagenes/carrusel_${i + 1}.jpg`;
+    const valMobile = carouselMobile[i] || val; // Fallback to desktop if mobile is empty
     html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}\\}\\}`, 'g'), val);
+    html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}_MOBILE\\}\\}`, 'g'), valMobile);
   }
   
   // Newsletter registration popup

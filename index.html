@@ -24,6 +24,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css?v=1.1">
+    <!-- Responsive Carousel Backgrounds -->
+    <style>
+        #heroCarouselItem1 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_ram_a3zc3a.jpg'); }
+        #heroCarouselItem2 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_jeep_hmix1p.jpg'); }
+        #heroCarouselItem3 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg'); }
+        #heroCarouselItem4 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg'); }
+
+        @media (max-width: 768px) {
+            #heroCarouselItem1 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_ram_a3zc3a.jpg'); }
+            #heroCarouselItem2 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_jeep_hmix1p.jpg'); }
+            #heroCarouselItem3 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg'); }
+            #heroCarouselItem4 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg'); }
+        }
+    </style>
 </head>
 <body>
 
@@ -60,10 +74,10 @@
                      Para usar Cloudinary, elimina la línea de abajo que dice "imagenes/..." y descomenta (borra los < ! - - y - - >) la línea siguiente:
                 -->
                 <!-- <div class="carousel-item active h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg');"></div> -->
-                <div class="carousel-item active h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_ram_a3zc3a.jpg');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_jeep_hmix1p.jpg');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg');"></div>
+                <div class="carousel-item active h-100 bg-cover" id="heroCarouselItem1"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem2"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem3"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem4"></div>
             </div>
             <div class="overlay"></div>
         </div>

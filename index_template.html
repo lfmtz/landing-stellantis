@@ -24,6 +24,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css?v=1.1">
+    <!-- Responsive Carousel Backgrounds -->
+    <style>
+        #heroCarouselItem1 { background-image: url('{{CAROUSEL_1}}'); }
+        #heroCarouselItem2 { background-image: url('{{CAROUSEL_2}}'); }
+        #heroCarouselItem3 { background-image: url('{{CAROUSEL_3}}'); }
+        #heroCarouselItem4 { background-image: url('{{CAROUSEL_4}}'); }
+
+        @media (max-width: 768px) {
+            #heroCarouselItem1 { background-image: url('{{CAROUSEL_1_MOBILE}}'); }
+            #heroCarouselItem2 { background-image: url('{{CAROUSEL_2_MOBILE}}'); }
+            #heroCarouselItem3 { background-image: url('{{CAROUSEL_3_MOBILE}}'); }
+            #heroCarouselItem4 { background-image: url('{{CAROUSEL_4_MOBILE}}'); }
+        }
+    </style>
 </head>
 <body>
 
@@ -60,10 +74,10 @@
                      Para usar Cloudinary, elimina la línea de abajo que dice "imagenes/..." y descomenta (borra los < ! - - y - - >) la línea siguiente:
                 -->
                 <!-- <div class="carousel-item active h-100 bg-cover" style="background-image: url('https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg');"></div> -->
-                <div class="carousel-item active h-100 bg-cover" style="background-image: url('{{CAROUSEL_1}}');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_2}}');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_3}}');"></div>
-                <div class="carousel-item h-100 bg-cover" style="background-image: url('{{CAROUSEL_4}}');"></div>
+                <div class="carousel-item active h-100 bg-cover" id="heroCarouselItem1"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem2"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem3"></div>
+                <div class="carousel-item h-100 bg-cover" id="heroCarouselItem4"></div>
             </div>
             <div class="overlay"></div>
         </div>
