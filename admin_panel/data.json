@@ -446,7 +446,7 @@
         "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20autos%20demo"
       }
     ],
-    "newsletterPopupImage": "imagenes/popup_promo.jpg",
+    "newsletterPopupImage": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787602300/ENTRADA_2_ocjd42.jpg",
     "leasingPopupImage": "imagenes/popup_arrendamiento.jpg",
     "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
     "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
