@@ -587,7 +587,7 @@
         
         card.innerHTML = `
           <div class="card-image-wrapper">
-            <img src="${p.image ? '../' + p.image : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
+            <img src="${p.image ? (p.image.startsWith('http') ? p.image : '../' + p.image) : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
           </div>
           <div class="card-details">
             <div class="card-main-info">
@@ -619,6 +619,7 @@
     // Brand navigation clicks
     brandTabs.forEach(tab => {
       tab.addEventListener('click', (e) => {
+        if (!tab.dataset.brand) return; // Skip if it's the landing config tab (it triggers its own listener below)
         brandTabs.forEach(t => t.classList.remove('active'));
         landingConfigTabBtn.classList.remove('active');
         tab.classList.add('active');
@@ -819,7 +820,8 @@
 
       // Preview Image
       if (p.image) {
-        filePreview.innerHTML = `<img src="../${p.image}" class="preview-img"><p class="preview-text">Imagen cargada anteriormente</p>`;
+        const previewSrc = p.image.startsWith('http') ? p.image : `../${p.image}`;
+        filePreview.innerHTML = `<img src="${previewSrc}" class="preview-img"><p class="preview-text">Imagen cargada anteriormente</p>`;
       } else {
         filePreview.innerHTML = '';
       }
