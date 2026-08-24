@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+   <!-- Google Tag (gtag.js) - Google Analytics -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XRDWZPQ4WT"></script>
+   <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     gtag('config', 'G-XRDWZPQ4WT');
+   </script>
+
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <title>Promociones DEMOS</title>
+  <style>
+    :root {
+      --acento: #00e5ff;
+      --fondo-inv: #FFF6F2;
+      --borde-inv: #ffd9c7;
+      --gris-suave: #F4F4F4;
+      --gris-texto: #666666;
+      --texto-minimo: #999999;
+      --fuente: 'Barlow Condensed', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .grid-promos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 10px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) {
+      .grid-promos {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Estilos de la Tabla Excel Interactiva */
+    .excel-table-container {
+      max-width: 960px;
+      margin: 30px auto;
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      padding: 20px;
+      font-family: var(--fuente);
+    }
+    .table-header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .table-title {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .table-search-box {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+    }
+    .table-search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    .table-search-box input {
+      width: 100%;
+      padding: 8px 12px 8px 35px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+    .table-search-box input:focus {
+      border-color: var(--acento);
+    }
+    .table-responsive-scroll {
+      overflow-x: auto;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
+    .demo-excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .demo-excel-table th {
+      background: #f4f4f4;
+      color: #111;
+      font-weight: 700;
+      padding: 12px;
+      border-bottom: 2px solid #E0E0E0;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .demo-excel-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      color: #444;
+    }
+    .demo-excel-table tr:hover {
+      background: #fafafa;
+    }
+    .btn-wa-table {
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-top: 5px solid var(--acento);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .img-container {
+      width: 100%;
+      padding-top: 75%;
+      position: relative;
+      background: #f5f5f5;
+    }
+
+    .card-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #f5f5f5;
+    }
+
+    .card-header {
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      gap: 8px;
+    }
+
+    .model-name {
+      font-family: var(--fuente);
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      color: #111;
+    }
+
+    .model-price {
+      font-family: var(--fuente);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .btn-wa {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--fuente);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .promo-body {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      box-sizing: border-box;
+      flex-direction: column;
+    }
+
+    .promo-main {
+      font-family: var(--fuente);
+      line-height: 1.4;
+      background: var(--gris-suave);
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px 0;
+      font-family: var(--fuente);
+    }
+
+    .benefits-list li {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: var(--gris-texto);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .benefits-list li::before {
+      content: "✓";
+      color: var(--acento-list, var(--acento));
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .legal {
+      font-size: 0.72rem;
+      color: var(--texto-minimo);
+      margin-top: auto;
+      padding-top: 10px;
+      font-family: var(--fuente);
+      line-height: 1.4;
+    }
+
+    .embed-footer {
+      height: 12px;
+    }
+
+    .no-promos {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      font-family: var(--fuente);
+      font-size: 1.2rem;
+      color: var(--gris-texto);
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+    }
+
+    /* Estilos de la Barra de Navegación */
+    .brand-navbar {
+      background: rgba(15, 20, 30, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      font-family: var(--fuente);
+    }
+    .brand-nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+    }
+    .brand-logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .brand-logo .accent-text {
+      color: #00e5ff;
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+    .nav-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-item-link {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-item-link:hover, .nav-item-link.active {
+      color: #00e5ff;
+    }
+    .btn-back-home {
+      background: linear-gradient(45deg, #0d6efd, #00e5ff);
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-back-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px #00e5ff;
+      color: #000;
+    }
+
+    /* Animación del menú hamburguesa */
+    .nav-toggle.open .bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.open .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.open .bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Estilos del Popup de Arrendamiento */
+    .leasing-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .leasing-popup-overlay.show {
+      opacity: 1;
+    }
+    .leasing-popup-content {
+      position: relative;
+      max-width: 420px; /* Ajustado para imágenes verticales / alargadas */
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 229, 255, 0.3);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      background: #000;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .leasing-popup-overlay.show .leasing-popup-content {
+      transform: scale(1);
+    }
+    .leasing-popup-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .leasing-popup-img:hover {
+      transform: scale(1.02);
+    }
+    .leasing-popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999 !important;
+      pointer-events: auto !important;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .leasing-popup-close:hover {
+      background: #00e5ff;
+      color: #000;
+      border-color: #00e5ff;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(10, 15, 25, 0.98);
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        padding: 25px 20px;
+        gap: 15px;
+        justify-items: center;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      }
+      .nav-links.open {
+        display: grid;
+      }
+      /* Hacer que el botón de Inicio ocupe el ancho completo */
+      .nav-links li:last-child {
+        grid-column: 1 / -1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .btn-back-home {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="brand-navbar">
+    <div class="brand-nav-container">
+      <a href="../index.html" class="brand-logo">STELLANTIS <span class="accent-text">PROMOS</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="promo-ram.html" class="nav-item-link " id="link-ram">RAM</a></li><li><a href="promo-dodge.html" class="nav-item-link " id="link-dodge">DODGE</a></li><li><a href="promo-jeep.html" class="nav-item-link " id="link-jeep">JEEP</a></li><li><a href="promo-fiat.html" class="nav-item-link " id="link-fiat">FIAT</a></li><li><a href="promo-peugeot.html" class="nav-item-link " id="link-peugeot">PEUGEOT</a></li><li><a href="promo-leapmotor.html" class="nav-item-link " id="link-leapmotor">LEAPMOTOR</a></li><li><a href="promo-demos.html" class="nav-item-link active" id="link-demos">AUTOS DEMO</a></li>
+        <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  
+        <div class="excel-table-container">
+          <div class="table-header-actions">
+            <h3 class="table-title"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo (Listado)</h3>
+            <div class="table-search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="demoTableSearch" placeholder="Buscar unidad..." onkeyup="filterDemoTable()">
+            </div>
+          </div>
+          <div class="table-responsive-scroll">
+            <table class="demo-excel-table" id="demoExcelTable">
+              <thead>
+                <tr>
+                  <th>Marca</th><th>Modelo</th><th>Año</th><th>Versión</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>WhatsApp</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>RAM</td><td>1200 Crew Cab</td><td>2026</td><td>Tradesman</td><td>Blanco</td><td>1500 km</td><td>$399,000</td><td><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200" target="_blank" class="btn-wa-table" style="background:#00e5ff;">Cotizar</a></td></tr><tr><td>Jeep</td><td>Compass</td><td>2025</td><td>Limited</td><td>Gris</td><td>3400 km</td><td>$549,000</td><td><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass" target="_blank" class="btn-wa-table" style="background:#00e5ff;">Cotizar</a></td></tr><tr><td>Dodge</td><td>Attitude</td><td>2025</td><td>SXT</td><td>Rojo</td><td>800 km</td><td>$359,000</td><td><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude" target="_blank" class="btn-wa-table" style="background:#00e5ff;">Cotizar</a></td></tr><tr><td>Fiat</td><td>Pulse</td><td>2024</td><td>Audace</td><td>Azul</td><td>4200 km</td><td>$370,000</td><td><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse" target="_blank" class="btn-wa-table" style="background:#00e5ff;">Cotizar</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+  
+  
+  
+  <div class="grid-promos" style="margin-top: 10px;">
+    
+  </div>
+  <div class="embed-footer"></div>
+
+  <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
+  <div id="leasingPopup" class="leasing-popup-overlay" style="display: none;" onclick="closeLeasingPopupOverlay(event)">
+    <div class="leasing-popup-content" onclick="event.stopPropagation()">
+      <button class="leasing-popup-close" id="closeLeasingPopup" onclick="closeLeasingPopupOverlay(event)" aria-label="Cerrar">&times;</button>
+      <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': 'demos' }); }">
+        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787610610/ARREN_4_taedg6.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Lógica de Menú Hamburguesa Responsivo
+      var navToggle = document.getElementById("navToggle");
+      var navLinks = document.getElementById("navLinks");
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", function(e) {
+          e.stopPropagation();
+          navToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
+        });
+        document.addEventListener("click", function(e) {
+          if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+            navToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+          }
+        });
+      }
+
+      // Lógica de Popup de Arrendamiento
+      window.closeLeasingPopupOverlay = function(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        var popup = document.getElementById('leasingPopup');
+        if (popup) {
+          popup.classList.remove('show');
+          setTimeout(function() {
+            popup.style.display = 'none';
+            sessionStorage.setItem('leasing_popup_dismissed', 'true');
+          }, 400);
+        }
+      };
+
+      var wasShown = localStorage.getItem('leasing_popup_shown');
+      var wasDismissed = sessionStorage.getItem('leasing_popup_dismissed');
+
+      if (!wasShown && !wasDismissed) {
+        setTimeout(function() {
+          var popup = document.getElementById('leasingPopup');
+          if (popup) {
+            popup.style.display = 'flex';
+            setTimeout(function() {
+              popup.classList.add('show');
+            }, 50);
+
+            document.getElementById('leasingPopupLink').addEventListener('click', function() {
+              localStorage.setItem('leasing_popup_shown', 'true');
+            });
+          }
+        }, 2000);
+      }
+    });
+
+    // Lógica para filtrar la tabla interactiva de demos
+    function filterDemoTable() {
+      var input = document.getElementById("demoTableSearch");
+      var filter = input.value.toUpperCase();
+      var table = document.getElementById("demoExcelTable");
+      if (!table) return;
+      var tr = table.getElementsByTagName("tr");
+      
+      for (var i = 1; i < tr.length; i++) {
+        var show = false;
+        var td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+          if (td[j]) {
+            var txtValue = td[j].textContent || td[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              show = true;
+              break;
+            }
+          }
+        }
+        tr[i].style.display = show ? "" : "none";
+      }
+    }
+  </script>
+ </body>
+</html>

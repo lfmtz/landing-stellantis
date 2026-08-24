@@ -192,7 +192,7 @@ app.get('/api/download-csv', (req, res) => {
   const dbData = readData();
   let csvContent = 'Marca;Auto;Precio\n';
   
-  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
   brands.forEach(b => {
     const vehicles = dbData[b] || [];
     vehicles.forEach(v => {
@@ -217,7 +217,7 @@ app.post('/api/landing-config', (req, res) => {
   generateIndexHtml(dbData);
   
   // Regenerate all brand pages too since leasingPopupImage might have changed!
-  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
   brands.forEach(b => {
     generateHtmlForBrand(b, dbData[b] || []);
   });
@@ -260,7 +260,8 @@ function generateHtmlForBrand(brand, vehicles) {
     jeep: '#4A7729',
     fiat: '#B30000',
     peugeot: '#001E62',
-    leapmotor: '#3B93A9'
+    leapmotor: '#3B93A9',
+    demos: '#00e5ff'
   };
 
   const accentColor = brandColors[brand] || '#CC4400';
@@ -322,14 +323,74 @@ function generateHtmlForBrand(brand, vehicles) {
   }).join('');
 
   // Generar enlaces de navegación dinámicos (marcando el activo)
-  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
   const navLinksHtml = brands.map(b => {
     const activeClass = b === brand ? 'active' : '';
-    return `<li><a href="promo-${b}.html" class="nav-item-link ${activeClass}" id="link-${b}">${b.toUpperCase()}</a></li>`;
+    const label = b === 'demos' ? 'AUTOS DEMO' : b.toUpperCase();
+    return `<li><a href="promo-${b}.html" class="nav-item-link ${activeClass}" id="link-${b}">${label}</a></li>`;
   }).join('');
   
   const dbDataLocal = readData();
   const landingConfigLocal = dbDataLocal.landing || {};
+  
+  let excelTableHtml = '';
+  if (brand === 'demos') {
+    const demosCsv = landingConfigLocal.demosTableCsv || '';
+    if (demosCsv.trim()) {
+      const lines = demosCsv.trim().split('\n');
+      if (lines.length > 0) {
+        let headers = [];
+        let delimiter = ',';
+        const firstLine = lines[0];
+        if (firstLine.includes('\t')) delimiter = '\t';
+        else if (firstLine.includes(';')) delimiter = ';';
+        
+        headers = firstLine.split(delimiter).map(h => h.trim());
+        
+        let rowsHtml = '';
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const cols = lines[i].split(delimiter).map(c => c.trim());
+          
+          let colsHtml = '';
+          headers.forEach((h, idx) => {
+            const val = cols[idx] || '';
+            if (val.startsWith('http://') || val.startsWith('https://')) {
+              colsHtml += `<td><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};">Cotizar</a></td>`;
+            } else {
+              colsHtml += `<td>${val}</td>`;
+            }
+          });
+          rowsHtml += `<tr>${colsHtml}</tr>`;
+        }
+        
+        excelTableHtml = `
+        <div class="excel-table-container">
+          <div class="table-header-actions">
+            <h3 class="table-title"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo (Listado)</h3>
+            <div class="table-search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="demoTableSearch" placeholder="Buscar unidad..." onkeyup="filterDemoTable()">
+            </div>
+          </div>
+          <div class="table-responsive-scroll">
+            <table class="demo-excel-table" id="demoExcelTable">
+              <thead>
+                <tr>
+                  ${headers.map(h => `<th>${h}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        `;
+      }
+    }
+  }
+
   let leasingPopupImgSrc = optimizeCloudinaryUrl(landingConfigLocal.leasingPopupImage) || '../imagenes/popup_arrendamiento.jpg';
   if (leasingPopupImgSrc && !leasingPopupImgSrc.startsWith('http') && !leasingPopupImgSrc.startsWith('../')) {
     leasingPopupImgSrc = `../${leasingPopupImgSrc}`;
@@ -350,6 +411,7 @@ function generateHtmlForBrand(brand, vehicles) {
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <title>Promociones ${brand.toUpperCase()}</title>
   <style>
     :root {
@@ -387,6 +449,100 @@ function generateHtmlForBrand(brand, vehicles) {
       .grid-promos {
         grid-template-columns: 1fr;
       }
+    }
+
+    /* Estilos de la Tabla Excel Interactiva */
+    .excel-table-container {
+      max-width: 960px;
+      margin: 30px auto;
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      padding: 20px;
+      font-family: var(--fuente);
+    }
+    .table-header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .table-title {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .table-search-box {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+    }
+    .table-search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    .table-search-box input {
+      width: 100%;
+      padding: 8px 12px 8px 35px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+    .table-search-box input:focus {
+      border-color: var(--acento);
+    }
+    .table-responsive-scroll {
+      overflow-x: auto;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
+    .demo-excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .demo-excel-table th {
+      background: #f4f4f4;
+      color: #111;
+      font-weight: 700;
+      padding: 12px;
+      border-bottom: 2px solid #E0E0E0;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .demo-excel-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      color: #444;
+    }
+    .demo-excel-table tr:hover {
+      background: #fafafa;
+    }
+    .btn-wa-table {
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      text-align: center;
     }
 
     .card {
@@ -740,8 +896,16 @@ function generateHtmlForBrand(brand, vehicles) {
     </div>
   </nav>
 
-  <div class="grid-promos" style="margin-top: 20px;">
-    ${cardsHtml.length > 0 ? cardsHtml : '<div class="no-promos">No hay promociones activas actualmente para esta marca.</div>'}
+  ${excelTableHtml}
+  
+  ${brand === 'demos' && cardsHtml.length > 0 ? `
+  <div class="demos-gallery-section" style="max-width:960px; margin:30px auto 10px auto; padding: 0 10px;">
+    <h3 class="table-title" style="margin-bottom: 5px; color: #111;"><i class="fa-solid fa-camera"></i> Galería de Fotos</h3>
+  </div>
+  ` : ''}
+  
+  <div class="grid-promos" style="margin-top: 10px;">
+    ${cardsHtml.length > 0 ? cardsHtml : (brand === 'demos' ? '' : '<div class="no-promos">No hay promociones activas actualmente para esta marca.</div>')}
   </div>
   <div class="embed-footer"></div>
 
@@ -809,6 +973,30 @@ function generateHtmlForBrand(brand, vehicles) {
         }, 2000);
       }
     });
+
+    // Lógica para filtrar la tabla interactiva de demos
+    function filterDemoTable() {
+      var input = document.getElementById("demoTableSearch");
+      var filter = input.value.toUpperCase();
+      var table = document.getElementById("demoExcelTable");
+      if (!table) return;
+      var tr = table.getElementsByTagName("tr");
+      
+      for (var i = 1; i < tr.length; i++) {
+        var show = false;
+        var td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+          if (td[j]) {
+            var txtValue = td[j].textContent || td[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              show = true;
+              break;
+            }
+          }
+        }
+        tr[i].style.display = show ? "" : "none";
+      }
+    }
   </script>
  </body>
 </html>`;
@@ -867,7 +1055,7 @@ function generateIndexHtml(dbData) {
   
   // Brand modules images
   const brandsImages = landing.brandsImages || {};
-  const brandKeys = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  const brandKeys = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
   brandKeys.forEach(bk => {
     const val = brandsImages[bk] || `imagenes/marca_${bk}.jpg`;
     html = html.replace(new RegExp(`\\{\\{BRAND_IMAGE_${bk.toUpperCase()}\\}\\}`, 'g'), val);
@@ -878,13 +1066,17 @@ function generateIndexHtml(dbData) {
 }
 
 // Generate all initial HTMLs on startup if database has info
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  const data = readData();
-  generateIndexHtml(data);
-  Object.keys(data).forEach(brand => {
-    if (brand !== 'landing') {
-      generateHtmlForBrand(brand, data[brand]);
-    }
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    const data = readData();
+    generateIndexHtml(data);
+    Object.keys(data).forEach(brand => {
+      if (brand !== 'landing') {
+        generateHtmlForBrand(brand, data[brand]);
+      }
+    });
   });
-});
+}
+
+module.exports = { generateIndexHtml, generateHtmlForBrand, readData, writeData };

@@ -59,6 +59,9 @@
         <button class="brand-tab-btn" data-brand="leapmotor">
           <span class="brand-badge badge-leapmotor"></span> Leapmotor
         </button>
+        <button class="brand-tab-btn" data-brand="demos">
+          <span class="brand-badge badge-demos"></span> Autos Demo
+        </button>
         <div style="border-top: 1px solid #233143; margin: 15px 0;"></div>
         <button class="brand-tab-btn" id="landingConfigTabBtn" style="display: flex; align-items: center; gap: 8px; width: 100%;">
           <i class="fa-solid fa-house-laptop"></i> Configuración Landing
@@ -333,6 +336,27 @@
                   <label for="brandImageLeapmotor">Leapmotor (1080x1080)</label>
                   <input type="url" id="brandImageLeapmotor" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
                 </div>
+                <div class="form-group">
+                  <label for="brandImageDemos">Autos Demo (1080x1080)</label>
+                  <input type="url" id="brandImageDemos" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion 5: Autos Demo CSV Table -->
+          <div class="accordion-section">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-table"></i> 5. Listado de Autos Demo (Formato Excel / CSV)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 10px;">
+                <i class="fa-solid fa-circle-info"></i> Pega aquí la lista de tus autos demo que no tienen fotos. Puedes copiar las celdas directamente desde Excel y pegarlas aquí. El formato debe ser separado por comas o tabuladores.
+              </p>
+              <div class="form-group">
+                <label for="demosTableCsv">Datos de la Tabla (Marca, Modelo, Año, Versión, Color, Kilometraje, Precio, WhatsApp)</label>
+                <textarea id="demosTableCsv" class="form-control" style="width:100%; height:200px; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px; font-family: monospace;" placeholder="Marca,Modelo,Año,Versión,Color,Kilometraje,Precio,WhatsApp&#10;RAM,700 Crew Cab,2025,SLT,Blanco,1500 km,$320,000,https://wa.me/...&#10;Jeep,Renegade,2024,Latitude,Gris,3400 km,$450,000,https://wa.me/..."></textarea>
               </div>
             </div>
           </div>
@@ -700,6 +724,8 @@
       document.getElementById('brandImageFiat').value = brandsImages.fiat || '';
       document.getElementById('brandImagePeugeot').value = brandsImages.peugeot || '';
       document.getElementById('brandImageLeapmotor').value = brandsImages.leapmotor || '';
+      document.getElementById('brandImageDemos').value = brandsImages.demos || '';
+      document.getElementById('demosTableCsv').value = landing.demosTableCsv || '';
     }
 
     // Save Landing Page Config
@@ -735,7 +761,8 @@
         jeep: document.getElementById('brandImageJeep').value.trim(),
         fiat: document.getElementById('brandImageFiat').value.trim(),
         peugeot: document.getElementById('brandImagePeugeot').value.trim(),
-        leapmotor: document.getElementById('brandImageLeapmotor').value.trim()
+        leapmotor: document.getElementById('brandImageLeapmotor').value.trim(),
+        demos: document.getElementById('brandImageDemos').value.trim()
       };
       
       const landingConfig = {
@@ -746,7 +773,8 @@
         leasingPopupImage: document.getElementById('leasingPopupImage').value.trim(),
         bodyBg: document.getElementById('bodyBg').value.trim(),
         bodyBgMobile: document.getElementById('bodyBgMobile').value.trim(),
-        brandsImages
+        brandsImages,
+        demosTableCsv: document.getElementById('demosTableCsv').value
       };
       
       showOverlay('Guardando...', 'Actualizando configuración de la landing page...');
@@ -854,7 +882,8 @@
         jeep: '#4A7729',
         fiat: '#B30000',
         peugeot: '#001E62',
-        leapmotor: '#3B93A9'
+        leapmotor: '#3B93A9',
+        demos: '#00e5ff'
       };
       
       const brandColor = defaultColors[currentBrand] || '#CC4400';

@@ -457,6 +457,8 @@
       "fiat": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359880/PULSE_08_khp9qn.png",
       "peugeot": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/2008_08_efwatx.png",
       "leapmotor": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/B10_08_ey7usy.png"
-    }
-  }
+    },
+    "demosTableCsv": "Marca;Modelo;Año;Versión;Color;Kilometraje;Precio;WhatsApp\nRAM;1200 Crew Cab;2026;Tradesman;Blanco;1500 km;$399,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200\nJeep;Compass;2025;Limited;Gris;3400 km;$549,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass\nDodge;Attitude;2025;SXT;Rojo;800 km;$359,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude\nFiat;Pulse;2024;Audace;Azul;4200 km;$370,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse"
+  },
+  "demos": []
 }
