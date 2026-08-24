@@ -33,17 +33,17 @@ body {
     
     /* Ajustes para el Carrusel Principal (Hero) en Móviles */
     .hero-section {
-        height: 55vh !important;
-        min-height: 380px !important;
+        height: 80vh !important;
+        min-height: 520px !important;
     }
     
     .hero-content {
-        padding-top: 3.5rem !important;
-        padding-bottom: 0px !important;
+        padding-top: 5.5rem !important; /* Más espacio arriba en móvil para bajar el contenido */
+        padding-bottom: 10px !important;
     }
     
     #heroCarousel .carousel-item {
-        min-height: 55vh !important;
+        min-height: 80vh !important;
         background-size: cover !important;
         background-position: center center !important;
     }
