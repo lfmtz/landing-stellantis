@@ -898,6 +898,23 @@
       promoModal.classList.add('active');
     });
 
+    // Auto-generate WhatsApp link based on car name input
+    const nameInput = document.getElementById('name');
+    const whatsappInput = document.getElementById('whatsapp');
+    nameInput.addEventListener('input', () => {
+      const id = document.getElementById('promoId').value;
+      // Only auto-generate link if creating a new promotion (no ID)
+      if (!id) {
+        const nameVal = nameInput.value.trim();
+        if (nameVal) {
+          const encodedText = encodeURIComponent(`Hola, me interesa el ${nameVal}`);
+          whatsappInput.value = `https://wa.me/525521787900?text=${encodedText}`;
+        } else {
+          whatsappInput.value = `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20${currentBrand}`;
+        }
+      }
+    });
+
     // Close Modals
     function closeModal() {
       promoModal.classList.remove('active');
