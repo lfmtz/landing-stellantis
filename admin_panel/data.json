@@ -405,16 +405,16 @@
   "leapmotor": [],
   "landing": {
     "carousel": [
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_ram_a3zc3a.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_jeep_hmix1p.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg"
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787111618/carrusel_ram_a3zc3a.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787111617/carrusel_jeep_hmix1p.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787111617/carrusel_fiat_s85fnc.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787111618/carrusel_peugeot_isldwt.jpg"
     ],
     "carouselMobile": [
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787540903/carrusel_ram_vert_e82p7r.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787540901/carrusel_jeep_vertical_jobg09.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787540904/carrusel_fiat_vert_koue4l.jpg",
-      "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787540903/carrusel_peugeot_vertical_da7bin.jpg"
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787540903/carrusel_ram_vert_e82p7r.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787540901/carrusel_jeep_vertical_jobg09.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787540904/carrusel_fiat_vert_koue4l.jpg",
+      "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787540903/carrusel_peugeot_vertical_da7bin.jpg"
     ],
     "promos": [
       {
@@ -448,15 +448,15 @@
     ],
     "newsletterPopupImage": "imagenes/popup_promo.jpg",
     "leasingPopupImage": "imagenes/popup_arrendamiento.jpg",
-    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
-    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
+    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
+    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
     "brandsImages": {
-      "ram": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/CHASIS_08_sxfkt4.png",
-      "dodge": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/ATTITUDE_08_xn2snk.png",
-      "jeep": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/RENEGADE_08_qzv3py.png",
-      "fiat": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359880/PULSE_08_khp9qn.png",
-      "peugeot": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/2008_08_efwatx.png",
-      "leapmotor": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/B10_08_ey7usy.png"
+      "ram": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/CHASIS_08_sxfkt4.png",
+      "dodge": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/ATTITUDE_08_xn2snk.png",
+      "jeep": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/RENEGADE_08_qzv3py.png",
+      "fiat": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359880/PULSE_08_khp9qn.png",
+      "peugeot": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/2008_08_efwatx.png",
+      "leapmotor": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787359879/B10_08_ey7usy.png"
     }
   }
 }
