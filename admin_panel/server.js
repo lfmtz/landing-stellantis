@@ -834,6 +834,12 @@ function generateIndexHtml(dbData) {
   // Newsletter registration popup
   const popupImg = landing.newsletterPopupImage || '';
   html = html.replace(/\{\{NEWSLETTER_POPUP_IMAGE\}\}/g, popupImg);
+
+  // Dynamic Backgrounds (Cloudinary or local fallback)
+  const bodyBg = landing.bodyBg || 'imagenes/fondo_escritorio.png';
+  const bodyBgMobile = landing.bodyBgMobile || 'imagenes/fondo_movil.png';
+  html = html.replace(/\{\{BODY_BG\}\}/g, bodyBg);
+  html = html.replace(/\{\{BODY_BG_MOBILE\}\}/g, bodyBgMobile);
   
   // Featured promos
   const promos = landing.promos || [];

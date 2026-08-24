@@ -37,6 +37,16 @@
             #heroCarouselItem3 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111617/carrusel_fiat_s85fnc.jpg'); }
             #heroCarouselItem4 { background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/v1787111618/carrusel_peugeot_isldwt.jpg'); }
         }
+
+        /* Fondo dinámico de la Landing Page */
+        body {
+            background-image: url('{{BODY_BG}}');
+        }
+        @media (max-width: 768px) {
+            body {
+                background-image: url('{{BODY_BG_MOBILE}}');
+            }
+        }
     </style>
 </head>
 <body>

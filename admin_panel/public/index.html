@@ -94,14 +94,14 @@
 
         <div class="landing-config-form" style="margin-top: 20px;">
           
-          <!-- Accordion 1: Popups -->
+          <!-- Accordion 1: Popups y Fondos -->
           <div class="accordion-section">
             <div class="accordion-header active-header" onclick="toggleAccordion(this)">
-              <h3><i class="fa-solid fa-window-restore"></i> 1. Imágenes de Popups</h3>
+              <h3><i class="fa-solid fa-window-restore"></i> 1. Popups y Fondos de la Landing</h3>
               <i class="fa-solid fa-chevron-down accordion-icon"></i>
             </div>
             <div class="accordion-content" style="display: block;">
-              <div class="form-row" style="display: flex; gap: 15px;">
+              <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
                 <div class="form-group col-6" style="flex: 1;">
                   <label for="newsletterPopupImage">Popup de Registro (Newsletter / Invitaciones) (800x500)</label>
                   <input type="url" id="newsletterPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
@@ -109,6 +109,16 @@
                 <div class="form-group col-6" style="flex: 1;">
                   <label for="leasingPopupImage">Popup de Arrendamiento (Global para Marcas) (800x1000)</label>
                   <input type="url" id="leasingPopupImage" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+                </div>
+              </div>
+              <div class="form-row" style="display: flex; gap: 15px;">
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="bodyBg">Fondo de Pantalla Escritorio (Cloudinary) (1920x1080)</label>
+                  <input type="url" id="bodyBg" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/... o imagenes/fondo_escritorio.png">
+                </div>
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="bodyBgMobile">Fondo de Pantalla Celular / Móvil (Cloudinary) (800x1000)</label>
+                  <input type="url" id="bodyBgMobile" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/... o imagenes/fondo_movil.png">
                 </div>
               </div>
             </div>
@@ -652,9 +662,11 @@
     function loadLandingConfigToForm() {
       const landing = database.landing || {};
       
-      // Popups
+      // Popups y Fondos
       document.getElementById('newsletterPopupImage').value = landing.newsletterPopupImage || '';
       document.getElementById('leasingPopupImage').value = landing.leasingPopupImage || '';
+      document.getElementById('bodyBg').value = landing.bodyBg || '';
+      document.getElementById('bodyBgMobile').value = landing.bodyBgMobile || '';
       
       // Carousel backgrounds
       const carousel = landing.carousel || [];
@@ -731,6 +743,8 @@
         promos,
         newsletterPopupImage: document.getElementById('newsletterPopupImage').value.trim(),
         leasingPopupImage: document.getElementById('leasingPopupImage').value.trim(),
+        bodyBg: document.getElementById('bodyBg').value.trim(),
+        bodyBgMobile: document.getElementById('bodyBgMobile').value.trim(),
         brandsImages
       };
       
