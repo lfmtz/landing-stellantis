@@ -443,7 +443,7 @@
         "name": "Autos Demo",
         "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548627/AUTOS_DEMO_ul9abk.jpg",
         "description": "Tu mejor inversión con precio especial de remate, equipamiento completo y entrega inmediata.",
-        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20autos%20demo"
+        "whatsapp": "paginas_promo/promo-demos.html"
       }
     ],
     "newsletterPopupImage": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787602300/ENTRADA_2_ocjd42.jpg",

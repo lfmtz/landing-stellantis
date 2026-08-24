@@ -1047,10 +1047,12 @@ function generateIndexHtml(dbData) {
     const desc = p.description || '';
     const wa = p.whatsapp || '';
     
+    const target = (wa.startsWith('http') || wa.startsWith('https') || wa.startsWith('//') || wa.startsWith('wa.me')) ? 'target="_blank"' : '';
     html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_IMAGE\\}\\}`, 'g'), img);
     html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_NAME\\}\\}`, 'g'), name);
     html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_DESC\\}\\}`, 'g'), desc);
     html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_WA\\}\\}`, 'g'), wa);
+    html = html.replace(new RegExp(`\\{\\{OFFER_${i + 1}_TARGET\\}\\}`, 'g'), target);
   }
   
   // Brand modules images
