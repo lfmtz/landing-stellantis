@@ -60,6 +60,15 @@ function writeData(data) {
   }
 }
 
+// Optimize Cloudinary URLs helper
+function optimizeCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('cloudinary.com') && !url.includes('f_auto') && !url.includes('q_auto')) {
+    return url.replace(/(image\/upload\/)(v\d+)/, '$1f_auto,q_auto/$2');
+  }
+  return url;
+}
+
 // Get all promos
 app.get('/api/promos', (req, res) => {
   res.json(readData());
@@ -271,7 +280,7 @@ function generateHtmlForBrand(brand, vehicles) {
       : '';
 
     // Relative image path adjustment (pages are in paginas_promo, so they need to go up one folder '../imagenes/')
-    let imageSrc = v.image;
+    let imageSrc = optimizeCloudinaryUrl(v.image);
     if (imageSrc && !imageSrc.startsWith('http') && !imageSrc.startsWith('../')) {
       imageSrc = `../${imageSrc}`;
     }
@@ -321,7 +330,7 @@ function generateHtmlForBrand(brand, vehicles) {
   
   const dbDataLocal = readData();
   const landingConfigLocal = dbDataLocal.landing || {};
-  let leasingPopupImgSrc = landingConfigLocal.leasingPopupImage || '../imagenes/popup_arrendamiento.jpg';
+  let leasingPopupImgSrc = optimizeCloudinaryUrl(landingConfigLocal.leasingPopupImage) || '../imagenes/popup_arrendamiento.jpg';
   if (leasingPopupImgSrc && !leasingPopupImgSrc.startsWith('http') && !leasingPopupImgSrc.startsWith('../')) {
     leasingPopupImgSrc = `../${leasingPopupImgSrc}`;
   }
@@ -825,19 +834,19 @@ function generateIndexHtml(dbData) {
   const carousel = landing.carousel || [];
   const carouselMobile = landing.carouselMobile || [];
   for (let i = 0; i < 4; i++) {
-    const val = carousel[i] || `imagenes/carrusel_${i + 1}.jpg`;
-    const valMobile = carouselMobile[i] || val; // Fallback to desktop if mobile is empty
+    const val = optimizeCloudinaryUrl(carousel[i] || `imagenes/carrusel_${i + 1}.jpg`);
+    const valMobile = optimizeCloudinaryUrl(carouselMobile[i] || val); // Fallback to desktop if mobile is empty
     html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}\\}\\}`, 'g'), val);
     html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}_MOBILE\\}\\}`, 'g'), valMobile);
   }
   
   // Newsletter registration popup
-  const popupImg = landing.newsletterPopupImage || '';
+  const popupImg = optimizeCloudinaryUrl(landing.newsletterPopupImage || '');
   html = html.replace(/\{\{NEWSLETTER_POPUP_IMAGE\}\}/g, popupImg);
 
   // Dynamic Backgrounds (Cloudinary or local fallback)
-  const bodyBg = landing.bodyBg || 'imagenes/fondo_escritorio.png';
-  const bodyBgMobile = landing.bodyBgMobile || 'imagenes/fondo_movil.png';
+  const bodyBg = optimizeCloudinaryUrl(landing.bodyBg || 'imagenes/fondo_escritorio.png');
+  const bodyBgMobile = optimizeCloudinaryUrl(landing.bodyBgMobile || 'imagenes/fondo_movil.png');
   html = html.replace(/\{\{BODY_BG\}\}/g, bodyBg);
   html = html.replace(/\{\{BODY_BG_MOBILE\}\}/g, bodyBgMobile);
   
@@ -845,7 +854,7 @@ function generateIndexHtml(dbData) {
   const promos = landing.promos || [];
   for (let i = 0; i < 4; i++) {
     const p = promos[i] || {};
-    const img = p.image || '';
+    const img = optimizeCloudinaryUrl(p.image || '');
     const name = p.name || '';
     const desc = p.description || '';
     const wa = p.whatsapp || '';
