@@ -419,37 +419,37 @@
     "promos": [
       {
         "id": "lp-1",
-        "name": "RAM 700",
-        "image": "imagenes/oferta_1.png",
-        "description": "Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.",
-        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%20700."
-      },
-      {
-        "id": "lp-2",
-        "name": "RAM 4000",
-        "image": "imagenes/oferta_2.png",
-        "description": "El máximo poder para tu negocio. Descubre los beneficios exclusivos.",
-        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%204000."
-      },
-      {
-        "id": "lp-3",
         "name": "RAM 1200 Chasis",
-        "image": "imagenes/oferta_3.png",
-        "description": "Robustez y versatilidad para llevar tu negocio al siguiente nivel. ¡Descubre sus planes de financiamiento!",
+        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548632/RAM_CHASIS_vhuyq5.jpg",
+        "description": "Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.",
         "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis."
       },
       {
+        "id": "lp-2",
+        "name": "RAM 1200 Doble Cabina",
+        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/RAM_DOBLE_CABINA_gpzsab.jpg",
+        "description": "El máximo poder para tu negocio. Descubre los beneficios exclusivos.",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20doble%20cabina"
+      },
+      {
+        "id": "lp-3",
+        "name": "B10",
+        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/B10__FLOTILLA_vncjpr.jpg",
+        "description": "Tecnología 100% eléctrica y máximo confort para transformar tu forma de viajar. ¡Descubre sus planes de financiamiento!",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20B10"
+      },
+      {
         "id": "lp-4",
-        "name": "Expert Furgon",
-        "image": "imagenes/oferta_4.png",
-        "description": "Tu socio de negocios ideal con el mayor espacio y rendimiento de combustible.",
-        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20Expert%20Furgon."
+        "name": "Autos Demo",
+        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548627/AUTOS_DEMO_ul9abk.jpg",
+        "description": "Tu mejor inversión con precio especial de remate, equipamiento completo y entrega inmediata.",
+        "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20autos%20demo"
       }
     ],
     "newsletterPopupImage": "imagenes/popup_promo.jpg",
     "leasingPopupImage": "imagenes/popup_arrendamiento.jpg",
-    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
-    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
+    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
+    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
     "brandsImages": {
       "ram": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/CHASIS_08_sxfkt4.png",
       "dodge": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/ATTITUDE_08_xn2snk.png",
