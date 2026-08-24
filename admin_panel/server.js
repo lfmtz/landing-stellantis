@@ -356,7 +356,10 @@ function generateHtmlForBrand(brand, vehicles) {
           headers.forEach((h, idx) => {
             const val = cols[idx] || '';
             if (val.startsWith('http://') || val.startsWith('https://')) {
-              colsHtml += `<td><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};">Cotizar</a></td>`;
+              const carBrand = cols[0] || 'Demo';
+              const carModel = cols[1] || '';
+              const fullName = `${carBrand} ${carModel}`.trim().replace(/'/g, "\\'");
+              colsHtml += `<td><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
             } else {
               colsHtml += `<td>${val}</td>`;
             }
