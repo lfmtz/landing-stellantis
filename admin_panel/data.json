@@ -448,8 +448,8 @@
     ],
     "newsletterPopupImage": "imagenes/popup_promo.jpg",
     "leasingPopupImage": "imagenes/popup_arrendamiento.jpg",
-    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
-    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
+    "bodyBg": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png",
+    "bodyBgMobile": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png",
     "brandsImages": {
       "ram": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/CHASIS_08_sxfkt4.png",
       "dodge": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1787359879/ATTITUDE_08_xn2snk.png",
