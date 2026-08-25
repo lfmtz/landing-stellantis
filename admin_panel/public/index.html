@@ -1035,6 +1035,9 @@
         } else {
           showOverlay('Error', 'No se pudo guardar la configuración.', false);
         }
+      } catch (err) {
+        showOverlay('Error', 'Error de conexión con el servidor.', false);
+      }
     });
 
     // Save Welcome Portal Config

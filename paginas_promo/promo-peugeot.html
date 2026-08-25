@@ -13,6 +13,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <title>Promociones PEUGEOT</title>
   <style>
     :root {
@@ -50,6 +51,100 @@
       .grid-promos {
         grid-template-columns: 1fr;
       }
+    }
+
+    /* Estilos de la Tabla Excel Interactiva */
+    .excel-table-container {
+      max-width: 960px;
+      margin: 30px auto;
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      padding: 20px;
+      font-family: var(--fuente);
+    }
+    .table-header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .table-title {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .table-search-box {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+    }
+    .table-search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    .table-search-box input {
+      width: 100%;
+      padding: 8px 12px 8px 35px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+    .table-search-box input:focus {
+      border-color: var(--acento);
+    }
+    .table-responsive-scroll {
+      overflow-x: auto;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
+    .demo-excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .demo-excel-table th {
+      background: #f4f4f4;
+      color: #111;
+      font-weight: 700;
+      padding: 12px;
+      border-bottom: 2px solid #E0E0E0;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .demo-excel-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      color: #444;
+    }
+    .demo-excel-table tr:hover {
+      background: #fafafa;
+    }
+    .btn-wa-table {
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      text-align: center;
     }
 
     .card {
@@ -397,13 +492,17 @@
         <span class="bar"></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="promo-ram.html" class="nav-item-link " id="link-ram">RAM</a></li><li><a href="promo-dodge.html" class="nav-item-link " id="link-dodge">DODGE</a></li><li><a href="promo-jeep.html" class="nav-item-link " id="link-jeep">JEEP</a></li><li><a href="promo-fiat.html" class="nav-item-link " id="link-fiat">FIAT</a></li><li><a href="promo-peugeot.html" class="nav-item-link active" id="link-peugeot">PEUGEOT</a></li><li><a href="promo-leapmotor.html" class="nav-item-link " id="link-leapmotor">LEAPMOTOR</a></li>
+        <li><a href="promo-ram.html" class="nav-item-link " id="link-ram">RAM</a></li><li><a href="promo-dodge.html" class="nav-item-link " id="link-dodge">DODGE</a></li><li><a href="promo-jeep.html" class="nav-item-link " id="link-jeep">JEEP</a></li><li><a href="promo-fiat.html" class="nav-item-link " id="link-fiat">FIAT</a></li><li><a href="promo-peugeot.html" class="nav-item-link active" id="link-peugeot">PEUGEOT</a></li><li><a href="promo-leapmotor.html" class="nav-item-link " id="link-leapmotor">LEAPMOTOR</a></li><li><a href="promo-demos.html" class="nav-item-link " id="link-demos">AUTOS DEMO</a></li>
         <li><a href="../index.html" class="btn-back-home">Inicio</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="grid-promos" style="margin-top: 20px;">
+  
+  
+  
+  
+  <div class="grid-promos" style="margin-top: 10px;">
     
     <article class="card" style="border-top-color: #001e62;">
       <div class="img-container">
@@ -750,6 +849,30 @@
         }, 2000);
       }
     });
+
+    // Lógica para filtrar la tabla interactiva de demos
+    function filterDemoTable() {
+      var input = document.getElementById("demoTableSearch");
+      var filter = input.value.toUpperCase();
+      var table = document.getElementById("demoExcelTable");
+      if (!table) return;
+      var tr = table.getElementsByTagName("tr");
+      
+      for (var i = 1; i < tr.length; i++) {
+        var show = false;
+        var td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+          if (td[j]) {
+            var txtValue = td[j].textContent || td[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              show = true;
+              break;
+            }
+          }
+        }
+        tr[i].style.display = show ? "" : "none";
+      }
+    }
   </script>
  </body>
 </html>
