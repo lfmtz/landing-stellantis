@@ -1070,18 +1070,379 @@ function generateIndexHtml(dbData) {
   console.log('index.html successfully generated.');
 }
 
+// Portal Config Endpoint
+app.post('/api/portal-config', (req, res) => {
+  const dbData = readData();
+  dbData.portal = req.body;
+  writeData(dbData);
+
+  // Generate portal HTML
+  generatePortalHtml(dbData);
+
+  // Git Push automatically for the welcome portal repo
+  const PORTAL_DIR = 'C:/Users/luism/Documents/portal_bienvenida';
+  if (fs.existsSync(PORTAL_DIR)) {
+    exec('git add .', { cwd: PORTAL_DIR }, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error running git add in portal:', stderr);
+        return res.json({ success: true, warning: 'Guardado localmente, pero falló git add para el portal.' });
+      }
+      const commitMsg = `Portal Update - ${new Date().toISOString()}`;
+      exec(`git commit -m "${commitMsg}"`, { cwd: PORTAL_DIR }, (err, stdout, stderr) => {
+        exec('git push', { cwd: PORTAL_DIR }, (err, stdout, stderr) => {
+          if (err) {
+            console.error('Error running git push in portal:', stderr);
+            return res.json({ success: true, warning: 'Guardado localmente, pero falló git push para el portal.' });
+          }
+          res.json({ success: true, message: 'Portal actualizado y publicado en GitHub Pages con éxito!' });
+        });
+      });
+    });
+  } else {
+    res.json({ success: true, warning: 'Guardado localmente, pero la carpeta del portal bienvenida no fue encontrada.' });
+  }
+});
+
+// Generate HTML for the welcome portal (Link Hub)
+function generatePortalHtml(data) {
+  const portal = data.portal || {};
+  const name = portal.name || 'Luis';
+  const role = portal.role || 'Tu Asesor Automotriz de Confianza';
+  const avatar = optimizeCloudinaryUrl(portal.avatar || 'https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg');
+  
+  const headerType = portal.headerType || 'text';
+  const brandTitle = portal.brandTitle || 'Aurum Autos';
+  const brandSubtitle = portal.brandSubtitle || 'Car Portfolio';
+  const logoUrl = optimizeCloudinaryUrl(portal.logoUrl || '');
+  
+  const bgType = portal.bgType || 'gradient';
+  const bgImageUrl = optimizeCloudinaryUrl(portal.bgImageUrl || '');
+  
+  const buttons = portal.buttons || [];
+
+  // Background style
+  let bodyBgStyle = 'background: var(--bg-gradient);';
+  if (bgType === 'image' && bgImageUrl) {
+    bodyBgStyle = `background: url('${bgImageUrl}') no-repeat center center fixed; background-size: cover;`;
+  }
+
+  // Header content
+  let headerHtml = `<h1 class="brand-title">${brandTitle}</h1><p class="brand-subtitle">${brandSubtitle}</p>`;
+  if (headerType === 'logo' && logoUrl) {
+    headerHtml = `<img src="${logoUrl}" alt="${brandTitle}" style="max-height: 80px; margin-bottom: 25px; object-fit: contain; max-width: 100%;">`;
+  }
+
+  // Generate buttons dynamic styling and HTML
+  let buttonsHtml = '';
+  let buttonsCss = '';
+  buttons.forEach((btn, idx) => {
+    const text = btn.text || '';
+    const url = btn.url || '#';
+    const color = btn.color || '#ffffff';
+    const icon = btn.icon || 'fa-solid fa-arrow-right-long';
+    
+    buttonsHtml += `
+      <a href="${url}" class="portal-btn btn-custom-${idx}">
+        <span>${text}</span>
+        <i class="${icon}"></i>
+      </a>
+    `;
+
+    buttonsCss += `
+    .btn-custom-${idx} {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.03);
+    }
+    .btn-custom-${idx}:hover {
+      border-color: ${color};
+      box-shadow: 0 0 25px ${color}40;
+      background: ${color}10;
+      transform: translateY(-3px);
+    }
+    .btn-custom-${idx}:hover i {
+      transform: translateX(5px);
+      color: ${color};
+    }
+    `;
+  });
+
+  const fullHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${brandTitle} | ${brandSubtitle}</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* VARIABLES */
+    :root {
+      --bg-gradient: radial-gradient(circle at center, #0e1726 0%, #05080f 100%);
+      --silver-primary: #e0e0e0;
+      --silver-glow: rgba(255, 255, 255, 0.8);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-hover: rgba(255, 255, 255, 0.25);
+    }
+
+    /* GLOBAL STYLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      ${bodyBgStyle}
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* LUXURY GEOMETRIC BACKGROUND ACCENTS */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.05), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    body::before { left: 20%; transform: rotate(15deg); }
+    body::after { right: 20%; transform: rotate(-15deg); }
+
+    /* CONTAINER */
+    .portal-container {
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
+
+    /* LOGO AND BRANDING */
+    .brand-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #ffffff 30%, #a6afb8 70%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      color: #8fa0b5;
+      margin-bottom: 35px;
+    }
+
+    /* AVATAR FRAME */
+    .avatar-wrapper {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin-bottom: 25px;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: transparent;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.1);
+    }
+
+    /* PRESENTATION TEXT */
+    .advisor-name {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .advisor-role {
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: #a0aec0;
+      text-transform: uppercase;
+      margin-bottom: 45px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 15px;
+      width: 80%;
+    }
+
+    /* LINKTREE BUTTON STACK */
+    .links-stack {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .portal-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 18px 25px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .portal-btn i {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    /* Dynamic buttons glow styling */
+    ${buttonsCss}
+
+    /* FOOTER */
+    .portal-footer {
+      margin-top: auto;
+      font-size: 0.7rem;
+      color: #4a5568;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    /* KEYFRAMES */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    /* RESPONSIVE DESIGN (Desktop version optimization) */
+    @media (min-width: 768px) {
+      .portal-container {
+        max-width: 520px;
+        background: rgba(255, 255, 255, 0.01);
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        border-radius: 24px;
+        padding: 50px 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(5px);
+      }
+      
+      .brand-title {
+        font-size: 2.2rem;
+      }
+      
+      .advisor-name {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-container">
+    <!-- BRANDING -->
+    ${headerHtml}
+
+    <!-- AVATAR -->
+    <div class="avatar-wrapper">
+      <div class="avatar-ring"></div>
+      <img src="${avatar}" alt="${name}" class="avatar-img">
+    </div>
+
+    <!-- PRESENTATION -->
+    <h2 class="advisor-name">${name}</h2>
+    <p class="advisor-role">${role}</p>
+
+    <!-- BUTTONS STACK -->
+    <div class="links-stack">
+      ${buttonsHtml}
+    </div>
+
+    <!-- FOOTER -->
+    <p class="portal-footer">&copy; ${new Date().getFullYear()} ${brandTitle}. Todos los derechos reservados.</p>
+  </div>
+
+</body>
+</html>`;
+
+  const PORTAL_DIR = 'C:/Users/luism/Documents/portal_bienvenida';
+  if (fs.existsSync(PORTAL_DIR)) {
+    fs.writeFileSync(path.join(PORTAL_DIR, 'index.html'), fullHtml, 'utf8');
+    console.log('[+] Portal index.html successfully generated.');
+  }
+}
+
 // Generate all initial HTMLs on startup if database has info
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     const data = readData();
     generateIndexHtml(data);
+    generatePortalHtml(data);
     Object.keys(data).forEach(brand => {
-      if (brand !== 'landing') {
+      if (brand !== 'landing' && brand !== 'portal') {
         generateHtmlForBrand(brand, data[brand]);
       }
     });
   });
 }
 
-module.exports = { generateIndexHtml, generateHtmlForBrand, readData, writeData };
+module.exports = { generateIndexHtml, generateHtmlForBrand, generatePortalHtml, readData, writeData };

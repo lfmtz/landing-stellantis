@@ -63,6 +63,9 @@
           <span class="brand-badge badge-demos"></span> Autos Demo
         </button>
         <div style="border-top: 1px solid #233143; margin: 15px 0;"></div>
+        <button class="brand-tab-btn" id="portalConfigTabBtn" style="display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 8px;">
+          <i class="fa-solid fa-square-share-nodes"></i> Portal de Bienvenida
+        </button>
         <button class="brand-tab-btn" id="landingConfigTabBtn" style="display: flex; align-items: center; gap: 8px; width: 100%;">
           <i class="fa-solid fa-house-laptop"></i> Configuración Landing
         </button>
@@ -83,6 +86,112 @@
         <!-- Cars Gallery -->
         <div id="promosGrid" class="promos-grid">
           <!-- Dynamic content will be rendered here -->
+        </div>
+      </div>
+
+      <!-- Portal de Bienvenida Config View -->
+      <div id="portalView" style="display: none;">
+        <div class="content-header">
+          <h2>Configuración del Portal de Bienvenida</h2>
+          <button id="savePortalBtn" class="btn btn-success">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Guardar y Publicar en GitHub
+          </button>
+        </div>
+
+        <div class="landing-config-form" style="margin-top: 20px;">
+          
+          <!-- Sección 1: Datos del Asesor -->
+          <div class="accordion-section">
+            <div class="accordion-header active-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-user-tie"></i> 1. Perfil del Asesor</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content" style="display: block;">
+              <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="portalName">Nombre de Presentación</label>
+                  <input type="text" id="portalName" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. Luis">
+                </div>
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="portalRole">Cargo / Subtítulo</label>
+                  <input type="text" id="portalRole" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. Tu Asesor Automotriz de Confianza">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 15px;">
+                <label for="portalAvatar">URL de tu Foto de Perfil (Cloudinary) (Recomendado 500x500 circular o medio cuerpo)</label>
+                <input type="url" id="portalAvatar" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 2: Cabecera y Branding -->
+          <div class="accordion-section" style="margin-top: 15px;">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-images"></i> 2. Cabecera y Logotipos</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content" style="display: none;">
+              <div class="form-group" style="margin-bottom: 15px;">
+                <label for="portalHeaderType">Tipo de Cabecera</label>
+                <select id="portalHeaderType" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" onchange="togglePortalHeaderFields()">
+                  <option value="text">Texto de Marca (Ej: Aurum Autos)</option>
+                  <option value="logo">Logotipo de Imagen (URL de Cloudinary)</option>
+                </select>
+              </div>
+              <div id="portalHeaderTextGroup" class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="portalBrandTitle">Título de Marca</label>
+                  <input type="text" id="portalBrandTitle" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. Aurum Autos">
+                </div>
+                <div class="form-group col-6" style="flex: 1;">
+                  <label for="portalBrandSubtitle">Subtítulo de Marca</label>
+                  <input type="text" id="portalBrandSubtitle" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ej. Car Portfolio">
+                </div>
+              </div>
+              <div id="portalHeaderLogoGroup" class="form-group" style="margin-bottom: 15px; display: none;">
+                <label for="portalLogoUrl">URL del Logotipo Corporativo (Cloudinary)</label>
+                <input type="url" id="portalLogoUrl" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 3: Fondo de Pantalla -->
+          <div class="accordion-section" style="margin-top: 15px;">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-palette"></i> 3. Fondo del Portal</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content" style="display: none;">
+              <div class="form-group" style="margin-bottom: 15px;">
+                <label for="portalBgType">Tipo de Fondo</label>
+                <select id="portalBgType" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" onchange="togglePortalBgFields()">
+                  <option value="gradient">Fondo Gradiente Oscuro (Por defecto, ultra rápido)</option>
+                  <option value="image">Imagen de Fondo Personalizada (URL de Cloudinary)</option>
+                </select>
+              </div>
+              <div id="portalBgImageGroup" class="form-group" style="margin-bottom: 15px; display: none;">
+                <label for="portalBgImageUrl">URL de la Imagen de Fondo (Cloudinary) (Recomendado 1080x1920 oscuro)</label>
+                <input type="url" id="portalBgImageUrl" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="https://res.cloudinary.com/...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 4: Enlaces / Botones Linktree -->
+          <div class="accordion-section" style="margin-top: 15px;">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-square-share-nodes"></i> 4. Botones y Enlaces (Linktree)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content" style="display: none;">
+              <div id="portalButtonsList" style="margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px;">
+                <!-- Las filas de los botones se agregarán aquí dinámicamente -->
+              </div>
+              <button type="button" id="addPortalButtonBtn" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-plus"></i> Agregar Otro Botón
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -651,19 +760,23 @@
     }
 
     const landingConfigTabBtn = document.getElementById('landingConfigTabBtn');
+    const portalConfigTabBtn = document.getElementById('portalConfigTabBtn');
     const promosView = document.getElementById('promosView');
     const landingView = document.getElementById('landingView');
+    const portalView = document.getElementById('portalView');
 
     // Brand navigation clicks
     brandTabs.forEach(tab => {
       tab.addEventListener('click', (e) => {
-        if (!tab.dataset.brand) return; // Skip if it's the landing config tab (it triggers its own listener below)
+        if (!tab.dataset.brand) return; // Skip if it's the landing config tab
         brandTabs.forEach(t => t.classList.remove('active'));
         landingConfigTabBtn.classList.remove('active');
+        portalConfigTabBtn.classList.remove('active');
         tab.classList.add('active');
         
         promosView.style.display = 'block';
         landingView.style.display = 'none';
+        portalView.style.display = 'none';
         
         currentBrand = tab.dataset.brand;
         renderCurrentBrand();
@@ -674,11 +787,26 @@
     landingConfigTabBtn.addEventListener('click', () => {
       brandTabs.forEach(t => t.classList.remove('active'));
       landingConfigTabBtn.classList.add('active');
+      portalConfigTabBtn.classList.remove('active');
       
       promosView.style.display = 'none';
       landingView.style.display = 'block';
+      portalView.style.display = 'none';
       
       loadLandingConfigToForm();
+    });
+
+    // Portal Config Tab Click
+    portalConfigTabBtn.addEventListener('click', () => {
+      brandTabs.forEach(t => t.classList.remove('active'));
+      landingConfigTabBtn.classList.remove('active');
+      portalConfigTabBtn.classList.add('active');
+      
+      promosView.style.display = 'none';
+      landingView.style.display = 'none';
+      portalView.style.display = 'block';
+      
+      loadPortalConfigToForm();
     });
 
     // Accordion Toggle Helper Function in Global Scope
@@ -697,6 +825,106 @@
         contentEl.style.display = 'block';
       }
     };
+
+    window.togglePortalHeaderFields = function() {
+      const type = document.getElementById('portalHeaderType').value;
+      if (type === 'logo') {
+        document.getElementById('portalHeaderTextGroup').style.display = 'none';
+        document.getElementById('portalHeaderLogoGroup').style.display = 'block';
+      } else {
+        document.getElementById('portalHeaderTextGroup').style.display = 'flex';
+        document.getElementById('portalHeaderLogoGroup').style.display = 'none';
+      }
+    };
+
+    window.togglePortalBgFields = function() {
+      const type = document.getElementById('portalBgType').value;
+      if (type === 'image') {
+        document.getElementById('portalBgImageGroup').style.display = 'block';
+      } else {
+        document.getElementById('portalBgImageGroup').style.display = 'none';
+      }
+    };
+
+    function addPortalButtonRow(text = '', url = '', color = '#ffffff', icon = 'fa-solid fa-arrow-right-long') {
+      const container = document.getElementById('portalButtonsList');
+      const row = document.createElement('div');
+      row.className = 'portal-button-row';
+      row.style.cssText = 'display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.01); border: 1px solid #233143; padding: 15px; border-radius: 8px; flex-wrap: wrap; margin-bottom: 10px; width: 100%;';
+      
+      row.innerHTML = `
+        <div style="flex: 2; min-width: 150px; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 0.75rem; color: #8fa0b5;">Texto del Botón</label>
+          <input type="text" class="btn-text-input form-control" style="background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" value="${text.replace(/"/g, '&quot;')}">
+        </div>
+        <div style="flex: 3; min-width: 200px; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 0.75rem; color: #8fa0b5;">Enlace (URL)</label>
+          <input type="url" class="btn-url-input form-control" style="background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" value="${url.replace(/"/g, '&quot;')}">
+        </div>
+        <div style="flex: 1.5; min-width: 120px; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 0.75rem; color: #8fa0b5;">Resplandor</label>
+          <select class="btn-color-input form-control" style="background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            <option value="#00e5ff" ${color === '#00e5ff' ? 'selected' : ''}>Celeste Cyan</option>
+            <option value="#ffffff" ${color === '#ffffff' ? 'selected' : ''}>Plateado</option>
+            <option value="#CC4400" ${color === '#CC4400' ? 'selected' : ''}>Naranja Dodge</option>
+            <option value="#4A7729" ${color === '#4A7729' ? 'selected' : ''}>Verde Jeep</option>
+            <option value="#B30000" ${color === '#B30000' ? 'selected' : ''}>Rojo Fiat</option>
+            <option value="#001E62" ${color === '#001E62' ? 'selected' : ''}>Azul Peugeot</option>
+          </select>
+        </div>
+        <div style="flex: 1.5; min-width: 120px; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 0.75rem; color: #8fa0b5;">Icono</label>
+          <select class="btn-icon-input form-control" style="background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;">
+            <option value="fa-solid fa-arrow-right-long" ${icon === 'fa-solid fa-arrow-right-long' ? 'selected' : ''}>Flecha →</option>
+            <option value="fa-solid fa-car" ${icon === 'fa-solid fa-car' ? 'selected' : ''}>Auto 🚗</option>
+            <option value="fa-brands fa-whatsapp" ${icon === 'fa-brands fa-whatsapp' ? 'selected' : ''}>WhatsApp 💬</option>
+            <option value="fa-solid fa-phone" ${icon === 'fa-solid fa-phone' ? 'selected' : ''}>Teléfono 📞</option>
+            <option value="fa-solid fa-globe" ${icon === 'fa-solid fa-globe' ? 'selected' : ''}>Web 🌐</option>
+            <option value="fa-solid fa-briefcase" ${icon === 'fa-solid fa-briefcase' ? 'selected' : ''}>Maletín 💼</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()" style="margin-top: 20px; padding: 10px 12px; border-radius: 4px; cursor: pointer; background:#b30000; border:none; color:#fff;">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      `;
+      container.appendChild(row);
+    }
+
+    document.getElementById('addPortalButtonBtn').addEventListener('click', () => {
+      addPortalButtonRow('', '', '#ffffff', 'fa-solid fa-arrow-right-long');
+    });
+
+    function loadPortalConfigToForm() {
+      const portal = database.portal || {};
+      
+      // Profile
+      document.getElementById('portalName').value = portal.name || 'Luis';
+      document.getElementById('portalRole').value = portal.role || 'Tu Asesor Automotriz de Confianza';
+      document.getElementById('portalAvatar').value = portal.avatar || 'https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg';
+      
+      // Branding
+      document.getElementById('portalHeaderType').value = portal.headerType || 'text';
+      document.getElementById('portalBrandTitle').value = portal.brandTitle || 'Aurum Autos';
+      document.getElementById('portalBrandSubtitle').value = portal.brandSubtitle || 'Car Portfolio';
+      document.getElementById('portalLogoUrl').value = portal.logoUrl || '';
+      togglePortalHeaderFields();
+
+      // Background
+      document.getElementById('portalBgType').value = portal.bgType || 'gradient';
+      document.getElementById('portalBgImageUrl').value = portal.bgImageUrl || '';
+      togglePortalBgFields();
+
+      // Buttons list
+      const container = document.getElementById('portalButtonsList');
+      container.innerHTML = '';
+      const buttons = portal.buttons || [
+        { text: 'Nuevos y Autos Demo', url: 'https://lfmtz.github.io/landing-stellantis/', color: '#00e5ff', icon: 'fa-solid fa-car' },
+        { text: 'Autos Seminuevos', url: 'https://lfmtz.github.io/catalogo-seminuevos/', color: '#ffffff', icon: 'fa-solid fa-car' }
+      ];
+      buttons.forEach(btn => {
+        addPortalButtonRow(btn.text, btn.url, btn.color, btn.icon);
+      });
+    }
 
     function loadLandingConfigToForm() {
       const landing = database.landing || {};
@@ -807,8 +1035,60 @@
         } else {
           showOverlay('Error', 'No se pudo guardar la configuración.', false);
         }
+    });
+
+    // Save Welcome Portal Config
+    document.getElementById('savePortalBtn').addEventListener('click', async () => {
+      const buttons = [];
+      const rows = document.querySelectorAll('.portal-button-row');
+      rows.forEach(row => {
+        const text = row.querySelector('.btn-text-input').value.trim();
+        const url = row.querySelector('.btn-url-input').value.trim();
+        const color = row.querySelector('.btn-color-input').value;
+        const icon = row.querySelector('.btn-icon-input').value;
+        if (text && url) {
+          buttons.push({ text, url, color, icon });
+        }
+      });
+
+      const portalConfig = {
+        name: document.getElementById('portalName').value.trim(),
+        role: document.getElementById('portalRole').value.trim(),
+        avatar: document.getElementById('portalAvatar').value.trim(),
+        headerType: document.getElementById('portalHeaderType').value,
+        brandTitle: document.getElementById('portalBrandTitle').value.trim(),
+        brandSubtitle: document.getElementById('portalBrandSubtitle').value.trim(),
+        logoUrl: document.getElementById('portalLogoUrl').value.trim(),
+        bgType: document.getElementById('portalBgType').value,
+        bgImageUrl: document.getElementById('portalBgImageUrl').value.trim(),
+        buttons
+      };
+
+      showOverlay('Guardando...', 'Publicando cambios del Portal en GitHub Pages...');
+
+      try {
+        const res = await fetch('/api/portal-config', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(portalConfig)
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          showOverlay(
+            result.warning ? 'Guardado con advertencia' : '¡Publicado!',
+            result.message || result.warning,
+            !result.warning
+          );
+          // Reload local database cache
+          await loadPromos();
+        } else {
+          showOverlay('Error', 'No se pudo guardar la configuración del portal.', false);
+        }
       } catch (err) {
-        showOverlay('Error', 'Error de conexión con el servidor.', false);
+        showOverlay('Error', 'Ocurrió un error de red al conectar con el servidor.', false);
       }
     });
 

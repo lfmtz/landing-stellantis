@@ -460,5 +460,30 @@
     },
     "demosTableCsv": "Marca;Modelo;Año;Versión;Color;Kilometraje;Precio;WhatsApp\nRAM;1200 Crew Cab;2026;Tradesman;Blanco;1500 km;$399,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200\nJeep;Compass;2025;Limited;Gris;3400 km;$549,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass\nDodge;Attitude;2025;SXT;Rojo;800 km;$359,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude\nFiat;Pulse;2024;Audace;Azul;4200 km;$370,000;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse"
   },
-  "demos": []
+  "demos": [],
+  "portal": {
+    "name": "Luis",
+    "role": "Tu Asesor Automotriz de Confianza",
+    "avatar": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg",
+    "headerType": "text",
+    "brandTitle": "Aurum Autos",
+    "brandSubtitle": "Car Portfolio",
+    "logoUrl": "",
+    "bgType": "gradient",
+    "bgImageUrl": "",
+    "buttons": [
+      {
+        "text": "Nuevos y Autos Demo",
+        "url": "https://lfmtz.github.io/landing-stellantis/",
+        "color": "#00e5ff",
+        "icon": "fa-solid fa-car"
+      },
+      {
+        "text": "Autos Seminuevos",
+        "url": "https://lfmtz.github.io/catalogo-seminuevos/",
+        "color": "#ffffff",
+        "icon": "fa-solid fa-car"
+      }
+    ]
+  }
 }
