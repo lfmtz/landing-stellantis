@@ -420,7 +420,21 @@
         </div>
 
         <div class="form-group">
-          <label for="description">Descripción Principal / Mensaje de la Promo</label>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; flex-wrap: wrap; gap: 5px;">
+            <label for="description" style="margin-bottom: 0;">Descripción Principal / Mensaje de la Promo</label>
+            <div class="text-format-toolbar" style="display: flex; gap: 5px; align-items: center;">
+              <select id="highlightColor" style="background: #151d2a; color: #fff; border: 1px solid #233143; border-radius: 4px; padding: 3px 8px; font-size: 0.8rem;">
+                <option value="red">Rojo Estándar</option>
+                <option value="#B30000">Rojo Fiat</option>
+                <option value="#CC4400">Naranja Dodge</option>
+                <option value="#4A7729">Verde Jeep</option>
+                <option value="#001E62">Azul Peugeot</option>
+                <option value="#00e5ff">Cyan Demo</option>
+              </select>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="formatDescription('highlight')" style="padding: 3px 10px; font-size: 0.8rem; border-radius: 4px; background: #233143; border: 1px solid #32455e; color: #fff; cursor: pointer;" title="Resaltar texto seleccionado con color y negritas"><i class="fa-solid fa-highlighter"></i> Resaltar</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="formatDescription('bold')" style="padding: 3px 10px; font-size: 0.8rem; border-radius: 4px; background: #233143; border: 1px solid #32455e; color: #fff; cursor: pointer;" title="Poner texto seleccionado en Negritas"><i class="fa-solid fa-bold"></i> Negrita</button>
+            </div>
+          </div>
           <textarea id="description" rows="3" required placeholder="Ej. ¡Domina la ciudad con el sedán más eficiente! Estrena con el 46.5% de enganche."></textarea>
         </div>
 
@@ -817,6 +831,32 @@
         showOverlay('Error', 'Ocurrió un error de red.', false);
       }
     }
+
+    // Format description text selection
+    window.formatDescription = function(action) {
+      const textarea = document.getElementById('description');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      const selectedText = text.substring(start, end);
+      
+      if (start === end) {
+        alert('Por favor, selecciona primero con el mouse el texto de la descripción que deseas resaltar.');
+        return;
+      }
+      
+      let replacement = '';
+      if (action === 'bold') {
+        replacement = `<b>${selectedText}</b>`;
+      } else if (action === 'highlight') {
+        const color = document.getElementById('highlightColor').value;
+        replacement = `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
+      }
+      
+      textarea.value = text.substring(0, start) + replacement + text.substring(end);
+      textarea.dispatchEvent(new Event('input'));
+      textarea.focus();
+    };
 
     // Edit Promo Trigger
     window.editPromo = function(id) {
