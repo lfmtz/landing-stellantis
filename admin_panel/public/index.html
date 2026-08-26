@@ -13,6 +13,33 @@
   <!-- Cropper.js CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos del Editor Visual de Tabla CSV */
+    #demosEditorTable input, #demosEditorTable textarea {
+      background: #0b1019 !important;
+      color: #fff !important;
+      border: 1px solid #233143 !important;
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 4px;
+      width: 100%;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    #demosEditorTable input:focus, #demosEditorTable textarea:focus {
+      border-color: #00e5ff !important;
+      background: #111a2e !important;
+    }
+    #demosEditorTable th {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding-bottom: 12px;
+    }
+    .editor-row td {
+      vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
 
@@ -476,9 +503,43 @@
                   </a>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="demosTableCsv">Datos de la Tabla (Marca, Modelo, Año, Color, Kilometraje, Precio, Inventario, WhatsApp)</label>
-                <textarea id="demosTableCsv" class="form-control" style="width:100%; height:200px; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px; font-family: monospace;" placeholder="Marca,Modelo,Año,Color,Kilometraje,Precio,Inventario,WhatsApp&#10;RAM,700 Crew Cab SLT,2025,Blanco,1500 km,$320,000,2 unidades,https://wa.me/...&#10;Jeep,Renegade Latitude,2024,Gris,3400 km,$450,000,1 unidad,https://wa.me/..."></textarea>
+              <div class="form-group" style="margin-top: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                  <label style="margin: 0; font-weight: bold; color: var(--text-primary); font-size: 1.05rem;">Editor Visual de Inventario</label>
+                  <input type="text" id="demosEditorSearch" onkeyup="filterDemosEditorTable()" placeholder="🔍 Buscar por marca, modelo o inventario..." style="width: 320px; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; outline: none; margin: 0;">
+                </div>
+                
+                <div style="overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-secondary); padding: 10px; margin-bottom: 15px;">
+                  <table id="demosEditorTable" style="width: 100%; border-collapse: collapse; min-width: 1000px;">
+                    <thead>
+                      <tr style="border-bottom: 2px solid var(--border);">
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 130px;">MARCA</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 220px;">MODELO Y VERSIÓN</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 90px;">AÑO</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 140px;">COLOR</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">KILOMETRAJE</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">PRECIO</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">INVENTARIO</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b;">WHATSAPP LINK</th>
+                        <th style="padding: 8px; text-align: center; font-size: 0.85rem; color: #64748b; width: 80px;">ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody id="demosEditorTbody">
+                      <!-- Cargado dinámicamente en JS -->
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="addEditorRow()" style="background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-primary); padding: 8px 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-plus"></i> Agregar Unidad al Listado
+                  </button>
+                  <button type="button" class="btn btn-sm" onclick="clearAllEditorRows()" style="background: #dc3545; border: 1px solid #dc3545; color: #fff; padding: 8px 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border-radius: 4px; font-weight: 600;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Limpiar Todo el Inventario
+                  </button>
+                </div>
+                
+                <textarea id="demosTableCsv" style="display: none;"></textarea>
               </div>
             </div>
           </div>
@@ -1090,10 +1151,12 @@
       document.getElementById('brandImageLeapmotor').value = brandsImages.leapmotor || '';
       document.getElementById('brandImageDemos').value = brandsImages.demos || '';
       document.getElementById('demosTableCsv').value = landing.demosTableCsv || '';
+      loadDemosVisualEditor(landing.demosTableCsv || '');
     }
 
     // Save Landing Page Config
     document.getElementById('saveLandingBtn').addEventListener('click', async () => {
+      saveDemosVisualEditor();
       const carousel = [
         document.getElementById('carousel1').value.trim(),
         document.getElementById('carousel2').value.trim(),
@@ -1547,13 +1610,183 @@
           text = text.substring(1);
         }
         document.getElementById('demosTableCsv').value = text;
-        alert('Archivo CSV cargado con éxito en el cuadro de texto. Recuerda hacer clic en "Guardar Cambios" para aplicar.');
+        loadDemosVisualEditor(text);
+        alert('Archivo CSV cargado con éxito en el editor visual. Revisa las filas abajo y recuerda hacer clic en "Guardar Cambios" para aplicar.');
       };
       reader.onerror = function() {
         alert('Error al leer el archivo CSV.');
       };
       reader.readAsText(file, 'UTF-8');
     };
+
+    // Demos Visual Editor Parsing and Building
+    window.loadDemosVisualEditor = function(csvText) {
+      const tbody = document.getElementById('demosEditorTbody');
+      tbody.innerHTML = '';
+      
+      if (!csvText.trim()) return;
+      
+      const parsedRows = parseCsvText(csvText.trim());
+      if (parsedRows.length === 0) return;
+      
+      for (let i = 1; i < parsedRows.length; i++) {
+        const cols = parsedRows[i];
+        if (cols.length === 0 || (cols.length === 1 && cols[0] === '')) continue;
+        addEditorRowWithData(cols);
+      }
+    };
+
+    // Parse CSV in JS (mirroring server.js parser)
+    function parseCsvText(text) {
+      const result = [];
+      let row = [''];
+      let inQuotes = false;
+      let delimiter = null;
+
+      const sample = text.slice(0, 500);
+      if (sample.includes(';')) delimiter = ';';
+      else if (sample.includes('\t')) delimiter = '\t';
+      else delimiter = ',';
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && nextChar === '"') {
+            row[row.length - 1] += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === delimiter && !inQuotes) {
+          row.push('');
+        } else if ((char === '\r' || char === '\n') && !inQuotes) {
+          if (char === '\r' && nextChar === '\n') {
+            i++;
+          }
+          if (row.length > 1 || row[0] !== '') {
+            result.push(row);
+          }
+          row = [''];
+        } else {
+          row[row.length - 1] += char;
+        }
+      }
+      if (row.length > 1 || row[0] !== '') {
+        result.push(row);
+      }
+      return result;
+    }
+
+    // Add a visual row to the editor with existing data
+    window.addEditorRowWithData = function(cols) {
+      const tbody = document.getElementById('demosEditorTbody');
+      const tr = document.createElement('tr');
+      tr.className = 'editor-row';
+      tr.style.borderBottom = '1px solid var(--border)';
+      
+      const cleanCols = cols.map(c => c.trim().replace(/^["']|["']$/g, '').trim());
+      
+      const brand = cleanCols[0] || '';
+      const model = cleanCols[1] || '';
+      const year = cleanCols[2] || '';
+      const color = cleanCols[3] || '';
+      const km = cleanCols[4] || '';
+      const price = cleanCols[5] || '';
+      const stock = cleanCols[6] || '';
+      const wa = cleanCols[7] || '';
+      
+      tr.innerHTML = `
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field brand-field" value="${brand}" style="width: 100%;" placeholder="RAM"></td>
+        <td style="padding: 6px;"><textarea class="form-control editor-field model-field" style="width: 100%; height: 35px; resize: vertical;" placeholder="1200 Crew Cab Tradesman">${model}</textarea></td>
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field year-field" value="${year}" style="width: 100%;" placeholder="2026"></td>
+        <td style="padding: 6px;"><textarea class="form-control editor-field color-field" style="width: 100%; height: 35px; resize: vertical;" placeholder="Blanco">${color}</textarea></td>
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field km-field" value="${km}" style="width: 100%;" placeholder="1500 km"></td>
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field price-field" value="${price}" style="width: 100%;" placeholder="399,000"></td>
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field stock-field" value="${stock}" style="width: 100%;" placeholder="2 unidades"></td>
+        <td style="padding: 6px;"><input type="text" class="form-control editor-field wa-field" value="${wa}" style="width: 100%;" placeholder="https://wa.me/..."></td>
+        <td style="padding: 6px; text-align: center; vertical-align: middle;">
+          <button type="button" class="btn btn-sm" onclick="deleteEditorRow(this)" style="background: #dc3545; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px;">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    };
+
+    // Add empty row
+    window.addEditorRow = function() {
+      addEditorRowWithData(['', '', '', '', '', '', '', '']);
+    };
+
+    // Delete row
+    window.deleteEditorRow = function(btn) {
+      if (confirm('¿Estás seguro de que deseas eliminar este vehículo de la lista?')) {
+        const tr = btn.closest('tr');
+        tr.remove();
+      }
+    };
+
+    // Clear all rows
+    window.clearAllEditorRows = function() {
+      if (confirm('⚠️ ¡ATENCIÓN! Esto eliminará todas las filas del listado de inventario. ¿Estás seguro de que deseas vaciar toda la tabla?')) {
+        document.getElementById('demosEditorTbody').innerHTML = '';
+        saveDemosVisualEditor();
+      }
+    };
+
+    // Filter table rows by search query
+    window.filterDemosEditorTable = function() {
+      const query = document.getElementById('demosEditorSearch').value.toUpperCase();
+      const rows = document.querySelectorAll('#demosEditorTbody .editor-row');
+      rows.forEach(row => {
+        const brand = row.querySelector('.brand-field').value.toUpperCase();
+        const model = row.querySelector('.model-field').value.toUpperCase();
+        const year = row.querySelector('.year-field').value.toUpperCase();
+        const color = row.querySelector('.color-field').value.toUpperCase();
+        const stock = row.querySelector('.stock-field').value.toUpperCase();
+        
+        if (brand.includes(query) || model.includes(query) || year.includes(query) || color.includes(query) || stock.includes(query)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    };
+
+    // Serialize visual editor back to CSV in textarea
+    window.saveDemosVisualEditor = function() {
+      const rows = document.querySelectorAll('.editor-row');
+      let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp\n';
+      
+      rows.forEach(row => {
+        const brand = formatCsvField(row.querySelector('.brand-field').value);
+        const model = formatCsvField(row.querySelector('.model-field').value);
+        const year = formatCsvField(row.querySelector('.year-field').value);
+        const color = formatCsvField(row.querySelector('.color-field').value);
+        const km = formatCsvField(row.querySelector('.km-field').value);
+        const price = formatCsvField(row.querySelector('.price-field').value);
+        const stock = formatCsvField(row.querySelector('.stock-field').value);
+        const wa = formatCsvField(row.querySelector('.wa-field').value);
+        
+        if (brand || model || year || color || km || price || stock || wa) {
+          csvContent += `${brand};${model};${year};${color};${km};${price};${stock};${wa}\n`;
+        }
+      });
+      
+      document.getElementById('demosTableCsv').value = csvContent;
+    };
+
+    // Format fields with quotes if they contain newlines or delimiters
+    function formatCsvField(val) {
+      val = val.trim();
+      if (val.includes(';') || val.includes('\n') || val.includes('\r') || val.includes('"')) {
+        val = val.replace(/"/g, '""');
+        return `"${val}"`;
+      }
+      return val;
+    }
 
     // Init
     loadPromos();
