@@ -425,13 +425,24 @@ function generateHtmlForBrand(brand, vehicles) {
             // Convert internal newlines to HTML line breaks
             val = val.replace(/\r?\n/g, '<br>');
 
+            // Format price column automatically if it contains a number
+            if (h.toLowerCase().includes('precio')) {
+              const cleanNum = val.replace(/[^0-9.]/g, '');
+              if (cleanNum) {
+                const num = parseFloat(cleanNum);
+                if (!isNaN(num)) {
+                  val = '$' + num.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                }
+              }
+            }
+
             if (val.startsWith('http://') || val.startsWith('https://')) {
               const carBrand = (cols[0] || 'Demo').trim().replace(/^["']|["']$/g, '');
               const carModel = (cols[1] || '').trim().replace(/^["']|["']$/g, '');
               const fullName = `${carBrand} ${carModel}`.trim().replace(/'/g, "\\'");
-              colsHtml += `<td><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
+              colsHtml += `<td data-label="${h}"><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
             } else {
-              colsHtml += `<td>${val}</td>`;
+              colsHtml += `<td data-label="${h}">${val}</td>`;
             }
           });
           rowsHtml += `<tr>${colsHtml}</tr>`;
@@ -616,6 +627,62 @@ function generateHtmlForBrand(brand, vehicles) {
       text-transform: uppercase;
       display: inline-block;
       text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .demo-excel-table, 
+      .demo-excel-table thead, 
+      .demo-excel-table tbody, 
+      .demo-excel-table th, 
+      .demo-excel-table td, 
+      .demo-excel-table tr {
+        display: block;
+      }
+      .demo-excel-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      .demo-excel-table tr {
+        border: 1px solid #E0E0E0;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      }
+      .demo-excel-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 45% !important;
+        text-align: right;
+        min-height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .demo-excel-table td:last-child {
+        border-bottom: 0;
+        justify-content: center;
+        padding-left: 12px !important;
+        margin-top: 10px;
+      }
+      .demo-excel-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: #888;
+      }
+      .btn-wa-table {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
     }
 
     .card {
