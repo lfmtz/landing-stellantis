@@ -84,6 +84,49 @@ function optimizeCloudinaryUrl(url, brand = '') {
   return url;
 }
 
+// Parse CSV text respecting quoted fields (RFC 4180 compliant)
+function parseCsv(text) {
+  const result = [];
+  let row = [''];
+  let inQuotes = false;
+  let delimiter = null;
+
+  const sample = text.slice(0, 500);
+  if (sample.includes(';')) delimiter = ';';
+  else if (sample.includes('\t')) delimiter = '\t';
+  else delimiter = ',';
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        row[row.length - 1] += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === delimiter && !inQuotes) {
+      row.push('');
+    } else if ((char === '\r' || char === '\n') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        i++;
+      }
+      if (row.length > 1 || row[0] !== '') {
+        result.push(row);
+      }
+      row = [''];
+    } else {
+      row[row.length - 1] += char;
+    }
+  }
+  if (row.length > 1 || row[0] !== '') {
+    result.push(row);
+  }
+  return result;
+}
+
 // Get all promos
 app.get('/api/promos', (req, res) => {
   res.json(readData());
@@ -365,27 +408,26 @@ function generateHtmlForBrand(brand, vehicles) {
   if (brand === 'demos') {
     const demosCsv = landingConfigLocal.demosTableCsv || '';
     if (demosCsv.trim()) {
-      const lines = demosCsv.trim().split('\n');
-      if (lines.length > 0) {
-        let headers = [];
-        let delimiter = ',';
-        const firstLine = lines[0];
-        if (firstLine.includes('\t')) delimiter = '\t';
-        else if (firstLine.includes(';')) delimiter = ';';
-        
-        headers = firstLine.split(delimiter).map(h => h.trim());
+      const parsedRows = parseCsv(demosCsv.trim());
+      if (parsedRows.length > 0) {
+        const headers = parsedRows[0].map(h => h.trim().replace(/^["']|["']$/g, ''));
         
         let rowsHtml = '';
-        for (let i = 1; i < lines.length; i++) {
-          if (!lines[i].trim()) continue;
-          const cols = lines[i].split(delimiter).map(c => c.trim());
+        for (let i = 1; i < parsedRows.length; i++) {
+          const cols = parsedRows[i];
+          if (cols.length === 0 || (cols.length === 1 && cols[0] === '')) continue;
           
           let colsHtml = '';
           headers.forEach((h, idx) => {
-            const val = cols[idx] || '';
+            let val = cols[idx] || '';
+            // Strip outer quotes and trim
+            val = val.trim().replace(/^["']|["']$/g, '').trim();
+            // Convert internal newlines to HTML line breaks
+            val = val.replace(/\r?\n/g, '<br>');
+
             if (val.startsWith('http://') || val.startsWith('https://')) {
-              const carBrand = cols[0] || 'Demo';
-              const carModel = cols[1] || '';
+              const carBrand = (cols[0] || 'Demo').trim().replace(/^["']|["']$/g, '');
+              const carModel = (cols[1] || '').trim().replace(/^["']|["']$/g, '');
               const fullName = `${carBrand} ${carModel}`.trim().replace(/'/g, "\\'");
               colsHtml += `<td><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
             } else {
