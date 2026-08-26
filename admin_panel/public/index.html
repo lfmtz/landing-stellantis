@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Cropper.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -460,12 +462,23 @@
               <i class="fa-solid fa-chevron-down accordion-icon"></i>
             </div>
             <div class="accordion-content">
-              <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 10px;">
-                <i class="fa-solid fa-circle-info"></i> Pega aquí la lista de tus autos demo que no tienen fotos. Puedes copiar las celdas directamente desde Excel y pegarlas aquí. El formato debe ser separado por comas o tabuladores.
-              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                <p style="color: #64748b; font-size: 0.9rem; margin: 0; max-width: 60%;">
+                  <i class="fa-solid fa-circle-info"></i> Selecciona tu archivo CSV del inventario, o pega su contenido aquí.
+                </p>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('demosCsvFileInput').click()" style="display: inline-flex; align-items: center; gap: 6px; background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-primary); padding: 8px 15px; cursor: pointer;">
+                    <i class="fa-solid fa-file-import"></i> Subir Archivo CSV
+                  </button>
+                  <input type="file" id="demosCsvFileInput" accept=".csv" style="display: none;" onchange="handleDemosCsvUpload(this)">
+                  <a href="/api/download-demos-template" class="btn btn-secondary btn-sm" style="text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-primary); padding: 8px 15px;">
+                    <i class="fa-solid fa-download"></i> Descargar Plantilla
+                  </a>
+                </div>
+              </div>
               <div class="form-group">
-                <label for="demosTableCsv">Datos de la Tabla (Marca, Modelo, Año, Versión, Color, Kilometraje, Precio, WhatsApp)</label>
-                <textarea id="demosTableCsv" class="form-control" style="width:100%; height:200px; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px; font-family: monospace;" placeholder="Marca,Modelo,Año,Versión,Color,Kilometraje,Precio,WhatsApp&#10;RAM,700 Crew Cab,2025,SLT,Blanco,1500 km,$320,000,https://wa.me/...&#10;Jeep,Renegade,2024,Latitude,Gris,3400 km,$450,000,https://wa.me/..."></textarea>
+                <label for="demosTableCsv">Datos de la Tabla (Marca, Modelo, Año, Color, Kilometraje, Precio, Inventario, WhatsApp)</label>
+                <textarea id="demosTableCsv" class="form-control" style="width:100%; height:200px; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px; font-family: monospace;" placeholder="Marca,Modelo,Año,Color,Kilometraje,Precio,Inventario,WhatsApp&#10;RAM,700 Crew Cab SLT,2025,Blanco,1500 km,$320,000,2 unidades,https://wa.me/...&#10;Jeep,Renegade Latitude,2024,Gris,3400 km,$450,000,1 unidad,https://wa.me/..."></textarea>
               </div>
             </div>
           </div>
@@ -515,7 +528,10 @@
 
         <div class="form-group">
           <label for="imageURL">URL de la Imagen (Cloudinary / Externa) (800x600 o PNG Transparente)</label>
-          <input type="url" id="imageURL" placeholder="Ej. https://res.cloudinary.com/... (Si usas Cloudinary, pega el link aquí)">
+          <div style="display: flex; gap: 10px; width: 100%;">
+            <input type="url" id="imageURL" placeholder="Ej. https://res.cloudinary.com/... (Si usas Cloudinary, pega el link aquí)" style="flex: 1; margin-bottom: 0;">
+            <button type="button" id="cropImageBtn" class="btn btn-secondary" style="display: none; padding: 0 15px; border-radius: 4px; height: 38px; align-items: center; justify-content: center; gap: 5px; flex-shrink: 0;"><i class="fa-solid fa-crop"></i> Encuadrar</button>
+          </div>
         </div>
 
         <div class="form-group">
@@ -617,6 +633,28 @@
     </div>
   </div>
 
+  <!-- Crop Modal -->
+  <div id="cropModal" class="modal" style="z-index: 1200;">
+    <div class="modal-content" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3>Encuadrar Imagen (Recorte Inteligente)</h3>
+        <span class="close-btn" id="closeCropModalBtn">&times;</span>
+      </div>
+      <div class="modal-body" style="padding: 15px 0;">
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;">
+          Arrastra y ajusta el recuadro para seleccionar el área visible del auto. El recorte mantendrá la proporción adecuada para la página.
+        </p>
+        <div class="cropper-container-wrapper" style="max-height: 400px; background: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; border-radius: 6px;">
+          <img id="cropPreviewImg" style="max-width: 100%; max-height: 400px; display: block;">
+        </div>
+      </div>
+      <div class="modal-footer" style="margin-top: 15px; display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" id="cancelCropBtn" class="btn btn-secondary">Cancelar</button>
+        <button type="button" id="applyCropBtn" class="btn btn-primary">Aplicar Encuadre</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Status / Loading Overlay -->
   <div id="statusOverlay" class="overlay-status">
     <div class="overlay-card">
@@ -630,6 +668,8 @@
     </div>
   </div>
 
+  <!-- Cropper.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
   <script>
     let currentBrand = 'ram';
     let database = {};
@@ -653,6 +693,88 @@
     const dropZone = document.getElementById('dropZone');
     const imageFileInput = document.getElementById('imageFile');
     const filePreview = document.getElementById('filePreview');
+
+    // Crop Elements
+    const imageURLInput = document.getElementById('imageURL');
+    const cropImageBtn = document.getElementById('cropImageBtn');
+    const cropModal = document.getElementById('cropModal');
+    const cropPreviewImg = document.getElementById('cropPreviewImg');
+    const closeCropModalBtn = document.getElementById('closeCropModalBtn');
+    const cancelCropBtn = document.getElementById('cancelCropBtn');
+    const applyCropBtn = document.getElementById('applyCropBtn');
+    let cropperInstance = null;
+
+    function checkCloudinaryBtn() {
+      const isCloudinary = imageURLInput.value.includes('cloudinary.com');
+      cropImageBtn.style.display = isCloudinary ? 'inline-flex' : 'none';
+    }
+    imageURLInput.addEventListener('input', checkCloudinaryBtn);
+    imageURLInput.addEventListener('change', checkCloudinaryBtn);
+
+    // Open Crop Modal
+    cropImageBtn.addEventListener('click', () => {
+      const urlVal = imageURLInput.value.trim();
+      if (!urlVal) return;
+
+      // Clean transformation params to get the original raw image URL
+      const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
+
+      // Set image source and show modal
+      cropPreviewImg.src = cleanUrl;
+      cropModal.classList.add('active');
+
+      if (cropperInstance) {
+        cropperInstance.destroy();
+        cropperInstance = null;
+      }
+
+      const aspect = currentBrand === 'demos' ? 1 : (4 / 3);
+
+      cropPreviewImg.onload = () => {
+        cropperInstance = new Cropper(cropPreviewImg, {
+          aspectRatio: aspect,
+          viewMode: 1,
+          autoCropArea: 0.9,
+          responsive: true,
+          restore: false
+        });
+      };
+    });
+
+    // Close Crop Modal Helpers
+    function closeCropModal() {
+      cropModal.classList.remove('active');
+      if (cropperInstance) {
+        cropperInstance.destroy();
+        cropperInstance = null;
+      }
+    }
+    closeCropModalBtn.addEventListener('click', closeCropModal);
+    cancelCropBtn.addEventListener('click', closeCropModal);
+
+    // Apply Crop
+    applyCropBtn.addEventListener('click', () => {
+      if (!cropperInstance) return;
+
+      const data = cropperInstance.getData(true); // integer coordinates on natural image size
+      const urlVal = imageURLInput.value.trim();
+      const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
+
+      // Construct final Cloudinary URL
+      const cropParams = `x_${data.x},y_${data.y},w_${data.width},h_${data.height},c_crop`;
+      const resizeParams = currentBrand === 'demos' 
+        ? 'w_1080,h_1080,c_fill,f_auto,q_auto' 
+        : 'w_800,h_600,c_fill,f_auto,q_auto';
+
+      const transformedUrl = cleanUrl.replace(/(image\/upload\/)(v\d+)/, `$1${cropParams}/${resizeParams}/$2`);
+
+      imageURLInput.value = transformedUrl;
+      
+      // Update form preview
+      filePreview.innerHTML = `<img src="${transformedUrl}" class="preview-img"><p class="preview-text">Imagen encuadrada con éxito</p>`;
+      
+      closeCropModal();
+    });
 
     // Color Picker Sync
     const accentColorInput = document.getElementById('accentColor');
@@ -1168,6 +1290,7 @@
         document.getElementById('imageURL').value = '';
         document.getElementById('existingImage').value = p.image || '';
       }
+      checkCloudinaryBtn();
 
       // Preview Image
       if (p.image) {
@@ -1217,6 +1340,7 @@
       filePreview.innerHTML = '';
       benefitsContainer.innerHTML = '';
       addBenefitInput();
+      checkCloudinaryBtn();
       
       promoModal.classList.add('active');
     });
@@ -1411,6 +1535,25 @@
         showOverlay('Error', 'No se pudo conectar con el servidor local.', false);
       }
     });
+
+    // Demos CSV File Upload Handler
+    window.handleDemosCsvUpload = function(input) {
+      if (!input.files || input.files.length === 0) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        let text = e.target.result;
+        if (text.startsWith('\uFEFF')) {
+          text = text.substring(1);
+        }
+        document.getElementById('demosTableCsv').value = text;
+        alert('Archivo CSV cargado con éxito en el cuadro de texto. Recuerda hacer clic en "Guardar Cambios" para aplicar.');
+      };
+      reader.onerror = function() {
+        alert('Error al leer el archivo CSV.');
+      };
+      reader.readAsText(file, 'UTF-8');
+    };
 
     // Init
     loadPromos();

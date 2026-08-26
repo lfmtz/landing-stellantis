@@ -61,10 +61,25 @@ function writeData(data) {
 }
 
 // Optimize Cloudinary URLs helper
-function optimizeCloudinaryUrl(url) {
+function optimizeCloudinaryUrl(url, brand = '') {
   if (!url || typeof url !== 'string') return url;
-  if (url.includes('cloudinary.com') && !url.includes('f_auto') && !url.includes('q_auto')) {
-    return url.replace(/(image\/upload\/)(v\d+)/, '$1f_auto,q_auto/$2');
+  if (url.includes('cloudinary.com')) {
+    if (!url.includes('/w_') && !url.includes('/h_') && !url.includes('/c_')) {
+      if (brand === 'demos') {
+        return url.replace(/(image\/upload\/)(v\d+)/, '$1w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/$2');
+      } else {
+        return url.replace(/(image\/upload\/)(v\d+)/, '$1w_800,h_600,c_fill,g_auto,f_auto,q_auto/$2');
+      }
+    } else {
+      if (!url.includes('f_auto') || !url.includes('q_auto')) {
+        return url.replace(/(image\/upload\/)([^/]+)\/(v\d+)/, (match, p1, p2, p3) => {
+          let opts = p2;
+          if (!opts.includes('f_auto')) opts += ',f_auto';
+          if (!opts.includes('q_auto')) opts += ',q_auto';
+          return p1 + opts + '/' + p3;
+        });
+      }
+    }
   }
   return url;
 }
@@ -207,6 +222,19 @@ app.get('/api/download-csv', (req, res) => {
   res.status(200).send('\uFEFF' + csvContent); // BOM UTF-8
 });
 
+// CSV Demos Template Download Endpoint
+app.get('/api/download-demos-template', (req, res) => {
+  let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp\n';
+  csvContent += 'RAM;1200 Crew Cab Tradesman;2026;Blanco;1500 km;$399,000;2 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200\n';
+  csvContent += 'Jeep;Compass Limited;2025;Gris;3400 km;$549,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass\n';
+  csvContent += 'Dodge;Attitude SXT;2025;Rojo;800 km;$359,000;3 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude\n';
+  csvContent += 'Fiat;Pulse Audace;2024;Azul;4200 km;$370,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse\n';
+  
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename=plantilla_inventario_demos.csv');
+  res.status(200).send('\uFEFF' + csvContent); // BOM UTF-8
+});
+
 // Landing Config Endpoint
 app.post('/api/landing-config', (req, res) => {
   const dbData = readData();
@@ -281,7 +309,7 @@ function generateHtmlForBrand(brand, vehicles) {
       : '';
 
     // Relative image path adjustment (pages are in paginas_promo, so they need to go up one folder '../imagenes/')
-    let imageSrc = optimizeCloudinaryUrl(v.image);
+    let imageSrc = optimizeCloudinaryUrl(v.image, brand);
     if (imageSrc && !imageSrc.startsWith('http') && !imageSrc.startsWith('../')) {
       imageSrc = `../${imageSrc}`;
     }
@@ -559,7 +587,7 @@ function generateHtmlForBrand(brand, vehicles) {
 
     .img-container {
       width: 100%;
-      padding-top: 75%;
+      padding-top: ${brand === 'demos' ? '100%' : '75%'};
       position: relative;
       background: #f5f5f5;
     }
@@ -570,7 +598,7 @@ function generateHtmlForBrand(brand, vehicles) {
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: ${brand === 'demos' ? 'cover' : 'contain'};
       background: #f5f5f5;
     }
 
