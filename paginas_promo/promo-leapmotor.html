@@ -112,6 +112,73 @@
       border-radius: 4px;
       border: 1px solid #eee;
     }
+    /* Estilos de Acordeones por Marca */
+    .brand-accordion {
+      background: #fdfdfd;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+    .brand-accordion:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .brand-accordion-summary {
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      background: #f9f9f9;
+      user-select: none;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .brand-accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .brand-accordion-summary:hover {
+      background: #f2f2f2;
+    }
+    .brand-accordion[open] .brand-accordion-summary {
+      background: #f1f1f1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .brand-accordion-summary::after {
+      content: '078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: #888;
+      transition: transform 0.3s ease;
+    }
+    .brand-accordion[open] .brand-accordion-summary::after {
+      transform: rotate(180deg);
+    }
+    .brand-name-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-units-badge {
+      background: #e1f5fe;
+      color: #0288d1;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .brand-accordion-content {
+      padding: 15px;
+      background: #fff;
+    }
+
     .demo-excel-table {
       width: 100%;
       border-collapse: collapse;
@@ -556,11 +623,11 @@
 
   
   
-  
-  
-  <div class="grid-promos" style="margin-top: 10px;">
+  <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     <div class="no-promos">No hay promociones activas actualmente para esta marca.</div>
   </div>
+
+  
   <div class="embed-footer"></div>
 
   <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
@@ -628,28 +695,49 @@
       }
     });
 
-    // Lógica para filtrar la tabla interactiva de demos
+    // Lógica para filtrar la tabla interactiva de demos con acordeones
     function filterDemoTable() {
       var input = document.getElementById("demoTableSearch");
       var filter = input.value.toUpperCase();
-      var table = document.getElementById("demoExcelTable");
-      if (!table) return;
-      var tr = table.getElementsByTagName("tr");
+      var accordions = document.querySelectorAll(".brand-accordion");
       
-      for (var i = 1; i < tr.length; i++) {
-        var show = false;
-        var td = tr[i].getElementsByTagName("td");
-        for (var j = 0; j < td.length; j++) {
-          if (td[j]) {
-            var txtValue = td[j].textContent || td[j].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              show = true;
-              break;
+      accordions.forEach(function(accordion) {
+        var table = accordion.querySelector(".demo-excel-table");
+        if (!table) return;
+        var tr = table.getElementsByTagName("tr");
+        var hasVisibleRow = false;
+        
+        for (var i = 1; i < tr.length; i++) {
+          var show = false;
+          var td = tr[i].getElementsByTagName("td");
+          for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+              var txtValue = td[j].textContent || td[j].innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                show = true;
+                break;
+              }
             }
           }
+          tr[i].style.display = show ? "" : "none";
+          if (show) {
+            hasVisibleRow = true;
+          }
         }
-        tr[i].style.display = show ? "" : "none";
-      }
+        
+        if (filter.length > 0) {
+          if (hasVisibleRow) {
+            accordion.style.display = "";
+            accordion.open = true;
+          } else {
+            accordion.style.display = "none";
+            accordion.open = false;
+          }
+        } else {
+          accordion.style.display = "";
+          accordion.open = false;
+        }
+      });
     }
   </script>
  </body>

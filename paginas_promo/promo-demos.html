@@ -112,6 +112,73 @@
       border-radius: 4px;
       border: 1px solid #eee;
     }
+    /* Estilos de Acordeones por Marca */
+    .brand-accordion {
+      background: #fdfdfd;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+    .brand-accordion:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .brand-accordion-summary {
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      background: #f9f9f9;
+      user-select: none;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .brand-accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .brand-accordion-summary:hover {
+      background: #f2f2f2;
+    }
+    .brand-accordion[open] .brand-accordion-summary {
+      background: #f1f1f1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .brand-accordion-summary::after {
+      content: '078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: #888;
+      transition: transform 0.3s ease;
+    }
+    .brand-accordion[open] .brand-accordion-summary::after {
+      transform: rotate(180deg);
+    }
+    .brand-name-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-units-badge {
+      background: #e1f5fe;
+      color: #0288d1;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .brand-accordion-content {
+      padding: 15px;
+      background: #fff;
+    }
+
     .demo-excel-table {
       width: 100%;
       border-collapse: collapse;
@@ -555,35 +622,134 @@
   </nav>
 
   
+  
+  <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
+    
+  </div>
+
+  
         <div class="excel-table-container">
-          <div class="table-header-actions">
-            <h3 class="table-title"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo (Listado)</h3>
+          <div class="table-header-actions" style="margin-bottom: 25px;">
+            <div>
+              <h3 class="table-title" style="margin-bottom: 5px;"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo</h3>
+              <p style="color: #666; font-size: 0.95rem; margin: 0;">Si buscas otro modelo o color, consulta nuestro listado por marca a continuación:</p>
+            </div>
             <div class="table-search-box">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="demoTableSearch" placeholder="Buscar unidad..." onkeyup="filterDemoTable()">
             </div>
           </div>
-          <div class="table-responsive-scroll">
-            <table class="demo-excel-table" id="demoExcelTable">
-              <thead>
-                <tr>
-                  <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">3008 ALLURE PACK</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>OKENITE /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$579,900</td><td data-label="Inventario">369</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%203008%20ALLURE%20PACK" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT 3008 ALLURE PACK', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">GRANITO /<br>DOS TONOS<br>NEGROS</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$439,900</td><td data-label="Inventario">311</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>BRILLANTE /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$354,900</td><td data-label="Inventario">91</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>BRILLANTE /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$354,900</td><td data-label="Inventario">4</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">FASTBACK IMPETUS</td><td data-label="Año">2025</td><td data-label="Color">BLANCO<br>BANCHISA /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$454,900</td><td data-label="Inventario">78</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FASTBACK%20IMPETUS" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT FASTBACK IMPETUS', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">FASTBACK IMPETUS</td><td data-label="Año">2025</td><td data-label="Color">ROJO<br>MONTECARLO<br>/ NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$399,900</td><td data-label="Inventario">79</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FASTBACK%20IMPETUS" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT FASTBACK IMPETUS', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE CVT</td><td data-label="Año">2026</td><td data-label="Color">BLANCO BACH<br>/ TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$350,000</td><td data-label="Inventario">108</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE%20CVT" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE CVT', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">ROJO MONTE<br>C / TELA<br>PLUS NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">139</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">PLATA BARI /<br>TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">106</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">GRIS<br>SILVERSTONE<br>/ TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">312</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">GRAND CHEROKEE<br>LIMITED 4X4</td><td data-label="Año">2026</td><td data-label="Color">PLATA<br>METALICO /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$1,202,900</td><td data-label="Inventario">101</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20GRAND%20CHEROKEE<br>LIMITED%204X4" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP GRAND CHEROKEE
-LIMITED 4X4', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">COMPASS LIMITED</td><td data-label="Año">2026</td><td data-label="Color">AZUL JAZZ /<br>GRI/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$549,900</td><td data-label="Inventario">198</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20COMPASS%20LIMITED" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP COMPASS LIMITED', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">RENEGADE LATITUDE</td><td data-label="Año">2026</td><td data-label="Color">NEGRO<br>CARBON /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$444,000</td><td data-label="Inventario">93</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RENEGADE%20LATITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP RENEGADE LATITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">WRANGLER UNLIMITED SAHARA</td><td data-label="Año">2026</td><td data-label="Color">GRIS<br>FERROSO /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$1,260,900</td><td data-label="Inventario">117</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20WRANGLER%20UNLIMITED%20SAHARA" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP WRANGLER UNLIMITED SAHARA', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">FURGON L2H2 HDI</td><td data-label="Año">2026</td><td data-label="Color">BLANCO ICY /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$787,900</td><td data-label="Inventario">171</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FURGON%20L2H2%20HDI" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT FURGON L2H2 HDI', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">FURGON L2H2 HDI</td><td data-label="Año">2026</td><td data-label="Color">BLANCO ICY /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$699,000</td><td data-label="Inventario">80</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FURGON%20L2H2%20HDI" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT FURGON L2H2 HDI', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">RAM</td><td data-label="Modelo">BIGHORN CREW CAB CVT</td><td data-label="Año">2026</td><td data-label="Color">BLANCO /<br>GRIS<br>OSCUREC</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$403,900</td><td data-label="Inventario">88</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20BIGHORN%20CREW%20CAB%20CVT" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM BIGHORN CREW CAB CVT', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">RAM</td><td data-label="Modelo">LARAMIE CREW CAB</td><td data-label="Año">2025</td><td data-label="Color">GRIS CUARZO<br>METALIZADO /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$447,900</td><td data-label="Inventario">93</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20LARAMIE%20CREW%20CAB" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM LARAMIE CREW CAB', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">RAM</td><td data-label="Modelo">TRADESMAN REGULAR CAB</td><td data-label="Año">2026</td><td data-label="Color">GRIS</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$323,900</td><td data-label="Inventario">203</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20TRADESMAN%20REGULAR%20CAB" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM TRADESMAN REGULAR CAB', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
-              </tbody>
-            </table>
+          <div class="accordions-container">
+            
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> DODGE</span>
+              <span class="brand-units-badge">3 unidades</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">GRANITO /<br>DOS TONOS<br>NEGROS</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$439,900</td><td data-label="Inventario">311</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>BRILLANTE /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$354,900</td><td data-label="Inventario">91</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">DODGE</td><td data-label="Modelo">ATTITUDE</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>BRILLANTE /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$354,900</td><td data-label="Inventario">4</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20ATTITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'DODGE ATTITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> FIAT</span>
+              <span class="brand-units-badge">6 unidades</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Marca">FIAT</td><td data-label="Modelo">FASTBACK IMPETUS</td><td data-label="Año">2025</td><td data-label="Color">BLANCO<br>BANCHISA /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$454,900</td><td data-label="Inventario">78</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FASTBACK%20IMPETUS" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT FASTBACK IMPETUS', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">FASTBACK IMPETUS</td><td data-label="Año">2025</td><td data-label="Color">ROJO<br>MONTECARLO<br>/ NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$399,900</td><td data-label="Inventario">79</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FASTBACK%20IMPETUS" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT FASTBACK IMPETUS', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE CVT</td><td data-label="Año">2026</td><td data-label="Color">BLANCO BACH<br>/ TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$350,000</td><td data-label="Inventario">108</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE%20CVT" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE CVT', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">ROJO MONTE<br>C / TELA<br>PLUS NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">139</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">PLATA BARI /<br>TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">106</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">FIAT</td><td data-label="Modelo">PULSE DRIVE</td><td data-label="Año">2026</td><td data-label="Color">GRIS<br>SILVERSTONE<br>/ TELA PLUS<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$344,500</td><td data-label="Inventario">312</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20PULSE%20DRIVE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'FIAT PULSE DRIVE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> JEEP</span>
+              <span class="brand-units-badge">4 unidades</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Marca">JEEP</td><td data-label="Modelo">GRAND CHEROKEE<br>LIMITED 4X4</td><td data-label="Año">2026</td><td data-label="Color">PLATA<br>METALICO /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$1,202,900</td><td data-label="Inventario">101</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20GRAND%20CHEROKEE<br>LIMITED%204X4" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP GRAND CHEROKEE
+LIMITED 4X4', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">COMPASS LIMITED</td><td data-label="Año">2026</td><td data-label="Color">AZUL JAZZ /<br>GRI/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$549,900</td><td data-label="Inventario">198</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20COMPASS%20LIMITED" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP COMPASS LIMITED', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">RENEGADE LATITUDE</td><td data-label="Año">2026</td><td data-label="Color">NEGRO<br>CARBON /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$444,000</td><td data-label="Inventario">93</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RENEGADE%20LATITUDE" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP RENEGADE LATITUDE', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">JEEP</td><td data-label="Modelo">WRANGLER UNLIMITED SAHARA</td><td data-label="Año">2026</td><td data-label="Color">GRIS<br>FERROSO /<br>GRIS/NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$1,260,900</td><td data-label="Inventario">117</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20WRANGLER%20UNLIMITED%20SAHARA" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'JEEP WRANGLER UNLIMITED SAHARA', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> PEUGEOT</span>
+              <span class="brand-units-badge">3 unidades</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">3008 ALLURE PACK</td><td data-label="Año">2026</td><td data-label="Color">BLANCO<br>OKENITE /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$579,900</td><td data-label="Inventario">369</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%203008%20ALLURE%20PACK" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT 3008 ALLURE PACK', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">FURGON L2H2 HDI</td><td data-label="Año">2026</td><td data-label="Color">BLANCO ICY /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$787,900</td><td data-label="Inventario">171</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FURGON%20L2H2%20HDI" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT FURGON L2H2 HDI', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">PEUGEOT</td><td data-label="Modelo">FURGON L2H2 HDI</td><td data-label="Año">2026</td><td data-label="Color">BLANCO ICY /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$699,000</td><td data-label="Inventario">80</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20FURGON%20L2H2%20HDI" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'PEUGEOT FURGON L2H2 HDI', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> RAM</span>
+              <span class="brand-units-badge">3 unidades</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      <th>Marca</th><th>Modelo</th><th>Año</th><th>Color</th><th>Kilometraje</th><th>Precio</th><th>Inventario</th><th>WhatsApp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Marca">RAM</td><td data-label="Modelo">BIGHORN CREW CAB CVT</td><td data-label="Año">2026</td><td data-label="Color">BLANCO /<br>GRIS<br>OSCUREC</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$403,900</td><td data-label="Inventario">88</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20BIGHORN%20CREW%20CAB%20CVT" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM BIGHORN CREW CAB CVT', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">RAM</td><td data-label="Modelo">LARAMIE CREW CAB</td><td data-label="Año">2025</td><td data-label="Color">GRIS CUARZO<br>METALIZADO /<br>NEGRO</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$447,900</td><td data-label="Inventario">93</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20LARAMIE%20CREW%20CAB" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM LARAMIE CREW CAB', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-label="Marca">RAM</td><td data-label="Modelo">TRADESMAN REGULAR CAB</td><td data-label="Año">2026</td><td data-label="Color">GRIS</td><td data-label="Kilometraje">PENDIENTE</td><td data-label="Precio">$323,900</td><td data-label="Inventario">203</td><td data-label="WhatsApp"><a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20TRADESMAN%20REGULAR%20CAB" target="_blank" class="btn-wa-table" style="background:#00e5ff;" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': 'RAM TRADESMAN REGULAR CAB', 'brand_name': 'demos' }); }">Cotizar</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          
           </div>
         </div>
         
-  
-  
-  
-  <div class="grid-promos" style="margin-top: 10px;">
-    
-  </div>
   <div class="embed-footer"></div>
 
   <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
@@ -651,28 +817,49 @@ LIMITED 4X4', 'brand_name': 'demos' }); }">Cotizar</a></td></tr><tr><td data-lab
       }
     });
 
-    // Lógica para filtrar la tabla interactiva de demos
+    // Lógica para filtrar la tabla interactiva de demos con acordeones
     function filterDemoTable() {
       var input = document.getElementById("demoTableSearch");
       var filter = input.value.toUpperCase();
-      var table = document.getElementById("demoExcelTable");
-      if (!table) return;
-      var tr = table.getElementsByTagName("tr");
+      var accordions = document.querySelectorAll(".brand-accordion");
       
-      for (var i = 1; i < tr.length; i++) {
-        var show = false;
-        var td = tr[i].getElementsByTagName("td");
-        for (var j = 0; j < td.length; j++) {
-          if (td[j]) {
-            var txtValue = td[j].textContent || td[j].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              show = true;
-              break;
+      accordions.forEach(function(accordion) {
+        var table = accordion.querySelector(".demo-excel-table");
+        if (!table) return;
+        var tr = table.getElementsByTagName("tr");
+        var hasVisibleRow = false;
+        
+        for (var i = 1; i < tr.length; i++) {
+          var show = false;
+          var td = tr[i].getElementsByTagName("td");
+          for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+              var txtValue = td[j].textContent || td[j].innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                show = true;
+                break;
+              }
             }
           }
+          tr[i].style.display = show ? "" : "none";
+          if (show) {
+            hasVisibleRow = true;
+          }
         }
-        tr[i].style.display = show ? "" : "none";
-      }
+        
+        if (filter.length > 0) {
+          if (hasVisibleRow) {
+            accordion.style.display = "";
+            accordion.open = true;
+          } else {
+            accordion.style.display = "none";
+            accordion.open = false;
+          }
+        } else {
+          accordion.style.display = "";
+          accordion.open = false;
+        }
+      });
     }
   </script>
  </body>

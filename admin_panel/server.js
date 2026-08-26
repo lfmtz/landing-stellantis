@@ -412,62 +412,98 @@ function generateHtmlForBrand(brand, vehicles) {
       if (parsedRows.length > 0) {
         const headers = parsedRows[0].map(h => h.trim().replace(/^["']|["']$/g, ''));
         
-        let rowsHtml = '';
+        const grouped = {};
         for (let i = 1; i < parsedRows.length; i++) {
           const cols = parsedRows[i];
           if (cols.length === 0 || (cols.length === 1 && cols[0] === '')) continue;
           
-          let colsHtml = '';
-          headers.forEach((h, idx) => {
-            let val = cols[idx] || '';
-            // Strip outer quotes and trim
-            val = val.trim().replace(/^["']|["']$/g, '').trim();
-            // Convert internal newlines to HTML line breaks
-            val = val.replace(/\r?\n/g, '<br>');
+          let brandName = (cols[0] || 'Otros').trim().replace(/^["']|["']$/g, '').trim();
+          if (!brandName) brandName = 'Otros';
+          
+          const brandKey = brandName.toUpperCase();
+          if (!grouped[brandKey]) {
+            grouped[brandKey] = {
+              displayName: brandName.toUpperCase(),
+              rows: []
+            };
+          }
+          grouped[brandKey].rows.push(cols);
+        }
 
-            // Format price column automatically if it contains a number
-            if (h.toLowerCase().includes('precio')) {
-              const cleanNum = val.replace(/[^0-9.]/g, '');
-              if (cleanNum) {
-                const num = parseFloat(cleanNum);
-                if (!isNaN(num)) {
-                  val = '$' + num.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        let accordionsHtml = '';
+        Object.keys(grouped).sort().forEach(brandKey => {
+          const group = grouped[brandKey];
+          const totalUnits = group.rows.length;
+          const labelUnits = totalUnits === 1 ? '1 unidad' : `${totalUnits} unidades`;
+          
+          let rowsHtml = '';
+          group.rows.forEach(cols => {
+            let colsHtml = '';
+            headers.forEach((h, idx) => {
+              let val = cols[idx] || '';
+              val = val.trim().replace(/^["']|["']$/g, '').trim();
+              val = val.replace(/\r?\n/g, '<br>');
+
+              if (h.toLowerCase().includes('precio')) {
+                const cleanNum = val.replace(/[^0-9.]/g, '');
+                if (cleanNum) {
+                  const num = parseFloat(cleanNum);
+                  if (!isNaN(num)) {
+                    val = '$' + num.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                  }
                 }
               }
-            }
 
-            if (val.startsWith('http://') || val.startsWith('https://')) {
-              const carBrand = (cols[0] || 'Demo').trim().replace(/^["']|["']$/g, '');
-              const carModel = (cols[1] || '').trim().replace(/^["']|["']$/g, '');
-              const fullName = `${carBrand} ${carModel}`.trim().replace(/'/g, "\\'");
-              colsHtml += `<td data-label="${h}"><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
-            } else {
-              colsHtml += `<td data-label="${h}">${val}</td>`;
-            }
+              if (val.startsWith('http://') || val.startsWith('https://')) {
+                const carBrand = (cols[0] || 'Demo').trim().replace(/^["']|["']$/g, '');
+                const carModel = (cols[1] || '').trim().replace(/^["']|["']$/g, '');
+                const fullName = `${carBrand} ${carModel}`.trim().replace(/'/g, "\\'");
+                colsHtml += `<td data-label="${h}"><a href="${val}" target="_blank" class="btn-wa-table" style="background:${accentColor};" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_tabla', { 'car_name': '${fullName}', 'brand_name': 'demos' }); }">Cotizar</a></td>`;
+              } else {
+                colsHtml += `<td data-label="${h}">${val}</td>`;
+              }
+            });
+            rowsHtml += `<tr>${colsHtml}</tr>`;
           });
-          rowsHtml += `<tr>${colsHtml}</tr>`;
-        }
-        
+
+          accordionsHtml += `
+          <details class="brand-accordion">
+            <summary class="brand-accordion-summary">
+              <span class="brand-name-text"><i class="fa-solid fa-car-side"></i> ${group.displayName}</span>
+              <span class="brand-units-badge">${labelUnits}</span>
+            </summary>
+            <div class="brand-accordion-content">
+              <div class="table-responsive-scroll">
+                <table class="demo-excel-table">
+                  <thead>
+                    <tr>
+                      ${headers.map(h => `<th>${h}</th>`).join('')}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rowsHtml}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          `;
+        });
+
         excelTableHtml = `
         <div class="excel-table-container">
-          <div class="table-header-actions">
-            <h3 class="table-title"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo (Listado)</h3>
+          <div class="table-header-actions" style="margin-bottom: 25px;">
+            <div>
+              <h3 class="table-title" style="margin-bottom: 5px;"><i class="fa-solid fa-list-check"></i> Inventario de Autos Demo</h3>
+              <p style="color: #666; font-size: 0.95rem; margin: 0;">Si buscas otro modelo o color, consulta nuestro listado por marca a continuación:</p>
+            </div>
             <div class="table-search-box">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="demoTableSearch" placeholder="Buscar unidad..." onkeyup="filterDemoTable()">
             </div>
           </div>
-          <div class="table-responsive-scroll">
-            <table class="demo-excel-table" id="demoExcelTable">
-              <thead>
-                <tr>
-                  ${headers.map(h => `<th>${h}</th>`).join('')}
-                </tr>
-              </thead>
-              <tbody>
-                ${rowsHtml}
-              </tbody>
-            </table>
+          <div class="accordions-container">
+            ${accordionsHtml}
           </div>
         </div>
         `;
@@ -594,6 +630,73 @@ function generateHtmlForBrand(brand, vehicles) {
       border-radius: 4px;
       border: 1px solid #eee;
     }
+    /* Estilos de Acordeones por Marca */
+    .brand-accordion {
+      background: #fdfdfd;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+    .brand-accordion:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .brand-accordion-summary {
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      background: #f9f9f9;
+      user-select: none;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .brand-accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .brand-accordion-summary:hover {
+      background: #f2f2f2;
+    }
+    .brand-accordion[open] .brand-accordion-summary {
+      background: #f1f1f1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .brand-accordion-summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: #888;
+      transition: transform 0.3s ease;
+    }
+    .brand-accordion[open] .brand-accordion-summary::after {
+      transform: rotate(180deg);
+    }
+    .brand-name-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-units-badge {
+      background: #e1f5fe;
+      color: #0288d1;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .brand-accordion-content {
+      padding: 15px;
+      background: #fff;
+    }
+
     .demo-excel-table {
       width: 100%;
       border-collapse: collapse;
@@ -1036,17 +1139,18 @@ function generateHtmlForBrand(brand, vehicles) {
     </div>
   </nav>
 
-  ${excelTableHtml}
-  
   ${brand === 'demos' && cardsHtml.length > 0 ? `
-  <div class="demos-gallery-section" style="max-width:960px; margin:30px auto 10px auto; padding: 0 10px;">
-    <h3 class="table-title" style="margin-bottom: 5px; color: #111;"><i class="fa-solid fa-camera"></i> Galería de Fotos</h3>
+  <div class="demos-gallery-section" style="max-width:960px; margin:40px auto 10px auto; padding: 0 10px;">
+    <h3 class="table-title" style="margin-bottom: 5px; color: #111; text-transform: uppercase;"><i class="fa-solid fa-fire" style="color: #ff5722;"></i> Demos Destacados (Con Foto)</h3>
+    <p style="color: #666; font-size: 0.95rem; margin: 0;">Revisa nuestras unidades con fotografías y encuadres reales:</p>
   </div>
   ` : ''}
   
-  <div class="grid-promos" style="margin-top: 10px;">
+  <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     ${cardsHtml.length > 0 ? cardsHtml : (brand === 'demos' ? '' : '<div class="no-promos">No hay promociones activas actualmente para esta marca.</div>')}
   </div>
+
+  ${excelTableHtml}
   <div class="embed-footer"></div>
 
   <!-- Popup de Arrendamiento (Vanilla CSS/JS Ligero) -->
@@ -1114,28 +1218,49 @@ function generateHtmlForBrand(brand, vehicles) {
       }
     });
 
-    // Lógica para filtrar la tabla interactiva de demos
+    // Lógica para filtrar la tabla interactiva de demos con acordeones
     function filterDemoTable() {
       var input = document.getElementById("demoTableSearch");
       var filter = input.value.toUpperCase();
-      var table = document.getElementById("demoExcelTable");
-      if (!table) return;
-      var tr = table.getElementsByTagName("tr");
+      var accordions = document.querySelectorAll(".brand-accordion");
       
-      for (var i = 1; i < tr.length; i++) {
-        var show = false;
-        var td = tr[i].getElementsByTagName("td");
-        for (var j = 0; j < td.length; j++) {
-          if (td[j]) {
-            var txtValue = td[j].textContent || td[j].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              show = true;
-              break;
+      accordions.forEach(function(accordion) {
+        var table = accordion.querySelector(".demo-excel-table");
+        if (!table) return;
+        var tr = table.getElementsByTagName("tr");
+        var hasVisibleRow = false;
+        
+        for (var i = 1; i < tr.length; i++) {
+          var show = false;
+          var td = tr[i].getElementsByTagName("td");
+          for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+              var txtValue = td[j].textContent || td[j].innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                show = true;
+                break;
+              }
             }
           }
+          tr[i].style.display = show ? "" : "none";
+          if (show) {
+            hasVisibleRow = true;
+          }
         }
-        tr[i].style.display = show ? "" : "none";
-      }
+        
+        if (filter.length > 0) {
+          if (hasVisibleRow) {
+            accordion.style.display = "";
+            accordion.open = true;
+          } else {
+            accordion.style.display = "none";
+            accordion.open = false;
+          }
+        } else {
+          accordion.style.display = "";
+          accordion.open = false;
+        }
+      });
     }
   </script>
  </body>
