@@ -3,51 +3,54 @@
     {
       "id": "ram-700",
       "name": "RAM 700",
-      "price": "Desde $334,900",
+      "price": "Desde $338,400",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/700_8_26_v8kvej.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%20700",
-      "description": "Lleva tu productividad al siguiente nivel con la versatilidad and resistencia que ofrece la RAM 700 por mensualidades desde $5,449, aplica para ram 700 regular cab.",
-      "descriptionSize": "1.0rem",
+      "description": "Lleva tu productividad al siguiente nivel con la versatilidad and resistencia que ofrece la RAM 700 por mensualidades desde <span style=\"color: red; font-weight: bold;\"><span style=\"color: red; font-weight: bold;\"><b>$5,490</b></span></span>, aplica para ram 700 regular cab.",
+      "descriptionSize": "1.1rem",
       "descriptionColor": "#333333",
       "benefits": [
         "Bonos hasta de $15,000",
         "0% comisión por apertura",
-        "Incluye 3 años de valor factura"
+        "o tasa del 6.29%"
       ],
-      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#000000",
       "underlineStyle": "solid"
     },
     {
       "id": "ram-1200",
       "name": "RAM 1200",
-      "price": "Desde $399,000",
+      "price": "Desde $469,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/ram1200cc_8_26_uxz0pd.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%201200",
-      "description": "Aprovecha las últimas unidades 2026 de RAM 1200 Tradesman doble cabina y pregunta por existencia antes de que se agoten por precio de flotilla $399,000 o mensualidades desde $5,099",
-      "descriptionSize": "1.0rem",
+      "description": "Aprovecha las últimas unidades 2026 de RAM 1200 Tradesman doble cabina y pregunta por existencia antes de que se agoten por precio de flotilla <span style=\"color: red; font-weight: bold;\"><b>$430,000</b></span> o mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,990</b></span>",
+      "descriptionSize": "1.1rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Planes con tasas preferenciales"
+        "0% comisión por apertura",
+        "O pregunta por nuestra tasa 0%",
+        "Bono hasta de $40,000"
       ],
-      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#000000",
       "underlineStyle": "solid"
     },
     {
       "id": "ram-1200-chasis",
       "name": "RAM 1200 Chasis",
-      "price": "Desde $408,400",
+      "price": "Desde $409,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/1200chasis_8_26_s4phoc.jpg",
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%201200%20Chasis",
-      "description": "Adapta la RAM 1200 Chasis a tus necesidades de carga y mantén tu operación activa por mensualidades desde $6,169",
-      "descriptionSize": "1.0rem",
+      "description": "Adapta la RAM 1200 Chasis a tus necesidades de carga y mantén tu operación activa por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,950</b></span> o tenemos un precio de contado de  <span style=\"color: red; font-weight: bold;\"><b>$399,000</b></span>",
+      "descriptionSize": "1.1rem",
       "descriptionColor": "#333333",
       "benefits": [
         "0% comisión apertura",
-        "Tasa preferente"
+        "O pregunta por nuestra tasa 0%",
+        "Bono hasta de $45,000"
       ],
-      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#000000",
       "underlineStyle": "solid"
     },
@@ -462,7 +465,7 @@
   },
   "demos": [],
   "portal": {
-    "name": "Luis",
+    "name": "Luis Fernando Martínez",
     "role": "Tu Asesor Automotriz de Confianza",
     "avatar": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg",
     "headerType": "text",
