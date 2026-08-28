@@ -69,6 +69,41 @@
       }
     ]
   },
+  "dodge": {
+    "welcome": "¡Hola! Bienvenido al portal de Dodge. 🏎️ Estamos en el área de Dodge y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Estás buscando un Muscle Car potente, un Sedán deportivo o una SUV familiar?",
+    "options": [
+      {
+        "label": "🏎️ Deportivos",
+        "filter": "deportivos",
+        "reply": "Excelente. Desata la adrenalina con nuestros vehículos deportivos y de alto desempeño Dodge:"
+      },
+      {
+        "label": "🚗 Sedán",
+        "filter": "sedan",
+        "reply": "Gran elección. Confort, estilo y potencia en nuestros sedanes deportivos Dodge:"
+      },
+      {
+        "label": "🚙 SUV",
+        "filter": "suv",
+        "reply": "Espacio, seguridad y desempeño para toda tu familia. Descubre nuestras SUVs Dodge:"
+      }
+    ]
+  },
+  "leapmotor": {
+    "welcome": "¡Hola! Bienvenido al portal de Leapmotor. ⚡ Estamos en el área de Leapmotor y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Te interesa conocer nuestra tecnología 100% eléctrica y sustentable?",
+    "options": [
+      {
+        "label": "⚡ Eléctricos",
+        "filter": "electricos",
+        "reply": "El futuro es hoy. Conoce nuestra gama de vehículos 100% eléctricos y sustentables de Leapmotor:"
+      },
+      {
+        "label": "🚙 SUV / Crossover",
+        "filter": "suv",
+        "reply": "Estilo, tecnología avanzada y cero emisiones. Descubre nuestras SUVs eléctricas Leapmotor:"
+      }
+    ]
+  },
   "demos": {
     "welcome": "¡Hola! Bienvenido al portal de Autos Demo. 🚗 Te muestro todas las ofertas en demos que tenemos. Si quieres, puedes filtrar por la categoría que estés buscando con los botones que tienes arriba. ¿Qué tipo de vehículo estás buscando hoy?",
     "options": [
