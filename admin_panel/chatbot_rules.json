@@ -1,6 +1,6 @@
 {
   "jeep": {
-    "welcome": "¡Hola! Bienvenido al portal de Jeep. ⛰️ ¿Te puedo asistir con algunas sugerencias? ¿Estás buscando una SUV elegante o un Todo Terreno para la aventura?",
+    "welcome": "¡Hola! Bienvenido al portal de Jeep. ⛰️ Estamos en el área de Jeep y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Estás buscando una SUV elegante o un Todo Terreno para la aventura?",
     "options": [
       {
         "label": "🚙 SUV",
@@ -15,7 +15,7 @@
     ]
   },
   "peugeot": {
-    "welcome": "¡Hola! Bienvenido al portal de Peugeot. 🦁 ¿Estás buscando una SUV sofisticada o un vehículo de Trabajo eficiente para tu negocio?",
+    "welcome": "¡Hola! Bienvenido al portal de Peugeot. 🦁 Estamos en el área de Peugeot y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Estás buscando una SUV sofisticada o un vehículo de Trabajo eficiente para tu negocio?",
     "options": [
       {
         "label": "🚙 SUV",
@@ -30,7 +30,7 @@
     ]
   },
   "ram": {
-    "welcome": "¡Hola! Bienvenido al portal de RAM. 🛻 ¿Estás buscando una Pickup equipada para todo o un Chasis fuerte para tu negocio?",
+    "welcome": "¡Hola! Bienvenido al portal de RAM. 🛻 Estamos en el área de RAM y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Estás buscando una Pickup equipada para todo o un Chasis fuerte para tu negocio?",
     "options": [
       {
         "label": "🛻 Pickup",
@@ -45,7 +45,7 @@
     ]
   },
   "fiat": {
-    "welcome": "¡Hola! Bienvenido al portal de Fiat. 🚗 ¿Estás buscando un Hatchback ágil para la ciudad o un Crossover dinámico?",
+    "welcome": "¡Hola! Bienvenido al portal de Fiat. 🚗 Estamos en el área de Fiat y te muestro lo que tenemos en nuevos, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página. ¿Estás buscando un Hatchback ágil para la ciudad o un Crossover dinámico?",
     "options": [
       {
         "label": "🚗 Hatchback",
@@ -60,7 +60,7 @@
     ]
   },
   "general": {
-    "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 ¿Qué tipo de vehículo estás buscando hoy? Dime si buscas algo para tu Trabajo, para tu Familia o de uso Personal:",
+    "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 Te muestro lo que tenemos en nuevos para todas nuestras marcas, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página de cada marca. ¿Qué tipo de vehículo estás buscando hoy? Dime si buscas algo para tu Trabajo, para tu Familia o de uso Personal:",
     "options": [
       {
         "label": "💼 Para mi Trabajo",
@@ -84,19 +84,19 @@
     "options": [
       {
         "label": "💳 ¿Requisitos de Crédito?",
-        "reply": "Los requisitos básicos para tramitar tu crédito automotriz son:\n1. Identificación oficial vigente (INE/Pasaporte).\n2. Comprobante de domicilio reciente.\n3. Comprobantes de ingresos de los últimos 3 meses (Estados de cuenta bancarios o recibos de nómina timbrados).\n4. Tener buen historial en buró de crédito.\n\n¿Quieres iniciar tu pre-aprobación? ¡Haz clic en el botón de WhatsApp abajo para platicar con tu asesor!"
+        "reply": "Los requisitos básicos para tramitar tu crédito automotriz con nuestro experto Luis Fernando Martínez son:\n1. Identificación oficial vigente (INE/Pasaporte).\n2. Comprobante de domicilio reciente.\n3. Comprobantes de ingresos de los últimos 3 meses (Estados de cuenta bancarios o recibos de nómina timbrados).\n4. Tener buen historial en buró de crédito.\n\n¿Quieres iniciar tu pre-aprobación? ¡Haz clic en el botón de WhatsApp abajo para platicar con Luis Fernando Martínez!"
       },
       {
         "label": "📈 ¿Tienen Arrendamiento?",
-        "reply": "¡Sí! Contamos con planes de Arrendamiento Puro (Leasing) ideal para personas físicas con actividad empresarial o personas morales. Te permite deducir tus mensualidades al 100% y renovar tu vehículo constantemente con un pago inicial mínimo.\n\nPregunta por una cotización de arrendamiento haciendo clic en el botón de WhatsApp."
+        "reply": "¡Sí! Contamos con planes de Arrendamiento Puro (Leasing) ideal para personas físicas con actividad empresarial o personas morales. Te permite deducir tus mensualidades al 100% y estrenar de forma constante con pago inicial mínimo.\n\nEscríbenos por WhatsApp para que nuestro experto, Luis Fernando Martínez, te haga una cotización a la medida."
       },
       {
         "label": "📍 ¿Dónde están ubicados?",
-        "reply": "¡Hola! Estamos para atenderte. Escríbenos por WhatsApp haciendo clic abajo para darte nuestra ubicación exacta, coordinar tu visita a nuestra sala de ventas y asegurar que tengamos listo el vehículo que te interesa ver."
+        "reply": "¡Hola! Estamos para atenderte. Escríbenos por WhatsApp haciendo clic abajo para darte nuestra ubicación exacta, coordinar tu visita a nuestra sala de ventas con Luis Fernando Martínez y asegurar que tengamos lista la unidad que quieres ver."
       },
       {
         "label": "🚗 ¿Pruebas de Manejo?",
-        "reply": "¡Claro que sí! Puedes programar una prueba de manejo sin costo para experimentar el vehículo de tu elección. Solo requerimos tu licencia de conducir vigente e identificación oficial.\n\nEscríbenos por WhatsApp abajo indicando qué modelo te interesa probar y qué día te gustaría venir."
+        "reply": "¡Claro que sí! Puedes programar una prueba de manejo sin costo. Requerimos tu licencia de conducir vigente e identificación oficial.\n\nEscríbenos por WhatsApp abajo para que Luis Fernando Martínez agende tu prueba del modelo que prefieras."
       }
     ]
   }

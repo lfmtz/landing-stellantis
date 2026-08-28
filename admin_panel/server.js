@@ -519,7 +519,7 @@ function generateHtmlForBrand(brand, vehicles) {
               </div>
               <div class="promo-body" style="padding-top: 0; padding-bottom: 10px;">
                 <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Color: <strong>${u.color}</strong> | Kilometraje: <strong>${u.km}</strong></p>
-                <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Disponibilidad: <strong>${u.stock}</strong></p>
+                <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Inventario: <strong>${u.stock}</strong></p>
               </div>
               <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; background: #fafafa;">
                 <a aria-label="Cotizar ${u.model} por WhatsApp" class="btn-wa" style="background-color: ${accentColor}; padding: 8px 15px; font-size: 0.9rem; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center;" href="${u.wa}" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_related_demo', { 'car_name': '${u.model}', 'brand_name': '${brand}' }); }">
@@ -2101,6 +2101,48 @@ function generateHtmlForBrand(brand, vehicles) {
             }
           }
           
+          // Filtrar por palabras financieras, buró de crédito o entregas
+          var replyMsg = "";
+          var queryWaText = "Hola Luis Fernando Martínez, solicito información y asistencia.";
+          
+          if (query.includes("crédito") || query.includes("credito") || query.includes("buró") || query.includes("buro")) {
+            replyMsg = "Entendido. Para darte una respuesta precisa sobre tu crédito o buró de crédito, te pondré en contacto directo con nuestro asesor experto en la materia, Luis Fernando Martínez, por WhatsApp. Él analizará tu caso personalmente para darte la mejor opción. ¿Te parece bien?";
+            queryWaText = "Hola Luis Fernando Martínez, me interesa revisar mis opciones de crédito.";
+          } else if (query.includes("arrendamiento") || query.includes("leasing")) {
+            replyMsg = "Entendido. Para darte una cotización exacta de arrendamiento y explicarte los beneficios fiscales, te pondré en contacto directo con nuestro asesor experto, Luis Fernando Martínez, a través de WhatsApp. ¿Te parece bien?";
+            queryWaText = "Hola Luis Fernando Martínez, me interesa una cotización de arrendamiento.";
+          } else if (query.includes("contado") || query.includes("precio")) {
+            replyMsg = "Entendido. Para ofrecerte el mejor precio de contado y descuentos vigentes, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. ¿Te parece bien?";
+            queryWaText = "Hola Luis Fernando Martínez, solicito cotización y precio de contado.";
+          } else if (query.includes("entrega") || query.includes("entregar") || query.includes("tiempo")) {
+            replyMsg = "Entendido. Para darte los tiempos exactos de entrega de las unidades en inventario o pedido especial, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. ¿Te parece bien?";
+            queryWaText = "Hola Luis Fernando Martínez, me interesa saber los tiempos de entrega de unidades.";
+          }
+          
+          if (replyMsg) {
+            appendMessage(replyMsg, true);
+            optionsContainer.innerHTML = "";
+            
+            var waBtn = document.createElement("button");
+            waBtn.className = "option-btn";
+            waBtn.style.background = "#25d366";
+            waBtn.style.color = "#fff";
+            waBtn.innerText = "💬 Hablar con Luis Fernando";
+            waBtn.addEventListener("click", function() {
+              window.open("https://wa.me/525521787900?text=" + encodeURIComponent(queryWaText), "_blank");
+            });
+            optionsContainer.appendChild(waBtn);
+            
+            var backBtn = document.createElement("button");
+            backBtn.className = "option-btn";
+            backBtn.innerText = "⬅️ Menú Principal";
+            backBtn.addEventListener("click", function() {
+              initChat();
+            });
+            optionsContainer.appendChild(backBtn);
+            return;
+          }
+          
           var matchedFaq = null;
           kb.faq.options.forEach(function(opt) {
             var labelLower = opt.label.toLowerCase();
@@ -2114,16 +2156,16 @@ function generateHtmlForBrand(brand, vehicles) {
           if (matchedFaq) {
             appendMessage(matchedFaq.reply, true);
           } else {
-            appendMessage("Entendido. Para darte una cotización exacta o responder dudas detalladas, te pondré en contacto directo con tu asesor por WhatsApp.", true);
+            appendMessage("Entendido. Para aclarar tus dudas de manera detallada y ofrecerte la mejor alternativa, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. ¿Está bien?", true);
             optionsContainer.innerHTML = "";
             
             var waBtn = document.createElement("button");
             waBtn.className = "option-btn";
             waBtn.style.background = "#25d366";
             waBtn.style.color = "#fff";
-            waBtn.innerText = "💬 Hablar por WhatsApp";
+            waBtn.innerText = "💬 Hablar con Luis Fernando";
             waBtn.addEventListener("click", function() {
-              window.open("https://wa.me/525521787900?text=Hola,%20solicito%20información%20y%20asistencia.", "_blank");
+              window.open("https://wa.me/525521787900?text=Hola%20Luis%20Fernando%20Mart%C3%ADnez,%20necesito%20aclarar%20unas%20dudas%20detalladas.", "_blank");
             });
             optionsContainer.appendChild(waBtn);
             
