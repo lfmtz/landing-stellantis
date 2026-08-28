@@ -336,6 +336,26 @@ function getModelFamily(brand, modelName) {
   return brand.toUpperCase() + ' ' + firstWord;
 }
 
+// Helper to refine classifications into granular categories
+function getAutoClassification(categoryFromCsv, modelName) {
+  if (!categoryFromCsv || !modelName) return 'suv';
+  const modelUpper = modelName.toUpperCase();
+  const catLower = categoryFromCsv.toLowerCase();
+  
+  if (catLower === 'trabajo' || catLower === 'pickup' || catLower === 'chasis' || catLower === 'van' || catLower === 'vans') {
+    if (modelUpper.includes('CHASIS') || modelUpper.includes('CABINA')) {
+      return 'chasis';
+    }
+    if (modelUpper.includes('FURGON') || modelUpper.includes('PARTNER') || modelUpper.includes('MANAGER') || modelUpper.includes('FIORINO') || modelUpper.includes('DUCATO') || modelUpper.includes('EXPERT') || modelUpper.includes('RIFTER') || modelUpper.includes('PROMASTER')) {
+      return 'van';
+    }
+    if (modelUpper.includes('RAM 700') || modelUpper.includes('RAM 1200') || modelUpper.includes('RAM 1500') || modelUpper.includes('BIGHORN') || modelUpper.includes('LARAMIE') || modelUpper.includes('TRADESMAN') || modelUpper.includes('JT') || modelUpper.includes('TUNGSTEN') || modelUpper.includes('PICKUP')) {
+      return 'pickup';
+    }
+  }
+  return catLower;
+}
+
 // Generate HTML file dynamically for a brand
 function generateHtmlForBrand(brand, vehicles) {
   const promoDir = path.join(__dirname, '..', 'paginas_promo');
@@ -447,10 +467,10 @@ function generateHtmlForBrand(brand, vehicles) {
       const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
       for (let i = 1; i < parsedRows.length; i++) {
         const cols = parsedRows[i];
-        if (cols.length > 0 && catIdx !== -1) {
-          const catVal = (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase();
+          const modelName = (cols[1] || '').trim().replace(/^["']|["']$/g, '');
+          let catVal = (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase();
+          catVal = getAutoClassification(catVal, modelName);
           uniqueCategories.add(catVal);
-        }
       }
     }
   }
@@ -480,7 +500,8 @@ function generateHtmlForBrand(brand, vehicles) {
           const price = (cols[5] || '').trim().replace(/^["']|["']$/g, '').trim();
           const stock = (cols[6] || '').trim().replace(/^["']|["']$/g, '').trim();
           const wa = (cols[7] || '').trim().replace(/^["']|["']$/g, '').trim();
-          const category = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
+          let category = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
+          category = getAutoClassification(category, model);
           
           uniqueCategories.add(category);
 
@@ -654,8 +675,9 @@ function generateHtmlForBrand(brand, vehicles) {
               }
             });
             const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
-            const catVal = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
+            let catVal = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
             const modelVal = (cols[1] || 'demo').trim().replace(/^["']|["']$/g, '');
+            catVal = getAutoClassification(catVal, modelVal);
             const cleanModelId = modelVal.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
             rowsHtml += `<tr id="row-${cleanModelId}-${rowIndex}" data-category="${catVal}">${colsHtml}</tr>`;
           });
