@@ -319,6 +319,22 @@ app.post('/api/git-sync', (req, res) => {
   });
 });
 
+// Helper to group models by their main family name
+function getModelFamily(brand, modelName) {
+  let cleanModel = modelName.replace(/["']/g, '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+  const brandUpper = brand.toUpperCase();
+  if (cleanModel.toUpperCase().startsWith(brandUpper)) {
+    cleanModel = cleanModel.slice(brandUpper.length).trim();
+  }
+  const words = cleanModel.split(' ');
+  if (words.length === 0) return brand.toUpperCase() + ' UNIDAD';
+  const firstWord = words[0].toUpperCase();
+  if (firstWord === 'GRAND' && words[1]) {
+    return brand.toUpperCase() + ' ' + firstWord + ' ' + words[1].toUpperCase();
+  }
+  return brand.toUpperCase() + ' ' + firstWord;
+}
+
 // Generate HTML file dynamically for a brand
 function generateHtmlForBrand(brand, vehicles) {
   const promoDir = path.join(__dirname, '..', 'paginas_promo');
@@ -453,7 +469,9 @@ function generateHtmlForBrand(brand, vehicles) {
       });
 
       if (relatedRows.length > 0) {
-        const relatedCards = relatedRows.map(cols => {
+        const familiesMap = {};
+        
+        relatedRows.forEach(cols => {
           const model = (cols[1] || '').trim().replace(/^["']|["']$/g, '').trim();
           const year = (cols[2] || '').trim().replace(/^["']|["']$/g, '').trim();
           const color = (cols[3] || '').trim().replace(/^["']|["']$/g, '').trim();
@@ -474,41 +492,68 @@ function generateHtmlForBrand(brand, vehicles) {
             }
           }
 
-          return `
-          <article class="card related-demo-card" data-category="${category}" style="border-top-color: ${accentColor}; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div class="card-header" style="padding-top: 15px;">
-              <div class="model-info">
-                <span class="badge" style="background: ${accentColor}; color: #fff; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; display: inline-block; margin-bottom: 5px;">${category.toUpperCase()} - DEMO</span>
-                <h2 class="model-name" style="margin-top: 5px;">${model} (${year})</h2>
-                <div class="model-price" style="color: ${accentColor}; font-size: 1.35rem; font-weight: bold;">
-                  ${displayPrice}
+          const family = getModelFamily(brand, model);
+          if (!familiesMap[family]) {
+            familiesMap[family] = [];
+          }
+          
+          familiesMap[family].push({
+            model, year, color, km, price: displayPrice, stock, wa, category
+          });
+        });
+
+        // Build the accordions HTML
+        const accordionsHtml = Object.keys(familiesMap).map(familyName => {
+          const units = familiesMap[familyName];
+          const cardsHtml = units.map(u => `
+            <article class="card related-demo-card" data-category="${u.category}" style="border-top-color: ${accentColor}; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="card-header" style="padding-top: 15px;">
+                <div class="model-info">
+                  <span class="badge" style="background: ${accentColor}; color: #fff; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; display: inline-block; margin-bottom: 5px;">${u.category.toUpperCase()} - DEMO</span>
+                  <h2 class="model-name" style="margin-top: 5px;">${u.model} (${u.year})</h2>
+                  <div class="model-price" style="color: ${accentColor}; font-size: 1.35rem; font-weight: bold;">
+                    ${u.price}
+                  </div>
                 </div>
               </div>
+              <div class="promo-body" style="padding-top: 0; padding-bottom: 10px;">
+                <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Color: <strong>${u.color}</strong> | Kilometraje: <strong>${u.km}</strong></p>
+                <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Disponibilidad: <strong>${u.stock}</strong></p>
+              </div>
+              <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; background: #fafafa;">
+                <a aria-label="Cotizar ${u.model} por WhatsApp" class="btn-wa" style="background-color: ${accentColor}; padding: 8px 15px; font-size: 0.9rem; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center;" href="${u.wa}" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_related_demo', { 'car_name': '${u.model}', 'brand_name': '${brand}' }); }">
+                  <svg viewBox="0 0 24 24" style="fill: white; width: 14px; height: 14px; margin-right: 5px;">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                  </svg>
+                  <span style="color:white; font-weight:bold;">Cotizar Demo</span>
+                </a>
+              </div>
+            </article>
+          `).join('');
+
+          return `
+          <details class="brand-accordion demo-category-accordion" style="margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+            <summary style="padding: 15px 20px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; user-select: none;">
+              <span>🚗 ${familyName}</span>
+              <span style="font-size: 0.9rem; color: ${accentColor}; font-weight: normal;">👉 Haz clic aquí para ver versiones</span>
+            </summary>
+            <div class="grid-promos" style="padding: 20px; background: #fafafa; border-top: 1px solid #eee; margin-top: 0; margin-bottom: 0;">
+              ${cardsHtml}
             </div>
-            <div class="promo-body" style="padding-top: 0; padding-bottom: 10px;">
-              <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Color: <strong>${color}</strong> | Kilometraje: <strong>${km}</strong></p>
-              <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Disponibilidad: <strong>${stock}</strong></p>
-            </div>
-            <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; background: #fafafa;">
-              <a aria-label="Cotizar ${model} por WhatsApp" class="btn-wa" style="background-color: ${accentColor}; padding: 8px 15px; font-size: 0.9rem; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center;" href="${wa}" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_related_demo', { 'car_name': '${model}', 'brand_name': '${brand}' }); }">
-                <svg viewBox="0 0 24 24" style="fill: white; width: 14px; height: 14px; margin-right: 5px;">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
-                </svg>
-                <span style="color:white; font-weight:bold;">Cotizar Demo</span>
-              </a>
-            </div>
-          </article>
+          </details>
           `;
-        }).join('');
+        }).join('\n');
 
         relatedDemosHtml = `
         <section class="related-demos-section" style="max-width: 960px; margin: 40px auto; padding: 0 10px;">
           <div class="heading-container" style="border-bottom: 2px solid ${accentColor}; padding-bottom: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-            <h3 class="table-title" style="margin: 0; color: #111; text-transform: uppercase;"><i class="fa-solid fa-tags" style="color: ${accentColor};"></i> Autos Demo (${brand.toUpperCase()}) en Oportunidad</h3>
+            <h3 class="table-title" style="margin: 0; color: #111; text-transform: uppercase;"><i class="fa-solid fa-tags" style="color: ${accentColor};"></i> Autos Demo según categoría</h3>
           </div>
-          <p style="color: #666; font-size: 0.95rem; margin-top: -10px; margin-bottom: 20px;">Ahorra con estas unidades seminuevas de bajo kilometraje y entrega inmediata:</p>
-          <div class="grid-promos" style="margin-top: 10px; margin-bottom: 20px;">
-            ${relatedCards}
+          <p style="color: #444; font-size: 1.05rem; line-height: 1.5; margin-top: -10px; margin-bottom: 25px; background: rgba(0,0,0,0.02); padding: 15px; border-left: 4px solid ${accentColor}; border-radius: 4px;">
+            Te muestro lo que tenemos en la categoría que elegiste. Adicionalmente, tengo promociones en el área de autos demo y te he dejado una lista para que puedas consultar los precios que te podemos ofrecer:
+          </p>
+          <div class="accordions-container" style="margin-top: 10px;">
+            ${accordionsHtml}
           </div>
         </section>
         `;
@@ -1424,13 +1469,40 @@ function generateHtmlForBrand(brand, vehicles) {
           var filterVal = this.getAttribute("data-filter");
           
           // Filtrar Tarjetas de Nuevos y Demos Destacados
-          var cards = document.querySelectorAll(".grid-promos .card");
+          var cards = document.querySelectorAll(".grid-promos .card:not(.related-demo-card)");
           cards.forEach(function(card) {
             var cat = card.getAttribute("data-category");
             if (filterVal === "all" || cat === filterVal) {
               card.style.display = "";
             } else {
               card.style.display = "none";
+            }
+          });
+          
+          // Filtrar los acordeones de Demos agrupados por familia
+          var demoCategoryAccordions = document.querySelectorAll(".demo-category-accordion");
+          demoCategoryAccordions.forEach(function(accordion) {
+            var relatedCards = accordion.querySelectorAll(".related-demo-card");
+            var hasVisibleCard = false;
+            relatedCards.forEach(function(rc) {
+              var cat = rc.getAttribute("data-category");
+              if (filterVal === "all" || cat === filterVal) {
+                rc.style.display = "";
+                hasVisibleCard = true;
+              } else {
+                rc.style.display = "none";
+              }
+            });
+            
+            if (hasVisibleCard) {
+              accordion.style.display = "";
+              if (filterVal !== "all") {
+                accordion.open = true; // Expandir automáticamente cuando se filtra una categoría específica
+              } else {
+                accordion.open = false; // Mantener contraídos al ver "Todos"
+              }
+            } else {
+              accordion.style.display = "none";
             }
           });
           
@@ -1445,8 +1517,8 @@ function generateHtmlForBrand(brand, vehicles) {
             }
           });
 
-          // Filtrar y Colapsar/Expandir Acordeones de Demos
-          var accordions = document.querySelectorAll(".brand-accordion");
+          // Filtrar y Colapsar/Expandir Acordeones de Demos (Página de Demos)
+          var accordions = document.querySelectorAll(".brand-accordion:not(.demo-category-accordion)");
           accordions.forEach(function(accordion) {
             var rows = accordion.querySelectorAll(".demo-excel-table tbody tr");
             var hasVisibleRow = false;

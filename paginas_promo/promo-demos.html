@@ -926,13 +926,40 @@ GAS', 'brand_name': 'demos' }); }">Cotizar</a></td><td data-label="Clasificació
           var filterVal = this.getAttribute("data-filter");
           
           // Filtrar Tarjetas de Nuevos y Demos Destacados
-          var cards = document.querySelectorAll(".grid-promos .card");
+          var cards = document.querySelectorAll(".grid-promos .card:not(.related-demo-card)");
           cards.forEach(function(card) {
             var cat = card.getAttribute("data-category");
             if (filterVal === "all" || cat === filterVal) {
               card.style.display = "";
             } else {
               card.style.display = "none";
+            }
+          });
+          
+          // Filtrar los acordeones de Demos agrupados por familia
+          var demoCategoryAccordions = document.querySelectorAll(".demo-category-accordion");
+          demoCategoryAccordions.forEach(function(accordion) {
+            var relatedCards = accordion.querySelectorAll(".related-demo-card");
+            var hasVisibleCard = false;
+            relatedCards.forEach(function(rc) {
+              var cat = rc.getAttribute("data-category");
+              if (filterVal === "all" || cat === filterVal) {
+                rc.style.display = "";
+                hasVisibleCard = true;
+              } else {
+                rc.style.display = "none";
+              }
+            });
+            
+            if (hasVisibleCard) {
+              accordion.style.display = "";
+              if (filterVal !== "all") {
+                accordion.open = true; // Expandir automáticamente cuando se filtra una categoría específica
+              } else {
+                accordion.open = false; // Mantener contraídos al ver "Todos"
+              }
+            } else {
+              accordion.style.display = "none";
             }
           });
           
@@ -947,8 +974,8 @@ GAS', 'brand_name': 'demos' }); }">Cotizar</a></td><td data-label="Clasificació
             }
           });
 
-          // Filtrar y Colapsar/Expandir Acordeones de Demos
-          var accordions = document.querySelectorAll(".brand-accordion");
+          // Filtrar y Colapsar/Expandir Acordeones de Demos (Página de Demos)
+          var accordions = document.querySelectorAll(".brand-accordion:not(.demo-category-accordion)");
           accordions.forEach(function(accordion) {
             var rows = accordion.querySelectorAll(".demo-excel-table tbody tr");
             var hasVisibleRow = false;
