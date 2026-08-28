@@ -163,7 +163,8 @@ app.post('/api/promos/:brand', upload.single('image'), (req, res) => {
     benefits: benefits,
     legal: req.body.legal || '* Promoción válida el mes en curso.',
     accentColor: req.body.accentColor || '#CC4400',
-    underlineStyle: req.body.underlineStyle || 'solid'
+    underlineStyle: req.body.underlineStyle || 'solid',
+    category: req.body.category || 'suv'
   };
 
   const existingIndex = data[brand].findIndex(p => p.id === newPromo.id);
@@ -267,11 +268,11 @@ app.get('/api/download-csv', (req, res) => {
 
 // CSV Demos Template Download Endpoint
 app.get('/api/download-demos-template', (req, res) => {
-  let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp\n';
-  csvContent += 'RAM;1200 Crew Cab Tradesman;2026;Blanco;1500 km;$399,000;2 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200\n';
-  csvContent += 'Jeep;Compass Limited;2025;Gris;3400 km;$549,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass\n';
-  csvContent += 'Dodge;Attitude SXT;2025;Rojo;800 km;$359,000;3 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude\n';
-  csvContent += 'Fiat;Pulse Audace;2024;Azul;4200 km;$370,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse\n';
+  let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp;Clasificación\n';
+  csvContent += 'RAM;1200 Crew Cab Tradesman;2026;Blanco;1500 km;$399,000;2 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20RAM%201200;pickup\n';
+  csvContent += 'Jeep;Compass Limited;2025;Gris;3400 km;$549,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Jeep%20Compass;suv\n';
+  csvContent += 'Dodge;Attitude SXT;2025;Rojo;800 km;$359,000;3 unidades;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Dodge%20Attitude;sedan\n';
+  csvContent += 'Fiat;Pulse Audace;2024;Azul;4200 km;$370,000;1 unidad;https://wa.me/525521787900?text=Hola,%20me%20interesa%20el%20demo%20Fiat%20Pulse;crossover\n';
   
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', 'attachment; filename=plantilla_inventario_demos.csv');
@@ -325,6 +326,16 @@ function generateHtmlForBrand(brand, vehicles) {
     fs.mkdirSync(promoDir, { recursive: true });
   }
 
+  const rulesPath = path.join(__dirname, 'chatbot_rules.json');
+  let chatbotRules = {};
+  if (fs.existsSync(rulesPath)) {
+    try {
+      chatbotRules = JSON.parse(fs.readFileSync(rulesPath, 'utf8'));
+    } catch (e) {
+      console.error('Error loading chatbot rules:', e);
+    }
+  }
+
   const brandColors = {
     ram: '#000000',
     dodge: '#CC4400',
@@ -358,7 +369,7 @@ function generateHtmlForBrand(brand, vehicles) {
     }
 
     return `
-    <article class="card" style="border-top-color: ${v.accentColor || accentColor};">
+    <article class="card" data-category="${v.category || 'suv'}" style="border-top-color: ${v.accentColor || accentColor};">
       <div class="img-container">
         <img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>
       </div>
@@ -403,6 +414,137 @@ function generateHtmlForBrand(brand, vehicles) {
   
   const dbDataLocal = readData();
   const landingConfigLocal = dbDataLocal.landing || {};
+  
+  const uniqueCategories = new Set();
+  vehicles.forEach(v => {
+    if (v.category) uniqueCategories.add(v.category.toLowerCase().trim());
+  });
+
+  const demosCsv = landingConfigLocal.demosTableCsv || '';
+
+  // Extract from demos CSV if on demos page
+  if (brand === 'demos' && demosCsv.trim()) {
+    const parsedRows = parseCsv(demosCsv.trim());
+    if (parsedRows.length > 0) {
+      const headers = parsedRows[0].map(h => h.trim().replace(/^["']|["']$/g, ''));
+      const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
+      for (let i = 1; i < parsedRows.length; i++) {
+        const cols = parsedRows[i];
+        if (cols.length > 0 && catIdx !== -1) {
+          const catVal = (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase();
+          uniqueCategories.add(catVal);
+        }
+      }
+    }
+  }
+
+  // Cross-Promotion Section (Related Demos)
+  let relatedDemosHtml = '';
+  if (brand !== 'demos' && demosCsv.trim()) {
+    const parsedRows = parseCsv(demosCsv.trim());
+    if (parsedRows.length > 1) {
+      const headers = parsedRows[0].map(h => h.trim().replace(/^["']|["']$/g, ''));
+      const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
+      
+      const relatedRows = parsedRows.slice(1).filter(cols => {
+        if (cols.length === 0 || (cols.length === 1 && cols[0] === '')) return false;
+        const rowBrand = (cols[0] || '').trim().replace(/^["']|["']$/g, '').trim().toLowerCase();
+        return rowBrand === brand.toLowerCase();
+      });
+
+      if (relatedRows.length > 0) {
+        const relatedCards = relatedRows.map(cols => {
+          const model = (cols[1] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const year = (cols[2] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const color = (cols[3] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const km = (cols[4] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const price = (cols[5] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const stock = (cols[6] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const wa = (cols[7] || '').trim().replace(/^["']|["']$/g, '').trim();
+          const category = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
+          
+          uniqueCategories.add(category);
+
+          let displayPrice = price;
+          const cleanNum = price.replace(/[^0-9.]/g, '');
+          if (cleanNum) {
+            const num = parseFloat(cleanNum);
+            if (!isNaN(num)) {
+              displayPrice = '$' + num.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            }
+          }
+
+          return `
+          <article class="card related-demo-card" data-category="${category}" style="border-top-color: ${accentColor}; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="card-header" style="padding-top: 15px;">
+              <div class="model-info">
+                <span class="badge" style="background: ${accentColor}; color: #fff; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; display: inline-block; margin-bottom: 5px;">${category.toUpperCase()} - DEMO</span>
+                <h2 class="model-name" style="margin-top: 5px;">${model} (${year})</h2>
+                <div class="model-price" style="color: ${accentColor}; font-size: 1.35rem; font-weight: bold;">
+                  ${displayPrice}
+                </div>
+              </div>
+            </div>
+            <div class="promo-body" style="padding-top: 0; padding-bottom: 10px;">
+              <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Color: <strong>${color}</strong> | Kilometraje: <strong>${km}</strong></p>
+              <p style="margin: 3px 0; font-size: 0.9rem; color: #555;">Disponibilidad: <strong>${stock}</strong></p>
+            </div>
+            <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; background: #fafafa;">
+              <a aria-label="Cotizar ${model} por WhatsApp" class="btn-wa" style="background-color: ${accentColor}; padding: 8px 15px; font-size: 0.9rem; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center;" href="${wa}" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar_related_demo', { 'car_name': '${model}', 'brand_name': '${brand}' }); }">
+                <svg viewBox="0 0 24 24" style="fill: white; width: 14px; height: 14px; margin-right: 5px;">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                </svg>
+                <span style="color:white; font-weight:bold;">Cotizar Demo</span>
+              </a>
+            </div>
+          </article>
+          `;
+        }).join('');
+
+        relatedDemosHtml = `
+        <section class="related-demos-section" style="max-width: 960px; margin: 40px auto; padding: 0 10px;">
+          <div class="heading-container" style="border-bottom: 2px solid ${accentColor}; padding-bottom: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <h3 class="table-title" style="margin: 0; color: #111; text-transform: uppercase;"><i class="fa-solid fa-tags" style="color: ${accentColor};"></i> Autos Demo (${brand.toUpperCase()}) en Oportunidad</h3>
+          </div>
+          <p style="color: #666; font-size: 0.95rem; margin-top: -10px; margin-bottom: 20px;">Ahorra con estas unidades seminuevas de bajo kilometraje y entrega inmediata:</p>
+          <div class="grid-promos" style="margin-top: 10px; margin-bottom: 20px;">
+            ${relatedCards}
+          </div>
+        </section>
+        `;
+      }
+    }
+  }
+
+  // Build Filters html
+  let filtersHtml = '';
+  if (uniqueCategories.size > 1) {
+    const categoryNames = {
+      suv: '🚙 SUV',
+      sedan: '🚗 Sedán',
+      deportivos: '🏎️ Deportivos',
+      trabajo: '💼 Trabajo',
+      todoterreno: '⛰️ Todo Terreno',
+      familiares: '👨‍👩‍👧‍👦 Familiares',
+      electricos: '⚡ Eléctricos',
+      hatchback: '🚗 Hatchback',
+      crossover: '🚙 Crossover',
+      chasis: '🚛 Chasis',
+      pickup: '🛻 Pickup'
+    };
+
+    const filterButtons = Array.from(uniqueCategories).sort().map(cat => {
+      const label = categoryNames[cat] || cat.toUpperCase();
+      return `<button class="filter-pill" data-filter="${cat}">${label}</button>`;
+    }).join('\n');
+    
+    filtersHtml = `
+    <div class="filters-container">
+      <button class="filter-pill active" data-filter="all">✨ Todos</button>
+      ${filterButtons}
+    </div>
+    `;
+  }
   
   let excelTableHtml = '';
   if (brand === 'demos') {
@@ -463,7 +605,9 @@ function generateHtmlForBrand(brand, vehicles) {
                 colsHtml += `<td data-label="${h}">${val}</td>`;
               }
             });
-            rowsHtml += `<tr>${colsHtml}</tr>`;
+            const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
+            const catVal = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
+            rowsHtml += `<tr data-category="${catVal}">${colsHtml}</tr>`;
           });
 
           accordionsHtml += `
@@ -1120,6 +1264,52 @@ function generateHtmlForBrand(brand, vehicles) {
         text-align: center;
       }
     }
+    
+    /* Estilos de Filtros de Categoría */
+    .filters-container {
+      max-width: 960px;
+      margin: 30px auto 10px auto;
+      padding: 0 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 8px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: var(--fuente);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      outline: none;
+    }
+    .filter-pill:hover {
+      background: #e2e2e2;
+      border-color: #bbb;
+      transform: translateY(-1px);
+    }
+    .filter-pill.active {
+      background: var(--acento);
+      color: #fff;
+      border-color: var(--acento);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .related-demo-card {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .related-demo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
   </style>
  </head>
  <body>
@@ -1139,6 +1329,8 @@ function generateHtmlForBrand(brand, vehicles) {
     </div>
   </nav>
 
+  ${filtersHtml}
+
   ${brand === 'demos' && cardsHtml.length > 0 ? `
   <div class="demos-gallery-section" style="max-width:960px; margin:40px auto 10px auto; padding: 0 10px;">
     <h3 class="table-title" style="margin-bottom: 5px; color: #111; text-transform: uppercase;"><i class="fa-solid fa-fire" style="color: #ff5722;"></i> Demos Destacados (Con Foto)</h3>
@@ -1149,6 +1341,8 @@ function generateHtmlForBrand(brand, vehicles) {
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     ${cardsHtml.length > 0 ? cardsHtml : (brand === 'demos' ? '' : '<div class="no-promos">No hay promociones activas actualmente para esta marca.</div>')}
   </div>
+
+  ${relatedDemosHtml}
 
   ${excelTableHtml}
   <div class="embed-footer"></div>
@@ -1216,6 +1410,60 @@ function generateHtmlForBrand(brand, vehicles) {
           }
         }, 2000);
       }
+      
+      // Lógica de Filtros de Categoría
+      var filterPills = document.querySelectorAll(".filter-pill");
+      filterPills.forEach(function(pill) {
+        pill.addEventListener("click", function() {
+          filterPills.forEach(function(p) { p.classList.remove("active"); });
+          this.classList.add("active");
+          
+          var filterVal = this.getAttribute("data-filter");
+          
+          // Filtrar Tarjetas de Nuevos y Demos Destacados
+          var cards = document.querySelectorAll(".grid-promos .card");
+          cards.forEach(function(card) {
+            var cat = card.getAttribute("data-category");
+            if (filterVal === "all" || cat === filterVal) {
+              card.style.display = "";
+            } else {
+              card.style.display = "none";
+            }
+          });
+          
+          // Filtrar Filas de Tabla Demos
+          var tableRows = document.querySelectorAll(".demo-excel-table tbody tr");
+          tableRows.forEach(function(row) {
+            var cat = row.getAttribute("data-category");
+            if (filterVal === "all" || cat === filterVal) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+
+          // Filtrar y Colapsar/Expandir Acordeones de Demos
+          var accordions = document.querySelectorAll(".brand-accordion");
+          accordions.forEach(function(accordion) {
+            var rows = accordion.querySelectorAll(".demo-excel-table tbody tr");
+            var hasVisibleRow = false;
+            rows.forEach(function(r) {
+              if (r.style.display !== "none") {
+                hasVisibleRow = true;
+              }
+            });
+            
+            if (hasVisibleRow) {
+              accordion.style.display = "";
+              if (filterVal !== "all") {
+                accordion.open = true;
+              }
+            } else {
+              accordion.style.display = "none";
+            }
+          });
+        });
+      });
     });
 
     // Lógica para filtrar la tabla interactiva de demos con acordeones
@@ -1262,6 +1510,561 @@ function generateHtmlForBrand(brand, vehicles) {
         }
       });
     }
+  </script>
+  
+  <!-- Chatbot Asistente IA -->
+  <style>
+    .chatbot-container {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 999999;
+      font-family: Arial, sans-serif;
+    }
+    .chatbot-launcher {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--acento);
+      border: 3px solid #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .chatbot-launcher:hover {
+      transform: scale(1.08);
+    }
+    .launcher-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .launcher-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #ff3b30;
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-5px); }
+      60% { transform: translateY(-3px); }
+    }
+    .chatbot-window {
+      position: absolute;
+      bottom: 75px;
+      right: 0;
+      width: 330px;
+      height: 460px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #eee;
+    }
+    .chatbot-window.active {
+      transform: scale(1);
+    }
+    .chatbot-header {
+      padding: 12px 15px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .chat-header-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      margin-right: 10px;
+    }
+    .chat-header-info {
+      flex: 1;
+    }
+    .chat-header-name {
+      margin: 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .chat-header-status {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .chatbot-close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .chatbot-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #fdfdfd;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-message {
+      max-width: 85%;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-message .message-content {
+      padding: 10px 14px;
+      border-radius: 15px;
+      font-size: 13.5px;
+      line-height: 1.4;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+    .bot-message {
+      align-self: flex-start;
+    }
+    .bot-message .message-content {
+      background: #f0f0f0;
+      color: #333;
+      border-bottom-left-radius: 3px;
+    }
+    .user-message {
+      align-self: flex-end;
+    }
+    .user-message .message-content {
+      background: var(--acento);
+      color: #fff;
+      border-bottom-right-radius: 3px;
+    }
+    .chatbot-options {
+      padding: 10px 15px;
+      background: #fff;
+      border-top: 1px solid #f0f0f0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .option-btn {
+      background: #fff;
+      color: #555;
+      border: 1px solid #ddd;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: bold;
+    }
+    .option-btn:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+      color: #333;
+    }
+    .chatbot-input-area {
+      display: flex;
+      padding: 10px 15px;
+      border-top: 1px solid #eee;
+      background: #fff;
+    }
+    .chatbot-input-area input {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 13px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .chatbot-input-area input:focus {
+      border-color: var(--acento);
+    }
+    .chatbot-input-area button {
+      border: none;
+      color: #fff;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-left: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .chatbot-input-area button:hover {
+      transform: scale(1.05);
+    }
+    .chat-card-suggestion {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .chat-card-body {
+      padding: 8px 12px;
+    }
+    .chat-card-title {
+      font-size: 13px;
+      font-weight: bold;
+      margin: 0 0 3px 0;
+      color: #333;
+    }
+    .chat-card-price {
+      font-size: 12px;
+      color: var(--acento);
+      font-weight: bold;
+      margin: 0 0 5px 0;
+    }
+    .chat-card-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 6px;
+      background: #f5f5f5;
+      color: #333;
+      font-size: 11px;
+      text-decoration: none;
+      font-weight: bold;
+      border-top: 1px solid #eee;
+      transition: background 0.2s;
+    }
+    .chat-card-btn:hover {
+      background: #e9e9e9;
+    }
+  </style>
+
+  <div id="chatbotContainer" class="chatbot-container">
+    <button id="chatbotLauncher" class="chatbot-launcher" aria-label="Abrir Asistente">
+      <img src="${landingConfigLocal.avatar || 'https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg'}" alt="Asistente" class="launcher-avatar">
+      <span class="launcher-badge">1</span>
+    </button>
+    
+    <div id="chatbotWindow" class="chatbot-window">
+      <div class="chatbot-header" style="background: var(--acento);">
+        <img src="${landingConfigLocal.avatar || 'https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg'}" alt="Asistente" class="chat-header-avatar">
+        <div class="chat-header-info">
+          <h4 class="chat-header-name">Luis Fernando</h4>
+          <span class="chat-header-status">Online • Tu Asesor de Confianza</span>
+        </div>
+        <button id="chatbotClose" class="chatbot-close-btn" aria-label="Cerrar Asistente">&times;</button>
+      </div>
+      
+      <div id="chatbotBody" class="chatbot-body"></div>
+      <div id="chatbotOptions" class="chatbot-options"></div>
+      
+      <div class="chatbot-input-area">
+        <input type="text" id="chatbotInput" placeholder="Escribe tu pregunta o duda...">
+        <button id="chatbotSend" style="background: var(--acento);"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var launcher = document.getElementById("chatbotLauncher");
+      var windowEl = document.getElementById("chatbotWindow");
+      var closeBtn = document.getElementById("chatbotClose");
+      var body = document.getElementById("chatbotBody");
+      var optionsContainer = document.getElementById("chatbotOptions");
+      var input = document.getElementById("chatbotInput");
+      var sendBtn = document.getElementById("chatbotSend");
+      
+      var kb = ${JSON.stringify(chatbotRules)};
+      var brandKey = "${brand}";
+      var config = kb[brandKey] || kb["general"];
+      
+      launcher.addEventListener("click", function() {
+        windowEl.classList.toggle("active");
+        var badge = launcher.querySelector(".launcher-badge");
+        if (badge) badge.style.display = "none";
+      });
+      
+      closeBtn.addEventListener("click", function() {
+        windowEl.classList.remove("active");
+      });
+      
+      setTimeout(function() {
+        var isDismissed = sessionStorage.getItem("chatbot_dismissed");
+        if (!isDismissed && !windowEl.classList.contains("active")) {
+          windowEl.classList.add("active");
+          var badge = launcher.querySelector(".launcher-badge");
+          if (badge) badge.style.display = "none";
+          sessionStorage.setItem("chatbot_dismissed", "true");
+        }
+      }, 4000);
+
+      function appendMessage(text, isBot, cards) {
+        var msg = document.createElement("div");
+        msg.className = "chat-message " + (isBot ? "bot-message" : "user-message");
+        
+        var content = document.createElement("div");
+        content.className = "message-content";
+        content.innerText = text;
+        msg.appendChild(content);
+        
+        if (cards && cards.length > 0) {
+          cards.forEach(function(c) {
+            var cardEl = document.createElement("div");
+            cardEl.className = "chat-card-suggestion";
+            cardEl.innerHTML = '<div class="chat-card-body">' +
+              '<h5 class="chat-card-title">' + c.name + '</h5>' +
+              '<p class="chat-card-price">' + c.price + '</p>' +
+              '</div>' +
+              '<a href="#" class="chat-card-btn" data-target-id="' + c.id + '">📍 Ver unidad en pantalla</a>';
+            
+            cardEl.querySelector("a").addEventListener("click", function(e) {
+              e.preventDefault();
+              var targetId = this.getAttribute("data-target-id");
+              
+              var cardsElements = document.querySelectorAll(".card, tr");
+              var targetEl = null;
+              
+              if (targetId) {
+                cardsElements.forEach(function(el) {
+                  if (el.getAttribute("id") === targetId) {
+                    targetEl = el;
+                  }
+                  var waBtn = el.querySelector(".btn-wa, .btn-wa-table");
+                  if (waBtn && waBtn.getAttribute("href") && waBtn.getAttribute("href").includes(targetId)) {
+                    targetEl = el;
+                  }
+                });
+              }
+              
+              if (!targetEl) {
+                cardsElements.forEach(function(el) {
+                  var headerText = el.innerText || '';
+                  if (headerText.toUpperCase().includes(c.name.toUpperCase())) {
+                    targetEl = el;
+                  }
+                });
+              }
+
+              if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                var originalBorder = targetEl.style.borderColor;
+                targetEl.style.boxShadow = "0 0 25px " + (targetEl.style.borderTopColor || "var(--acento)");
+                setTimeout(function() {
+                  targetEl.style.boxShadow = "";
+                }, 3000);
+                windowEl.classList.remove("active");
+              } else {
+                alert("Para ver este vehículo demo te llevaremos a la sección correspondiente.");
+                window.location.href = "../paginas_promo/promo-demos.html";
+              }
+            });
+            msg.appendChild(cardEl);
+          });
+        }
+        
+        body.appendChild(msg);
+        body.scrollTop = body.scrollHeight;
+      }
+      
+      function loadOptions(options) {
+        optionsContainer.innerHTML = "";
+        options.forEach(function(opt) {
+          var btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.innerText = opt.label;
+          btn.addEventListener("click", function() {
+            appendMessage(opt.label, false);
+            handleOptionSelect(opt);
+          });
+          optionsContainer.appendChild(btn);
+        });
+        
+        if (options !== kb.faq.options) {
+          var faqBtn = document.createElement("button");
+          faqBtn.className = "option-btn";
+          faqBtn.style.borderColor = "var(--acento)";
+          faqBtn.innerText = "❓ Preguntas Frecuentes";
+          faqBtn.addEventListener("click", function() {
+            appendMessage("Preguntas Frecuentes", false);
+            appendMessage(kb.faq.welcome, true);
+            loadOptions(kb.faq.options);
+          });
+          optionsContainer.appendChild(faqBtn);
+        } else {
+          var backBtn = document.createElement("button");
+          backBtn.className = "option-btn";
+          backBtn.innerText = "⬅️ Volver al inicio";
+          backBtn.addEventListener("click", function() {
+            appendMessage("Volver al inicio", false);
+            initChat();
+          });
+          optionsContainer.appendChild(backBtn);
+        }
+      }
+
+      function handleOptionSelect(opt) {
+        appendMessage("De acuerdo. Buscando opciones...", true);
+        
+        setTimeout(function() {
+          var msgs = body.querySelectorAll(".bot-message");
+          for (var idx = msgs.length - 1; idx >= 0; idx--) {
+            if (msgs[idx].innerText.includes("Buscando opciones")) {
+              msgs[idx].remove();
+              break;
+            }
+          }
+          
+          if (opt.filter) {
+            var suggestions = [];
+            var cards = document.querySelectorAll(".grid-promos .card, .related-demo-card");
+            
+            cards.forEach(function(card) {
+              if (card.getAttribute("data-category") === opt.filter) {
+                var nameEl = card.querySelector(".model-name");
+                var priceEl = card.querySelector(".model-price");
+                var name = nameEl ? nameEl.innerText : "";
+                var price = priceEl ? priceEl.innerText : "";
+                var id = card.getAttribute("id") || "";
+                
+                if (name && !suggestions.some(s => s.name === name)) {
+                  suggestions.push({ id: id, name: name, price: price });
+                }
+              }
+            });
+            
+            var tableRows = document.querySelectorAll(".demo-excel-table tbody tr");
+            tableRows.forEach(function(row) {
+              if (row.getAttribute("data-category") === opt.filter) {
+                var tds = row.getElementsByTagName("td");
+                if (tds.length >= 6) {
+                  var nameVal = tds[1].innerText + " (Demo)";
+                  var priceVal = tds[5].innerText;
+                  var waBtn = row.querySelector(".btn-wa-table");
+                  var idVal = waBtn ? waBtn.getAttribute("href") : "";
+                  
+                  if (!suggestions.some(s => s.name === nameVal)) {
+                    suggestions.push({ id: idVal, name: nameVal, price: priceVal });
+                  }
+                }
+              }
+            });
+
+            var limitedSuggestions = suggestions.slice(0, 3);
+            
+            if (limitedSuggestions.length > 0) {
+              appendMessage(opt.reply, true, limitedSuggestions);
+            } else {
+              appendMessage("Actualmente no tenemos unidades publicadas en esta categoría para esta marca, pero te podemos cotizar sobre pedido. ¡Escríbenos por WhatsApp!", true);
+            }
+          } else if (opt.reply) {
+            appendMessage(opt.reply, true);
+          }
+          
+          var menuBtn = document.createElement("button");
+          menuBtn.className = "option-btn";
+          menuBtn.innerText = "⬅️ Menú Principal";
+          menuBtn.addEventListener("click", function() {
+            appendMessage("Menú Principal", false);
+            initChat();
+          });
+          optionsContainer.appendChild(menuBtn);
+        }, 800);
+      }
+      
+      function handleTextQuery() {
+        var query = input.value.trim().toLowerCase();
+        if (!query) return;
+        
+        appendMessage(input.value, false);
+        input.value = "";
+        
+        appendMessage("Pensando...", true);
+        
+        setTimeout(function() {
+          var msgs = body.querySelectorAll(".bot-message");
+          for (var idx = msgs.length - 1; idx >= 0; idx--) {
+            if (msgs[idx].innerText.includes("Pensando")) {
+              msgs[idx].remove();
+              break;
+            }
+          }
+          
+          var matchedFaq = null;
+          kb.faq.options.forEach(function(opt) {
+            var labelLower = opt.label.toLowerCase();
+            var replyLower = opt.reply.toLowerCase();
+            
+            if (labelLower.includes(query) || query.includes(labelLower.replace(/[^a-z0-9 ]/g, "").trim()) || replyLower.includes(query)) {
+              matchedFaq = opt;
+            }
+          });
+          
+          if (matchedFaq) {
+            appendMessage(matchedFaq.reply, true);
+          } else {
+            appendMessage("Entendido. Para darte una cotización exacta o responder dudas detalladas, te pondré en contacto directo con tu asesor por WhatsApp.", true);
+            optionsContainer.innerHTML = "";
+            
+            var waBtn = document.createElement("button");
+            waBtn.className = "option-btn";
+            waBtn.style.background = "#25d366";
+            waBtn.style.color = "#fff";
+            waBtn.innerText = "💬 Hablar por WhatsApp";
+            waBtn.addEventListener("click", function() {
+              window.open("https://wa.me/525521787900?text=Hola,%20solicito%20información%20y%20asistencia.", "_blank");
+            });
+            optionsContainer.appendChild(waBtn);
+            
+            var backBtn = document.createElement("button");
+            backBtn.className = "option-btn";
+            backBtn.innerText = "⬅️ Menú Principal";
+            backBtn.addEventListener("click", function() {
+              initChat();
+            });
+            optionsContainer.appendChild(backBtn);
+          }
+        }, 600);
+      }
+      
+      sendBtn.addEventListener("click", handleTextQuery);
+      input.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          handleTextQuery();
+        }
+      });
+      
+      function initChat() {
+        body.innerHTML = "";
+        appendMessage(config.welcome, true);
+        loadOptions(config.options);
+      }
+      
+      initChat();
+    });
   </script>
  </body>
 </html>`;
@@ -1327,6 +2130,23 @@ function generateIndexHtml(dbData) {
     const val = brandsImages[bk] || `imagenes/marca_${bk}.jpg`;
     html = html.replace(new RegExp(`\\{\\{BRAND_IMAGE_${bk.toUpperCase()}\\}\\}`, 'g'), val);
   });
+  
+  // Reemplazar reglas de Chatbot y avatar en Landing Page
+  const rulesPath = path.join(__dirname, 'chatbot_rules.json');
+  let chatbotRules = {};
+  if (fs.existsSync(rulesPath)) {
+    try {
+      chatbotRules = JSON.parse(fs.readFileSync(rulesPath, 'utf8'));
+    } catch (e) {
+      console.error('Error loading chatbot rules:', e);
+    }
+  }
+  
+  const portal = dbData.portal || {};
+  const avatar = optimizeCloudinaryUrl(portal.avatar || 'https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg');
+
+  html = html.replace(/\{\{CHATBOT_RULES\}\}/g, JSON.stringify(chatbotRules));
+  html = html.replace(/\{\{CHATBOT_AVATAR\}\}/g, avatar);
   
   fs.writeFileSync(outputPath, html, 'utf8');
   console.log('index.html successfully generated.');

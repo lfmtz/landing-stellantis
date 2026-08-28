@@ -1,0 +1,103 @@
+{
+  "jeep": {
+    "welcome": "¡Hola! Bienvenido al portal de Jeep. ⛰️ ¿Te puedo asistir con algunas sugerencias? ¿Estás buscando una SUV elegante o un Todo Terreno para la aventura?",
+    "options": [
+      {
+        "label": "🚙 SUV",
+        "filter": "suv",
+        "reply": "Excelente. Jeep cuenta con SUVs de gran confort y tecnología. Te recomiendo revisar estas opciones (tanto Nuevas como Demos en remate):"
+      },
+      {
+        "label": "⛰️ Todo Terreno",
+        "filter": "todoterreno",
+        "reply": "¡Perfecto para la aventura! Supera cualquier terreno con estas opciones de Jeep 4x4:"
+      }
+    ]
+  },
+  "peugeot": {
+    "welcome": "¡Hola! Bienvenido al portal de Peugeot. 🦁 ¿Estás buscando una SUV sofisticada o un vehículo de Trabajo eficiente para tu negocio?",
+    "options": [
+      {
+        "label": "🚙 SUV",
+        "filter": "suv",
+        "reply": "Gran elección. Peugeot tiene SUVs con el mejor diseño europeo. Te recomiendo revisar:"
+      },
+      {
+        "label": "💼 Trabajo / Comercial",
+        "filter": "trabajo",
+        "reply": "Excelente para tu negocio. Estas son nuestras unidades de carga y utilitarios con grandes promociones:"
+      }
+    ]
+  },
+  "ram": {
+    "welcome": "¡Hola! Bienvenido al portal de RAM. 🛻 ¿Estás buscando una Pickup equipada para todo o un Chasis fuerte para tu negocio?",
+    "options": [
+      {
+        "label": "🛻 Pickup",
+        "filter": "pickup",
+        "reply": "Excelente. Las pickups RAM combinan potencia y lujo. Revisa estas unidades disponibles:"
+      },
+      {
+        "label": "🚛 Chasis / Trabajo",
+        "filter": "chasis",
+        "reply": "El chasis ideal para poner a trabajar tu negocio. Estas son las opciones de RAM Chasis:"
+      }
+    ]
+  },
+  "fiat": {
+    "welcome": "¡Hola! Bienvenido al portal de Fiat. 🚗 ¿Estás buscando un Hatchback ágil para la ciudad o un Crossover dinámico?",
+    "options": [
+      {
+        "label": "🚗 Hatchback",
+        "filter": "hatchback",
+        "reply": "Súper práctico para el día a día. Te recomiendo ver estas opciones de Fiat Hatchback:"
+      },
+      {
+        "label": "🚙 Crossover",
+        "filter": "crossover",
+        "reply": "Estilo y altura para cualquier camino. Descubre nuestros Fiat Crossover:"
+      }
+    ]
+  },
+  "general": {
+    "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 ¿Qué tipo de vehículo estás buscando hoy? Dime si buscas algo para tu Trabajo, para tu Familia o de uso Personal:",
+    "options": [
+      {
+        "label": "💼 Para mi Trabajo",
+        "filter": "trabajo",
+        "reply": "Excelente. Tenemos las mejores opciones comerciales y de carga. Te sugiero ver las siguientes unidades de Trabajo, Chasis y Pickups:"
+      },
+      {
+        "label": "👨‍👩‍👧‍👦 Para mi Familia",
+        "filter": "familiares",
+        "reply": "El espacio y seguridad de tu familia son lo primero. Te sugiero ver estas opciones de SUVs, Familiares de 7 plazas y Crossovers:"
+      },
+      {
+        "label": "🚗 De uso Personal",
+        "filter": "personal",
+        "reply": "Perfecto. Disfruta el manejo diario. Te sugiero ver nuestros Sedanes, Deportivos, Hatchbacks y Eléctricos:"
+      }
+    ]
+  },
+  "faq": {
+    "welcome": "Aquí tienes algunas de las preguntas más frecuentes. ¿En qué te puedo ayudar?",
+    "options": [
+      {
+        "label": "💳 ¿Requisitos de Crédito?",
+        "reply": "Los requisitos básicos para tramitar tu crédito automotriz son:\n1. Identificación oficial vigente (INE/Pasaporte).\n2. Comprobante de domicilio reciente.\n3. Comprobantes de ingresos de los últimos 3 meses (Estados de cuenta bancarios o recibos de nómina timbrados).\n4. Tener buen historial en buró de crédito.\n\n¿Quieres iniciar tu pre-aprobación? ¡Haz clic en el botón de WhatsApp abajo para platicar con tu asesor!"
+      },
+      {
+        "label": "📈 ¿Tienen Arrendamiento?",
+        "reply": "¡Sí! Contamos con planes de Arrendamiento Puro (Leasing) ideal para personas físicas con actividad empresarial o personas morales. Te permite deducir tus mensualidades al 100% y renovar tu vehículo constantemente con un pago inicial mínimo.\n\nPregunta por una cotización de arrendamiento haciendo clic en el botón de WhatsApp."
+      },
+      {
+        "label": "📍 ¿Dónde están ubicados?",
+        "reply": "¡Hola! Estamos para atenderte. Escríbenos por WhatsApp haciendo clic abajo para darte nuestra ubicación exacta, coordinar tu visita a nuestra sala de ventas y asegurar que tengamos listo el vehículo que te interesa ver."
+      },
+      {
+        "label": "🚗 ¿Pruebas de Manejo?",
+        "reply": "¡Claro que sí! Puedes programar una prueba de manejo sin costo para experimentar el vehículo de tu elección. Solo requerimos tu licencia de conducir vigente e identificación oficial.\n\nEscríbenos por WhatsApp abajo indicando qué modelo te interesa probar y qué día te gustaría venir."
+      }
+    ]
+  }
+}

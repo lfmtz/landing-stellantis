@@ -520,7 +520,8 @@
                         <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">KILOMETRAJE</th>
                         <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">PRECIO</th>
                         <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 110px;">INVENTARIO</th>
-                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b;">WHATSAPP LINK</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 140px;">WHATSAPP LINK</th>
+                        <th style="padding: 8px; text-align: left; font-size: 0.85rem; color: #64748b; width: 120px;">CLASIFICACIÓN</th>
                         <th style="padding: 8px; text-align: center; font-size: 0.85rem; color: #64748b; width: 80px;">ACCIONES</th>
                       </tr>
                     </thead>
@@ -625,7 +626,7 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label for="descriptionSize">Tamaño de Letra</label>
             <select id="descriptionSize">
               <option value="0.9rem">Pequeña (0.9rem)</option>
@@ -635,13 +636,29 @@
               <option value="1.4rem">Muy Grande (1.4rem)</option>
             </select>
           </div>
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label for="underlineStyle">Estilo de Subrayado en Título</label>
             <select id="underlineStyle">
               <option value="solid" selected>Línea Continua</option>
               <option value="dashed">Línea Discontinua (Guiones)</option>
               <option value="dotted">Puntos</option>
               <option value="none">Sin Subrayado</option>
+            </select>
+          </div>
+          <div class="form-group col-4">
+            <label for="category">Categoría / Clasificación</label>
+            <select id="category" required>
+              <option value="suv">SUV</option>
+              <option value="sedan">Sedán</option>
+              <option value="deportivos">Deportivos</option>
+              <option value="trabajo">Trabajo / Comerciales</option>
+              <option value="todoterreno">Todo Terreno</option>
+              <option value="familiares">Familiares 7 Plazas</option>
+              <option value="electricos">Eléctricos</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="crossover">Crossover</option>
+              <option value="chasis">Chasis (RAM)</option>
+              <option value="pickup">Pickup (RAM)</option>
             </select>
           </div>
         </div>
@@ -1344,6 +1361,7 @@
       document.getElementById('accentColor').value = p.accentColor || '#CC4400';
       document.getElementById('accentColorHex').value = (p.accentColor || '#CC4400').toUpperCase();
       document.getElementById('legal').value = p.legal || '';
+      document.getElementById('category').value = p.category || 'suv';
 
       // Check if image is an external URL or local
       if (p.image && (p.image.startsWith('http://') || p.image.startsWith('https://'))) {
@@ -1399,6 +1417,12 @@
       document.getElementById('accentColor').value = brandColor;
       document.getElementById('accentColorHex').value = brandColor.toUpperCase();
       document.getElementById('legal').value = '* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.';
+      
+      let defaultCat = 'suv';
+      if (currentBrand === 'ram') defaultCat = 'pickup';
+      else if (currentBrand === 'fiat') defaultCat = 'crossover';
+      else if (currentBrand === 'leapmotor') defaultCat = 'electricos';
+      document.getElementById('category').value = defaultCat;
       
       filePreview.innerHTML = '';
       benefitsContainer.innerHTML = '';
@@ -1502,6 +1526,7 @@
       formData.append('existingImage', document.getElementById('existingImage').value);
       formData.append('imageURL', document.getElementById('imageURL').value);
       formData.append('legal', document.getElementById('legal').value);
+      formData.append('category', document.getElementById('category').value);
       
       // Benefits collection
       const benefits = [];
@@ -1696,6 +1721,7 @@
       const price = cleanCols[5] || '';
       const stock = cleanCols[6] || '';
       const wa = cleanCols[7] || '';
+      const category = cleanCols[8] || 'suv';
       
       tr.innerHTML = `
         <td style="padding: 6px;"><input type="text" class="form-control editor-field brand-field" value="${brand}" style="width: 100%;" placeholder="RAM"></td>
@@ -1706,6 +1732,21 @@
         <td style="padding: 6px;"><input type="text" class="form-control editor-field price-field" value="${price}" style="width: 100%;" placeholder="399,000"></td>
         <td style="padding: 6px;"><input type="text" class="form-control editor-field stock-field" value="${stock}" style="width: 100%;" placeholder="2 unidades"></td>
         <td style="padding: 6px;"><input type="text" class="form-control editor-field wa-field" value="${wa}" style="width: 100%;" placeholder="https://wa.me/..."></td>
+        <td style="padding: 6px;">
+          <select class="form-control editor-field category-field" style="width: 100%; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 6px; border-radius: 4px; font-size: 0.85rem; height: 35px;">
+            <option value="suv" ${category === 'suv' ? 'selected' : ''}>SUV</option>
+            <option value="sedan" ${category === 'sedan' ? 'selected' : ''}>Sedán</option>
+            <option value="deportivos" ${category === 'deportivos' ? 'selected' : ''}>Deportivos</option>
+            <option value="trabajo" ${category === 'trabajo' ? 'selected' : ''}>Trabajo</option>
+            <option value="todoterreno" ${category === 'todoterreno' ? 'selected' : ''}>Todo Terreno</option>
+            <option value="familiares" ${category === 'familiares' ? 'selected' : ''}>Familiares</option>
+            <option value="electricos" ${category === 'electricos' ? 'selected' : ''}>Eléctricos</option>
+            <option value="hatchback" ${category === 'hatchback' ? 'selected' : ''}>Hatchback</option>
+            <option value="crossover" ${category === 'crossover' ? 'selected' : ''}>Crossover</option>
+            <option value="chasis" ${category === 'chasis' ? 'selected' : ''}>Chasis</option>
+            <option value="pickup" ${category === 'pickup' ? 'selected' : ''}>Pickup</option>
+          </select>
+        </td>
         <td style="padding: 6px; text-align: center; vertical-align: middle;">
           <button type="button" class="btn btn-sm" onclick="deleteEditorRow(this)" style="background: #dc3545; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px;">
             <i class="fa-solid fa-trash-can"></i>
@@ -1717,7 +1758,7 @@
 
     // Add empty row
     window.addEditorRow = function() {
-      addEditorRowWithData(['', '', '', '', '', '', '', '']);
+      addEditorRowWithData(['', '', '', '', '', '', '', '', 'suv']);
     };
 
     // Delete row
@@ -1758,7 +1799,7 @@
     // Serialize visual editor back to CSV in textarea
     window.saveDemosVisualEditor = function() {
       const rows = document.querySelectorAll('.editor-row');
-      let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp\n';
+      let csvContent = 'Marca;Modelo;Año;Color;Kilometraje;Precio;Inventario;WhatsApp;Clasificación\n';
       
       rows.forEach(row => {
         const brand = formatCsvField(row.querySelector('.brand-field').value);
@@ -1769,9 +1810,10 @@
         const price = formatCsvField(row.querySelector('.price-field').value);
         const stock = formatCsvField(row.querySelector('.stock-field').value);
         const wa = formatCsvField(row.querySelector('.wa-field').value);
+        const category = formatCsvField(row.querySelector('.category-field').value);
         
-        if (brand || model || year || color || km || price || stock || wa) {
-          csvContent += `${brand};${model};${year};${color};${km};${price};${stock};${wa}\n`;
+        if (brand || model || year || color || km || price || stock || wa || category) {
+          csvContent += `${brand};${model};${year};${color};${km};${price};${stock};${wa};${category}\n`;
         }
       });
       

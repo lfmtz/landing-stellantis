@@ -512,5 +512,506 @@
             }
         })();
     </script>
+    
+    <!-- Chatbot Asistente IA -->
+    <style>
+      .chatbot-container {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 999999;
+        font-family: Arial, sans-serif;
+      }
+      .chatbot-launcher {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #007bff; /* fallback acento */
+        border: 3px solid #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+      .chatbot-launcher:hover {
+        transform: scale(1.08);
+      }
+      .launcher-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .launcher-badge {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        background: #ff3b30;
+        color: #fff;
+        font-size: 11px;
+        font-weight: bold;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-5px); }
+        60% { transform: translateY(-3px); }
+      }
+      .chatbot-window {
+        position: absolute;
+        bottom: 75px;
+        right: 0;
+        width: 330px;
+        height: 460px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transform: scale(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid #eee;
+      }
+      .chatbot-window.active {
+        transform: scale(1);
+      }
+      .chatbot-header {
+        padding: 12px 15px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        position: relative;
+        background: #007bff;
+      }
+      .chat-header-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #fff;
+        margin-right: 10px;
+      }
+      .chat-header-info {
+        flex: 1;
+      }
+      .chat-header-name {
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .chat-header-status {
+        font-size: 11px;
+        opacity: 0.9;
+      }
+      .chatbot-close-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+      .chatbot-body {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background: #fdfdfd;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .chat-message {
+        max-width: 85%;
+        display: flex;
+        flex-direction: column;
+      }
+      .chat-message .message-content {
+        padding: 10px 14px;
+        border-radius: 15px;
+        font-size: 13.5px;
+        line-height: 1.4;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      }
+      .bot-message {
+        align-self: flex-start;
+      }
+      .bot-message .message-content {
+        background: #f0f0f0;
+        color: #333;
+        border-bottom-left-radius: 3px;
+      }
+      .user-message {
+        align-self: flex-end;
+      }
+      .user-message .message-content {
+        background: #007bff;
+        color: #fff;
+        border-bottom-right-radius: 3px;
+      }
+      .chatbot-options {
+        padding: 10px 15px;
+        background: #fff;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-height: 120px;
+        overflow-y: auto;
+      }
+      .option-btn {
+        background: #fff;
+        color: #555;
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: bold;
+      }
+      .option-btn:hover {
+        background: #f5f5f5;
+        border-color: #bbb;
+        color: #333;
+      }
+      .chatbot-input-area {
+        display: flex;
+        padding: 10px 15px;
+        border-top: 1px solid #eee;
+        background: #fff;
+      }
+      .chatbot-input-area input {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-size: 13px;
+        outline: none;
+        transition: border 0.2s;
+      }
+      .chatbot-input-area input:focus {
+        border-color: #007bff;
+      }
+      .chatbot-input-area button {
+        border: none;
+        color: #fff;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-left: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+      }
+      .chatbot-input-area button:hover {
+        transform: scale(1.05);
+      }
+      .chat-card-suggestion {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 8px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+      .chat-card-body {
+        padding: 8px 12px;
+      }
+      .chat-card-title {
+        font-size: 13px;
+        font-weight: bold;
+        margin: 0 0 3px 0;
+        color: #333;
+      }
+      .chat-card-price {
+        font-size: 12px;
+        color: #007bff;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+      }
+      .chat-card-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 6px;
+        background: #f5f5f5;
+        color: #333;
+        font-size: 11px;
+        text-decoration: none;
+        font-weight: bold;
+        border-top: 1px solid #eee;
+        transition: background 0.2s;
+      }
+      .chat-card-btn:hover {
+        background: #e9e9e9;
+      }
+    </style>
+  
+    <div id="chatbotContainer" class="chatbot-container">
+      <button id="chatbotLauncher" class="chatbot-launcher" aria-label="Abrir Asistente">
+        <img src="{{CHATBOT_AVATAR}}" alt="Asistente" class="launcher-avatar">
+        <span class="launcher-badge">1</span>
+      </button>
+      
+      <div id="chatbotWindow" class="chatbot-window">
+        <div class="chatbot-header">
+          <img src="{{CHATBOT_AVATAR}}" alt="Asistente" class="chat-header-avatar">
+          <div class="chat-header-info">
+            <h4 class="chat-header-name">Luis Fernando</h4>
+            <span class="chat-header-status">Online • Tu Asesor de Confianza</span>
+          </div>
+          <button id="chatbotClose" class="chatbot-close-btn" aria-label="Cerrar Asistente">&times;</button>
+        </div>
+        
+        <div id="chatbotBody" class="chatbot-body"></div>
+        <div id="chatbotOptions" class="chatbot-options"></div>
+        
+        <div class="chatbot-input-area">
+          <input type="text" id="chatbotInput" placeholder="Escribe tu pregunta o duda...">
+          <button id="chatbotSend" style="background: #007bff;"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var launcher = document.getElementById("chatbotLauncher");
+        var windowEl = document.getElementById("chatbotWindow");
+        var closeBtn = document.getElementById("chatbotClose");
+        var body = document.getElementById("chatbotBody");
+        var optionsContainer = document.getElementById("chatbotOptions");
+        var input = document.getElementById("chatbotInput");
+        var sendBtn = document.getElementById("chatbotSend");
+        
+        var kb = {{CHATBOT_RULES}};
+        var brandKey = "general";
+        var config = kb[brandKey] || kb["general"];
+        
+        launcher.addEventListener("click", function() {
+          windowEl.classList.toggle("active");
+          var badge = launcher.querySelector(".launcher-badge");
+          if (badge) badge.style.display = "none";
+        });
+        
+        closeBtn.addEventListener("click", function() {
+          windowEl.classList.remove("active");
+        });
+        
+        setTimeout(function() {
+          var isDismissed = sessionStorage.getItem("chatbot_dismissed");
+          if (!isDismissed && !windowEl.classList.contains("active")) {
+            windowEl.classList.add("active");
+            var badge = launcher.querySelector(".launcher-badge");
+            if (badge) badge.style.display = "none";
+            sessionStorage.setItem("chatbot_dismissed", "true");
+          }
+        }, 4000);
+  
+        function appendMessage(text, isBot, cards) {
+          var msg = document.createElement("div");
+          msg.className = "chat-message " + (isBot ? "bot-message" : "user-message");
+          
+          var content = document.createElement("div");
+          content.className = "message-content";
+          content.innerText = text;
+          msg.appendChild(content);
+          
+          if (cards && cards.length > 0) {
+            cards.forEach(function(c) {
+              var cardEl = document.createElement("div");
+              cardEl.className = "chat-card-suggestion";
+              cardEl.innerHTML = `
+                <div class="chat-card-body">
+                  <h5 class="chat-card-title">${c.name}</h5>
+                  <p class="chat-card-price">${c.price}</p>
+                </div>
+                <a href="${c.url || '#'}" class="chat-card-btn">📍 Ir a promoción</a>
+              `;
+              msg.appendChild(cardEl);
+            });
+          }
+          
+          body.appendChild(msg);
+          body.scrollTop = body.scrollHeight;
+        }
+        
+        function loadOptions(options) {
+          optionsContainer.innerHTML = "";
+          options.forEach(function(opt) {
+            var btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt.label;
+            btn.addEventListener("click", function() {
+              appendMessage(opt.label, false);
+              handleOptionSelect(opt);
+            });
+            optionsContainer.appendChild(btn);
+          });
+          
+          if (options !== kb.faq.options) {
+            var faqBtn = document.createElement("button");
+            faqBtn.className = "option-btn";
+            faqBtn.style.borderColor = "#007bff";
+            faqBtn.innerText = "❓ Preguntas Frecuentes";
+            faqBtn.addEventListener("click", function() {
+              appendMessage("Preguntas Frecuentes", false);
+              appendMessage(kb.faq.welcome, true);
+              loadOptions(kb.faq.options);
+            });
+            optionsContainer.appendChild(faqBtn);
+          } else {
+            var backBtn = document.createElement("button");
+            backBtn.className = "option-btn";
+            backBtn.innerText = "⬅️ Volver al inicio";
+            backBtn.addEventListener("click", function() {
+              appendMessage("Volver al inicio", false);
+              initChat();
+            });
+            optionsContainer.appendChild(backBtn);
+          }
+        }
+  
+        function handleOptionSelect(opt) {
+          appendMessage("De acuerdo. Buscando opciones...", true);
+          
+          setTimeout(function() {
+            var msgs = body.querySelectorAll(".bot-message");
+            for (var idx = msgs.length - 1; idx >= 0; idx--) {
+              if (msgs[idx].innerText.includes("Buscando opciones")) {
+                msgs[idx].remove();
+                break;
+              }
+            }
+            
+            if (opt.filter) {
+              // On landing, recommend brand pages matching this category
+              var categoryBrands = [];
+              if (opt.filter === "trabajo") {
+                categoryBrands = [
+                  { name: "RAM Pickups & Chasis", price: "Ver inventario de carga", url: "paginas_promo/promo-ram.html" },
+                  { name: "Peugeot Comerciales", price: "Socio de tu negocio", url: "paginas_promo/promo-peugeot.html" }
+                ];
+              } else if (opt.filter === "familiares") {
+                categoryBrands = [
+                  { name: "Jeep SUVs", price: "Aventura y espacio", url: "paginas_promo/promo-jeep.html" },
+                  { name: "Fiat Crossovers", price: "Estilo y diversión", url: "paginas_promo/promo-fiat.html" },
+                  { name: "Peugeot 5008 / Rifter", price: "Máxima comodidad", url: "paginas_promo/promo-peugeot.html" }
+                ];
+              } else if (opt.filter === "personal") {
+                categoryBrands = [
+                  { name: "Dodge Attitude & Sedan", price: "Eficiencia para ti", url: "paginas_promo/promo-dodge.html" },
+                  { name: "Fiat Hatchback & Sport", price: "Diseño juvenil", url: "paginas_promo/promo-fiat.html" },
+                  { name: "Leapmotor Eléctricos", price: "100% Eléctrico", url: "paginas_promo/promo-leapmotor.html" }
+                ];
+              }
+              
+              if (categoryBrands.length > 0) {
+                appendMessage(opt.reply, true, categoryBrands);
+              } else {
+                appendMessage(opt.reply, true);
+              }
+            } else if (opt.reply) {
+              appendMessage(opt.reply, true);
+            }
+            
+            var menuBtn = document.createElement("button");
+            menuBtn.className = "option-btn";
+            menuBtn.innerText = "⬅️ Menú Principal";
+            menuBtn.addEventListener("click", function() {
+              appendMessage("Menú Principal", false);
+              initChat();
+            });
+            optionsContainer.appendChild(menuBtn);
+          }, 800);
+        }
+        
+        function handleTextQuery() {
+          var query = input.value.trim().toLowerCase();
+          if (!query) return;
+          
+          appendMessage(input.value, false);
+          input.value = "";
+          
+          appendMessage("Pensando...", true);
+          
+          setTimeout(function() {
+            var msgs = body.querySelectorAll(".bot-message");
+            for (var idx = msgs.length - 1; idx >= 0; idx--) {
+              if (msgs[idx].innerText.includes("Pensando")) {
+                msgs[idx].remove();
+                break;
+              }
+            }
+            
+            var matchedFaq = null;
+            kb.faq.options.forEach(function(opt) {
+              var labelLower = opt.label.toLowerCase();
+              var replyLower = opt.reply.toLowerCase();
+              
+              if (labelLower.includes(query) || query.includes(labelLower.replace(/[^a-z0-9 ]/g, "").trim()) || replyLower.includes(query)) {
+                matchedFaq = opt;
+              }
+            });
+            
+            if (matchedFaq) {
+              appendMessage(matchedFaq.reply, true);
+            } else {
+              appendMessage("Entendido. Para darte una cotización exacta o responder dudas detalladas, te pondré en contacto directo con tu asesor por WhatsApp.", true);
+              optionsContainer.innerHTML = "";
+              
+              var waBtn = document.createElement("button");
+              waBtn.className = "option-btn";
+              waBtn.style.background = "#25d366";
+              waBtn.style.color = "#fff";
+              waBtn.innerText = "💬 Hablar por WhatsApp";
+              waBtn.addEventListener("click", function() {
+                window.open("https://wa.me/525521787900?text=Hola,%20solicito%20información%20y%20asistencia.", "_blank");
+              });
+              optionsContainer.appendChild(waBtn);
+              
+              var backBtn = document.createElement("button");
+              backBtn.className = "option-btn";
+              backBtn.innerText = "⬅️ Menú Principal";
+              backBtn.addEventListener("click", function() {
+                initChat();
+              });
+              optionsContainer.appendChild(backBtn);
+            }
+          }, 600);
+        }
+        
+        sendBtn.addEventListener("click", handleTextQuery);
+        input.addEventListener("keypress", function(e) {
+          if (e.key === "Enter") {
+            handleTextQuery();
+          }
+        });
+        
+        function initChat() {
+          body.innerHTML = "";
+          appendMessage(config.welcome, true);
+          loadOptions(config.options);
+        }
+        
+        initChat();
+      });
+    </script>
 </body>
 </html>
