@@ -59,6 +59,26 @@
       }
     ]
   },
+  "demos": {
+    "welcome": "¡Hola! Bienvenido al portal de Autos Demo. 🚗 Te muestro todas las ofertas en demos que tenemos. Si quieres, puedes filtrar por la categoría que estés buscando con los botones que tienes arriba. ¿Qué tipo de vehículo estás buscando hoy?",
+    "options": [
+      {
+        "label": "🚙 SUV / Crossover",
+        "filter": "suv",
+        "reply": "Excelente. Estas son nuestras unidades de Demos SUV y Crossover listas para entrega inmediata con precio de remate:"
+      },
+      {
+        "label": "💼 Trabajo / Pickup / Chasis",
+        "filter": "trabajo",
+        "reply": "Gran oportunidad para tu negocio. Revisa las opciones de Demos de Carga, Pickups y Chasis:"
+      },
+      {
+        "label": "🚗 Sedán / Deportivos",
+        "filter": "sedan",
+        "reply": "Perfectos para tu día a día o conducción deportiva. Estos son los Demos Sedán y Deportivos:"
+      }
+    ]
+  },
   "general": {
     "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 Te muestro lo que tenemos en nuevos para todas nuestras marcas, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página de cada marca. ¿Qué tipo de vehículo estás buscando hoy? Dime si buscas algo para tu Trabajo, para tu Familia o de uso Personal:",
     "options": [

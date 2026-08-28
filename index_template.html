@@ -988,6 +988,9 @@
             } else if (query.includes("entrega") || query.includes("entregar") || query.includes("tiempo")) {
               replyMsg = "Entendido. Para darte los tiempos exactos de entrega de las unidades en inventario o pedido especial, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. ¿Te parece bien?";
               queryWaText = "Hola Luis Fernando Martínez, me interesa saber los tiempos de entrega de unidades.";
+            } else if (query.includes("cotiz") || query.includes("informe") || query.includes("información") || query.includes("informacion") || query.includes("info")) {
+              replyMsg = "Entendido. Para darte una cotización exacta o brindarte informes detallados sobre cualquier unidad, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. ¿Está bien?";
+              queryWaText = "Hola Luis Fernando Martínez, solicito una cotización e informes detallados.";
             }
             
             if (replyMsg) {
