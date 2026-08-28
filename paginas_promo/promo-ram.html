@@ -1629,19 +1629,31 @@ BRILLANTE</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
   </style>
 
   <div id="chatbotContainer" class="chatbot-container">
-    <button id="chatbotLauncher" class="chatbot-launcher" aria-label="Abrir Asistente">
-      <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg" alt="Asistente" class="launcher-avatar">
+    <button id="chatbotLauncher" class="chatbot-launcher" aria-label="Abrir Asistente" style="background: var(--acento); display: flex; align-items: center; justify-content: center;">
+      <div class="launcher-avatar-svg" style="width: 32px; height: 32px; color: #fff;">
+        <svg viewBox="0 0 24 24" style="fill: currentColor; width: 100%; height: 100%;">
+          <path d="M12 2c0 5.523-4.477 10-10 10 5.523 0 10 4.477 10 10 0-5.523 4.477-10 10-10-5.523 0-10-4.477-10-10z"/>
+          <path d="M19 4.5c0 1.38-1.12 2.5-2.5 2.5 1.38 0 2.5 1.12 2.5 2.5 0-1.38 1.12-2.5 2.5-2.5-1.38 0-2.5-1.12-2.5-2.5z" opacity="0.8"/>
+          <path d="M5 16.5c0 .83-.67 1.5-1.5 1.5.83 0 1.5.67 1.5 1.5 0-.83.67-1.5 1.5-1.5-.83 0-1.5-.67-1.5-1.5z" opacity="0.6"/>
+        </svg>
+      </div>
       <span class="launcher-badge">1</span>
     </button>
     
     <div id="chatbotWindow" class="chatbot-window">
-      <div class="chatbot-header" style="background: var(--acento);">
-        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/v1775709817/Luis_tarjeta_gd45h6.jpg" alt="Asistente" class="chat-header-avatar">
-        <div class="chat-header-info">
-          <h4 class="chat-header-name">Luis Fernando</h4>
-          <span class="chat-header-status">Online • Tu Asesor de Confianza</span>
+      <div class="chatbot-header" style="background: var(--acento); display: flex; align-items: center; padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); color: #fff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <div class="chat-header-avatar-svg" style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #fff; padding: 6px;">
+          <svg viewBox="0 0 24 24" style="fill: currentColor; width: 100%; height: 100%;">
+            <path d="M12 2c0 5.523-4.477 10-10 10 5.523 0 10 4.477 10 10 0-5.523 4.477-10 10-10-5.523 0-10-4.477-10-10z"/>
+            <path d="M19 4.5c0 1.38-1.12 2.5-2.5 2.5 1.38 0 2.5 1.12 2.5 2.5 0-1.38 1.12-2.5 2.5-2.5-1.38 0-2.5-1.12-2.5-2.5z" opacity="0.8"/>
+            <path d="M5 16.5c0 .83-.67 1.5-1.5 1.5.83 0 1.5.67 1.5 1.5 0-.83.67-1.5 1.5-1.5-.83 0-1.5-.67-1.5-1.5z" opacity="0.6"/>
+          </svg>
         </div>
-        <button id="chatbotClose" class="chatbot-close-btn" aria-label="Cerrar Asistente">&times;</button>
+        <div class="chat-header-info">
+          <h4 class="chat-header-name" style="margin: 0; font-size: 1.05rem; font-weight: bold; color: #fff; line-height: 1.2;">Asistente Virtual</h4>
+          <span class="chat-header-status" style="font-size: 0.8rem; opacity: 0.9; display: block; margin-top: 2px; color: #fff;">IA Stellantis • En Línea</span>
+        </div>
+        <button id="chatbotClose" class="chatbot-close-btn" aria-label="Cerrar Asistente" style="margin-left: auto; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; line-height: 1;">&times;</button>
       </div>
       
       <div id="chatbotBody" class="chatbot-body"></div>
