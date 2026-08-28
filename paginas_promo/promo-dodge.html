@@ -1665,6 +1665,10 @@ BRILLANTE</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
               }
 
               if (targetEl) {
+                var parentDetails = targetEl.closest("details");
+                if (parentDetails) {
+                  parentDetails.open = true;
+                }
                 targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 var originalBorder = targetEl.style.borderColor;
                 targetEl.style.boxShadow = "0 0 25px " + (targetEl.style.borderTopColor || "var(--acento)");
@@ -1734,6 +1738,10 @@ BRILLANTE</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
           }
           
           if (opt.filter) {
+            var targetPill = document.querySelector('.filter-pill[data-filter="' + opt.filter + '"]');
+            if (targetPill) {
+              targetPill.click();
+            }
             var suggestions = [];
             var cards = document.querySelectorAll(".grid-promos .card, .related-demo-card");
             
@@ -1758,8 +1766,7 @@ BRILLANTE</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
                 if (tds.length >= 6) {
                   var nameVal = tds[1].innerText + " (Demo)";
                   var priceVal = tds[5].innerText;
-                  var waBtn = row.querySelector(".btn-wa-table");
-                  var idVal = waBtn ? waBtn.getAttribute("href") : "";
+                  var idVal = row.getAttribute("id") || "";
                   
                   if (!suggestions.some(s => s.name === nameVal)) {
                     suggestions.push({ id: idVal, name: nameVal, price: priceVal });

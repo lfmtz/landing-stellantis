@@ -625,7 +625,7 @@ function generateHtmlForBrand(brand, vehicles) {
           const labelUnits = totalUnits === 1 ? '1 unidad' : `${totalUnits} unidades`;
           
           let rowsHtml = '';
-          group.rows.forEach(cols => {
+          group.rows.forEach((cols, rowIndex) => {
             let colsHtml = '';
             headers.forEach((h, idx) => {
               let val = cols[idx] || '';
@@ -653,7 +653,9 @@ function generateHtmlForBrand(brand, vehicles) {
             });
             const catIdx = headers.findIndex(h => h.toLowerCase().includes('clasificaci') || h.toLowerCase().includes('categor'));
             const catVal = catIdx !== -1 ? (cols[catIdx] || 'suv').trim().replace(/^["']|["']$/g, '').trim().toLowerCase() : 'suv';
-            rowsHtml += `<tr data-category="${catVal}">${colsHtml}</tr>`;
+            const modelVal = (cols[1] || 'demo').trim().replace(/^["']|["']$/g, '');
+            const cleanModelId = modelVal.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+            rowsHtml += `<tr id="row-${cleanModelId}-${rowIndex}" data-category="${catVal}">${colsHtml}</tr>`;
           });
 
           accordionsHtml += `
@@ -1958,6 +1960,10 @@ function generateHtmlForBrand(brand, vehicles) {
               }
 
               if (targetEl) {
+                var parentDetails = targetEl.closest("details");
+                if (parentDetails) {
+                  parentDetails.open = true;
+                }
                 targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 var originalBorder = targetEl.style.borderColor;
                 targetEl.style.boxShadow = "0 0 25px " + (targetEl.style.borderTopColor || "var(--acento)");
@@ -2027,6 +2033,10 @@ function generateHtmlForBrand(brand, vehicles) {
           }
           
           if (opt.filter) {
+            var targetPill = document.querySelector('.filter-pill[data-filter="' + opt.filter + '"]');
+            if (targetPill) {
+              targetPill.click();
+            }
             var suggestions = [];
             var cards = document.querySelectorAll(".grid-promos .card, .related-demo-card");
             
@@ -2051,8 +2061,7 @@ function generateHtmlForBrand(brand, vehicles) {
                 if (tds.length >= 6) {
                   var nameVal = tds[1].innerText + " (Demo)";
                   var priceVal = tds[5].innerText;
-                  var waBtn = row.querySelector(".btn-wa-table");
-                  var idVal = waBtn ? waBtn.getAttribute("href") : "";
+                  var idVal = row.getAttribute("id") || "";
                   
                   if (!suggestions.some(s => s.name === nameVal)) {
                     suggestions.push({ id: idVal, name: nameVal, price: priceVal });
