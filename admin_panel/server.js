@@ -576,7 +576,9 @@ function generateHtmlForBrand(brand, vehicles) {
       hatchback: '🚗 Hatchback',
       crossover: '🚙 Crossover',
       chasis: '🚛 Chasis',
-      pickup: '🛻 Pickup'
+      pickup: '🛻 Pickup',
+      van: '🚐 Van de Carga',
+      vans: '🚐 Vans de Carga'
     };
 
     const filterButtons = Array.from(uniqueCategories).sort().map(cat => {

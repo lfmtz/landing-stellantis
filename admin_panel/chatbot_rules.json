@@ -23,9 +23,14 @@
         "reply": "Gran elección. Peugeot tiene SUVs con el mejor diseño europeo. Te recomiendo revisar:"
       },
       {
-        "label": "💼 Trabajo / Comercial",
+        "label": "🚐 Vans de Carga",
+        "filter": "van",
+        "reply": "Excelente para tu negocio. Estas son nuestras vans de carga Peugeot (como Partner, Expert o Manager) con grandes promociones:"
+      },
+      {
+        "label": "💼 Trabajo / Chasis",
         "filter": "trabajo",
-        "reply": "Excelente para tu negocio. Estas son nuestras unidades de carga y utilitarios con grandes promociones:"
+        "reply": "Para las tareas más exigentes. Revisa nuestras unidades comerciales de trabajo:"
       }
     ]
   },
@@ -38,7 +43,7 @@
         "reply": "Excelente. Las pickups RAM combinan potencia y lujo. Revisa estas unidades disponibles:"
       },
       {
-        "label": "🚛 Chasis / Trabajo",
+        "label": "🚛 Chasis Cabina",
         "filter": "chasis",
         "reply": "El chasis ideal para poner a trabajar tu negocio. Estas son las opciones de RAM Chasis:"
       }
@@ -56,6 +61,11 @@
         "label": "🚙 Crossover",
         "filter": "crossover",
         "reply": "Estilo y altura para cualquier camino. Descubre nuestros Fiat Crossover:"
+      },
+      {
+        "label": "🚐 Vans (Fiorino / Ducato)",
+        "filter": "van",
+        "reply": "Excelente para logística urbana o carga pesada. Revisa nuestras opciones de Vans Fiat:"
       }
     ]
   },
@@ -68,9 +78,19 @@
         "reply": "Excelente. Estas son nuestras unidades de Demos SUV y Crossover listas para entrega inmediata con precio de remate:"
       },
       {
-        "label": "💼 Trabajo / Pickup / Chasis",
-        "filter": "trabajo",
-        "reply": "Gran oportunidad para tu negocio. Revisa las opciones de Demos de Carga, Pickups y Chasis:"
+        "label": "🛻 Pickups",
+        "filter": "pickup",
+        "reply": "Gran oportunidad en Pickups. Revisa las opciones de Demos Pickups (RAM 700, RAM 1200, etc.):"
+      },
+      {
+        "label": "🚛 Chasis Cabina",
+        "filter": "chasis",
+        "reply": "Fuerza y adaptación para tu negocio. Descubre nuestros Chasis Demo en liquidación:"
+      },
+      {
+        "label": "🚐 Vans de Carga",
+        "filter": "van",
+        "reply": "Ideales para carga, transporte y distribución. Estas son las Vans de Carga Demo disponibles:"
       },
       {
         "label": "🚗 Sedán / Deportivos",
