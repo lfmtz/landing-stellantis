@@ -80,7 +80,7 @@
       {
         "label": "🚗 Sedán",
         "filter": "sedan",
-        "reply": "Gran elección. Confort, estilo y potencia en nuestros sedanes deportivos Dodge:"
+        "reply": "Gran elección. Confort, estilo and potencia en nuestros sedanes deportivos Dodge:"
       },
       {
         "label": "🚙 SUV",
@@ -159,19 +159,19 @@
     "options": [
       {
         "label": "💳 ¿Requisitos de Crédito?",
-        "reply": "Los requisitos básicos para tramitar tu crédito automotriz con nuestro experto Luis Fernando Martínez son:\n1. Identificación oficial vigente (INE/Pasaporte).\n2. Comprobante de domicilio reciente.\n3. Comprobantes de ingresos de los últimos 3 meses (Estados de cuenta bancarios o recibos de nómina timbrados).\n4. Tener buen historial en buró de crédito.\n\n¿Quieres iniciar tu pre-aprobación? ¡Haz clic en el botón de WhatsApp abajo para platicar con Luis Fernando Martínez!"
+        "reply": "Los requisitos básicos para tramitar tu crédito automotriz con nuestro experto Luis Fernando Martínez son:\n1. Identificación oficial vigente (INE/Pasaporte).\n2. Comprobante de domicilio reciente (telefonía fija, luz).\n3. Comprobantes de ingresos de los últimos 3 meses (Estados de cuenta bancarios y en caso de nómina anexar recibos de nómina timbrados).\n4. Tener buen historial en buró de crédito.\n\nPor favor, haz clic en el botón de abajo para iniciar tu atención personalizada por WhatsApp."
       },
       {
         "label": "📈 ¿Tienen Arrendamiento?",
-        "reply": "¡Sí! Contamos con planes de Arrendamiento Puro (Leasing) ideal para personas físicas con actividad empresarial o personas morales. Te permite deducir tus mensualidades al 100% y estrenar de forma constante con pago inicial mínimo.\n\nEscríbenos por WhatsApp para que nuestro experto, Luis Fernando Martínez, te haga una cotización a la medida."
+        "reply": "¡Sí! Contamos con planes de Arrendamiento Puro (Leasing) ideal para personas físicas con actividad empresarial o personas morales. Te permite deducir tus mensualidades al 100 y estrenar de forma constante con pago inicial mínimo.\n\nPor favor, haz clic en el botón de abajo para iniciar tu atención personalizada por WhatsApp."
       },
       {
         "label": "📍 ¿Dónde están ubicados?",
-        "reply": "¡Hola! Estamos para atenderte. Escríbenos por WhatsApp haciendo clic abajo para darte nuestra ubicación exacta, coordinar tu visita a nuestra sala de ventas con Luis Fernando Martínez y asegurar que tengamos lista la unidad que quieres ver."
+        "reply": "¡Hola! Estamos para atenderte. Con gusto te daremos nuestra ubicación exacta y coordinaremos tu visita a nuestra sala de ventas con Luis Fernando Martínez.\n\nPor favor, haz clic en el botón de abajo para que te enviemos la información por WhatsApp y agendemos tu visita."
       },
       {
         "label": "🚗 ¿Pruebas de Manejo?",
-        "reply": "¡Claro que sí! Puedes programar una prueba de manejo sin costo. Requerimos tu licencia de conducir vigente e identificación oficial.\n\nEscríbenos por WhatsApp abajo para que Luis Fernando Martínez agende tu prueba del modelo que prefieras."
+        "reply": "¡Claro que sí! Puedes programar una prueba de manejo sin costo con Luis Fernando Martínez. Requerimos tu licencia de conducir vigente e identificación oficial.\n\nPor favor, haz clic en el botón de abajo para que agendemos tu cita por WhatsApp."
       }
     ]
   }

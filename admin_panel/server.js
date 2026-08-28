@@ -2115,6 +2115,31 @@ function generateHtmlForBrand(brand, vehicles) {
             }
           } else if (opt.reply) {
             appendMessage(opt.reply, true);
+            
+            var optLabel = opt.label.toLowerCase();
+            var waText = "Hola Luis Fernando Martínez, solicito información.";
+            
+            if (optLabel.includes("crédito") || optLabel.includes("credito")) {
+              waText = "quiero informacion de credito";
+            } else if (optLabel.includes("arrendamiento") || optLabel.includes("leasing")) {
+              waText = "quiero informacion de arrendamiento";
+            } else if (optLabel.includes("ubic") || optLabel.includes("dónde") || optLabel.includes("donde")) {
+              waText = "quiero agendar una cita";
+            } else if (optLabel.includes("manejo") || optLabel.includes("prueba")) {
+              waText = "quiero agendar una prueba de manejo";
+            }
+            
+            optionsContainer.innerHTML = "";
+            
+            var waBtn = document.createElement("button");
+            waBtn.className = "option-btn";
+            waBtn.style.background = "#25d366";
+            waBtn.style.color = "#fff";
+            waBtn.innerText = "💬 Hablar con Luis Fernando";
+            waBtn.addEventListener("click", function() {
+              window.open("https://wa.me/525521787900?text=" + encodeURIComponent(waText), "_blank");
+            });
+            optionsContainer.appendChild(waBtn);
           }
           
           var menuBtn = document.createElement("button");
@@ -2152,19 +2177,22 @@ function generateHtmlForBrand(brand, vehicles) {
           
           if (query.includes("crédito") || query.includes("credito") || query.includes("buró") || query.includes("buro")) {
             replyMsg = "Entendido. Para darte una respuesta precisa sobre tu crédito o buró de crédito, te pondré en contacto directo con nuestro asesor experto en la materia, Luis Fernando Martínez, por WhatsApp. Él analizará tu caso personalmente para darte la mejor opción. Por favor, haz clic en el botón de abajo para iniciar tu atención personalizada.";
-            queryWaText = "Hola Luis Fernando Martínez, me interesa revisar mis opciones de crédito.";
+            queryWaText = "quiero informacion de credito";
           } else if (query.includes("arrendamiento") || query.includes("leasing")) {
             replyMsg = "Entendido. Para darte una cotización exacta de arrendamiento y explicarte los beneficios fiscales, te pondré en contacto directo con nuestro asesor experto, Luis Fernando Martínez, a través de WhatsApp. Por favor, haz clic en el botón de abajo para iniciar tu atención personalizada.";
-            queryWaText = "Hola Luis Fernando Martínez, me interesa una cotización de arrendamiento.";
+            queryWaText = "quiero informacion de arrendamiento";
           } else if (query.includes("contado") || query.includes("precio")) {
             replyMsg = "Entendido. Para ofrecerte el mejor precio de contado y descuentos vigentes, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. Por favor, haz clic en el botón de abajo para iniciar tu atención personalizada.";
-            queryWaText = "Hola Luis Fernando Martínez, solicito cotización y precio de contado.";
+            queryWaText = "quiero informacion de contado";
           } else if (query.includes("entrega") || query.includes("entregar") || query.includes("tiempo")) {
             replyMsg = "Entendido. Para darte los tiempos exactos de entrega de las unidades en inventario o pedido especial, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. Por favor, haz clic en el botón de abajo para iniciar tu atención personalizada.";
-            queryWaText = "Hola Luis Fernando Martínez, me interesa saber los tiempos de entrega de unidades.";
+            queryWaText = "quiero informacion de entrega";
           } else if (query.includes("cotiz") || query.includes("informe") || query.includes("información") || query.includes("informacion") || query.includes("info")) {
             replyMsg = "Entendido. Para darte una cotización exacta o brindarte informes detallados sobre cualquier unidad, te pondré en contacto directo con tu asesor experto en la materia, Luis Fernando Martínez, a través de WhatsApp. Por favor, haz clic en el botón de abajo para iniciar tu atención personalizada.";
-            queryWaText = "Hola Luis Fernando Martínez, solicito una cotización e informes detallados.";
+            queryWaText = "quiero cotizacion e informes";
+          } else if (query.includes("ubicaci") || query.includes("donde est") || query.includes("dónde est") || query.includes("direcci") || query.includes("cita") || query.includes("agendar")) {
+            replyMsg = "Entendido. Para darte nuestra ubicación exacta, coordinar tu visita a nuestra sala de ventas o agendar una cita con nuestro asesor experto Luis Fernando Martínez, te pondré en contacto directo por WhatsApp. Por favor, haz clic en el botón de abajo para que te enviemos la información.";
+            queryWaText = "quiero agendar una cita";
           }
           
           if (replyMsg) {
