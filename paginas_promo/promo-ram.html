@@ -1179,6 +1179,9 @@ METALIZADO</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
           setTimeout(function() {
             popup.style.display = 'none';
             sessionStorage.setItem('leasing_popup_dismissed', 'true');
+            // Dispatch event to notify chatbot
+            var closedEvent = new CustomEvent('leasingClosed');
+            document.dispatchEvent(closedEvent);
           }, 400);
         }
       };
@@ -1603,7 +1606,7 @@ METALIZADO</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
         windowEl.classList.remove("active");
       });
       
-      setTimeout(function() {
+      var openChat = function() {
         var isDismissed = sessionStorage.getItem("chatbot_dismissed");
         if (!isDismissed && !windowEl.classList.contains("active")) {
           windowEl.classList.add("active");
@@ -1611,7 +1614,19 @@ METALIZADO</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
           if (badge) badge.style.display = "none";
           sessionStorage.setItem("chatbot_dismissed", "true");
         }
-      }, 4000);
+      };
+
+      var wasShownLeasing = localStorage.getItem('leasing_popup_shown');
+      var wasDismissedLeasing = sessionStorage.getItem('leasing_popup_dismissed');
+      var leasingPopupEl = document.getElementById('leasingPopup');
+
+      if (leasingPopupEl && !wasShownLeasing && !wasDismissedLeasing) {
+        document.addEventListener('leasingClosed', function() {
+          setTimeout(openChat, 1500);
+        });
+      } else {
+        setTimeout(openChat, 4000);
+      }
 
       function appendMessage(text, isBot, cards) {
         var msg = document.createElement("div");

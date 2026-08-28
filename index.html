@@ -814,7 +814,7 @@
           windowEl.classList.remove("active");
         });
         
-        setTimeout(function() {
+        var openChat = function() {
           var isDismissed = sessionStorage.getItem("chatbot_dismissed");
           if (!isDismissed && !windowEl.classList.contains("active")) {
             windowEl.classList.add("active");
@@ -822,7 +822,19 @@
             if (badge) badge.style.display = "none";
             sessionStorage.setItem("chatbot_dismissed", "true");
           }
-        }, 4000);
+        };
+
+        var isSubscribed = localStorage.getItem('newsletter_subscribed') === 'true';
+        var isNewsletterDismissed = sessionStorage.getItem('newsletter_dismissed') === 'true';
+        var newsletterEl = document.getElementById('newsletterModal');
+
+        if (newsletterEl && !isSubscribed && !isNewsletterDismissed) {
+          newsletterEl.addEventListener('hidden.bs.modal', function() {
+            setTimeout(openChat, 1500);
+          });
+        } else {
+          setTimeout(openChat, 4000);
+        }
   
         function appendMessage(text, isBot, cards) {
           var msg = document.createElement("div");
