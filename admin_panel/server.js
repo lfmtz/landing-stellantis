@@ -1523,11 +1523,7 @@ function generateHtmlForBrand(brand, vehicles) {
             
             if (hasVisibleCard) {
               accordion.style.display = "";
-              if (filterVal !== "all") {
-                accordion.open = true; // Expandir automáticamente cuando se filtra una categoría específica
-              } else {
-                accordion.open = false; // Mantener contraídos al ver "Todos"
-              }
+              accordion.open = false; // Mantener siempre contraídos al filtrar
             } else {
               accordion.style.display = "none";
             }
@@ -1557,9 +1553,7 @@ function generateHtmlForBrand(brand, vehicles) {
             
             if (hasVisibleRow) {
               accordion.style.display = "";
-              if (filterVal !== "all") {
-                accordion.open = true;
-              }
+              accordion.open = false; // Mantener siempre contraídos al filtrar
             } else {
               accordion.style.display = "none";
             }
