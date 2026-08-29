@@ -927,23 +927,28 @@
             if (opt.filter) {
               // On landing, recommend brand pages matching this category
               var categoryBrands = [];
-              if (opt.filter === "trabajo") {
+              if (opt.filter === "marcas") {
                 categoryBrands = [
-                  { name: "RAM Pickups & Chasis", price: "Ver inventario de carga", url: "paginas_promo/promo-ram.html" },
-                  { name: "Peugeot Comerciales", price: "Socio de tu negocio", url: "paginas_promo/promo-peugeot.html" }
+                  { name: "Jeep", price: "Aventura y espacio (Nuevos/Demos)", url: "paginas_promo/promo-jeep.html" },
+                  { name: "Peugeot", price: "Estilo y confort europeo (Nuevos/Demos)", url: "paginas_promo/promo-peugeot.html" },
+                  { name: "RAM", price: "Pickups y vehículos de carga (Nuevos/Demos)", url: "paginas_promo/promo-ram.html" },
+                  { name: "Fiat", price: "Juvenil y crossovers (Nuevos/Demos)", url: "paginas_promo/promo-fiat.html" },
+                  { name: "Dodge", price: "Deportividad y sedanes (Nuevos/Demos)", url: "paginas_promo/promo-dodge.html" },
+                  { name: "Leapmotor", price: "Gama 100% Eléctrica (Nuevos)", url: "paginas_promo/promo-leapmotor.html" }
                 ];
-              } else if (opt.filter === "familiares") {
+              } else if (opt.filter === "demos_general") {
                 categoryBrands = [
-                  { name: "Jeep SUVs", price: "Aventura y espacio", url: "paginas_promo/promo-jeep.html" },
-                  { name: "Fiat Crossovers", price: "Estilo y diversión", url: "paginas_promo/promo-fiat.html" },
-                  { name: "Peugeot 5008 / Rifter", price: "Máxima comodidad", url: "paginas_promo/promo-peugeot.html" }
+                  { name: "Autos Demo en Remate", price: "Liquidación y entrega inmediata", url: "paginas_promo/promo-demos.html" }
                 ];
-              } else if (opt.filter === "personal") {
-                categoryBrands = [
-                  { name: "Dodge Attitude & Sedan", price: "Eficiencia para ti", url: "paginas_promo/promo-dodge.html" },
-                  { name: "Fiat Hatchback & Sport", price: "Diseño juvenil", url: "paginas_promo/promo-fiat.html" },
-                  { name: "Leapmotor Eléctricos", price: "100% Eléctrico", url: "paginas_promo/promo-leapmotor.html" }
-                ];
+              } else if (opt.filter === "credito_leasing") {
+                appendMessage(opt.reply, true);
+                setTimeout(function() {
+                  loadOptions([
+                    kb.faq.options[0],
+                    kb.faq.options[1]
+                  ]);
+                }, 600);
+                return;
               }
               
               if (categoryBrands.length > 0) {

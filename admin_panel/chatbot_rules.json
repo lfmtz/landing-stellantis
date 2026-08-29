@@ -135,22 +135,22 @@
     ]
   },
   "general": {
-    "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 Te muestro lo que tenemos en nuevos para todas nuestras marcas, pero también he diseñado un bloque de autos en promoción que son demo, la lista la verás al final de la página de cada marca. ¿Qué tipo de vehículo estás buscando hoy? Dime si buscas algo para tu Trabajo, para tu Familia o de uso Personal:",
+    "welcome": "¡Hola! Soy tu asistente virtual Stellantis. 🤖 Te muestro lo que tenemos en modelos nuevos para todas nuestras marcas, así como nuestro bloque de autos Demo en promoción (al final de la página de cada marca). ¿Qué te gustaría consultar hoy?",
     "options": [
       {
-        "label": "💼 Para mi Trabajo",
-        "filter": "trabajo",
-        "reply": "Excelente. Tenemos las mejores opciones comerciales y de carga. Te sugiero ver las siguientes unidades de Trabajo, Chasis y Pickups:"
+        "label": "🏢 Ver Marcas",
+        "filter": "marcas",
+        "reply": "Excelente. Haz clic en cualquiera de nuestras marcas para conocer sus modelos nuevos y demos en liquidación:"
       },
       {
-        "label": "👨‍👩‍👧‍👦 Para mi Familia",
-        "filter": "familiares",
-        "reply": "El espacio y seguridad de tu familia son lo primero. Te sugiero ver estas opciones de SUVs, Familiares de 7 plazas y Crossovers:"
+        "label": "🔥 Demos en Promoción",
+        "filter": "demos_general",
+        "reply": "¡Perfecto! Te sugiero revisar nuestro catálogo general de autos Demo con precios de remate y listos para entrega inmediata:"
       },
       {
-        "label": "🚗 De uso Personal",
-        "filter": "personal",
-        "reply": "Perfecto. Disfruta el manejo diario. Te sugiero ver nuestros Sedanes, Deportivos, Hatchbacks y Eléctricos:"
+        "label": "💳 Crédito y Financiamiento",
+        "filter": "credito_leasing",
+        "reply": "Te muestro nuestras opciones de financiamiento disponibles. ¿Cuál prefieres consultar?"
       }
     ]
   },
