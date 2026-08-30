@@ -509,8 +509,20 @@
       "name": "Peugeot 2008",
       "price": "Precio de Lista: $510,900",
       "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778756/IMG_20260826_104621934.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778766/IMG_20260826_105029479_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778760/IMG_20260826_104635026.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778735/IMG_20260826_104039437_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778737/IMG_20260826_104114619_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778738/IMG_20260826_104141784.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778752/IMG_20260826_104441690_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778754/IMG_20260826_104539501_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778744/IMG_20260826_104349885_HDR.jpg"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
-      "description": "Estrena con precio exclusivo de liquidación Precios:\r\nDe ~~$510,900~~ a solo $439,000\r\nLlévatelo hoy con el mejor plan financiero: mensualidades bajas a crédito o esquema de arrendamiento deducible a tu medida. No dejes pasar este ahorro directo. \r\nPide tu cotización personalizada aquí",
+      "description": "Estrena con precio exclusivo de liquidación Precios:\r\nDe ~~<span style=\"color: red; font-weight: bold;\"><b>$510,900</b>\r\n</span>~~ A solo <span style=\"color: red; font-weight: bold;\"><b>$439,000</b></span>\r\n\r\nLlévatelo hoy con el mejor plan financiero: mensualidades bajas a crédito o esquema de arrendamiento deducible a tu medida. No dejes pasar este ahorro directo. \r\nPide tu cotización personalizada aquí",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
