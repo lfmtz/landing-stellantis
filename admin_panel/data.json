@@ -426,7 +426,25 @@
       "category": "trabajo"
     }
   ],
-  "leapmotor": [],
+  "leapmotor": [
+    {
+      "id": "leapmotor-1788121201596",
+      "name": "B10",
+      "price": "Desde $575,000",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg",
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20B10",
+      "description": "El SUV 100% eléctrico del futuro, hoy.\r\nVanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena desde <span style=\"color: red; font-weight: bold;\"><b>$6,499</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Pregunta por el bono de prueba de manejo"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones. Pregunta con tu asesor de ventas",
+      "accentColor": "#3b93a9",
+      "underlineStyle": "solid",
+      "category": "electricos"
+    }
+  ],
   "landing": {
     "carousel": [
       "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787111618/carrusel_ram_a3zc3a.jpg",
