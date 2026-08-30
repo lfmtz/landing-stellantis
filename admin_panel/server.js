@@ -133,8 +133,8 @@ app.get('/api/promos', (req, res) => {
   res.json(readData());
 });
 
-// Add a promotion (supports text and image upload)
-app.post('/api/promos/:brand', upload.single('image'), (req, res) => {
+// Add a promotion (supports text and image upload, single or multiple)
+app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 50 }]), (req, res) => {
   const { brand } = req.params;
   const data = readData();
 
@@ -145,11 +145,35 @@ app.post('/api/promos/:brand', upload.single('image'), (req, res) => {
   // Parse details
   const benefits = req.body.benefits ? JSON.parse(req.body.benefits) : [];
   
-  // Base image path
+  // Base image path (single image upload)
   let imgPath = req.body.imageURL || req.body.existingImage || '';
-  if (req.file) {
-    // Save relative image path for HTML rendering (relative to root)
-    imgPath = `imagenes/${brand}/${req.file.filename}`;
+  if (req.files && req.files['image'] && req.files['image'][0]) {
+    imgPath = `imagenes/${brand}/${req.files['image'][0].filename}`;
+  }
+
+  // Multiple images gallery processing
+  let finalImages = [];
+  if (req.body.imagesData) {
+    try {
+      const imagesData = JSON.parse(req.body.imagesData);
+      imagesData.forEach(item => {
+        if (item.type === 'url') {
+          finalImages.push(item.val);
+        } else if (item.type === 'file') {
+          const fileIndex = item.index;
+          if (req.files && req.files['images'] && req.files['images'][fileIndex]) {
+            finalImages.push(`imagenes/${brand}/${req.files['images'][fileIndex].filename}`);
+          }
+        }
+      });
+    } catch (e) {
+      console.error('Error parsing imagesData:', e);
+    }
+  }
+
+  // Fallback if finalImages has elements, set main image to the first one
+  if (finalImages.length > 0) {
+    imgPath = finalImages[0];
   }
 
   const newPromo = {
@@ -157,6 +181,7 @@ app.post('/api/promos/:brand', upload.single('image'), (req, res) => {
     name: req.body.name,
     price: req.body.price,
     image: imgPath,
+    images: finalImages, // Save gallery array
     whatsapp: req.body.whatsapp || `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20${brand}`,
     description: req.body.description || '',
     descriptionSize: req.body.descriptionSize || '1.0rem',
@@ -405,10 +430,44 @@ function generateHtmlForBrand(brand, vehicles) {
       imageSrc = `../${imageSrc}`;
     }
 
+    let imgContainerContent = '';
+    if (v.images && Array.isArray(v.images) && v.images.length > 1) {
+      const slidesHtml = v.images.map((imgUrl, idx) => {
+        let src = optimizeCloudinaryUrl(imgUrl, brand);
+        if (src && !src.startsWith('http') && !src.startsWith('../')) {
+          src = `../${src}`;
+        }
+        return `
+        <div class="carousel-slide">
+          <img src="${src}" alt="${v.name} - Foto ${idx+1}" class="card-img-carousel" loading="lazy" />
+        </div>`;
+      }).join('');
+
+      const indicatorsHtml = v.images.map((_, idx) => `
+        <span class="indicator ${idx === 0 ? 'active' : ''}" onclick="setCarouselSlide('${v.id}', ${idx}, event)"></span>
+      `).join('');
+
+      imgContainerContent = `
+      <div class="carousel" id="carousel-${v.id}">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track">
+            ${slidesHtml}
+          </div>
+        </div>
+        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('${v.id}', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('${v.id}', 1, event)">&#10095;</button>
+        <div class="carousel-indicators">
+          ${indicatorsHtml}
+        </div>
+      </div>`;
+    } else {
+      imgContainerContent = `<img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>`;
+    }
+
     return `
     <article class="card" data-category="${v.category || 'suv'}" style="border-top-color: ${v.accentColor || accentColor};">
       <div class="img-container">
-        <img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>
+        ${imgContainerContent}
       </div>
       <div class="card-header">
         <div class="model-info">
@@ -427,7 +486,7 @@ function generateHtmlForBrand(brand, vehicles) {
         </a>
       </div>
       <div class="promo-body">
-        <div class="promo-main" style="${textStyle}">
+        <div class="promo-main" style="${textStyle} white-space: pre-line;">
           <span>${v.description}</span>
         </div>
         <ul class="benefits-list" style="--acento-list: ${v.accentColor || accentColor};">
@@ -1028,6 +1087,86 @@ function generateHtmlForBrand(brand, vehicles) {
       height: 100%;
       object-fit: ${brand === 'demos' ? 'cover' : 'contain'};
       background: #f5f5f5;
+    }
+
+    /* Carousel / Gallery Slider Styles */
+    .carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .carousel-track-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .card-img-carousel {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.3s;
+    }
+    .carousel-control:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .carousel-control.prev {
+      left: 10px;
+    }
+    .carousel-control.next {
+      right: 10px;
+    }
+    .carousel-indicators {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .carousel-indicators .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .carousel-indicators .indicator.active {
+      background: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 
     .card-header {
@@ -2265,6 +2404,113 @@ function generateHtmlForBrand(brand, vehicles) {
       
       initChat();
     });
+
+    // Slider Carousel Script for Multi-Photos
+    var carouselStates = {};
+
+    window.initCarousels = function() {
+      document.querySelectorAll('.carousel').forEach(function(el) {
+        var id = el.id.replace('carousel-', '');
+        var track = el.querySelector('.carousel-track');
+        var slides = el.querySelectorAll('.carousel-slide');
+        var indicators = el.querySelectorAll('.indicator');
+        
+        carouselStates[id] = {
+          currentIdx: 0,
+          totalSlides: slides.length,
+          track: track,
+          indicators: indicators
+        };
+        
+        // Touch/Swipe support
+        var startX = 0;
+        var isDragging = false;
+        
+        el.addEventListener('touchstart', function(e) {
+          startX = e.touches[0].clientX;
+          isDragging = true;
+        }, { passive: true });
+        
+        el.addEventListener('touchend', function(e) {
+          if (!isDragging) return;
+          var endX = e.changedTouches[0].clientX;
+          var diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              moveCarousel(id, 1);
+            } else {
+              moveCarousel(id, -1);
+            }
+          }
+          isDragging = false;
+        }, { passive: true });
+        
+        // Mouse drag/swipe support
+        el.addEventListener('mousedown', function(e) {
+          startX = e.clientX;
+          isDragging = true;
+        });
+        
+        el.addEventListener('mouseup', function(e) {
+          if (!isDragging) return;
+          var endX = e.clientX;
+          var diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              moveCarousel(id, 1);
+            } else {
+              moveCarousel(id, -1);
+            }
+          }
+          isDragging = false;
+        });
+      });
+    };
+
+    window.moveCarousel = function(id, dir, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var state = carouselStates[id];
+      if (!state) return;
+      
+      var nextIdx = state.currentIdx + dir;
+      if (nextIdx < 0) {
+        nextIdx = state.totalSlides - 1;
+      } else if (nextIdx >= state.totalSlides) {
+        nextIdx = 0;
+      }
+      
+      setCarouselSlide(id, nextIdx);
+    };
+
+    window.setCarouselSlide = function(id, idx, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var state = carouselStates[id];
+      if (!state) return;
+      
+      state.currentIdx = idx;
+      state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      
+      state.indicators.forEach(function(ind, i) {
+        if (i === idx) {
+          ind.classList.add('active');
+        } else {
+          ind.classList.remove('active');
+        }
+      });
+    };
+
+    // Initialize carousels
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCarousels);
+    } else {
+      initCarousels();
+    }
   </script>
  </body>
 </html>`;

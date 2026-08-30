@@ -606,6 +606,26 @@
           </div>
         </div>
 
+        <!-- Múltiples Imágenes (especialmente para Autos Demo) -->
+        <div class="form-group" id="multiImagesSection" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
+          <label style="font-weight: bold; color: var(--text-primary);">Galería de Fotos (Múltiples fotos para Carrusel)</label>
+          
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="url" id="multiImageURLInput" placeholder="Pega URL de Cloudinary u otra imagen..." style="flex: 1; margin-bottom: 0;">
+            <button type="button" class="btn btn-secondary" onclick="addMultiImageURL()" style="padding: 0 15px; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-primary); cursor: pointer;"><i class="fa-solid fa-plus"></i> Añadir Link</button>
+          </div>
+          
+          <div style="margin-bottom: 10px;">
+            <label style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 5px;">O subir fotos locales para la galería:</label>
+            <input type="file" id="multiImageFileInput" accept="image/*" multiple style="display: none;" onchange="handleMultiImageUpload(this)">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('multiImageFileInput').click()" style="background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-primary); padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 0.85rem;"><i class="fa-solid fa-upload"></i> Seleccionar Archivos</button>
+          </div>
+
+          <div id="multiImagesContainer" style="display: flex; flex-wrap: wrap; gap: 10px; border: 1px dashed var(--border); padding: 10px; border-radius: 4px; background: rgba(0,0,0,0.1); min-height: 80px; align-items: center; justify-content: flex-start; width: 100%;">
+            <!-- Miniaturas cargadas dinámicamente -->
+          </div>
+        </div>
+
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; flex-wrap: wrap; gap: 5px;">
             <label for="description" style="margin-bottom: 0;">Descripción Principal / Mensaje de la Promo</label>
@@ -788,6 +808,100 @@
     }
     imageURLInput.addEventListener('input', checkCloudinaryBtn);
     imageURLInput.addEventListener('change', checkCloudinaryBtn);
+
+    // Multiple Images Gallery Support
+    let currentPromoImages = [];
+
+    window.addMultiImageURL = function() {
+      const input = document.getElementById('multiImageURLInput');
+      const url = input.value.trim();
+      if (url) {
+        currentPromoImages.push(url);
+        input.value = '';
+        renderMultiImages();
+      }
+    };
+
+    window.handleMultiImageUpload = function(input) {
+      const files = input.files;
+      if (!files || files.length === 0) return;
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          currentPromoImages.push({
+            file: file,
+            preview: e.target.result
+          });
+          renderMultiImages();
+        };
+        reader.readAsDataURL(file);
+      }
+      // Reset input value so same files can be selected again
+      input.value = '';
+    };
+
+    window.removeMultiImage = function(index) {
+      currentPromoImages.splice(index, 1);
+      renderMultiImages();
+    };
+
+    window.renderMultiImages = function() {
+      const container = document.getElementById('multiImagesContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      
+      if (currentPromoImages.length === 0) {
+        container.innerHTML = '<p style="color: #64748b; font-size: 0.85rem; margin: 0; width: 100%; text-align: center;">No hay imágenes en la galería. Añade links o sube archivos locales.</p>';
+        return;
+      }
+      
+      currentPromoImages.forEach((img, idx) => {
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+        wrapper.style.width = '80px';
+        wrapper.style.height = '80px';
+        wrapper.style.borderRadius = '4px';
+        wrapper.style.overflow = 'hidden';
+        wrapper.style.border = '1px solid var(--border)';
+        wrapper.style.background = '#000';
+        
+        const src = typeof img === 'string' ? (img.startsWith('http') ? img : `../${img}`) : img.preview;
+        
+        const image = document.createElement('img');
+        image.src = src;
+        image.style.width = '100%';
+        image.style.height = '100%';
+        image.style.objectFit = 'cover';
+        wrapper.appendChild(image);
+        
+        // Remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.style.position = 'absolute';
+        removeBtn.style.top = '2px';
+        removeBtn.style.right = '2px';
+        removeBtn.style.background = 'rgba(220, 53, 69, 0.9)';
+        removeBtn.style.color = '#fff';
+        removeBtn.style.border = 'none';
+        removeBtn.style.borderRadius = '50%';
+        removeBtn.style.width = '18px';
+        removeBtn.style.height = '18px';
+        removeBtn.style.cursor = 'pointer';
+        removeBtn.style.display = 'flex';
+        removeBtn.style.alignItems = 'center';
+        removeBtn.style.justifyContent = 'center';
+        removeBtn.style.fontSize = '12px';
+        removeBtn.style.fontWeight = 'bold';
+        removeBtn.style.padding = '0';
+        removeBtn.onclick = () => removeMultiImage(idx);
+        wrapper.appendChild(removeBtn);
+        
+        container.appendChild(wrapper);
+      });
+    };
 
     // Open Crop Modal
     cropImageBtn.addEventListener('click', () => {
@@ -1386,6 +1500,16 @@
       p.benefits.forEach(b => addBenefitInput(b));
       if (p.benefits.length === 0) addBenefitInput();
 
+      // Populate multiple images gallery list
+      if (p.images && Array.isArray(p.images)) {
+        currentPromoImages = [...p.images];
+      } else if (p.image) {
+        currentPromoImages = [p.image];
+      } else {
+        currentPromoImages = [];
+      }
+      renderMultiImages();
+
       promoModal.classList.add('active');
     };
 
@@ -1424,10 +1548,13 @@
       else if (currentBrand === 'leapmotor') defaultCat = 'electricos';
       document.getElementById('category').value = defaultCat;
       
-      filePreview.innerHTML = '';
+       filePreview.innerHTML = '';
       benefitsContainer.innerHTML = '';
       addBenefitInput();
       checkCloudinaryBtn();
+      
+      currentPromoImages = [];
+      renderMultiImages();
       
       promoModal.classList.add('active');
     });
@@ -1534,6 +1661,20 @@
         if (field.value.trim()) benefits.push(field.value.trim());
       });
       formData.append('benefits', JSON.stringify(benefits));
+      
+      // Multiple images collection
+      const imagesData = [];
+      let newFileCount = 0;
+      currentPromoImages.forEach(img => {
+        if (typeof img === 'string') {
+          imagesData.push({ type: 'url', val: img });
+        } else if (img.file) {
+          formData.append('images', img.file);
+          imagesData.push({ type: 'file', index: newFileCount });
+          newFileCount++;
+        }
+      });
+      formData.append('imagesData', JSON.stringify(imagesData));
       
       if (imageFileInput.files[0]) {
         formData.append('image', imageFileInput.files[0]);

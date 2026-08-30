@@ -296,6 +296,86 @@
       background: #f5f5f5;
     }
 
+    /* Carousel / Gallery Slider Styles */
+    .carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .carousel-track-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .card-img-carousel {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.3s;
+    }
+    .carousel-control:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .carousel-control.prev {
+      left: 10px;
+    }
+    .carousel-control.next {
+      right: 10px;
+    }
+    .carousel-indicators {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .carousel-indicators .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .carousel-indicators .indicator.active {
+      background: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    }
+
     .card-header {
       padding: 12px 15px;
       display: flex;
@@ -694,7 +774,7 @@
         </a>
       </div>
       <div class="promo-body">
-        <div class="promo-main" style="font-size: 1.0rem; color: #333333;">
+        <div class="promo-main" style="font-size: 1.0rem; color: #333333; white-space: pre-line;">
           <span>El SUV 100% eléctrico del futuro, hoy.
 Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena desde <span style="color: red; font-weight: bold;"><b>$6,499</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.</span>
         </div>
@@ -1564,6 +1644,113 @@ Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena
       
       initChat();
     });
+
+    // Slider Carousel Script for Multi-Photos
+    var carouselStates = {};
+
+    window.initCarousels = function() {
+      document.querySelectorAll('.carousel').forEach(function(el) {
+        var id = el.id.replace('carousel-', '');
+        var track = el.querySelector('.carousel-track');
+        var slides = el.querySelectorAll('.carousel-slide');
+        var indicators = el.querySelectorAll('.indicator');
+        
+        carouselStates[id] = {
+          currentIdx: 0,
+          totalSlides: slides.length,
+          track: track,
+          indicators: indicators
+        };
+        
+        // Touch/Swipe support
+        var startX = 0;
+        var isDragging = false;
+        
+        el.addEventListener('touchstart', function(e) {
+          startX = e.touches[0].clientX;
+          isDragging = true;
+        }, { passive: true });
+        
+        el.addEventListener('touchend', function(e) {
+          if (!isDragging) return;
+          var endX = e.changedTouches[0].clientX;
+          var diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              moveCarousel(id, 1);
+            } else {
+              moveCarousel(id, -1);
+            }
+          }
+          isDragging = false;
+        }, { passive: true });
+        
+        // Mouse drag/swipe support
+        el.addEventListener('mousedown', function(e) {
+          startX = e.clientX;
+          isDragging = true;
+        });
+        
+        el.addEventListener('mouseup', function(e) {
+          if (!isDragging) return;
+          var endX = e.clientX;
+          var diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              moveCarousel(id, 1);
+            } else {
+              moveCarousel(id, -1);
+            }
+          }
+          isDragging = false;
+        });
+      });
+    };
+
+    window.moveCarousel = function(id, dir, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var state = carouselStates[id];
+      if (!state) return;
+      
+      var nextIdx = state.currentIdx + dir;
+      if (nextIdx < 0) {
+        nextIdx = state.totalSlides - 1;
+      } else if (nextIdx >= state.totalSlides) {
+        nextIdx = 0;
+      }
+      
+      setCarouselSlide(id, nextIdx);
+    };
+
+    window.setCarouselSlide = function(id, idx, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var state = carouselStates[id];
+      if (!state) return;
+      
+      state.currentIdx = idx;
+      state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      
+      state.indicators.forEach(function(ind, i) {
+        if (i === idx) {
+          ind.classList.add('active');
+        } else {
+          ind.classList.remove('active');
+        }
+      });
+    };
+
+    // Initialize carousels
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCarousels);
+    } else {
+      initCarousels();
+    }
   </script>
  </body>
 </html>
