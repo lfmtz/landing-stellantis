@@ -811,6 +811,8 @@
 
     // Multiple Images Gallery Support
     let currentPromoImages = [];
+    let cropTargetType = 'main'; // 'main' or 'gallery'
+    let cropTargetIndex = -1;
 
     window.addMultiImageURL = function() {
       const input = document.getElementById('multiImageURLInput');
@@ -845,6 +847,35 @@
     window.removeMultiImage = function(index) {
       currentPromoImages.splice(index, 1);
       renderMultiImages();
+    };
+
+    window.openGalleryCrop = function(idx) {
+      const urlVal = currentPromoImages[idx];
+      if (!urlVal || typeof urlVal !== 'string') return;
+      
+      cropTargetType = 'gallery';
+      cropTargetIndex = idx;
+      
+      const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
+      cropPreviewImg.src = cleanUrl;
+      cropModal.classList.add('active');
+      
+      if (cropperInstance) {
+        cropperInstance.destroy();
+        cropperInstance = null;
+      }
+      
+      const aspect = currentBrand === 'demos' ? 1 : (4 / 3);
+      
+      cropPreviewImg.onload = () => {
+        cropperInstance = new Cropper(cropPreviewImg, {
+          aspectRatio: aspect,
+          viewMode: 1,
+          autoCropArea: 0.9,
+          responsive: true,
+          restore: false
+        });
+      };
     };
 
     window.renderMultiImages = function() {
@@ -898,6 +929,30 @@
         removeBtn.style.padding = '0';
         removeBtn.onclick = () => removeMultiImage(idx);
         wrapper.appendChild(removeBtn);
+
+        // Crop button for Cloudinary gallery images
+        if (typeof img === 'string' && img.includes('cloudinary.com')) {
+          const cropBtn = document.createElement('button');
+          cropBtn.type = 'button';
+          cropBtn.innerHTML = '<i class="fa-solid fa-crop"></i>';
+          cropBtn.style.position = 'absolute';
+          cropBtn.style.bottom = '2px';
+          cropBtn.style.right = '2px';
+          cropBtn.style.background = 'rgba(0, 229, 255, 0.9)';
+          cropBtn.style.color = '#fff';
+          cropBtn.style.border = 'none';
+          cropBtn.style.borderRadius = '50%';
+          cropBtn.style.width = '18px';
+          cropBtn.style.height = '18px';
+          cropBtn.style.cursor = 'pointer';
+          cropBtn.style.display = 'flex';
+          cropBtn.style.alignItems = 'center';
+          cropBtn.style.justifyContent = 'center';
+          cropBtn.style.fontSize = '9px';
+          cropBtn.style.padding = '0';
+          cropBtn.onclick = () => openGalleryCrop(idx);
+          wrapper.appendChild(cropBtn);
+        }
         
         container.appendChild(wrapper);
       });
@@ -907,6 +962,9 @@
     cropImageBtn.addEventListener('click', () => {
       const urlVal = imageURLInput.value.trim();
       if (!urlVal) return;
+
+      cropTargetType = 'main';
+      cropTargetIndex = -1;
 
       // Clean transformation params to get the original raw image URL
       const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
@@ -941,6 +999,7 @@
         cropperInstance = null;
       }
     }
+    closeModalBtn.addEventListener('click', closeModal);
     closeCropModalBtn.addEventListener('click', closeCropModal);
     cancelCropBtn.addEventListener('click', closeCropModal);
 
@@ -949,7 +1008,9 @@
       if (!cropperInstance) return;
 
       const data = cropperInstance.getData(true); // integer coordinates on natural image size
-      const urlVal = imageURLInput.value.trim();
+      const urlVal = cropTargetType === 'main' 
+        ? imageURLInput.value.trim() 
+        : currentPromoImages[cropTargetIndex];
       const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
 
       // Construct final Cloudinary URL
@@ -960,10 +1021,14 @@
 
       const transformedUrl = cleanUrl.replace(/(image\/upload\/)(v\d+)/, `$1${cropParams}/${resizeParams}/$2`);
 
-      imageURLInput.value = transformedUrl;
-      
-      // Update form preview
-      filePreview.innerHTML = `<img src="${transformedUrl}" class="preview-img"><p class="preview-text">Imagen encuadrada con éxito</p>`;
+      if (cropTargetType === 'main') {
+        imageURLInput.value = transformedUrl;
+        // Update form preview
+        filePreview.innerHTML = `<img src="${transformedUrl}" class="preview-img"><p class="preview-text">Imagen encuadrada con éxito</p>`;
+      } else {
+        currentPromoImages[cropTargetIndex] = transformedUrl;
+        renderMultiImages();
+      }
       
       closeCropModal();
     });
