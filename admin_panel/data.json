@@ -616,6 +616,46 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788219667089",
+      "name": "Fiat Abarth",
+      "km": "Demo",
+      "listPrice": "$518,500",
+      "price": "$449,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778625/IMG_20260826_110208844.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778625/IMG_20260826_110208844.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778604/IMG_20260826_105435720_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778609/IMG_20260826_105453710_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778607/IMG_20260826_105359339.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778619/IMG_20260826_105711116_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778620/IMG_20260826_105731451_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778622/IMG_20260826_105746179_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778624/IMG_20260826_105801515_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20Abarth",
+      "description": "Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de arrendamiento puro con beneficios fiscales. No dejes pasar este ahorro irrepetible por tiempo limitado.\r\n\r\n👉 Pide tu cotización personalizada aquí y recibe informes de inmediato por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Incorpora escape deportivo de doble salida",
+        "Fascias deportivas con insertos negros",
+        "Rines de aluminio pintados en negro de 18” (con neumáticos 215/45 R18)",
+        "Techo panorámico con cortina eléctrica",
+        "Pantalla táctil a color Uconnect® de 10.1\"  compatible de forma inalámbrica con Apple CarPlay® y Android Auto™",
+        "Cargador inalámbrico para smartphone",
+        "Selector de modos de manejo con opciones Normal, Sport y botón \"Poison\" montado en el volante , complementado con paletas de cambio (paddle shifters) tras el volante",
+        "Asientos deportivos en piel con nuevo diseño Abarth",
+        "Motor: 1.3L Turbo con inyección directa",
+        "Potencia y torque: Genera 173 hp @ 5,750 rpm y un torque de 198 lb-pie @ 1,850 rpm",
+        "Asistencias avanzadas a la conducción (ADAS)",
+        "Bolsas de aire frontales y laterales delanteras de doble función (con cobertura para cabeza y tórax)"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
