@@ -578,6 +578,44 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788217915584",
+      "name": "Peugeot 5008",
+      "km": "Demo",
+      "listPrice": "$789,900",
+      "price": "$736,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777902/IMG_20260826_135440249_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777902/IMG_20260826_135440249_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777904/IMG_20260826_135546786_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777906/IMG_20260826_135616858_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777907/IMG_20260826_135655722.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777907/IMG_20260826_135632930.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777903/IMG_20260826_135512749.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777911/IMG_20260826_140105684.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777912/IMG_20260826_140148937_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777908/IMG_20260826_135753218_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%205008",
+      "description": "Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de arrendamiento puro con beneficios fiscales. No dejes pasar este ahorro irrepetible por tiempo limitado.\r\n\r\n👉 Pide tu cotización personalizada aquí y recibe informes de inmediato por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Arquitectura para 7 Pasajeros, Faros Pixel LED y Techo Black Diamond",
+        "Techo panorámico eléctrico",
+        "Peugeot i-Cockpit® Panorámico con doble pantalla curva flotante elevada de 21 pulgadas HD",
+        "Conectividad inalámbrica para Apple CarPlay y Android Auto, navegación integrada y cargador inalámbrico para smartphone",
+        "Motor 1.6L THP de 4 cilindros con 180 hp a 5,500 rpm y 300 Nm de torque neto (equivalente a ~221 lb-pie) a 2,000 rpm",
+        "Grip Control con 3 modos de manejo y asistente de descenso en pendientes (Hill Assist Descent Control)",
+        "Integra 10 asistencias ADAS, entre ellas control crucero adaptativo Stop&Go, asistente de mantenimiento y posicionamiento de carril, alerta de colisión frontal, frenado autónomo de emergencia y monitor de punto ciego de largo alcance",
+        "Cámara con visión 360° y sensores perimetrales delanteros, laterales y traseros",
+        "Apertura eléctrica con función \"Manos Libres\""
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
