@@ -882,7 +882,13 @@ function generateHtmlForBrand(brand, vehicles) {
       font-family: var(--fuente);
     }
     .excel-table-container * {
-      font-family: var(--fuente) !important;
+      font-family: var(--fuente);
+    }
+    .excel-table-container i, 
+    .excel-table-container i::before, 
+    .excel-table-container i::after {
+      font-family: 'Font Awesome 6 Free' !important;
+      font-weight: 900;
     }
 
     @keyframes bounce {
@@ -1580,13 +1586,6 @@ function generateHtmlForBrand(brand, vehicles) {
 
   ${filtersHtml}
 
-  ${brand === 'demos' && cardsHtml.length > 0 ? `
-  <div class="demos-gallery-section" style="max-width:960px; margin:40px auto 10px auto; padding: 0 10px;">
-    <h3 class="table-title" style="margin-bottom: 5px; color: #111; text-transform: uppercase;"><i class="fa-solid fa-fire" style="color: #ff5722;"></i> Demos Destacados (Con Foto)</h3>
-    <p style="color: #666; font-size: 0.95rem; margin: 0;">Revisa nuestras unidades con fotografías y encuadres reales:</p>
-  </div>
-  ` : ''}
-  
   ${brand === 'demos' ? `
   <div class="section-divider" style="max-width: 960px; margin: 30px auto 15px auto; padding: 0 10px;">
     <h2 style="font-family: var(--fuente); text-transform: uppercase; color: #111; border-bottom: 3px solid var(--acento); padding-bottom: 8px; font-size: 1.6rem; display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
