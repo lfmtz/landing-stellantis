@@ -539,6 +539,45 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788213953633",
+      "name": "Peugeot 3008",
+      "km": "Demo",
+      "listPrice": "$739,900",
+      "price": "$675,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857743/IMG_20260827_082940671_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857743/IMG_20260827_082940671_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857743/IMG_20260827_083003771_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857743/IMG_20260827_083046184_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857743/IMG_20260827_083112289.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857744/IMG_20260827_083155793_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857744/IMG_20260827_083330007_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857744/IMG_20260827_083218086_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787857744/IMG_20260827_083252662.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%203008",
+      "description": "Aprovecha nuestro precio especial de liquidación y estrena hoy.\r\n\r\nDiseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o arrendamiento deducible para tu negocio o persona física.\r\n\r\n👉 Solicita tu cotización aquí y te atendemos al instante por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Faros Pixel LED",
+        "Techo Black Diamond: Incluye techo con acabado \"Black Diamond\" y techo panorámico eléctrico",
+        "Panorámico con doble pantalla curva flotante de 21\" elevada en HD",
+        "Asientos delanteros Dynamic: Disponen de ajuste eléctrico, función de masaje y calefacción",
+        "Asientos en Alcántara",
+        "Motor: 1.6l THP a gasolina (4 cilindros en línea, 1,598 cc",
+        "Potencia: 180 hp a 5,500 rpm",
+        "Torque neto: 300 Nm a 2,000 rpm (equivalente a aprox. 221 lb-pie)",
+        "Transmisión: Automática de 6 velocidades con tracción delantera",
+        "Cámara de visión panorámica: Dispone de cámara de reversa con visión de 180° / 360° y sensores traseros, delanteros y laterales",
+        "Cajuela: Apertura y cierre de cajuela eléctrica con función \"Manos Libres\""
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
