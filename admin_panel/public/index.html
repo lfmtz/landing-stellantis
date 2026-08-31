@@ -566,11 +566,22 @@
         <div class="form-row">
           <div class="form-group col-6">
             <label for="name">Nombre del Auto / Modelo</label>
-            <input type="text" id="name" required placeholder="Ej. Dodge Attitude SXT">
+            <input type="text" id="name" required placeholder="Ej. Peugeot 2008 Allure">
           </div>
           <div class="form-group col-6">
-            <label for="price">Precio desde / Mensualidad</label>
-            <input type="text" id="price" required placeholder="Ej. Desde $379,900 o Mensualidades de $5,499">
+            <label for="km">Kilometraje (Opcional)</label>
+            <input type="text" id="km" placeholder="Ej. 0 Km o 15,200 Km">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="listPrice">Precio de Lista (Opcional - Se mostrará tachado)</label>
+            <input type="text" id="listPrice" placeholder="Ej. $510,900">
+          </div>
+          <div class="form-group col-6">
+            <label for="price">Precio de Promoción / Liquidación</label>
+            <input type="text" id="price" required placeholder="Ej. $439,000 o Mensualidades de $5,499">
           </div>
         </div>
 
@@ -628,7 +639,7 @@
 
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; flex-wrap: wrap; gap: 5px;">
-            <label for="description" style="margin-bottom: 0;">Descripción Principal / Mensaje de la Promo</label>
+            <label for="description" style="margin-bottom: 0;">Descripción Principal / Mensaje de Contacto (CTA)</label>
             <div class="text-format-toolbar" style="display: flex; gap: 5px; align-items: center;">
               <select id="highlightColor" style="background: #151d2a; color: #fff; border: 1px solid #233143; border-radius: 4px; padding: 3px 8px; font-size: 0.8rem;">
                 <option value="red">Rojo Estándar</option>
@@ -642,7 +653,7 @@
               <button type="button" class="btn btn-secondary btn-sm" onclick="formatDescription('bold')" style="padding: 3px 10px; font-size: 0.8rem; border-radius: 4px; background: #233143; border: 1px solid #32455e; color: #fff; cursor: pointer;" title="Poner texto seleccionado en Negritas"><i class="fa-solid fa-bold"></i> Negrita</button>
             </div>
           </div>
-          <textarea id="description" rows="3" required placeholder="Ej. ¡Domina la ciudad con el sedán más eficiente! Estrena con el 46.5% de enganche."></textarea>
+          <textarea id="description" rows="3" required placeholder="Ej. ¡Estrena con precio exclusivo de liquidación! Pide tu cotización personalizada aquí."></textarea>
         </div>
 
         <div class="form-row">
@@ -684,12 +695,12 @@
         </div>
 
         <div class="form-group">
-          <label>Beneficios Incluidos (Bullets)</label>
+          <label>Características Destacadas / Beneficios (Bullets desplegables en acordeón)</label>
           <div id="benefitsContainer">
             <!-- Dynamic benefits inputs -->
           </div>
           <button type="button" id="addBenefitBtn" class="btn btn-secondary btn-sm">
-            <i class="fa-solid fa-plus"></i> Añadir Beneficio
+            <i class="fa-solid fa-plus"></i> Añadir Característica / Beneficio
           </button>
         </div>
 
@@ -1532,6 +1543,8 @@
       document.getElementById('promoBrand').value = currentBrand;
       document.getElementById('existingImage').value = p.image;
       document.getElementById('name').value = p.name;
+      document.getElementById('km').value = p.km || '';
+      document.getElementById('listPrice').value = p.listPrice || '';
       document.getElementById('price').value = p.price;
       document.getElementById('whatsapp').value = p.whatsapp || '';
       document.getElementById('description').value = p.description || '';
@@ -1586,6 +1599,8 @@
       document.getElementById('existingImage').value = '';
       document.getElementById('imageURL').value = '';
       document.getElementById('name').value = '';
+      document.getElementById('km').value = '';
+      document.getElementById('listPrice').value = '';
       document.getElementById('price').value = '';
       document.getElementById('whatsapp').value = `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20de%20vehículos%20${currentBrand}`;
       document.getElementById('description').value = '';
@@ -1709,6 +1724,8 @@
       
       formData.append('id', document.getElementById('promoId').value);
       formData.append('name', document.getElementById('name').value);
+      formData.append('km', document.getElementById('km').value.trim());
+      formData.append('listPrice', document.getElementById('listPrice').value.trim());
       formData.append('price', document.getElementById('price').value);
       formData.append('whatsapp', document.getElementById('whatsapp').value);
       formData.append('accentColor', document.getElementById('accentColor').value);

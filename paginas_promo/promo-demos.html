@@ -486,6 +486,22 @@
       line-height: 1.4;
     }
 
+    /* Card Details Accordion Styles */
+    .card-details-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+    .card-details-accordion summary:hover {
+      background: #f1f3f5 !important;
+    }
+    .card-details-accordion[open] summary .accordion-arrow {
+      transform: rotate(180deg);
+    }
+    .card-details-accordion[open] summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      background: #f1f3f5;
+    }
+
     .embed-footer {
       height: 12px;
     }
@@ -877,42 +893,81 @@
             DEMOS <i class="fa-solid fa-circle-check" style="color: #1d9bf0; font-size: 0.85rem;"></i>
           </div>
           
-          <!-- Sección del Precio Promocional Resaltado -->
-          <div style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px;">
-            <span style="font-size: 0.85rem; color: #777; display: block; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; font-family: var(--fuente);">Desde</span>
+          <!-- Sección de Precios (Lista Tachado + Promoción Destacado) -->
+          <div class="price-container" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 12px;">
+            
+              <div style="font-size: 1rem; color: #888; text-decoration: line-through; font-family: var(--fuente); font-weight: bold; margin-bottom: 2px;">
+                Precio de Lista: $510,900
+              </div>
+            
+            <span style="font-size: 0.85rem; color: #777; display: block; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; font-family: var(--fuente);">
+              Precio Promoción / Liquidación
+            </span>
             <div class="model-price" style="color: #00e5ff; font-size: 2.2rem; font-weight: bold; font-family: var(--fuente); line-height: 1; margin-top: 2px;">
-              Precio de Lista: $510,900
+              $439,000
             </div>
           </div>
           
-          <!-- Descripción Principal -->
-          <div class="promo-body" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px; padding-bottom: 0;">
-            <div class="promo-main" style="font-size: 1.0rem; color: #333333; white-space: pre-line; line-height: 1.4; margin-bottom: 15px;">
-              <span>Estrena con precio exclusivo de liquidación Precios:
-De <span style="color: red; font-weight: bold;"><b>$510,900</b></span>
-
-A solo <span style="color: red; font-weight: bold;"><b>$439,000</b></span>
-
-Llévatelo hoy con el mejor plan financiero: mensualidades bajas a crédito o esquema de arrendamiento deducible a tu medida. No dejes pasar este ahorro directo. 
-Pide tu cotización personalizada aquí</span>
-            </div>
-            <ul class="benefits-list" style="--acento-list: #00e5ff; margin-bottom: 15px; padding-left: 20px;">
+          <!-- Acordeón Desplegable de Características, Kilometraje y CTA -->
+          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+            <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
+              <span><i class="fa-solid fa-list-ul" style="color: #00e5ff; margin-right: 6px;"></i> Ver Características y Detalles</span>
+              <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: #00e5ff; transition: transform 0.3s ease;"></i>
+            </summary>
+            <div class="card-accordion-body" style="padding: 15px 5px 5px 5px;">
               
+                <div style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-family: var(--fuente); font-size: 0.95rem; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-gauge-high"></i> Kilometraje: 0 Km / Demo
+                </div>
+              
+
+              
+                <div style="margin-bottom: 12px;">
+                  <div style="font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #555; font-family: var(--fuente); margin-bottom: 6px;">Características Destacadas:</div>
+                  <ul class="benefits-list" style="--acento-list: #00e5ff; margin: 0; padding-left: 20px;">
+                    
       <li>
         Bono hasta de $81,900
       </li>
     
-            </ul>
-            <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
-              * Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas
-            </p>
-          </div>
+      <li>
+        Garantía de planta
+      </li>
+    
+      <li>
+        Mensualidades bajas a crédito
+      </li>
+    
+      <li>
+        Arrendamiento 100% deducible
+      </li>
+    
+                  </ul>
+                </div>
+              
+
+              
+                <div class="promo-main" style="font-size: 1.0rem; color: #333333; white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid #00e5ff; padding: 10px 12px; border-radius: 0 4px 4px 0;">
+                  <span>Estrena con precio exclusivo de liquidación.
+Llévatelo hoy con el mejor plan financiero: mensualidades bajas a crédito o esquema de arrendamiento deducible a tu medida. No dejes pasar este ahorro directo.
+
+👉 Pide tu cotización personalizada aquí y te respondemos de inmediato por WhatsApp:</span>
+                </div>
+              
+
+              
+                <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
+                  * Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones. Pregunta con tu asesor de ventas.
+                </p>
+              
+            </div>
+          </details>
         </div>
       </div>
       
-      <!-- Botón de Cotización por WhatsApp (Estilo Comercial) -->
+      <!-- Botón de Cotización por WhatsApp (Fijo en la parte inferior) -->
       <div style="padding: 0 20px 20px 20px; background: #fff;">
-        <a aria-label="Cotizar Peugeot 2008 por WhatsApp" class="btn-wa" style="background-color: #00e5ff; color: #fff; text-decoration: none; padding: 12px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 8px; font-size: 1.05rem; transition: background 0.3s; width: 100%; border: none; font-family: var(--fuente); text-transform: uppercase; letter-spacing: 0.5px;" href="https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar', { 'car_name': 'Peugeot 2008', 'brand_name': 'demos' }); }">
+        <a aria-label="Cotizar Peugeot 2008 por WhatsApp" class="btn-wa" style="background-color: #00e5ff; color: #fff; text-decoration: none; padding: 12px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 8px; font-size: 1.05rem; transition: background 0.3s; width: 100%; border: none; font-family: var(--fuente); text-transform: uppercase; letter-spacing: 0.5px;" href="https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008%20Demo" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar', { 'car_name': 'Peugeot 2008', 'brand_name': 'demos' }); }">
           <svg viewBox="0 0 24 24" style="fill: white; width: 18px; height: 18px; display: inline-block; vertical-align: middle;">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
           </svg>

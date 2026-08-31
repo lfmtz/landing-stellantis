@@ -179,6 +179,8 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
   const newPromo = {
     id: req.body.id || `${brand}-${Date.now()}`,
     name: req.body.name,
+    km: req.body.km || '',
+    listPrice: req.body.listPrice || '',
     price: req.body.price,
     image: imgPath,
     images: finalImages, // Save gallery array
@@ -487,30 +489,60 @@ function generateHtmlForBrand(brand, vehicles) {
             ${brand.toUpperCase()} <i class="fa-solid fa-circle-check" style="color: #1d9bf0; font-size: 0.85rem;"></i>
           </div>
           
-          <!-- Sección del Precio Promocional Resaltado -->
-          <div style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px;">
-            <span style="font-size: 0.85rem; color: #777; display: block; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; font-family: var(--fuente);">Desde</span>
+          <!-- Sección de Precios (Lista Tachado + Promoción Destacado) -->
+          <div class="price-container" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 12px;">
+            ${v.listPrice ? `
+              <div style="font-size: 1rem; color: #888; text-decoration: line-through; font-family: var(--fuente); font-weight: bold; margin-bottom: 2px;">
+                Precio de Lista: ${v.listPrice}
+              </div>
+            ` : ''}
+            <span style="font-size: 0.85rem; color: #777; display: block; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; font-family: var(--fuente);">
+              ${v.listPrice ? 'Precio Promoción / Liquidación' : 'Desde'}
+            </span>
             <div class="model-price" style="color: ${v.accentColor || accentColor}; font-size: 2.2rem; font-weight: bold; font-family: var(--fuente); line-height: 1; margin-top: 2px;">
               ${v.price}
             </div>
           </div>
           
-          <!-- Descripción Principal -->
-          <div class="promo-body" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px; padding-bottom: 0;">
-            <div class="promo-main" style="${textStyle} white-space: pre-line; line-height: 1.4; margin-bottom: 15px;">
-              <span>${v.description}</span>
+          <!-- Acordeón Desplegable de Características, Kilometraje y CTA -->
+          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+            <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
+              <span><i class="fa-solid fa-list-ul" style="color: ${v.accentColor || accentColor}; margin-right: 6px;"></i> Ver Características y Detalles</span>
+              <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: ${v.accentColor || accentColor}; transition: transform 0.3s ease;"></i>
+            </summary>
+            <div class="card-accordion-body" style="padding: 15px 5px 5px 5px;">
+              ${v.km ? `
+                <div style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-family: var(--fuente); font-size: 0.95rem; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-gauge-high"></i> Kilometraje: ${v.km}
+                </div>
+              ` : ''}
+
+              ${benefitsListHtml ? `
+                <div style="margin-bottom: 12px;">
+                  <div style="font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #555; font-family: var(--fuente); margin-bottom: 6px;">Características Destacadas:</div>
+                  <ul class="benefits-list" style="--acento-list: ${v.accentColor || accentColor}; margin: 0; padding-left: 20px;">
+                    ${benefitsListHtml}
+                  </ul>
+                </div>
+              ` : ''}
+
+              ${v.description ? `
+                <div class="promo-main" style="${textStyle} white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid ${v.accentColor || accentColor}; padding: 10px 12px; border-radius: 0 4px 4px 0;">
+                  <span>${v.description}</span>
+                </div>
+              ` : ''}
+
+              ${v.legal ? `
+                <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
+                  ${v.legal}
+                </p>
+              ` : ''}
             </div>
-            <ul class="benefits-list" style="--acento-list: ${v.accentColor || accentColor}; margin-bottom: 15px; padding-left: 20px;">
-              ${benefitsListHtml}
-            </ul>
-            <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
-              ${v.legal}
-            </p>
-          </div>
+          </details>
         </div>
       </div>
       
-      <!-- Botón de Cotización por WhatsApp (Estilo Comercial) -->
+      <!-- Botón de Cotización por WhatsApp (Fijo en la parte inferior) -->
       <div style="padding: 0 20px 20px 20px; background: #fff;">
         <a aria-label="Cotizar ${v.name} por WhatsApp" class="btn-wa" style="background-color: ${v.accentColor || accentColor}; color: #fff; text-decoration: none; padding: 12px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 8px; font-size: 1.05rem; transition: background 0.3s; width: 100%; border: none; font-family: var(--fuente); text-transform: uppercase; letter-spacing: 0.5px;" href="${v.whatsapp}" rel="noopener" target="_blank" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
           <svg viewBox="0 0 24 24" style="fill: white; width: 18px; height: 18px; display: inline-block; vertical-align: middle;">
@@ -1300,6 +1332,22 @@ function generateHtmlForBrand(brand, vehicles) {
       padding-top: 10px;
       font-family: var(--fuente);
       line-height: 1.4;
+    }
+
+    /* Card Details Accordion Styles */
+    .card-details-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+    .card-details-accordion summary:hover {
+      background: #f1f3f5 !important;
+    }
+    .card-details-accordion[open] summary .accordion-arrow {
+      transform: rotate(180deg);
+    }
+    .card-details-accordion[open] summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      background: #f1f3f5;
     }
 
     .embed-footer {
