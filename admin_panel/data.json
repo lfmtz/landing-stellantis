@@ -585,8 +585,9 @@
       "km": "Demo",
       "listPrice": "$789,900",
       "price": "$736,000",
-      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777902/IMG_20260826_135440249_HDR.jpg",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777903/IMG_20260826_135505250_HDR.jpg",
       "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777903/IMG_20260826_135505250_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777902/IMG_20260826_135440249_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777904/IMG_20260826_135546786_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787777906/IMG_20260826_135616858_HDR.jpg",
@@ -623,8 +624,9 @@
       "km": "Demo",
       "listPrice": "$518,500",
       "price": "$449,000",
-      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778625/IMG_20260826_110208844.jpg",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778605/IMG_20260826_105347455.jpg",
       "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778605/IMG_20260826_105347455.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778625/IMG_20260826_110208844.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778604/IMG_20260826_105435720_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778609/IMG_20260826_105453710_HDR.jpg",
