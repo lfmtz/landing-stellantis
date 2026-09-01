@@ -776,6 +776,43 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "todoterreno"
+    },
+    {
+      "id": "demos-1788229220176",
+      "name": "Ram 700 Laramie",
+      "km": "Demo",
+      "listPrice": "$521,500",
+      "price": "$481,500",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/x_121,y_977,w_2765,h_2765,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1787778368/IMG_20260826_113114954.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/x_121,y_977,w_2765,h_2765,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1787778368/IMG_20260826_113114954.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778368/IMG_20260826_113114954.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778381/IMG_20260826_114315293.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778376/IMG_20260826_113333483.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778372/IMG_20260826_113122744_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778371/IMG_20260826_113454235_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778373/IMG_20260826_113230813_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778374/IMG_20260826_113254775_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778369/IMG_20260826_113316927_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%20700%20Laramie",
+      "description": "Estrena con precio exclusivo de liquidación.\r\n\r\nLlévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de arrendamiento puro con beneficios fiscales. No dejes pasar este ahorro irrepetible por tiempo limitado.\r\n\r\n👉 Pide tu cotización personalizada aquí y recibe informes de inmediato por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Barras longitudinales de techo",
+        "Pantalla táctil de 7\" compatible de forma inalámbrica con Apple CarPlay® y Android Auto",
+        "Cargador inalámbrico por inducción para smartphone, clúster digital TFT de 3.5\" y controles de audio montados al volante",
+        "Dirección electroasistida",
+        "Motor 1.3L Firefly: 98 HP y 94 lb-pie de torque",
+        "Capacidad de carga de 650 kg",
+        "Hasta 4 bolsas de aire (delanteras y laterales)",
+        "Frenos ABS con distribución electrónica (EBD), Asistencia de Arranque en Pendiente (HSA), Control de Estabilidad (ESC) y cámara de reversa con sensores sonoros"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "pickup"
     }
   ],
   "portal": {
