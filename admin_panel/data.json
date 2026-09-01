@@ -862,6 +862,46 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "todoterreno"
+    },
+    {
+      "id": "demos-1788291129404",
+      "name": "Ram 1200 Redillas",
+      "km": "Flotilla",
+      "listPrice": "$454,900",
+      "price": "$399,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/x_0,y_638,w_3072,h_3072,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1788232853/IMG_20260830_145658329_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/x_0,y_638,w_3072,h_3072,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1788232853/IMG_20260830_145658329_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232853/IMG_20260830_145658329_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232853/IMG_20260830_145503765.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232853/IMG_20260830_145600025_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232853/IMG_20260830_145638529_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232776/IMG_20260830_145417762.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232854/IMG_20260830_145715091_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232854/IMG_20260830_145746290_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201200%20Redillas",
+      "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Motor: 2.0 L Turbo I4 a gasolina",
+        "Potencia: 217 HP @ 5,500 rpm",
+        "Torque: 288 lb-pie @ 1,900 - 3,300 rpm",
+        "Transmisión: Manual de 6 velocidades",
+        "Tracción: 4X2 (2WD) con dirección eléctrica",
+        "Tanque de combustible: 70 L",
+        "Tradesman Chassis Cab (Chasis): 1,315 kg",
+        "Capacidad de Arrastre: 3,000 kg (3 toneladas)",
+        "Cinturones: De 3 puntos para conductor y pasajero lateral,",
+        "Aire acondicionado",
+        "Vidrios eléctricos",
+        "Sistema de audio: Radio AM/FM con conexión inalámbrica (Bluetooth) y reproductor MP3"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
