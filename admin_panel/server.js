@@ -171,8 +171,14 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     }
   }
 
-  // Fallback if finalImages has elements, set main image to the first one
-  if (finalImages.length > 0) {
+  // Prioritize cover image (imgPath) as the first item of finalImages
+  if (imgPath) {
+    const existingIndex = finalImages.indexOf(imgPath);
+    if (existingIndex > -1) {
+      finalImages.splice(existingIndex, 1);
+    }
+    finalImages.unshift(imgPath);
+  } else if (finalImages.length > 0) {
     imgPath = finalImages[0];
   }
 

@@ -817,8 +817,26 @@
       const isCloudinary = imageURLInput.value.includes('cloudinary.com');
       cropImageBtn.style.display = isCloudinary ? 'inline-flex' : 'none';
     }
-    imageURLInput.addEventListener('input', checkCloudinaryBtn);
-    imageURLInput.addEventListener('change', checkCloudinaryBtn);
+
+    function handleCoverUrlChange() {
+      checkCloudinaryBtn();
+      const val = imageURLInput.value.trim();
+      if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+        filePreview.innerHTML = `<img src="${val}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada (Link)</p>`;
+        
+        // Sync with gallery: ensure val is at index 0 of currentPromoImages
+        const existingIdx = currentPromoImages.findIndex(img => typeof img === 'string' && img === val);
+        if (existingIdx > 0) {
+          currentPromoImages.splice(existingIdx, 1);
+          currentPromoImages.unshift(val);
+        } else if (existingIdx === -1) {
+          currentPromoImages.unshift(val);
+        }
+        renderMultiImages();
+      }
+    }
+    imageURLInput.addEventListener('input', handleCoverUrlChange);
+    imageURLInput.addEventListener('change', handleCoverUrlChange);
 
     // Multiple Images Gallery Support
     let currentPromoImages = [];
@@ -857,36 +875,37 @@
 
     window.removeMultiImage = function(index) {
       currentPromoImages.splice(index, 1);
+      if (index === 0 && currentPromoImages.length > 0) {
+        const first = currentPromoImages[0];
+        if (typeof first === 'string' && (first.startsWith('http://') || first.startsWith('https://'))) {
+          document.getElementById('imageURL').value = first;
+          document.getElementById('existingImage').value = '';
+          filePreview.innerHTML = `<img src="${first}" class="preview-img"><p class="preview-text">Portada de la promoción</p>`;
+        }
+      }
       renderMultiImages();
     };
 
-    window.openGalleryCrop = function(idx) {
-      const urlVal = currentPromoImages[idx];
-      if (!urlVal || typeof urlVal !== 'string') return;
+    window.setCoverImage = function(index) {
+      if (index <= 0 || index >= currentPromoImages.length) return;
+      const selected = currentPromoImages.splice(index, 1)[0];
+      currentPromoImages.unshift(selected);
       
-      cropTargetType = 'gallery';
-      cropTargetIndex = idx;
-      
-      const cleanUrl = urlVal.replace(/(image\/upload\/)(?:[^/]+\/)*(v\d+)/, '$1$2');
-      cropPreviewImg.src = cleanUrl;
-      cropModal.classList.add('active');
-      
-      if (cropperInstance) {
-        cropperInstance.destroy();
-        cropperInstance = null;
+      const src = typeof selected === 'string' ? selected : (selected.preview || '');
+      if (typeof selected === 'string' && (selected.startsWith('http://') || selected.startsWith('https://'))) {
+        document.getElementById('imageURL').value = selected;
+        document.getElementById('existingImage').value = '';
+      } else if (typeof selected === 'string') {
+        document.getElementById('imageURL').value = '';
+        document.getElementById('existingImage').value = selected;
       }
       
-      const aspect = currentBrand === 'demos' ? 1 : (4 / 3);
-      
-      cropPreviewImg.onload = () => {
-        cropperInstance = new Cropper(cropPreviewImg, {
-          aspectRatio: aspect,
-          viewMode: 1,
-          autoCropArea: 0.9,
-          responsive: true,
-          restore: false
-        });
-      };
+      if (src) {
+        const previewSrc = src.startsWith('http') ? src : `../${src}`;
+        filePreview.innerHTML = `<img src="${previewSrc}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada seleccionada</p>`;
+      }
+      checkCloudinaryBtn();
+      renderMultiImages();
     };
 
     window.renderMultiImages = function() {
@@ -902,11 +921,11 @@
       currentPromoImages.forEach((img, idx) => {
         const wrapper = document.createElement('div');
         wrapper.style.position = 'relative';
-        wrapper.style.width = '80px';
-        wrapper.style.height = '80px';
-        wrapper.style.borderRadius = '4px';
+        wrapper.style.width = '84px';
+        wrapper.style.height = '84px';
+        wrapper.style.borderRadius = '6px';
         wrapper.style.overflow = 'hidden';
-        wrapper.style.border = '1px solid var(--border)';
+        wrapper.style.border = idx === 0 ? '2px solid #00e5ff' : '1px solid var(--border)';
         wrapper.style.background = '#000';
         
         const src = typeof img === 'string' ? (img.startsWith('http') ? img : `../${img}`) : img.preview;
@@ -922,6 +941,7 @@
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.innerHTML = '&times;';
+        removeBtn.title = 'Eliminar de la galería';
         removeBtn.style.position = 'absolute';
         removeBtn.style.top = '2px';
         removeBtn.style.right = '2px';
@@ -941,11 +961,52 @@
         removeBtn.onclick = () => removeMultiImage(idx);
         wrapper.appendChild(removeBtn);
 
+        if (idx === 0) {
+          // Badge Portada
+          const coverBadge = document.createElement('span');
+          coverBadge.innerHTML = '⭐ PORTADA';
+          coverBadge.style.position = 'absolute';
+          coverBadge.style.top = '2px';
+          coverBadge.style.left = '2px';
+          coverBadge.style.background = 'rgba(0, 229, 255, 0.95)';
+          coverBadge.style.color = '#000';
+          coverBadge.style.fontSize = '8px';
+          coverBadge.style.fontWeight = 'bold';
+          coverBadge.style.padding = '2px 4px';
+          coverBadge.style.borderRadius = '3px';
+          coverBadge.style.pointerEvents = 'none';
+          wrapper.appendChild(coverBadge);
+        } else {
+          // Button to set as cover
+          const makeCoverBtn = document.createElement('button');
+          makeCoverBtn.type = 'button';
+          makeCoverBtn.innerHTML = '⭐';
+          makeCoverBtn.title = 'Hacer Portada Principal';
+          makeCoverBtn.style.position = 'absolute';
+          makeCoverBtn.style.top = '2px';
+          makeCoverBtn.style.left = '2px';
+          makeCoverBtn.style.background = 'rgba(0, 0, 0, 0.7)';
+          makeCoverBtn.style.color = '#ffd700';
+          makeCoverBtn.style.border = '1px solid #ffd700';
+          makeCoverBtn.style.borderRadius = '50%';
+          makeCoverBtn.style.width = '18px';
+          makeCoverBtn.style.height = '18px';
+          makeCoverBtn.style.cursor = 'pointer';
+          makeCoverBtn.style.display = 'flex';
+          makeCoverBtn.style.alignItems = 'center';
+          makeCoverBtn.style.justifyContent = 'center';
+          makeCoverBtn.style.fontSize = '10px';
+          makeCoverBtn.style.padding = '0';
+          makeCoverBtn.onclick = () => setCoverImage(idx);
+          wrapper.appendChild(makeCoverBtn);
+        }
+
         // Crop button for Cloudinary gallery images
         if (typeof img === 'string' && img.includes('cloudinary.com')) {
           const cropBtn = document.createElement('button');
           cropBtn.type = 'button';
           cropBtn.innerHTML = '<i class="fa-solid fa-crop"></i>';
+          cropBtn.title = 'Encuadrar / Recortar';
           cropBtn.style.position = 'absolute';
           cropBtn.style.bottom = '2px';
           cropBtn.style.right = '2px';
