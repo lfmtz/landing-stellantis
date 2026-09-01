@@ -697,6 +697,47 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788225819552",
+      "name": "Jeep Grand Cherokee L",
+      "km": "Demo",
+      "listPrice": "$1,463,900",
+      "price": "$1,199,900",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778502/IMG_20260826_111315074_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778502/IMG_20260826_111315074_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778482/IMG_20260826_110813837_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778496/IMG_20260826_111337545_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778483/IMG_20260826_110823199.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778499/IMG_20260826_110838472_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778491/IMG_20260826_111040737_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778486/IMG_20260826_110904762_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778485/IMG_20260826_110852185_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778488/IMG_20260826_110927146_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778494/IMG_20260826_111134422_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778500/IMG_20260826_111200968_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Jeep%20Grand%20Cherokee%20L",
+      "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Pantalla táctil de 12.3” Uconnect® 5",
+        "Clúster a color de 10.25” TFT",
+        "Rines de aluminio de 20x8.5\"",
+        "CarPlay y Android Auto inalámbrico",
+        "Head-Up Display",
+        "Equipa un sistema de 9 altavoces + subwoofer con amplificador de 506 W",
+        "3 Filas / 7 Pasajeros",
+        "Selector Selec-Terrain",
+        "Sistema de tracción 4x4",
+        "Sistema de visión 360° con limpiador de cámara trasera"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
