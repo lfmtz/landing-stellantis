@@ -658,6 +658,45 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788224377875",
+      "name": "Dodge Attitude",
+      "km": "Demo",
+      "listPrice": "$515,900",
+      "price": "$459,900",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778249/IMG_20260826_132330231.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778249/IMG_20260826_132330231.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778256/IMG_20260826_132810100_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778252/IMG_20260826_132426842.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778250/IMG_20260826_132402280_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778251/IMG_20260826_132415947_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778253/IMG_20260826_132640021.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778254/IMG_20260826_132710536_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778244/IMG_20260826_132239190_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778245/IMG_20260826_132246490.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778246/IMG_20260826_132259112_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
+      "description": "Aprovecha nuestro precio especial de liquidación y estrena hoy.\r\n\r\nDiseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o arrendamiento deducible para tu negocio o persona física.\r\n\r\n👉 Solicita tu cotización aquí y te atendemos al instante por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Rines de 18\" en acabado negro satinado con llantas de alto desempeño para la versión GT",
+        "Faros delanteros automáticos Full LED con ajuste de altura, alerta de encendido y función \"Sígueme a casa\"",
+        "Doble pantalla HD 10.25\"",
+        "Conectividad Apple CarPlay® y Android Auto®",
+        "Quemacocos eléctrico con sistema antipellizco",
+        "Motor 1.5L Turbo GDI que genera 168 HP de potencia y 184 lb-pie de torque",
+        "Caja automática de 7 velocidades",
+        "Seguridad Activa (ADAS) y Pasiva",
+        "6 bolsas de aire de serie"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
