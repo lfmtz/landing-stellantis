@@ -881,7 +881,7 @@
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232854/IMG_20260830_145746290_HDR.jpg"
       ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201200%20Redillas",
-      "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
+      "description": "Precio de las redilas su costo adicional al precio es de<span style=\"color: red; font-weight: bold;\"> <b>$49,900*</b></span>\r\n\r\nEl precio de <span style=\"color: red; font-weight: bold;\"><b>$399,000</b></span> solo contempla el precio del chasis\r\n\r\nGran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
@@ -901,7 +901,87 @@
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
-      "category": "suv"
+      "category": "trabajo"
+    },
+    {
+      "id": "demos-1788292024575",
+      "name": "Ram 1200 caja",
+      "km": "Flotilla",
+      "listPrice": "$454,900",
+      "price": "$399,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/x_0,y_420,w_3072,h_3072,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1788233530/IMG_20260829_113809658.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/x_0,y_420,w_3072,h_3072,c_crop/w_1080,h_1080,c_fill,f_auto,q_auto/v1788233530/IMG_20260829_113809658.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233530/IMG_20260829_113809658.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233526/IMG_20260829_113751247.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232773/IMG_20260830_145314133.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232772/IMG_20260830_145208761.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232772/IMG_20260830_145118779.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232773/IMG_20260830_145935260_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232775/IMG_20260830_145928367_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201200%20caja",
+      "description": "Precio de la caja su costo adicional al precio es de<span style=\"color: red; font-weight: bold;\"> <b>$89,900*</b></span>\r\n\r\nEl precio de <span style=\"color: red; font-weight: bold;\"><b>$399,000</b></span> solo contempla el precio del chasis\r\n\r\nGran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Motor: 2.0 L Turbo I4 a gasolina",
+        "Potencia: 217 HP @ 5,500 rpm",
+        "Torque: 288 lb-pie @ 1,900 - 3,300 rpm",
+        "Transmisión: Manual de 6 velocidades",
+        "Tracción: 4X2 (2WD) con dirección eléctrica",
+        "Tanque de combustible: 70 L",
+        "Tradesman Chassis Cab (Chasis): 1,315 kg",
+        "Capacidad de Arrastre: 3,000 kg (3 toneladas)",
+        "Cinturones: De 3 puntos para conductor y pasajero lateral,",
+        "Aire acondicionado",
+        "Vidrios eléctricos",
+        "Sistema de audio: Radio AM/FM con conexión inalámbrica (Bluetooth) y reproductor MP3"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "trabajo"
+    },
+    {
+      "id": "demos-1788306215508",
+      "name": "Ram 1200 Crew Cab",
+      "km": "Flotilla",
+      "listPrice": "$509,900",
+      "price": "$430,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233605/IMG_20260829_112846760.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233605/IMG_20260829_112846760.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233604/IMG_20260829_112839023.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233612/IMG_20260829_113447967.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233607/IMG_20260829_112854028.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233606/IMG_20260829_112914514.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233607/IMG_20260829_112925248_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233608/IMG_20260829_113114168_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233609/IMG_20260829_113220512_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233610/IMG_20260829_113339040_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201200%20Crew%20Cab",
+      "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Motor: 2.0 L Turbo I4 de gasolina",
+        "Potencia: 217 HP @ 5,500 rpm",
+        "Torque: 288 lb-pie @ 1,900 - 3,300 rpm",
+        "Transmisión: Manual de 6 velocidades",
+        "Indicador de cambio: Indicador de cambio de velocidad electrónico",
+        "Tracción: 4X2 (2WD) con dirección eléctrica",
+        "Tanque de combustible: 70 L",
+        "Capacidad de Carga: 1,115 kg",
+        "Capacidad de Arrastre: 3,000 kg (3 toneladas)",
+        "Capacidad de Pasajeros: 5 pasajeros (Doble Cabina)",
+        "Rines de acero de 17\" con neumáticos 265/65 R17 y llanta de repuesto de tamaño completo con rin de acero"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "pickup"
     }
   ],
   "portal": {

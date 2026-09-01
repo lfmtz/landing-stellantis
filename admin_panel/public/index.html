@@ -695,11 +695,75 @@
         </div>
 
         <div class="form-group">
-          <label>Características Destacadas / Beneficios (Bullets desplegables en acordeón)</label>
+          <label for="fichaTecnica">
+            <i class="fa-solid fa-file-pdf" style="color: #ef4444; margin-right: 4px;"></i> Enlace de Ficha Técnica (PDF / URL) 
+            <small style="color: var(--text-secondary); font-weight: normal;">(Opcional - Si lo dejas vacío no se mostrará nada al cliente)</small>
+          </label>
+          <input type="url" id="fichaTecnica" placeholder="https://res.cloudinary.com/... o enlace a la ficha técnica en PDF">
+        </div>
+
+        <div class="form-group" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 15px; border-radius: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+            <label style="margin-bottom: 0; font-weight: bold; color: var(--text-primary);">
+              <i class="fa-solid fa-list-check" style="color: #00e5ff; margin-right: 5px;"></i> Características Destacadas / Beneficios (Bullets en acordeón)
+            </label>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openPasteBenefitsModal()" style="font-size: 0.8rem; padding: 5px 12px; background: #233143; border: 1px solid #32455e; color: #fff; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-paste"></i> Pegar Lista de Texto
+            </button>
+          </div>
+
+          <!-- Barra de Importación / Copiado Rápido de Características con División Demos / Nuevos -->
+          <div class="copy-benefits-toolbar" style="background: rgba(0, 229, 255, 0.04); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 0.85rem; color: #00e5ff; font-weight: bold; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-clone"></i> Copiar características desde:
+              </span>
+              
+              <!-- Pestañas Filtro de Origen: Demos / Nuevos / Todos -->
+              <div class="copy-source-tabs" style="display: inline-flex; background: #0b1019; padding: 2px; border-radius: 6px; border: 1px solid #233143; gap: 2px;">
+                <button type="button" id="tabSourceDemos" onclick="setCopySourceFilter('demos')" style="background: transparent; border: none; color: #94a3b8; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s;">
+                  ⚡ Autos Demo
+                </button>
+                <button type="button" id="tabSourceNuevos" onclick="setCopySourceFilter('nuevos')" style="background: transparent; border: none; color: #94a3b8; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s;">
+                  ⭐ Autos Nuevos
+                </button>
+                <button type="button" id="tabSourceAll" onclick="setCopySourceFilter('all')" style="background: transparent; border: none; color: #94a3b8; padding: 4px 8px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s;">
+                  Todos
+                </button>
+              </div>
+            </div>
+
+            <!-- Fila con Buscador y Select -->
+            <div style="display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+              <div style="position: relative; width: 180px; min-width: 140px;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: #64748b;"></i>
+                <input type="text" id="copyBenefitsSearch" placeholder="Buscar modelo..." oninput="filterCopyBenefitsList()" style="width: 100%; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 6px 10px 6px 28px; border-radius: 4px; font-size: 0.8rem; box-sizing: border-box; outline: none;">
+              </div>
+              <select id="copyBenefitsSelect" onchange="previewSelectedBenefits()" style="flex: 1; min-width: 220px; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 6px 10px; border-radius: 4px; font-size: 0.82rem; outline: none;">
+                <option value="">-- Seleccionar vehículo --</option>
+              </select>
+            </div>
+
+            <!-- Vista previa y Botones de acción -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <div id="copyBenefitsPreviewText" style="font-size: 0.78rem; color: #94a3b8; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 320px;">
+                Selecciona un auto para ver sus características
+              </div>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="applyCopiedBenefits('replace')" style="font-size: 0.8rem; padding: 5px 12px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;" title="Reemplazar características actuales">
+                  <i class="fa-solid fa-copy"></i> Copiar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="applyCopiedBenefits('append')" style="font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; cursor: pointer;" title="Añadir al final de las características que ya tengas escritas">
+                  + Añadir al final
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div id="benefitsContainer">
             <!-- Dynamic benefits inputs -->
           </div>
-          <button type="button" id="addBenefitBtn" class="btn btn-secondary btn-sm">
+          <button type="button" id="addBenefitBtn" class="btn btn-secondary btn-sm" style="margin-top: 5px;">
             <i class="fa-solid fa-plus"></i> Añadir Característica / Beneficio
           </button>
         </div>
@@ -760,6 +824,35 @@
       <div class="modal-footer" style="margin-top: 15px; display: flex; justify-content: flex-end; gap: 10px;">
         <button type="button" id="cancelCropBtn" class="btn btn-secondary">Cancelar</button>
         <button type="button" id="applyCropBtn" class="btn btn-primary">Aplicar Encuadre</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini Modal: Pegado Rápido de Características -->
+  <div id="pasteBenefitsModal" class="modal" style="z-index: 1300;">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-paste" style="color: #00e5ff; margin-right: 6px;"></i> Pegar Lista de Características</h3>
+        <span class="close-btn" onclick="closePasteBenefitsModal()">&times;</span>
+      </div>
+      <div class="modal-body" style="padding: 15px 0;">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">
+          Pega aquí el texto con las características (separadas por renglones, con o sin viñetas como •, -, *, 1.). El sistema creará una fila por cada renglón automáticamente:
+        </p>
+        <textarea id="pasteBenefitsTextarea" rows="8" style="width: 100%; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 10px; border-radius: 4px; font-size: 0.85rem; box-sizing: border-box; resize: vertical; font-family: inherit;" placeholder="Ejemplo:&#10;• Faros Pixel LED&#10;• Techo panorámico corredizo&#10;• Pantalla táctil de 10 pulgadas con Apple CarPlay&#10;• Motor 1.6L Turbo 180 HP&#10;• 6 bolsas de aire"></textarea>
+        
+        <div style="margin-top: 12px; display: flex; gap: 15px; align-items: center; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 4px;">
+          <label style="font-size: 0.85rem; color: var(--text-primary); display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="pasteBenefitsMode" value="replace" checked> Reemplazar actuales
+          </label>
+          <label style="font-size: 0.85rem; color: var(--text-primary); display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="pasteBenefitsMode" value="append"> Añadir al final
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer" style="margin-top: 15px; display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn btn-secondary" onclick="closePasteBenefitsModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="confirmPasteBenefits()"><i class="fa-solid fa-check"></i> Convertir a Características</button>
       </div>
     </div>
   </div>
@@ -1268,6 +1361,7 @@
         const res = await fetch('/api/promos');
         database = await res.json();
         renderCurrentBrand();
+        populateCopyBenefitsDropdown();
       } catch (err) {
         console.error('Error loading data:', err);
       }
@@ -1295,21 +1389,27 @@
         card.className = 'promo-admin-card';
         card.style.borderTopColor = p.accentColor || '#CC4400';
         
-        let benefitsHtml = (p.benefits || []).map(b => `<li><i class="fa-solid fa-check"></i> ${b}</li>`).join('');
+        const validBenefits = (p.benefits || []).filter(b => b && b.trim());
+        let benefitsHtml = validBenefits.map(b => `<li><i class="fa-solid fa-check"></i> ${b}</li>`).join('');
         
+        let pdfBadge = (p.fichaTecnica && p.fichaTecnica.trim()) 
+          ? `<a href="${p.fichaTecnica.trim()}" target="_blank" rel="noopener" style="font-size: 0.75rem; background: #ef4444; color: #fff; padding: 2px 7px; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;" title="Ver Ficha Técnica"><i class="fa-solid fa-file-pdf"></i> Ficha</a>` 
+          : '';
+
         card.innerHTML = `
           <div class="card-image-wrapper">
             <img src="${p.image ? (p.image.startsWith('http') ? p.image : '../' + p.image) : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
           </div>
           <div class="card-details">
-            <div class="card-main-info">
-              <h4>${p.name}</h4>
+            <div class="card-main-info" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div>
+                <h4 style="margin: 0; display: inline-block;">${p.name}</h4>
+                ${pdfBadge}
+              </div>
               <span class="price-badge" style="background-color: ${p.accentColor || '#CC4400'}">${p.price}</span>
             </div>
-            <p class="desc-preview">${p.description}</p>
-            <ul class="benefits-preview">
-              ${benefitsHtml}
-            </ul>
+            ${p.description ? `<p class="desc-preview">${p.description}</p>` : ''}
+            ${benefitsHtml ? `<ul class="benefits-preview">${benefitsHtml}</ul>` : ''}
             <div class="card-actions">
               <button class="btn btn-secondary btn-sm" onclick="editPromo('${p.id}')">
                 <i class="fa-solid fa-pen-to-square"></i> Editar
@@ -1729,6 +1829,7 @@
       document.getElementById('accentColorHex').value = (p.accentColor || '#CC4400').toUpperCase();
       document.getElementById('legal').value = p.legal || '';
       document.getElementById('category').value = p.category || 'suv';
+      document.getElementById('fichaTecnica').value = p.fichaTecnica || '';
 
       // Check if image is an external URL or local
       if (p.image && (p.image.startsWith('http://') || p.image.startsWith('https://'))) {
@@ -1763,6 +1864,12 @@
       }
       renderMultiImages();
 
+      // Refresh copy benefits dropdown with appropriate initial tab
+      if (document.getElementById('copyBenefitsSearch')) {
+        document.getElementById('copyBenefitsSearch').value = '';
+      }
+      setCopySourceFilter(currentBrand === 'demos' ? 'demos' : 'nuevos', true);
+
       promoModal.classList.add('active');
     };
 
@@ -1781,6 +1888,7 @@
       document.getElementById('description').value = '';
       document.getElementById('descriptionSize').value = '1.0rem';
       document.getElementById('underlineStyle').value = 'solid';
+      document.getElementById('fichaTecnica').value = '';
       
       const defaultColors = {
         ram: '#000000',
@@ -1803,13 +1911,19 @@
       else if (currentBrand === 'leapmotor') defaultCat = 'electricos';
       document.getElementById('category').value = defaultCat;
       
-       filePreview.innerHTML = '';
+      filePreview.innerHTML = '';
       benefitsContainer.innerHTML = '';
       addBenefitInput();
       checkCloudinaryBtn();
       
       currentPromoImages = [];
       renderMultiImages();
+
+      // Refresh copy benefits dropdown with appropriate initial tab
+      if (document.getElementById('copyBenefitsSearch')) {
+        document.getElementById('copyBenefitsSearch').value = '';
+      }
+      setCopySourceFilter(currentBrand === 'demos' ? 'demos' : 'nuevos', true);
       
       promoModal.classList.add('active');
     });
@@ -1847,7 +1961,7 @@
       input.type = 'text';
       input.className = 'benefit-field';
       input.value = value;
-      input.placeholder = 'Ej. 0% Comisión por Apertura';
+      input.placeholder = 'Ej. Faros Pixel LED / Pantalla 10" HD';
       
       const removeBtn = document.createElement('button');
       removeBtn.type = 'button';
@@ -1860,6 +1974,229 @@
       benefitsContainer.appendChild(wrapper);
     }
     addBenefitBtn.addEventListener('click', () => addBenefitInput());
+
+    // Origin Filter Management (Demos vs Nuevos vs Todos)
+    let currentCopySourceFilter = 'demos';
+
+    window.setCopySourceFilter = function(source, refresh = true) {
+      currentCopySourceFilter = source;
+
+      const tabDemos = document.getElementById('tabSourceDemos');
+      const tabNuevos = document.getElementById('tabSourceNuevos');
+      const tabAll = document.getElementById('tabSourceAll');
+
+      if (tabDemos && tabNuevos && tabAll) {
+        [tabDemos, tabNuevos, tabAll].forEach(t => {
+          t.style.background = 'transparent';
+          t.style.color = '#94a3b8';
+        });
+
+        if (source === 'demos') {
+          tabDemos.style.background = '#00e5ff';
+          tabDemos.style.color = '#0b1019';
+        } else if (source === 'nuevos') {
+          tabNuevos.style.background = '#00e5ff';
+          tabNuevos.style.color = '#0b1019';
+        } else {
+          tabAll.style.background = '#00e5ff';
+          tabAll.style.color = '#0b1019';
+        }
+      }
+
+      if (refresh) {
+        populateCopyBenefitsDropdown();
+      }
+    };
+
+    window.filterCopyBenefitsList = function() {
+      populateCopyBenefitsDropdown();
+    };
+
+    // Populate Copy Benefits Dropdown based on active tab and search query
+    function populateCopyBenefitsDropdown() {
+      const select = document.getElementById('copyBenefitsSelect');
+      const searchInput = document.getElementById('copyBenefitsSearch');
+      if (!select) return;
+
+      const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      select.innerHTML = '<option value="">-- Seleccionar vehículo con características --</option>';
+
+      let targetBrands = [];
+      const brandLabels = {
+        demos: 'Autos Demo',
+        ram: 'RAM (Nuevos)',
+        dodge: 'DODGE (Nuevos)',
+        jeep: 'JEEP (Nuevos)',
+        fiat: 'FIAT (Nuevos)',
+        peugeot: 'PEUGEOT (Nuevos)',
+        leapmotor: 'LEAPMOTOR (Nuevos)'
+      };
+
+      if (currentCopySourceFilter === 'demos') {
+        targetBrands = ['demos'];
+      } else if (currentCopySourceFilter === 'nuevos') {
+        targetBrands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+      } else {
+        targetBrands = ['demos', 'ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+      }
+
+      let countFound = 0;
+
+      targetBrands.forEach(b => {
+        const list = database[b] || [];
+        const validVehicles = list.filter(v => {
+          const hasBenefits = v.benefits && Array.isArray(v.benefits) && v.benefits.some(x => x && x.trim());
+          if (!hasBenefits) return false;
+          if (!searchVal) return true;
+          const matchName = (v.name || '').toLowerCase().includes(searchVal);
+          const matchBrand = (b || '').toLowerCase().includes(searchVal);
+          return matchName || matchBrand;
+        });
+
+        if (validVehicles.length > 0) {
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = `🚗 ${brandLabels[b] || b.toUpperCase()} (${validVehicles.length})`;
+
+          validVehicles.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = `${b}::${v.id}`;
+            const num = v.benefits.filter(x => x && x.trim()).length;
+            opt.textContent = `${v.name} (${num} características)`;
+            optgroup.appendChild(opt);
+            countFound++;
+          });
+
+          select.appendChild(optgroup);
+        }
+      });
+
+      if (countFound === 0) {
+        const filterName = currentCopySourceFilter === 'demos' ? 'Autos Demo' : currentCopySourceFilter === 'nuevos' ? 'Autos Nuevos' : 'la base de datos';
+        select.innerHTML = `<option value="">(No hay autos con características en ${filterName}${searchVal ? ' para "' + searchVal + '"' : ''})</option>`;
+      }
+
+      previewSelectedBenefits();
+    }
+
+    // Preview Selected Vehicle Characteristics
+    window.previewSelectedBenefits = function() {
+      const select = document.getElementById('copyBenefitsSelect');
+      const previewText = document.getElementById('copyBenefitsPreviewText');
+      if (!select || !previewText) return;
+
+      const val = select.value;
+      if (!val || !val.includes('::')) {
+        previewText.textContent = 'Selecciona un auto para ver sus características';
+        previewText.style.color = '#94a3b8';
+        return;
+      }
+
+      const [brand, id] = val.split('::');
+      const list = database[brand] || [];
+      const vehicle = list.find(x => x.id === id);
+
+      if (!vehicle || !vehicle.benefits || vehicle.benefits.length === 0) {
+        previewText.textContent = 'Este auto no tiene características capturadas.';
+        previewText.style.color = '#e02424';
+        return;
+      }
+
+      const cleanBenefits = vehicle.benefits.map(b => (typeof b === 'string' ? b.trim() : '')).filter(b => b.length > 0);
+      const previewSnippet = cleanBenefits.slice(0, 3).join(', ');
+      previewText.innerHTML = `<span style="color: #00e5ff; font-weight: 600;">${vehicle.name} (${cleanBenefits.length} caract.):</span> ${previewSnippet}${cleanBenefits.length > 3 ? '...' : ''}`;
+    };
+
+    // Apply Copied Benefits to Current Form
+    window.applyCopiedBenefits = function(mode = 'replace') {
+      const select = document.getElementById('copyBenefitsSelect');
+      const val = select.value;
+      if (!val || !val.includes('::')) {
+        alert('Por favor selecciona un vehículo de la lista desplegable.');
+        return;
+      }
+
+      const [brand, id] = val.split('::');
+      const list = database[brand] || [];
+      const vehicle = list.find(x => x.id === id);
+
+      if (!vehicle || !vehicle.benefits || vehicle.benefits.length === 0) {
+        alert('El vehículo seleccionado no tiene características guardadas.');
+        return;
+      }
+
+      const cleanBenefits = vehicle.benefits.map(b => (typeof b === 'string' ? b.trim() : '')).filter(b => b.length > 0);
+      if (cleanBenefits.length === 0) {
+        alert('El vehículo seleccionado no tiene características válidas.');
+        return;
+      }
+
+      if (mode === 'replace') {
+        benefitsContainer.innerHTML = '';
+      }
+
+      cleanBenefits.forEach(b => addBenefitInput(b));
+
+      const actionText = mode === 'replace' ? 'copiaron' : 'agregaron';
+      showToast(`¡Se ${actionText} ${cleanBenefits.length} características de "${vehicle.name}"!`);
+    };
+
+    // Paste List of Benefits Modal Handlers
+    window.openPasteBenefitsModal = function() {
+      document.getElementById('pasteBenefitsTextarea').value = '';
+      document.getElementById('pasteBenefitsModal').classList.add('active');
+    };
+
+    window.closePasteBenefitsModal = function() {
+      document.getElementById('pasteBenefitsModal').classList.remove('active');
+    };
+
+    window.confirmPasteBenefits = function() {
+      const textarea = document.getElementById('pasteBenefitsTextarea');
+      const text = textarea.value.trim();
+      if (!text) {
+        closePasteBenefitsModal();
+        return;
+      }
+
+      const modeRadio = document.querySelector('input[name="pasteBenefitsMode"]:checked');
+      const mode = modeRadio ? modeRadio.value : 'replace';
+
+      // Split lines and clean bullets (•, -, *, 1., etc.)
+      const lines = text.split(/\r?\n/)
+        .map(l => l.replace(/^[•\-\*\d\.\)\s]+/, '').trim())
+        .filter(l => l.length > 0);
+
+      if (lines.length === 0) {
+        alert('No se encontraron líneas de texto válidas.');
+        return;
+      }
+
+      if (mode === 'replace') {
+        benefitsContainer.innerHTML = '';
+      }
+
+      lines.forEach(line => addBenefitInput(line));
+      closePasteBenefitsModal();
+      showToast(`¡Se insertaron ${lines.length} características desde el texto!`);
+    };
+
+    // Lightweight Floating Toast Notification
+    function showToast(msg) {
+      let toast = document.getElementById('adminToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'adminToast';
+        toast.style.cssText = 'position: fixed; bottom: 25px; right: 25px; background: #00e5ff; color: #0b1019; font-weight: bold; padding: 12px 20px; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,229,255,0.4); z-index: 100010; font-size: 0.9rem; transition: opacity 0.3s, transform 0.3s; opacity: 0; transform: translateY(10px); display: flex; align-items: center; gap: 8px; font-family: inherit; pointer-events: none;';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<i class="fa-solid fa-circle-check" style="font-size: 1.1rem;"></i> ${msg}`;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateY(0)';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+      }, 3000);
+    }
 
     // File Drop Zone handler
     dropZone.addEventListener('click', () => imageFileInput.click());
@@ -1911,6 +2248,7 @@
       formData.append('imageURL', document.getElementById('imageURL').value);
       formData.append('legal', document.getElementById('legal').value);
       formData.append('category', document.getElementById('category').value);
+      formData.append('fichaTecnica', document.getElementById('fichaTecnica').value.trim());
       
       // Benefits collection
       const benefits = [];

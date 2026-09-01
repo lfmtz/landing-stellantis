@@ -143,7 +143,8 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
   }
 
   // Parse details
-  const benefits = req.body.benefits ? JSON.parse(req.body.benefits) : [];
+  const rawBenefits = req.body.benefits ? JSON.parse(req.body.benefits) : [];
+  const benefits = Array.isArray(rawBenefits) ? rawBenefits.map(b => (typeof b === 'string' ? b.trim() : '')).filter(b => b.length > 0) : [];
   
   // Base image path (single image upload)
   let imgPath = req.body.imageURL || req.body.existingImage || '';
@@ -195,6 +196,7 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     descriptionSize: req.body.descriptionSize || '1.0rem',
     descriptionColor: req.body.descriptionColor || '#333333',
     benefits: benefits,
+    fichaTecnica: req.body.fichaTecnica ? req.body.fichaTecnica.trim() : '',
     legal: req.body.legal || '* Promoción válida el mes en curso.',
     accentColor: req.body.accentColor || '#CC4400',
     underlineStyle: req.body.underlineStyle || 'solid',
@@ -419,12 +421,26 @@ function generateHtmlForBrand(brand, vehicles) {
   const accentColor = brandColors[brand] || '#CC4400';
 
   const cardsHtml = vehicles.map(v => {
-    // Generate benefits list
-    const benefitsListHtml = v.benefits.map(b => `
+    // Generate benefits list (only non-empty items)
+    const validBenefits = (v.benefits || []).map(b => (typeof b === 'string' ? b.trim() : '')).filter(b => b.length > 0);
+    const benefitsListHtml = validBenefits.map(b => `
       <li>
         ${b}
       </li>
     `).join('');
+
+    // Ficha Técnica Download Link
+    let fichaTecnicaHtml = '';
+    if (v.fichaTecnica && typeof v.fichaTecnica === 'string' && v.fichaTecnica.trim().length > 0) {
+      const ftUrl = v.fichaTecnica.trim();
+      fichaTecnicaHtml = `
+        <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
+          <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;">
+            <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i> Descargar Ficha Técnica
+          </a>
+        </div>
+      `;
+    }
 
     // Highlight style for description
     const textStyle = `font-size: ${v.descriptionSize || '1rem'}; color: ${v.descriptionColor || '#333333'};`;
@@ -472,6 +488,58 @@ function generateHtmlForBrand(brand, vehicles) {
       imgContainerContent = `<img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>`;
     }
 
+    // Check if there are any details to display in the accordion
+    const hasDetails = Boolean(
+      (v.km && v.km.trim()) ||
+      validBenefits.length > 0 ||
+      fichaTecnicaHtml ||
+      (v.description && v.description.trim()) ||
+      (v.legal && v.legal.trim())
+    );
+
+    let detailsAccordionHtml = '';
+    if (hasDetails) {
+      detailsAccordionHtml = `
+          <!-- Acordeón Desplegable de Características, Kilometraje, Ficha Técnica y CTA -->
+          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+            <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
+              <span><i class="fa-solid fa-list-ul" style="color: ${v.accentColor || accentColor}; margin-right: 6px;"></i> Ver Características y Detalles</span>
+              <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: ${v.accentColor || accentColor}; transition: transform 0.3s ease;"></i>
+            </summary>
+            <div class="card-accordion-body" style="padding: 15px 5px 5px 5px;">
+              ${v.km && v.km.trim() ? `
+                <div style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-family: var(--fuente); font-size: 0.95rem; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-gauge-high"></i> Kilometraje: ${v.km}
+                </div>
+              ` : ''}
+
+              ${validBenefits.length > 0 ? `
+                <div style="margin-bottom: 12px;">
+                  <div style="font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #555; font-family: var(--fuente); margin-bottom: 6px;">Características Destacadas:</div>
+                  <ul class="benefits-list" style="--acento-list: ${v.accentColor || accentColor}; margin: 0; padding-left: 20px;">
+                    ${benefitsListHtml}
+                  </ul>
+                </div>
+              ` : ''}
+
+              ${fichaTecnicaHtml}
+
+              ${v.description && v.description.trim() ? `
+                <div class="promo-main" style="${textStyle} white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid ${v.accentColor || accentColor}; padding: 10px 12px; border-radius: 0 4px 4px 0;">
+                  <span>${v.description}</span>
+                </div>
+              ` : ''}
+
+              ${v.legal && v.legal.trim() ? `
+                <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
+                  ${v.legal}
+                </p>
+              ` : ''}
+            </div>
+          </details>
+      `;
+    }
+
     return `
     <article class="card" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
@@ -510,41 +578,7 @@ function generateHtmlForBrand(brand, vehicles) {
             </div>
           </div>
           
-          <!-- Acordeón Desplegable de Características, Kilometraje y CTA -->
-          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
-            <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
-              <span><i class="fa-solid fa-list-ul" style="color: ${v.accentColor || accentColor}; margin-right: 6px;"></i> Ver Características y Detalles</span>
-              <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: ${v.accentColor || accentColor}; transition: transform 0.3s ease;"></i>
-            </summary>
-            <div class="card-accordion-body" style="padding: 15px 5px 5px 5px;">
-              ${v.km ? `
-                <div style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-family: var(--fuente); font-size: 0.95rem; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;">
-                  <i class="fa-solid fa-gauge-high"></i> Kilometraje: ${v.km}
-                </div>
-              ` : ''}
-
-              ${benefitsListHtml ? `
-                <div style="margin-bottom: 12px;">
-                  <div style="font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #555; font-family: var(--fuente); margin-bottom: 6px;">Características Destacadas:</div>
-                  <ul class="benefits-list" style="--acento-list: ${v.accentColor || accentColor}; margin: 0; padding-left: 20px;">
-                    ${benefitsListHtml}
-                  </ul>
-                </div>
-              ` : ''}
-
-              ${v.description ? `
-                <div class="promo-main" style="${textStyle} white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid ${v.accentColor || accentColor}; padding: 10px 12px; border-radius: 0 4px 4px 0;">
-                  <span>${v.description}</span>
-                </div>
-              ` : ''}
-
-              ${v.legal ? `
-                <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
-                  ${v.legal}
-                </p>
-              ` : ''}
-            </div>
-          </details>
+          ${detailsAccordionHtml}
         </div>
       </div>
       
