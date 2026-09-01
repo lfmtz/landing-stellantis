@@ -886,6 +886,28 @@
       renderMultiImages();
     };
 
+    window.moveMultiImage = function(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentPromoImages.length) return;
+      const item = currentPromoImages.splice(index, 1)[0];
+      currentPromoImages.splice(newIndex, 0, item);
+      
+      const first = currentPromoImages[0];
+      if (typeof first === 'string' && (first.startsWith('http://') || first.startsWith('https://'))) {
+        document.getElementById('imageURL').value = first;
+        document.getElementById('existingImage').value = '';
+        filePreview.innerHTML = `<img src="${first}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada (Posición 1)</p>`;
+      } else if (typeof first === 'string') {
+        document.getElementById('imageURL').value = '';
+        document.getElementById('existingImage').value = first;
+        filePreview.innerHTML = `<img src="../${first}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada (Posición 1)</p>`;
+      } else if (first && first.preview) {
+        filePreview.innerHTML = `<img src="${first.preview}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada (Posición 1)</p>`;
+      }
+      checkCloudinaryBtn();
+      renderMultiImages();
+    };
+
     window.setCoverImage = function(index) {
       if (index <= 0 || index >= currentPromoImages.length) return;
       const selected = currentPromoImages.splice(index, 1)[0];
@@ -921,12 +943,48 @@
       currentPromoImages.forEach((img, idx) => {
         const wrapper = document.createElement('div');
         wrapper.style.position = 'relative';
-        wrapper.style.width = '84px';
-        wrapper.style.height = '84px';
+        wrapper.style.width = '90px';
+        wrapper.style.height = '90px';
         wrapper.style.borderRadius = '6px';
         wrapper.style.overflow = 'hidden';
         wrapper.style.border = idx === 0 ? '2px solid #00e5ff' : '1px solid var(--border)';
         wrapper.style.background = '#000';
+        wrapper.style.cursor = 'grab';
+        wrapper.title = 'Arrastra para reordenar o usa las flechas';
+        
+        // Drag and Drop
+        wrapper.draggable = true;
+        wrapper.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', idx);
+          wrapper.style.opacity = '0.4';
+        });
+        wrapper.addEventListener('dragend', () => {
+          wrapper.style.opacity = '1';
+        });
+        wrapper.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          wrapper.style.borderColor = '#00e5ff';
+        });
+        wrapper.addEventListener('dragleave', () => {
+          wrapper.style.borderColor = idx === 0 ? '#00e5ff' : 'var(--border)';
+        });
+        wrapper.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const sourceIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+          if (!isNaN(sourceIdx) && sourceIdx !== idx) {
+            const item = currentPromoImages.splice(sourceIdx, 1)[0];
+            currentPromoImages.splice(idx, 0, item);
+            
+            const first = currentPromoImages[0];
+            if (typeof first === 'string' && (first.startsWith('http://') || first.startsWith('https://'))) {
+              document.getElementById('imageURL').value = first;
+              document.getElementById('existingImage').value = '';
+              filePreview.innerHTML = `<img src="${first}" class="preview-img"><p class="preview-text" style="color: #00e5ff; font-weight: bold;">⭐ Portada (Posición 1)</p>`;
+            }
+            checkCloudinaryBtn();
+            renderMultiImages();
+          }
+        });
         
         const src = typeof img === 'string' ? (img.startsWith('http') ? img : `../${img}`) : img.preview;
         
@@ -935,9 +993,10 @@
         image.style.width = '100%';
         image.style.height = '100%';
         image.style.objectFit = 'cover';
+        image.style.pointerEvents = 'none';
         wrapper.appendChild(image);
         
-        // Remove button
+        // Remove button (Top Right)
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.innerHTML = '&times;';
@@ -958,11 +1017,12 @@
         removeBtn.style.fontSize = '12px';
         removeBtn.style.fontWeight = 'bold';
         removeBtn.style.padding = '0';
-        removeBtn.onclick = () => removeMultiImage(idx);
+        removeBtn.style.zIndex = '3';
+        removeBtn.onclick = (e) => { e.stopPropagation(); removeMultiImage(idx); };
         wrapper.appendChild(removeBtn);
 
+        // Top Left (Cover badge / Make cover button)
         if (idx === 0) {
-          // Badge Portada
           const coverBadge = document.createElement('span');
           coverBadge.innerHTML = '⭐ PORTADA';
           coverBadge.style.position = 'absolute';
@@ -975,9 +1035,9 @@
           coverBadge.style.padding = '2px 4px';
           coverBadge.style.borderRadius = '3px';
           coverBadge.style.pointerEvents = 'none';
+          coverBadge.style.zIndex = '3';
           wrapper.appendChild(coverBadge);
         } else {
-          // Button to set as cover
           const makeCoverBtn = document.createElement('button');
           makeCoverBtn.type = 'button';
           makeCoverBtn.innerHTML = '⭐';
@@ -997,11 +1057,64 @@
           makeCoverBtn.style.justifyContent = 'center';
           makeCoverBtn.style.fontSize = '10px';
           makeCoverBtn.style.padding = '0';
-          makeCoverBtn.onclick = () => setCoverImage(idx);
+          makeCoverBtn.style.zIndex = '3';
+          makeCoverBtn.onclick = (e) => { e.stopPropagation(); setCoverImage(idx); };
           wrapper.appendChild(makeCoverBtn);
         }
 
-        // Crop button for Cloudinary gallery images
+        // Bottom Left (Move Left / Right buttons)
+        const reorderBar = document.createElement('div');
+        reorderBar.style.position = 'absolute';
+        reorderBar.style.bottom = '2px';
+        reorderBar.style.left = '2px';
+        reorderBar.style.display = 'flex';
+        reorderBar.style.gap = '2px';
+        reorderBar.style.zIndex = '3';
+
+        if (idx > 0) {
+          const leftBtn = document.createElement('button');
+          leftBtn.type = 'button';
+          leftBtn.innerHTML = '◀';
+          leftBtn.title = 'Mover foto a la izquierda';
+          leftBtn.style.background = 'rgba(0, 0, 0, 0.8)';
+          leftBtn.style.color = '#fff';
+          leftBtn.style.border = '1px solid rgba(255,255,255,0.3)';
+          leftBtn.style.borderRadius = '3px';
+          leftBtn.style.width = '18px';
+          leftBtn.style.height = '18px';
+          leftBtn.style.cursor = 'pointer';
+          leftBtn.style.display = 'flex';
+          leftBtn.style.alignItems = 'center';
+          leftBtn.style.justifyContent = 'center';
+          leftBtn.style.fontSize = '8px';
+          leftBtn.style.padding = '0';
+          leftBtn.onclick = (e) => { e.stopPropagation(); moveMultiImage(idx, -1); };
+          reorderBar.appendChild(leftBtn);
+        }
+
+        if (idx < currentPromoImages.length - 1) {
+          const rightBtn = document.createElement('button');
+          rightBtn.type = 'button';
+          rightBtn.innerHTML = '▶';
+          rightBtn.title = 'Mover foto a la derecha';
+          rightBtn.style.background = 'rgba(0, 0, 0, 0.8)';
+          rightBtn.style.color = '#fff';
+          rightBtn.style.border = '1px solid rgba(255,255,255,0.3)';
+          rightBtn.style.borderRadius = '3px';
+          rightBtn.style.width = '18px';
+          rightBtn.style.height = '18px';
+          rightBtn.style.cursor = 'pointer';
+          rightBtn.style.display = 'flex';
+          rightBtn.style.alignItems = 'center';
+          rightBtn.style.justifyContent = 'center';
+          rightBtn.style.fontSize = '8px';
+          rightBtn.style.padding = '0';
+          rightBtn.onclick = (e) => { e.stopPropagation(); moveMultiImage(idx, 1); };
+          reorderBar.appendChild(rightBtn);
+        }
+        wrapper.appendChild(reorderBar);
+
+        // Bottom Right (Crop button for Cloudinary gallery images)
         if (typeof img === 'string' && img.includes('cloudinary.com')) {
           const cropBtn = document.createElement('button');
           cropBtn.type = 'button';
@@ -1022,7 +1135,8 @@
           cropBtn.style.justifyContent = 'center';
           cropBtn.style.fontSize = '9px';
           cropBtn.style.padding = '0';
-          cropBtn.onclick = () => openGalleryCrop(idx);
+          cropBtn.style.zIndex = '3';
+          cropBtn.onclick = (e) => { e.stopPropagation(); openGalleryCrop(idx); };
           wrapper.appendChild(cropBtn);
         }
         
