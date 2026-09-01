@@ -738,6 +738,44 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788228572511",
+      "name": "Jeep JT",
+      "km": "Demo",
+      "listPrice": "$1,580,900",
+      "price": "$1,145,900",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778170/IMG_20260826_133020473_HDR.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778170/IMG_20260826_133020473_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778159/IMG_20260826_133528794_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778152/IMG_20260826_133028707_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778158/IMG_20260826_133428405.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778157/IMG_20260826_133359994.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778156/IMG_20260826_133232815_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778153/IMG_20260826_133111203_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778154/IMG_20260826_133122401_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778151/IMG_20260826_133037828.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Jeep%20JT",
+      "description": "Estrena con precio exclusivo de liquidación.\r\n\r\nLlévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de arrendamiento puro con beneficios fiscales. No dejes pasar este ahorro irrepetible por tiempo limitado.\r\n\r\n👉 Pide tu cotización personalizada aquí y recibe informes de inmediato por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Toldo Freedom Top®: Incluye de serie el toldo rígido modular de 3 piezas al color de la carrocería",
+        "Parabrisas: Es abatible/plegable y cuenta de fábrica con cristal Corning Gorilla Glass®",
+        "Pantalla Táctil Uconnect 5 de 12.3\" con Trails Offroad Integrado y Apple CarPlay/Android Auto Inalámbrico",
+        "Asientos: Forrados en piel Nappa ; delanteros calefactables con ajuste eléctrico de 8 vías para conductor y ajuste lumbar eléctrico de 4 vías",
+        "Sistema de Audio: Sistema de sonido premium Alpine® de 9 bocinas con subwoofer  y bocina Bluetooth recargable y desmontable",
+        "Cámara TrailCam: Cámara delantera para caminos todoterreno con guías dinámicas y autolimpieza",
+        "Control de crucero adaptativo con función Stop",
+        "Bolsas de aire: Frontales multietapa, laterales en asientos delanteros y bolsas de aire tipo cortina para ambas fila",
+        "Frenos y Control: Frenos de disco Heavy Duty con ABS en las 4 ruedas, Control Electrónico de Estabilidad (ESC), Mitigación Electrónica Antivuelco (ERM) y Asistente de Oscilación de Remolque"
+      ],
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "todoterreno"
     }
   ],
   "portal": {
