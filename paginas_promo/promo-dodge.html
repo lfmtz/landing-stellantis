@@ -796,7 +796,7 @@
   
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
-    <article class="card" data-category="sedan" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-dodge-attitude" data-id="dodge-attitude" data-category="sedan" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
         <img alt="Promoción Dodge Attitude SXT" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg" width="600"/>
       </div>
@@ -898,7 +898,7 @@
       </div>
     </article>
     
-    <article class="card" data-category="suv" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-dodge-1787102237711" data-id="dodge-1787102237711" data-category="suv" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
         <img alt="Promoción Dodge Charger" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787109704/charger_8_26_iahavk.png" width="600"/>
       </div>
@@ -974,7 +974,7 @@ El muscle car definitivo ya está en piso de venta. Descubre su nuevo diseño, m
       </div>
     </article>
     
-    <article class="card" data-category="suv" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-dodge-1787109067140" data-id="dodge-1787109067140" data-category="suv" style="border-top: 5px solid #cc4400; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
         <img alt="Promoción Dodge Durango" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787109704/durango_8_26_b4xx3n.png" width="600"/>
       </div>
@@ -2311,6 +2311,39 @@ BRILLANTE</strong> | Kilometraje: <strong>PENDIENTE</strong></p>
         }
       });
     };
+
+    // Auto-focus and highlight car when arriving with #auto-[id]
+    function checkHashAndFocus() {
+      if (!window.location.hash) return;
+      var hash = window.location.hash.replace('#', '');
+      var targetCard = document.getElementById(hash) || document.getElementById('auto-' + hash);
+      if (!targetCard) {
+        var allCards = document.querySelectorAll('.card');
+        for (var i = 0; i < allCards.length; i++) {
+          if (allCards[i].id === hash || allCards[i].id === 'auto-' + hash || (allCards[i].getAttribute('data-id') === hash)) {
+            targetCard = allCards[i];
+            break;
+          }
+        }
+      }
+      if (targetCard) {
+        setTimeout(function() {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var details = targetCard.querySelector('.card-details-accordion');
+          if (details) details.open = true;
+          var acColor = targetCard.style.borderTopColor || 'var(--acento)';
+          targetCard.style.transition = 'all 0.4s ease';
+          targetCard.style.boxShadow = '0 0 35px ' + acColor + ', 0 10px 30px rgba(0,0,0,0.3)';
+          targetCard.style.transform = 'scale(1.025)';
+          setTimeout(function() {
+            targetCard.style.boxShadow = '';
+            targetCard.style.transform = '';
+          }, 3500);
+        }, 350);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', checkHashAndFocus);
+    window.addEventListener('hashchange', checkHashAndFocus);
 
     // Initialize carousels
     if (document.readyState === 'loading') {

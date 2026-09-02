@@ -790,7 +790,7 @@
   
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
-    <article class="card" data-category="electricos" style="border-top: 5px solid #3b93a9; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-leapmotor-1788121201596" data-id="leapmotor-1788121201596" data-category="electricos" style="border-top: 5px solid #3b93a9; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
         <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
       </div>
@@ -1845,6 +1845,39 @@ Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena
         }
       });
     };
+
+    // Auto-focus and highlight car when arriving with #auto-[id]
+    function checkHashAndFocus() {
+      if (!window.location.hash) return;
+      var hash = window.location.hash.replace('#', '');
+      var targetCard = document.getElementById(hash) || document.getElementById('auto-' + hash);
+      if (!targetCard) {
+        var allCards = document.querySelectorAll('.card');
+        for (var i = 0; i < allCards.length; i++) {
+          if (allCards[i].id === hash || allCards[i].id === 'auto-' + hash || (allCards[i].getAttribute('data-id') === hash)) {
+            targetCard = allCards[i];
+            break;
+          }
+        }
+      }
+      if (targetCard) {
+        setTimeout(function() {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var details = targetCard.querySelector('.card-details-accordion');
+          if (details) details.open = true;
+          var acColor = targetCard.style.borderTopColor || 'var(--acento)';
+          targetCard.style.transition = 'all 0.4s ease';
+          targetCard.style.boxShadow = '0 0 35px ' + acColor + ', 0 10px 30px rgba(0,0,0,0.3)';
+          targetCard.style.transform = 'scale(1.025)';
+          setTimeout(function() {
+            targetCard.style.boxShadow = '';
+            targetCard.style.transform = '';
+          }, 3500);
+        }, 350);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', checkHashAndFocus);
+    window.addEventListener('hashchange', checkHashAndFocus);
 
     // Initialize carousels
     if (document.readyState === 'loading') {

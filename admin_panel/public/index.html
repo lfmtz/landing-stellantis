@@ -339,10 +339,76 @@
             </div>
           </div>
 
-          <!-- Accordion 3: Offers -->
+          <!-- Accordion 3: Auto Destacado en Portada (Oferta Estrella) -->
           <div class="accordion-section">
             <div class="accordion-header" onclick="toggleAccordion(this)">
-              <h3><i class="fa-solid fa-tags"></i> 3. Carrusel de Ofertas (Las 4 Tarjetas Destacadas)</h3>
+              <h3><i class="fa-solid fa-star" style="color: #f59e0b;"></i> 3. Auto Destacado en Portada (Oferta Estrella)</h3>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4;">
+                Muestra un vehículo en portada con diseño estelar. Cuando un cliente dé clic en el botón de la landing, viajará automáticamente a la página del vehículo, abrirá sus detalles y resaltará la tarjeta en pantalla.
+              </p>
+
+              <div style="background: #0b1019; border: 1px solid #233143; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 0;">
+                  <input type="checkbox" id="featuredCarEnabled" onchange="toggleFeaturedCarSectionFields()" style="width: 18px; height: 18px; cursor: pointer;">
+                  <span style="font-weight: bold; color: #fff; font-size: 0.95rem;">Activar Auto Destacado en la Landing Page</span>
+                </label>
+              </div>
+
+              <div id="featuredCarFieldsWrapper" style="display: none;">
+                <!-- Filtro y Selector de Auto Destacado -->
+                <div style="background: rgba(0, 229, 255, 0.03); border: 1px dashed rgba(0, 229, 255, 0.25); border-radius: 6px; padding: 15px; margin-bottom: 15px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
+                    <label style="margin-bottom: 0; font-weight: 600; color: #00e5ff; font-size: 0.85rem;">
+                      Seleccionar Auto a Destacar:
+                    </label>
+                    <div class="copy-source-tabs" style="display: inline-flex; background: #0b1019; padding: 2px; border-radius: 6px; border: 1px solid #233143; gap: 2px;">
+                      <button type="button" id="tabFeaturedDemos" onclick="setFeaturedCarSourceFilter('demos')" style="background: transparent; border: none; color: #94a3b8; padding: 3px 10px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer;">
+                        ⚡ Demos
+                      </button>
+                      <button type="button" id="tabFeaturedNuevos" onclick="setFeaturedCarSourceFilter('nuevos')" style="background: transparent; border: none; color: #94a3b8; padding: 3px 10px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer;">
+                        ⭐ Nuevos
+                      </button>
+                      <button type="button" id="tabFeaturedAll" onclick="setFeaturedCarSourceFilter('all')" style="background: transparent; border: none; color: #94a3b8; padding: 3px 8px; font-size: 0.78rem; font-weight: 600; border-radius: 4px; cursor: pointer;">
+                        Todos
+                      </button>
+                    </div>
+                  </div>
+
+                  <select id="featuredCarVehicleSelect" onchange="previewFeaturedCarAdmin()" style="width: 100%; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem; outline: none; margin-bottom: 10px;">
+                    <option value="">-- Seleccionar vehículo --</option>
+                  </select>
+
+                  <div id="featuredCarAdminPreview" style="background: #151d2a; border: 1px solid #233143; padding: 12px; border-radius: 6px; display: none; align-items: center; gap: 15px;">
+                    <!-- Thumbnail e info cargados dinámicamente -->
+                  </div>
+                </div>
+
+                <!-- Textos Personalizados -->
+                <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+                  <div class="form-group col-6" style="flex: 1;">
+                    <label for="featuredCarBadge">Insignia / Badge Superior</label>
+                    <input type="text" id="featuredCarBadge" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="🔥 OPORTUNIDAD DESTACADA DEL MES">
+                  </div>
+                  <div class="form-group col-6" style="flex: 1;">
+                    <label for="featuredCarBtnText">Texto del Botón de Acción</label>
+                    <input type="text" id="featuredCarBtnText" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="Ver Promoción y Detalles">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="featuredCarTagline">Subtítulo / Mensaje Comercial</label>
+                  <input type="text" id="featuredCarTagline" class="form-control" style="width:100%; background:#0b1019; color:#fff; border:1px solid #233143; padding:8px; border-radius:4px;" placeholder="¡Aprovecha nuestro precio exclusivo de liquidación con entrega inmediata!">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion 4: Offers -->
+          <div class="accordion-section">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <h3><i class="fa-solid fa-tags"></i> 4. Carrusel de Ofertas (Las 4 Tarjetas Destacadas)</h3>
               <i class="fa-solid fa-chevron-down accordion-icon"></i>
             </div>
             <div class="accordion-content">
@@ -1591,6 +1657,128 @@
       });
     }
 
+    // Featured Car Admin Handlers
+    let featuredCarSourceFilter = 'all';
+
+    window.toggleFeaturedCarSectionFields = function() {
+      const isEnabled = document.getElementById('featuredCarEnabled').checked;
+      const wrapper = document.getElementById('featuredCarFieldsWrapper');
+      if (wrapper) {
+        wrapper.style.display = isEnabled ? 'block' : 'none';
+      }
+    };
+
+    window.setFeaturedCarSourceFilter = function(source) {
+      featuredCarSourceFilter = source;
+      const tabDemos = document.getElementById('tabFeaturedDemos');
+      const tabNuevos = document.getElementById('tabFeaturedNuevos');
+      const tabAll = document.getElementById('tabFeaturedAll');
+
+      if (tabDemos && tabNuevos && tabAll) {
+        [tabDemos, tabNuevos, tabAll].forEach(t => {
+          t.style.background = 'transparent';
+          t.style.color = '#94a3b8';
+        });
+
+        if (source === 'demos') {
+          tabDemos.style.background = '#00e5ff';
+          tabDemos.style.color = '#0b1019';
+        } else if (source === 'nuevos') {
+          tabNuevos.style.background = '#00e5ff';
+          tabNuevos.style.color = '#0b1019';
+        } else {
+          tabAll.style.background = '#00e5ff';
+          tabAll.style.color = '#0b1019';
+        }
+      }
+
+      const currentVal = document.getElementById('featuredCarVehicleSelect').value;
+      populateFeaturedCarDropdown(currentVal);
+    };
+
+    function populateFeaturedCarDropdown(selectedVal = '') {
+      const select = document.getElementById('featuredCarVehicleSelect');
+      if (!select) return;
+
+      select.innerHTML = '<option value="">-- Seleccionar vehículo --</option>';
+
+      let targetBrands = [];
+      const brandLabels = {
+        demos: 'Autos Demo',
+        ram: 'RAM (Nuevos)',
+        dodge: 'DODGE (Nuevos)',
+        jeep: 'JEEP (Nuevos)',
+        fiat: 'FIAT (Nuevos)',
+        peugeot: 'PEUGEOT (Nuevos)',
+        leapmotor: 'LEAPMOTOR (Nuevos)'
+      };
+
+      if (featuredCarSourceFilter === 'demos') {
+        targetBrands = ['demos'];
+      } else if (featuredCarSourceFilter === 'nuevos') {
+        targetBrands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+      } else {
+        targetBrands = ['demos', 'ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+      }
+
+      targetBrands.forEach(b => {
+        const list = database[b] || [];
+        if (list.length > 0) {
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = `🚗 ${brandLabels[b] || b.toUpperCase()}`;
+
+          list.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = `${b}::${v.id}`;
+            opt.textContent = `${v.name} - ${v.price || ''} ${v.km ? '(' + v.km + ')' : ''}`;
+            optgroup.appendChild(opt);
+          });
+
+          select.appendChild(optgroup);
+        }
+      });
+
+      if (selectedVal) {
+        select.value = selectedVal;
+      }
+      previewFeaturedCarAdmin();
+    }
+
+    window.previewFeaturedCarAdmin = function() {
+      const select = document.getElementById('featuredCarVehicleSelect');
+      const preview = document.getElementById('featuredCarAdminPreview');
+      if (!select || !preview) return;
+
+      const val = select.value;
+      if (!val || !val.includes('::')) {
+        preview.style.display = 'none';
+        preview.innerHTML = '';
+        return;
+      }
+
+      const [brand, id] = val.split('::');
+      const list = database[brand] || [];
+      const v = list.find(x => x.id === id);
+
+      if (v) {
+        preview.style.display = 'flex';
+        const img = v.image ? (v.image.startsWith('http') ? v.image : `../${v.image}`) : '';
+        preview.innerHTML = `
+          ${img ? `<img src="${img}" style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #334155;">` : ''}
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: #fff; font-size: 0.95rem;">${v.name}</div>
+            <div style="font-size: 0.8rem; color: #94a3b8; display: flex; gap: 10px; margin-top: 3px;">
+              <span style="color: #00e5ff; font-weight: bold;">Precio: ${v.price}</span>
+              ${v.listPrice ? `<span style="text-decoration: line-through; color: #64748b;">${v.listPrice}</span>` : ''}
+              <span>${brand === 'demos' ? '⚡ Demo' : '⭐ Nuevo (' + brand.toUpperCase() + ')'}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        preview.style.display = 'none';
+      }
+    };
+
     function loadLandingConfigToForm() {
       const landing = database.landing || {};
       
@@ -1612,6 +1800,18 @@
       document.getElementById('carousel2Mobile').value = carouselMobile[1] || '';
       document.getElementById('carousel3Mobile').value = carouselMobile[2] || '';
       document.getElementById('carousel4Mobile').value = carouselMobile[3] || '';
+
+      // Featured Car Spotlight
+      const featured = landing.featuredCar || {};
+      const enabledCheckbox = document.getElementById('featuredCarEnabled');
+      if (enabledCheckbox) {
+        enabledCheckbox.checked = !!featured.enabled;
+        toggleFeaturedCarSectionFields();
+      }
+      document.getElementById('featuredCarBadge').value = featured.customBadge || '';
+      document.getElementById('featuredCarTagline').value = featured.customTagline || '';
+      document.getElementById('featuredCarBtnText').value = featured.customButtonText || '';
+      populateFeaturedCarDropdown(featured.vehicleKey || '');
       
       // Promos
       const promos = landing.promos || [];
@@ -1673,10 +1873,19 @@
         leapmotor: document.getElementById('brandImageLeapmotor').value.trim(),
         demos: document.getElementById('brandImageDemos').value.trim()
       };
+
+      const featuredCar = {
+        enabled: document.getElementById('featuredCarEnabled').checked,
+        vehicleKey: document.getElementById('featuredCarVehicleSelect').value,
+        customBadge: document.getElementById('featuredCarBadge').value.trim(),
+        customTagline: document.getElementById('featuredCarTagline').value.trim(),
+        customButtonText: document.getElementById('featuredCarBtnText').value.trim()
+      };
       
       const landingConfig = {
         carousel,
         carouselMobile,
+        featuredCar,
         promos,
         newsletterPopupImage: document.getElementById('newsletterPopupImage').value.trim(),
         leasingPopupImage: document.getElementById('leasingPopupImage').value.trim(),

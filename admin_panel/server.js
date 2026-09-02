@@ -541,7 +541,7 @@ function generateHtmlForBrand(brand, vehicles) {
     }
 
     return `
-    <article class="card" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-${v.id}" data-id="${v.id}" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container">
         ${imgContainerContent}
       </div>
@@ -2671,6 +2671,39 @@ function generateHtmlForBrand(brand, vehicles) {
       });
     };
 
+    // Auto-focus and highlight car when arriving with #auto-[id]
+    function checkHashAndFocus() {
+      if (!window.location.hash) return;
+      var hash = window.location.hash.replace('#', '');
+      var targetCard = document.getElementById(hash) || document.getElementById('auto-' + hash);
+      if (!targetCard) {
+        var allCards = document.querySelectorAll('.card');
+        for (var i = 0; i < allCards.length; i++) {
+          if (allCards[i].id === hash || allCards[i].id === 'auto-' + hash || (allCards[i].getAttribute('data-id') === hash)) {
+            targetCard = allCards[i];
+            break;
+          }
+        }
+      }
+      if (targetCard) {
+        setTimeout(function() {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var details = targetCard.querySelector('.card-details-accordion');
+          if (details) details.open = true;
+          var acColor = targetCard.style.borderTopColor || 'var(--acento)';
+          targetCard.style.transition = 'all 0.4s ease';
+          targetCard.style.boxShadow = '0 0 35px ' + acColor + ', 0 10px 30px rgba(0,0,0,0.3)';
+          targetCard.style.transform = 'scale(1.025)';
+          setTimeout(function() {
+            targetCard.style.boxShadow = '';
+            targetCard.style.transform = '';
+          }, 3500);
+        }, 350);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', checkHashAndFocus);
+    window.addEventListener('hashchange', checkHashAndFocus);
+
     // Initialize carousels
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initCarousels);
@@ -2698,6 +2731,91 @@ function generateIndexHtml(dbData) {
   let html = fs.readFileSync(templatePath, 'utf8');
   const landing = dbData.landing || {};
   
+  // Featured Car Spotlight section
+  let featuredCarHtml = '';
+  const featured = landing.featuredCar || {};
+  if (featured.enabled && featured.vehicleKey && featured.vehicleKey.includes('::')) {
+    const [fBrand, fId] = featured.vehicleKey.split('::');
+    const fList = dbData[fBrand] || [];
+    const fVehicle = fList.find(x => x.id === fId);
+
+    if (fVehicle) {
+      const fImg = optimizeCloudinaryUrl(fVehicle.image || '');
+      const fAccent = fVehicle.accentColor || (fBrand === 'demos' ? '#00e5ff' : '#CC4400');
+      const fBadge = (featured.customBadge && featured.customBadge.trim()) ? featured.customBadge.trim() : (fBrand === 'demos' ? '🔥 OPORTUNIDAD DESTACADA DEL MES' : '⭐ PROMOCIÓN EXCLUSIVA 0 KM');
+      const fTagline = (featured.customTagline && featured.customTagline.trim()) ? featured.customTagline.trim() : '¡Aprovecha nuestro precio especial de liquidación con entrega inmediata!';
+      const fBtnText = (featured.customButtonText && featured.customButtonText.trim()) ? featured.customButtonText.trim() : 'Ver Promoción y Detalles';
+      const fTargetUrl = `paginas_promo/promo-${fBrand}.html#auto-${fVehicle.id}`;
+      
+      // Key features snippet (up to 3 bullets)
+      let fBenefitsSnippet = '';
+      const validFBenefits = (fVehicle.benefits || []).filter(b => b && b.trim()).slice(0, 3);
+      if (validFBenefits.length > 0) {
+        const items = validFBenefits.map(b => `<li class="d-flex align-items-center gap-2 mb-2 text-white-50"><i class="fa-solid fa-circle-check" style="color: ${fAccent}; font-size: 0.9rem;"></i> <span class="text-white">${b}</span></li>`).join('');
+        fBenefitsSnippet = `<ul class="list-unstyled mb-4 p-3 rounded-3 text-start" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">${items}</ul>`;
+      }
+
+      featuredCarHtml = `
+    <!-- Sección: Auto Destacado (Oferta Estrella) -->
+    <section id="auto-destacado" class="py-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #07101e 0%, #0d1a30 100%); border-top: 2px solid ${fAccent}; border-bottom: 2px solid ${fAccent};">
+        <div style="position: absolute; top: -40%; right: -15%; width: 500px; height: 500px; background: radial-gradient(circle, ${fAccent}25 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
+        <div class="container py-3">
+            <div class="row align-items-center justify-content-center g-4">
+                <div class="col-lg-6 text-center">
+                    <div class="position-relative d-inline-block w-100" style="max-width: 520px;">
+                        <a href="${fTargetUrl}" class="d-block overflow-hidden rounded-4 shadow-lg text-decoration-none" style="border: 2px solid rgba(255,255,255,0.15);">
+                            <img src="${fImg}" alt="${fVehicle.name}" class="img-fluid rounded-4 w-100" style="object-fit: cover; max-height: 400px; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                        </a>
+                        <span class="position-absolute top-0 start-0 m-3 badge rounded-pill px-3 py-2 text-uppercase fw-bold shadow" style="background: #000; color: #fff; font-size: 0.78rem; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.2);">
+                            ${fBrand === 'demos' ? '⚡ AUTO DEMO LIQUIDACIÓN' : '⭐ ' + fBrand.toUpperCase() + ' 0 KM'}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 text-white text-center text-lg-start ps-lg-4">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 shadow-sm" style="background: rgba(0, 229, 255, 0.1); border: 1px solid ${fAccent}; color: ${fAccent}; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px;">
+                        ${fBadge}
+                    </div>
+
+                    <h2 class="display-5 fw-bold mb-2 text-white text-uppercase" style="font-family: 'Montserrat', sans-serif;">
+                        ${fVehicle.name}
+                    </h2>
+
+                    <p class="lead mb-3 text-white-50" style="font-size: 1rem;">
+                        ${fTagline}
+                    </p>
+
+                    <div class="d-flex align-items-baseline justify-content-center justify-content-lg-start gap-3 mb-3">
+                        ${fVehicle.listPrice ? `
+                            <span class="text-white-50 text-decoration-line-through fw-bold" style="font-size: 1.15rem;">
+                                ${fVehicle.listPrice}
+                            </span>
+                        ` : ''}
+                        <span class="display-6 fw-bold" style="color: ${fAccent}; font-size: 2.3rem; text-shadow: 0 0 20px ${fAccent}66;">
+                            ${fVehicle.price}
+                        </span>
+                        <span class="badge bg-success rounded-pill px-2 py-1" style="font-size: 0.75rem;">¡OFERTA EXCLUSIVA!</span>
+                    </div>
+
+                    ${fBenefitsSnippet}
+
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start mt-3">
+                        <a href="${fTargetUrl}" class="btn btn-glow btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none shadow" style="background-color: ${fAccent}; color: #07101e; border: none; font-size: 0.95rem;">
+                            <i class="fa-solid fa-car me-2"></i> ${fBtnText} <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                        <a href="${fVehicle.whatsapp}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none" style="font-size: 0.95rem; border-color: rgba(255,255,255,0.3);">
+                            <i class="fa-brands fa-whatsapp me-2 text-success" style="font-size: 1.2rem;"></i> Cotizar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      `;
+    }
+  }
+  html = html.replace(/\{\{FEATURED_CAR_SECTION\}\}/g, featuredCarHtml);
+
   // Carousel background images (desktop & mobile)
   const carousel = landing.carousel || [];
   const carouselMobile = landing.carouselMobile || [];

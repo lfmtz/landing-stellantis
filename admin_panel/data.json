@@ -982,6 +982,51 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "pickup"
+    },
+    {
+      "id": "demos-1788308764719",
+      "name": "Ram 1500 I6 Turbo 4X4",
+      "km": "Flotilla",
+      "listPrice": "$1,153,100",
+      "price": "$990,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233656/IMG_20260829_105611384.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233656/IMG_20260829_105611384.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233655/IMG_20260829_105557236.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233657/IMG_20260829_105748705.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233664/IMG_20260829_110150303_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233662/IMG_20260829_105920998_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233663/IMG_20260829_105932361_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233658/IMG_20260829_105758679_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233660/IMG_20260829_105815679_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233661/IMG_20260829_105823724.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233667/IMG_20260829_110422173_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233666/IMG_20260829_110318337.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201500%20I6%20Turbo%204X4",
+      "description": "Aprovecha nuestro precio especial de liquidación y estrena hoy.\r\n\r\nDiseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o arrendamiento deducible para tu negocio o persona física.\r\n\r\n👉 Solicita tu cotización aquí y te atendemos al instante por WhatsApp:",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Motor 3.0L I6 Hurricane SO Twin Turbo que genera una potencia de 420 hp @ 5,200 rpm",
+        "Torque: Desarrolla un torque de 469 lb-pie @ 3,500 rpm",
+        "Capacidad de carga: 860 Kg",
+        "Capacidad de arrastre: 5,130 Kg",
+        "Equipamiento de remolque: Incluye un enganche receptor Clase IV, arnés de cableado de 7 pines y control electrónico de remolque",
+        "Llantas: Medida 275/65R18 BSW AS LRR",
+        "Rines: Rin de acero de 18\"",
+        "Cuenta con frenos de disco antibloqueo en las cuatro ruedas",
+        "Asistencia avanzada de frenado",
+        "Asistencias de conducción y colisión:",
+        "Control y estabilidad",
+        "Asistencias de estacionamiento",
+        "Viene equipada con un sistema de 6 bolsas de aire",
+        "Freno de estacionamiento eléctrico"
+      ],
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
