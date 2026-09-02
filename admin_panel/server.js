@@ -435,7 +435,7 @@ function generateHtmlForBrand(brand, vehicles) {
       const ftUrl = v.fichaTecnica.trim();
       fichaTecnicaHtml = `
         <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
-          <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;">
+          <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;" onclick="if(typeof gtag==='function') { gtag('event', 'download_ficha_tecnica', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
             <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i> Descargar Ficha Técnica
           </a>
         </div>
@@ -501,7 +501,7 @@ function generateHtmlForBrand(brand, vehicles) {
     if (hasDetails) {
       detailsAccordionHtml = `
           <!-- Acordeón Desplegable de Características, Kilometraje, Ficha Técnica y CTA -->
-          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+          <details class="card-details-accordion" ontoggle="if(this.open && typeof gtag==='function'){ gtag('event', 'view_car_details', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
             <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
               <span><i class="fa-solid fa-list-ul" style="color: ${v.accentColor || accentColor}; margin-right: 6px;"></i> Ver Características y Detalles</span>
               <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: ${v.accentColor || accentColor}; transition: transform 0.3s ease;"></i>
@@ -542,7 +542,7 @@ function generateHtmlForBrand(brand, vehicles) {
 
     return `
     <article class="card" id="auto-${v.id}" data-id="${v.id}" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container">
+      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
         ${imgContainerContent}
       </div>
       
@@ -554,7 +554,7 @@ function generateHtmlForBrand(brand, vehicles) {
           </span>
           
           <!-- Nombre del Modelo -->
-          <h2 class="model-name" style="margin: 0; font-family: var(--fuente); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; color: #111; line-height: 1.2;">
+          <h2 class="model-name" style="margin: 0; font-family: var(--fuente); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; color: #111; line-height: 1.2; cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
             <span style="${headingStyle}">${v.name}</span>
           </h2>
           
@@ -686,7 +686,7 @@ function generateHtmlForBrand(brand, vehicles) {
               <div class="card-header" style="padding-top: 15px;">
                 <div class="model-info">
                   <span class="badge" style="background: ${accentColor}; color: #fff; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; display: inline-block; margin-bottom: 5px;">${u.category.toUpperCase()} - DEMO</span>
-                  <h2 class="model-name" style="margin-top: 5px;">${u.model} (${u.year})</h2>
+                  <h2 class="model-name" style="margin-top: 5px; cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${u.model}', 'brand_name': '${brand}' }); }">${u.model} (${u.year})</h2>
                   <div class="model-price" style="color: ${accentColor}; font-size: 1.35rem; font-weight: bold;">
                     ${u.price}
                   </div>
@@ -708,7 +708,7 @@ function generateHtmlForBrand(brand, vehicles) {
           `).join('');
 
           return `
-          <details class="brand-accordion demo-category-accordion" style="margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+          <details class="brand-accordion demo-category-accordion" ontoggle="if(this.open && typeof gtag==='function') { gtag('event', 'view_car_details', { 'car_name': '${familyName}', 'brand_name': '${brand}' }); }" style="margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
             <summary style="padding: 15px 20px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; user-select: none;">
               <span>🚗 ${familyName}</span>
               <span style="font-size: 0.9rem; color: ${accentColor}; font-weight: normal;">👉 Haz clic aquí para ver versiones</span>
@@ -1748,6 +1748,9 @@ function generateHtmlForBrand(brand, vehicles) {
         }
         var popup = document.getElementById('leasingPopup');
         if (popup) {
+          if (typeof gtag === 'function' && !localStorage.getItem('leasing_popup_shown')) {
+            gtag('event', 'dismiss_popup_leasing', { 'brand_name': '${brand}' });
+          }
           popup.classList.remove('show');
           setTimeout(function() {
             popup.style.display = 'none';
@@ -1769,6 +1772,9 @@ function generateHtmlForBrand(brand, vehicles) {
             popup.style.display = 'flex';
             setTimeout(function() {
               popup.classList.add('show');
+              if (typeof gtag === 'function') {
+                gtag('event', 'view_popup_leasing', { 'brand_name': '${brand}' });
+              }
             }, 50);
 
             document.getElementById('leasingPopupLink').addEventListener('click', function() {
@@ -2800,10 +2806,10 @@ function generateIndexHtml(dbData) {
                     ${fBenefitsSnippet}
 
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start mt-3">
-                        <a href="${fTargetUrl}" class="btn btn-glow btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none shadow" style="background-color: ${fAccent}; color: #07101e; border: none; font-size: 0.95rem;">
+                        <a href="${fTargetUrl}" class="btn btn-glow btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none shadow" style="background-color: ${fAccent}; color: #07101e; border: none; font-size: 0.95rem;" onclick="if(typeof gtag==='function') { gtag('event', 'click_featured_car', { 'car_name': '${fVehicle.name}', 'brand_name': '${fBrand}' }); }">
                             <i class="fa-solid fa-car me-2"></i> ${fBtnText} <i class="fa-solid fa-arrow-right ms-2"></i>
                         </a>
-                        <a href="${fVehicle.whatsapp}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none" style="font-size: 0.95rem; border-color: rgba(255,255,255,0.3);">
+                        <a href="${fVehicle.whatsapp}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none" style="font-size: 0.95rem; border-color: rgba(255,255,255,0.3);" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar', { 'car_name': '${fVehicle.name}', 'brand_name': '${fBrand}' }); }">
                             <i class="fa-brands fa-whatsapp me-2 text-success" style="font-size: 1.2rem;"></i> Cotizar por WhatsApp
                         </a>
                     </div>

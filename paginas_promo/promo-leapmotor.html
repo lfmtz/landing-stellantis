@@ -791,7 +791,7 @@
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
     <article class="card" id="auto-leapmotor-1788121201596" data-id="leapmotor-1788121201596" data-category="electricos" style="border-top: 5px solid #3b93a9; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container">
+      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'B10', 'brand_name': 'leapmotor' }); }">
         <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
       </div>
       
@@ -803,7 +803,7 @@
           </span>
           
           <!-- Nombre del Modelo -->
-          <h2 class="model-name" style="margin: 0; font-family: var(--fuente); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; color: #111; line-height: 1.2;">
+          <h2 class="model-name" style="margin: 0; font-family: var(--fuente); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; color: #111; line-height: 1.2; cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'B10', 'brand_name': 'leapmotor' }); }">
             <span style="border-bottom: 2px solid #3b93a9; padding-bottom: 3px; display: inline-block;">B10</span>
           </h2>
           
@@ -825,7 +825,7 @@
           
           
           <!-- Acordeón Desplegable de Características, Kilometraje, Ficha Técnica y CTA -->
-          <details class="card-details-accordion" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+          <details class="card-details-accordion" ontoggle="if(this.open && typeof gtag==='function'){ gtag('event', 'view_car_details', { 'car_name': 'B10', 'brand_name': 'leapmotor' }); }" style="margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
             <summary style="cursor: pointer; font-weight: 700; font-family: var(--fuente); color: #111; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef; user-select: none; transition: background 0.2s; outline: none;">
               <span><i class="fa-solid fa-list-ul" style="color: #3b93a9; margin-right: 6px;"></i> Ver Características y Detalles</span>
               <i class="fa-solid fa-chevron-down accordion-arrow" style="font-size: 0.85rem; color: #3b93a9; transition: transform 0.3s ease;"></i>
@@ -923,6 +923,9 @@ Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena
         }
         var popup = document.getElementById('leasingPopup');
         if (popup) {
+          if (typeof gtag === 'function' && !localStorage.getItem('leasing_popup_shown')) {
+            gtag('event', 'dismiss_popup_leasing', { 'brand_name': 'leapmotor' });
+          }
           popup.classList.remove('show');
           setTimeout(function() {
             popup.style.display = 'none';
@@ -944,6 +947,9 @@ Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena
             popup.style.display = 'flex';
             setTimeout(function() {
               popup.classList.add('show');
+              if (typeof gtag === 'function') {
+                gtag('event', 'view_popup_leasing', { 'brand_name': 'leapmotor' });
+              }
             }, 50);
 
             document.getElementById('leasingPopupLink').addEventListener('click', function() {
