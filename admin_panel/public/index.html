@@ -874,21 +874,21 @@
           Selecciona los vehículos que deseas exportar a tu archivo de Excel:
         </p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="/api/download-csv?filter=nuevos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
+          <a href="/api/download-csv?filter=nuevos" download="precios_stellantis_nuevos.csv" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
             <div>
               <div style="font-weight: 700; font-size: 1rem; color: #38bdf8;">🚗 Solo Autos Nuevos (0 KM)</div>
               <small style="color: #94a3b8;">RAM, Dodge, Jeep, Fiat, Peugeot, Leapmotor</small>
             </div>
             <i class="fa-solid fa-cloud-arrow-down" style="font-size: 1.3rem; color: #38bdf8;"></i>
           </a>
-          <a href="/api/download-csv?filter=demos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
+          <a href="/api/download-csv?filter=demos" download="precios_stellantis_demos.csv" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
             <div>
               <div style="font-weight: 700; font-size: 1rem; color: #00e5ff;">🏷️ Solo Autos Demo</div>
               <small style="color: #94a3b8;">Unidades de liquidación y exhibición</small>
             </div>
             <i class="fa-solid fa-cloud-arrow-down" style="font-size: 1.3rem; color: #00e5ff;"></i>
           </a>
-          <a href="/api/download-csv?filter=ambos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #0284c7; color: #fff; border: 1px solid #0369a1; border-radius: 8px; transition: all 0.2s;">
+          <a href="/api/download-csv?filter=ambos" download="precios_stellantis_todos.csv" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #0284c7; color: #fff; border: 1px solid #0369a1; border-radius: 8px; transition: all 0.2s;">
             <div>
               <div style="font-weight: 700; font-size: 1rem; color: #ffffff;">📋 Ambos (Todos los Vehículos)</div>
               <small style="color: #e0f2fe;">Incluye columna "Tipo" (NUEVO / DEMO) para filtrar</small>
@@ -2608,36 +2608,44 @@
     const closeDownloadModalBtn = document.getElementById('closeDownloadModalBtn');
     const cancelDownloadModalBtn = document.getElementById('cancelDownloadModalBtn');
 
-    if (openDownloadModalBtn && downloadModal) {
-      openDownloadModalBtn.addEventListener('click', () => {
-        downloadModal.style.display = 'block';
-      });
+    function openDownloadModal() {
+      if (downloadModal) {
+        downloadModal.style.display = '';
+        downloadModal.classList.add('active');
+      }
     }
 
-    if (closeDownloadModalBtn && downloadModal) {
-      closeDownloadModalBtn.addEventListener('click', () => {
-        downloadModal.style.display = 'none';
-      });
+    function closeDownloadModal() {
+      if (downloadModal) {
+        downloadModal.classList.remove('active');
+      }
     }
 
-    if (cancelDownloadModalBtn && downloadModal) {
-      cancelDownloadModalBtn.addEventListener('click', () => {
-        downloadModal.style.display = 'none';
-      });
+    if (openDownloadModalBtn) {
+      openDownloadModalBtn.addEventListener('click', openDownloadModal);
+    }
+
+    if (closeDownloadModalBtn) {
+      closeDownloadModalBtn.addEventListener('click', closeDownloadModal);
+    }
+
+    if (cancelDownloadModalBtn) {
+      cancelDownloadModalBtn.addEventListener('click', closeDownloadModal);
     }
 
     // Auto-close modal when clicking any download option
     document.querySelectorAll('.download-option-link').forEach(link => {
       link.addEventListener('click', () => {
-        setTimeout(() => {
-          if (downloadModal) downloadModal.style.display = 'none';
-        }, 400);
+        setTimeout(closeDownloadModal, 600);
       });
     });
 
     window.addEventListener('click', (e) => {
       if (e.target === downloadModal) {
-        downloadModal.style.display = 'none';
+        closeDownloadModal();
+      }
+      if (e.target === csvModal) {
+        csvModal.classList.remove('active');
       }
     });
 
@@ -2651,15 +2659,16 @@
 
     openCsvBtn.addEventListener('click', () => {
       csvFileInput.value = '';
-      csvModal.style.display = 'block';
+      csvModal.style.display = '';
+      csvModal.classList.add('active');
     });
 
     closeCsvModalBtn.addEventListener('click', () => {
-      csvModal.style.display = 'none';
+      csvModal.classList.remove('active');
     });
 
     cancelCsvModalBtn.addEventListener('click', () => {
-      csvModal.style.display = 'none';
+      csvModal.classList.remove('active');
     });
 
     csvForm.addEventListener('submit', async (e) => {
