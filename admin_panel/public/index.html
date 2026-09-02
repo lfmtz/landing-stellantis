@@ -350,14 +350,29 @@
                 Muestra un vehículo en portada con diseño estelar. Cuando un cliente dé clic en el botón de la landing, viajará automáticamente a la página del vehículo, abrirá sus detalles y resaltará la tarjeta en pantalla.
               </p>
 
-              <div style="background: #0b1019; border: 1px solid #233143; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
-                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 0;">
-                  <input type="checkbox" id="featuredCarEnabled" onchange="toggleFeaturedCarSectionFields()" style="width: 18px; height: 18px; cursor: pointer;">
-                  <span style="font-weight: bold; color: #fff; font-size: 0.95rem;">Activar Auto Destacado en la Landing Page</span>
-                </label>
+              <!-- Control de Activación / Desactivación con Botón Explícito -->
+              <div style="background: #0b1019; border: 1px solid #233143; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div>
+                  <div style="font-weight: bold; color: #fff; font-size: 0.95rem; margin-bottom: 3px;">
+                    ¿Mostrar esta sección en la Landing Page pública?
+                  </div>
+                  <div id="featuredCarStatusBadge" style="font-size: 0.8rem; color: #ef4444; font-weight: 600;">
+                    🔴 DESACTIVADA (Oculta en la página web mientras la afinas)
+                  </div>
+                </div>
+                
+                <div style="display: inline-flex; background: #151d2a; padding: 3px; border-radius: 6px; border: 1px solid #334155; gap: 4px;">
+                  <button type="button" id="btnFeaturedStateOff" onclick="setFeaturedCarActiveState(false)" style="background: #ef4444; color: #fff; border: none; padding: 7px 14px; font-size: 0.82rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="fa-solid fa-eye-slash"></i> NO Activar (Ocultar)
+                  </button>
+                  <button type="button" id="btnFeaturedStateOn" onclick="setFeaturedCarActiveState(true)" style="background: transparent; color: #94a3b8; border: none; padding: 7px 14px; font-size: 0.82rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="fa-solid fa-eye"></i> ACTIVAR (Visible)
+                  </button>
+                </div>
+                <input type="hidden" id="featuredCarEnabled" value="false">
               </div>
 
-              <div id="featuredCarFieldsWrapper" style="display: none;">
+              <div id="featuredCarFieldsWrapper" style="display: block;">
                 <!-- Filtro y Selector de Auto Destacado -->
                 <div style="background: rgba(0, 229, 255, 0.03); border: 1px dashed rgba(0, 229, 255, 0.25); border-radius: 6px; padding: 15px; margin-bottom: 15px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
@@ -1660,11 +1675,38 @@
     // Featured Car Admin Handlers
     let featuredCarSourceFilter = 'all';
 
-    window.toggleFeaturedCarSectionFields = function() {
-      const isEnabled = document.getElementById('featuredCarEnabled').checked;
-      const wrapper = document.getElementById('featuredCarFieldsWrapper');
-      if (wrapper) {
-        wrapper.style.display = isEnabled ? 'block' : 'none';
+    window.setFeaturedCarActiveState = function(isActive) {
+      document.getElementById('featuredCarEnabled').value = isActive ? 'true' : 'false';
+      const btnOff = document.getElementById('btnFeaturedStateOff');
+      const btnOn = document.getElementById('btnFeaturedStateOn');
+      const badge = document.getElementById('featuredCarStatusBadge');
+
+      if (isActive) {
+        if (btnOn) {
+          btnOn.style.background = '#10b981';
+          btnOn.style.color = '#fff';
+        }
+        if (btnOff) {
+          btnOff.style.background = 'transparent';
+          btnOff.style.color = '#94a3b8';
+        }
+        if (badge) {
+          badge.innerHTML = '🟢 ACTIVADA (Se mostrará en la portada al guardar)';
+          badge.style.color = '#10b981';
+        }
+      } else {
+        if (btnOff) {
+          btnOff.style.background = '#ef4444';
+          btnOff.style.color = '#fff';
+        }
+        if (btnOn) {
+          btnOn.style.background = 'transparent';
+          btnOn.style.color = '#94a3b8';
+        }
+        if (badge) {
+          badge.innerHTML = '🔴 DESACTIVADA (Oculta de la página web mientras la afinas)';
+          badge.style.color = '#ef4444';
+        }
       }
     };
 
@@ -1803,11 +1845,7 @@
 
       // Featured Car Spotlight
       const featured = landing.featuredCar || {};
-      const enabledCheckbox = document.getElementById('featuredCarEnabled');
-      if (enabledCheckbox) {
-        enabledCheckbox.checked = !!featured.enabled;
-        toggleFeaturedCarSectionFields();
-      }
+      setFeaturedCarActiveState(!!featured.enabled);
       document.getElementById('featuredCarBadge').value = featured.customBadge || '';
       document.getElementById('featuredCarTagline').value = featured.customTagline || '';
       document.getElementById('featuredCarBtnText').value = featured.customButtonText || '';
@@ -1875,7 +1913,7 @@
       };
 
       const featuredCar = {
-        enabled: document.getElementById('featuredCarEnabled').checked,
+        enabled: document.getElementById('featuredCarEnabled').value === 'true',
         vehicleKey: document.getElementById('featuredCarVehicleSelect').value,
         customBadge: document.getElementById('featuredCarBadge').value.trim(),
         customTagline: document.getElementById('featuredCarTagline').value.trim(),
