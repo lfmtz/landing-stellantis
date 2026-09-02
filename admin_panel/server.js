@@ -244,25 +244,70 @@ app.post('/api/upload-csv', csvUpload.single('csvFile'), (req, res) => {
   const dbData = readData();
   let updatedCount = 0;
 
-  lines.forEach(line => {
-    if (!line.trim()) return;
-    
-    // Parse CSV line (Brand,CarName,Price)
-    let parts = [];
-    if (line.includes(';')) {
-      parts = line.split(';');
-    } else {
-      parts = line.split(',');
+  function parseCsvLine(line) {
+    let inQuotes = false;
+    let semiCount = 0;
+    let commaCount = 0;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') inQuotes = !inQuotes;
+      else if (!inQuotes) {
+        if (line[i] === ';') semiCount++;
+        else if (line[i] === ',') commaCount++;
+      }
     }
+    const delim = semiCount >= commaCount ? ';' : ',';
 
+    const result = [];
+    let current = '';
+    inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === delim && !inQuotes) {
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result;
+  }
+
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.toLowerCase().startsWith('sep=') || trimmed.toLowerCase().startsWith('"marca"') || trimmed.toLowerCase().startsWith('marca')) {
+      return;
+    }
+    
+    const parts = parseCsvLine(trimmed);
     if (parts.length < 3) return;
 
-    const csvBrand = parts[0].trim().toLowerCase();
-    const csvCarName = parts[1].trim();
-    const csvPrice = parts[2].trim();
+    let csvBrand = parts[0].trim().toLowerCase();
+    let csvCarName = '';
+    let csvPrice = '';
+
+    if (parts.length >= 4) {
+      // Formato con columna Tipo: Marca;Tipo;Auto;Precio
+      const tipo = parts[1].trim().toUpperCase();
+      if (tipo === 'DEMO' || csvBrand === 'demos') {
+        csvBrand = 'demos';
+      }
+      csvCarName = parts[2].trim();
+      csvPrice = parts[3].trim();
+    } else {
+      // Formato clásico: Marca;Auto;Precio
+      csvCarName = parts[1].trim();
+      csvPrice = parts[2].trim();
+    }
 
     if (dbData[csvBrand]) {
-      // Find the vehicle by name (case-insensitive)
       const vehicle = dbData[csvBrand].find(v => v.name.trim().toLowerCase() === csvCarName.toLowerCase());
       if (vehicle) {
         vehicle.price = csvPrice;
@@ -282,23 +327,41 @@ app.post('/api/upload-csv', csvUpload.single('csvFile'), (req, res) => {
   res.json({ success: true, updatedCount });
 });
 
-// CSV Mass Price Download Endpoint
+// CSV Mass Price Download Endpoint con soporte de filtro (nuevos, demos, ambos) y entrecomillado seguro
 app.get('/api/download-csv', (req, res) => {
   const dbData = readData();
-  let csvContent = 'Marca;Auto;Precio\n';
+  const filter = (req.query.filter || req.query.type || 'ambos').toLowerCase();
   
-  const brands = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
-  brands.forEach(b => {
+  // Instrucción sep=; para apertura automática correcta en Excel de México y Latinoamérica
+  let csvContent = 'sep=;\n"Marca";"Tipo";"Auto";"Precio"\n';
+  
+  let brandsToExport = [];
+  if (filter === 'nuevos') {
+    brandsToExport = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor'];
+  } else if (filter === 'demos') {
+    brandsToExport = ['demos'];
+  } else {
+    brandsToExport = ['ram', 'dodge', 'jeep', 'fiat', 'peugeot', 'leapmotor', 'demos'];
+  }
+  
+  brandsToExport.forEach(b => {
     const vehicles = dbData[b] || [];
+    const tipo = b === 'demos' ? 'DEMO' : 'NUEVO';
+    const brandLabel = b === 'demos' ? 'DEMOS' : b.toUpperCase();
     vehicles.forEach(v => {
-      const cleanName = v.name.replace(/;/g, ',').replace(/"/g, '""');
-      const cleanPrice = v.price.replace(/;/g, ',').replace(/"/g, '""');
-      csvContent += `${b};${cleanName};${cleanPrice}\n`;
+      const cleanBrand = brandLabel.replace(/"/g, '""');
+      const cleanName = (v.name || '').replace(/"/g, '""');
+      const cleanPrice = (v.price || '').replace(/"/g, '""');
+      csvContent += `"${cleanBrand}";"${tipo}";"${cleanName}";"${cleanPrice}"\n`;
     });
   });
   
+  let filename = 'precios_stellantis_todos.csv';
+  if (filter === 'nuevos') filename = 'precios_stellantis_nuevos.csv';
+  if (filter === 'demos') filename = 'precios_stellantis_demos.csv';
+  
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename=precios_stellantis.csv');
+  res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
   res.status(200).send('\uFEFF' + csvContent); // BOM UTF-8
 });
 

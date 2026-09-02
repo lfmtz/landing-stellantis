@@ -51,9 +51,9 @@
         <span>STELLANTIS <small>Admin Panel</small></span>
       </div>
       <div class="actions" style="display: flex; gap: 10px;">
-        <a href="/api/download-csv" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+        <button id="openDownloadModalBtn" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px;">
           <i class="fa-solid fa-file-excel"></i> Descargar Precios (Excel)
-        </a>
+        </button>
         <button id="openCsvBtn" class="btn btn-secondary">
           <i class="fa-solid fa-file-csv"></i> Actualizar Precios (CSV)
         </button>
@@ -859,6 +859,50 @@
           <button type="submit" class="btn btn-primary">Guardar Promoción</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Download Prices Modal -->
+  <div id="downloadModal" class="modal">
+    <div class="modal-content" style="max-width: 480px; background: #0f172a; color: #fff; border: 1px solid #1e293b; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+      <div class="modal-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
+        <h3 style="margin: 0; color: #38bdf8; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-file-excel"></i> Descargar Precios (Excel)</h3>
+        <span class="close-btn" id="closeDownloadModalBtn" style="color: #94a3b8; font-size: 1.5rem; cursor: pointer;">&times;</span>
+      </div>
+      <div style="padding: 16px 0;">
+        <p style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 18px; line-height: 1.5;">
+          Selecciona los vehículos que deseas exportar a tu archivo de Excel:
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/api/download-csv?filter=nuevos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
+            <div>
+              <div style="font-weight: 700; font-size: 1rem; color: #38bdf8;">🚗 Solo Autos Nuevos (0 KM)</div>
+              <small style="color: #94a3b8;">RAM, Dodge, Jeep, Fiat, Peugeot, Leapmotor</small>
+            </div>
+            <i class="fa-solid fa-cloud-arrow-down" style="font-size: 1.3rem; color: #38bdf8;"></i>
+          </a>
+          <a href="/api/download-csv?filter=demos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 8px; transition: all 0.2s;">
+            <div>
+              <div style="font-weight: 700; font-size: 1rem; color: #00e5ff;">🏷️ Solo Autos Demo</div>
+              <small style="color: #94a3b8;">Unidades de liquidación y exhibición</small>
+            </div>
+            <i class="fa-solid fa-cloud-arrow-down" style="font-size: 1.3rem; color: #00e5ff;"></i>
+          </a>
+          <a href="/api/download-csv?filter=ambos" class="download-option-link" style="text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #0284c7; color: #fff; border: 1px solid #0369a1; border-radius: 8px; transition: all 0.2s;">
+            <div>
+              <div style="font-weight: 700; font-size: 1rem; color: #ffffff;">📋 Ambos (Todos los Vehículos)</div>
+              <small style="color: #e0f2fe;">Incluye columna "Tipo" (NUEVO / DEMO) para filtrar</small>
+            </div>
+            <i class="fa-solid fa-file-csv" style="font-size: 1.3rem; color: #ffffff;"></i>
+          </a>
+        </div>
+        <p style="font-size: 0.8rem; color: #64748b; margin-top: 15px; margin-bottom: 0;">
+          💡 <em>El archivo viene protegido con comillas estándar (RFC 4180) y delimitador automático para que las comas de los miles no se dividan en Excel.</em>
+        </p>
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid #1e293b; padding-top: 12px; display: flex; justify-content: flex-end;">
+        <button type="button" id="cancelDownloadModalBtn" class="btn btn-secondary" style="background: #334155; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Cerrar</button>
+      </div>
     </div>
   </div>
 
@@ -2555,6 +2599,45 @@
         }
       } catch (err) {
         showOverlay('Error', 'Error de conexión con el servidor local.', false);
+      }
+    });
+
+    // Download Prices Modal Elements
+    const downloadModal = document.getElementById('downloadModal');
+    const openDownloadModalBtn = document.getElementById('openDownloadModalBtn');
+    const closeDownloadModalBtn = document.getElementById('closeDownloadModalBtn');
+    const cancelDownloadModalBtn = document.getElementById('cancelDownloadModalBtn');
+
+    if (openDownloadModalBtn && downloadModal) {
+      openDownloadModalBtn.addEventListener('click', () => {
+        downloadModal.style.display = 'block';
+      });
+    }
+
+    if (closeDownloadModalBtn && downloadModal) {
+      closeDownloadModalBtn.addEventListener('click', () => {
+        downloadModal.style.display = 'none';
+      });
+    }
+
+    if (cancelDownloadModalBtn && downloadModal) {
+      cancelDownloadModalBtn.addEventListener('click', () => {
+        downloadModal.style.display = 'none';
+      });
+    }
+
+    // Auto-close modal when clicking any download option
+    document.querySelectorAll('.download-option-link').forEach(link => {
+      link.addEventListener('click', () => {
+        setTimeout(() => {
+          if (downloadModal) downloadModal.style.display = 'none';
+        }, 400);
+      });
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === downloadModal) {
+        downloadModal.style.display = 'none';
       }
     });
 
