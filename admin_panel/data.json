@@ -194,8 +194,13 @@
     {
       "id": "jeep-grand-cherokee",
       "name": "Grand Cherokee Altitude 4x2",
-      "price": "Desde $1,194,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $1,134,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20Grand%20Cherokee",
       "description": "Disfruta la distinción y el confort inigualable que solo una Grand Cherokee Altitude 4x2 puede ofrecerte por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$14,999</b></span> o tenemos <span style=\"color: red; font-weight: bold;\"><b>24 msi 0% comisión</b></span>",
       "descriptionSize": "1.1rem",
@@ -205,6 +210,7 @@
         "0% comisión de apertura",
         "Contamos con planes de arrendamiento"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#4a7729",
       "underlineStyle": "solid",
@@ -251,8 +257,13 @@
     {
       "id": "fiat-pulse",
       "name": "Fiat PULSE",
-      "price": "Desde $388,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $349,500",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786997782/pulse_8_26_fwmlkq.png",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786997782/pulse_8_26_fwmlkq.png"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20PULSE",
       "description": "Recorre la ciudad con el diseño vanguardista del Fiat Pulse integrando tecnología y confort en cada trayecto por mensualidades desde $4,990.",
       "descriptionSize": "1.0rem",
@@ -263,6 +274,7 @@
         "0% comisión de apertura",
         "Tasa de interés preferencial"
       ],
+      "fichaTecnica": "",
       "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
       "accentColor": "#b30000",
       "underlineStyle": "solid",
@@ -291,8 +303,13 @@
     {
       "id": "fiat-abarth",
       "name": "Fiat Abarth",
-      "price": "Desde $512,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $467,000",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786997782/abarth_8_26_uwkcmf.png",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786997782/abarth_8_26_uwkcmf.png"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20Abarth",
       "description": "Domina cada curva con la adrenalina y el sonido legendario del Fiat Abarth transformando tu conducción por mensualidades desde $6,890.",
       "descriptionSize": "1.0rem",
@@ -303,6 +320,7 @@
         "0% comisión de apertura",
         "Tasa de interés preferencial"
       ],
+      "fichaTecnica": "",
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
       "accentColor": "#b30000",
       "underlineStyle": "solid",
@@ -374,8 +392,13 @@
     {
       "id": "peugeot-expert",
       "name": "Expert Furgon",
-      "price": "Desde $705,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $658,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/expert_8_26_a5zm9n.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/expert_8_26_a5zm9n.jpg"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Expert%20Furgon",
       "description": "La herramienta de trabajo más eficiente. Aprovecha un bono histórico y mensualidades de <span style=\"color: red; font-weight: bold;\"><b>$8,899</b></span>",
       "descriptionSize": "1.0rem",
@@ -384,6 +407,7 @@
         "Incluye en el enganche: Bono hasta $50,000",
         "0% comisión por apertura"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
