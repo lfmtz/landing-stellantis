@@ -1058,6 +1058,45 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv"
+    },
+    {
+      "id": "demos-1788412278752",
+      "name": "Ram 4000",
+      "km": "Flotilla",
+      "listPrice": "$1,058,600",
+      "price": "$835,000",
+      "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232488/IMG_20260830_150100446.jpg",
+      "images": [
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232488/IMG_20260830_150100446.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232496/IMG_20260830_150108549.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232500/IMG_20260830_150116963.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232511/IMG_20260830_150216848_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232694/IMG_20260830_150151845_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232499/IMG_20260830_150135476_HDR.jpg",
+        "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232694/IMG_20260830_150257254_HDR.jpg"
+      ],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%204000",
+      "description": "¡Ahorra más de <span style=\"color: red; font-weight: bold;\"><b>$230,000</b> </span>en tu nueva RAM 4000 Chasis Corto 2027!\r\n\r\nPrecio de lista: ~~<span style=\"color: red; font-weight: bold;\"><span style=\"color: red; font-weight: bold;\"><b>$1,033,600</b></span></span>~~ ➔ Promoción: <span style=\"color: red; font-weight: bold;\"><b>$799,000</b></span>. Estrena con planes flexibles de financiamiento o arrendamiento puro deducible.\r\n\r\n[Cotizar por WhatsApp aquí]",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "L V8 HEMI® Upgrade HD 405 HP @ 5,500 rpm",
+        "Torque 429 lb-ft @ 4,000 rpm",
+        "Capacidad de carga:",
+        "Versión Chassis P (Corto): Ofrece una capacidad de 3,305 kg",
+        "Versión Chassis PL (Largo): Tiene capacidad para 3,279 kg",
+        "Capacidad de la Versión P: Soporta un arrastre máximo de 7,094 kg estándar",
+        "Capacidad de la Versión PL: Permite arrastrar 7,067 kg estándar",
+        "Largo total exterior: El chasis corto (Chassis P) tiene una longitud de 5,977 mm",
+        "Largo total exterior: El chasis largo (Chassis PL) se extiende hasta los 6,586 mm",
+        "Asistencias de Conducción (ADAS): Integra de serie Control de crucero adaptativo con stop, Asistencia de colisión frontal plus y Frenado de emergencia para peatones/ciclistas",
+        "Sistemas de Frenado: Equipa frenos de disco antibloqueo en las 4 ruedas respaldados por la tecnología de asistencia \"Ready alert\""
+      ],
+      "fichaTecnica": "",
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#00e5ff",
+      "underlineStyle": "solid",
+      "category": "suv"
     }
   ],
   "portal": {
