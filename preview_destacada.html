@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa - Publicación Destacada (Oferta Estrella)</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #07101e;
+            --accent-default: #00e5ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #060a12;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Barra Superior */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background: rgba(11, 16, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+            padding: 12px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .toolbar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .toolbar-title span {
+            color: #00e5ff;
+        }
+
+        .btn-view-toggle {
+            background: #151d2a;
+            border: 1px solid #233143;
+            color: #94a3b8;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-view-toggle:hover {
+            color: #fff;
+            border-color: #38bdf8;
+        }
+
+        .btn-view-toggle.active {
+            background: #0284c7;
+            color: #fff;
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Selector de Vehículo */
+        .vehicle-select {
+            background: #151d2a;
+            color: #fff;
+            border: 1px solid #233143;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Área de visualización */
+        .preview-stage {
+            padding: 30px 15px 60px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: calc(100vh - 70px);
+            background: #07101e;
+        }
+
+        /* Marco de Celular */
+        .phone-mockup {
+            width: 390px;
+            height: 780px;
+            background: #111;
+            border-radius: 44px;
+            padding: 12px 8px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 0 4px #262626, 0 0 0 6px #404040;
+            position: relative;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 34px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #07101e;
+            position: relative;
+        }
+
+        .phone-notch {
+            position: sticky;
+            top: 0;
+            left: 50%;
+            width: 130px;
+            height: 22px;
+            background: #000;
+            margin: 0 auto 10px auto;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 100;
+        }
+
+        .desktop-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilos de la Publicación Destacada */
+        .featured-card-wrapper {
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--cur-accent, #00e5ff);
+            border-bottom: 2px solid var(--cur-accent, #00e5ff);
+            background: linear-gradient(135deg, #07101e 0%, #0d1a30 100%);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .ambient-glow {
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--cur-accent-glow, rgba(0, 229, 255, 0.2)) 0%, transparent 70%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        /* Mejoras Clave Responsive para Celular */
+        .featured-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.45rem, 4.5vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.2;
+            word-break: break-word;
+            text-transform: uppercase;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: clamp(0.72rem, 2.8vw, 0.85rem);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--cur-accent, #00e5ff);
+            color: var(--cur-accent, #00e5ff);
+            max-width: 100%;
+            white-space: normal;
+            text-align: center;
+        }
+
+        .featured-tagline {
+            font-size: clamp(0.88rem, 3vw, 1rem);
+            line-height: 1.45;
+            color: rgba(255, 255, 255, 0.7);
+            word-break: break-word;
+            margin-bottom: 15px;
+        }
+
+        /* Contenedor de Precios que NUNCA se corta */
+        .price-box-responsive {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Clave: Salta de línea si no cabe */
+            gap: 8px 14px;
+            margin-bottom: 16px;
+        }
+
+        .price-list-strikethrough {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: line-through;
+            font-weight: 700;
+            font-size: clamp(1rem, 3.5vw, 1.25rem);
+            white-space: nowrap;
+        }
+
+        .price-promo-huge {
+            font-weight: 900;
+            color: var(--cur-accent, #00e5ff);
+            font-size: clamp(1.65rem, 6vw, 2.5rem);
+            text-shadow: 0 0 20px var(--cur-accent-glow, rgba(0, 229, 255, 0.4));
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .badge-exclusive {
+            background: #10b981;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* Viñetas de Beneficios alineadas */
+        .benefits-list {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start; /* Icono anclado arriba para textos largos */
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: clamp(0.82rem, 2.8vw, 0.92rem);
+            line-height: 1.35;
+            color: #fff;
+        }
+
+        .benefits-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .benefits-list li i {
+            color: var(--cur-accent, #00e5ff);
+            margin-top: 3px;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        /* Botones de Acción */
+        .btn-cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        @media (min-width: 576px) {
+            .btn-cta-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        .btn-cta-primary {
+            background-color: var(--cur-accent, #00e5ff);
+            color: #07101e;
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.88rem;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px var(--cur-accent-glow, rgba(0,229,255,0.3));
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            color: #07101e;
+            box-shadow: 0 6px 22px var(--cur-accent, #00e5ff);
+        }
+
+        .btn-cta-whatsapp {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.88rem;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .btn-cta-whatsapp:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        /* Info box */
+        .diag-box {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin-bottom: 25px;
+            max-width: 900px;
+            width: 100%;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <i class="fa-solid fa-star" style="color: #f59e0b;"></i>
+            Vista Previa: <span>Publicación Destacada (Oferta Estrella)</span>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <!-- Selector de Vehículo para Probar -->
+            <label style="font-size: 0.8rem; color: #94a3b8; margin: 0;">Vehículo:</label>
+            <select class="vehicle-select" id="vehiclePicker" onchange="changeVehicle(this.value)">
+                <option value="peugeot2008">⚡ Peugeot 2008 Demo ($439,000)</option>
+                <option value="ram1200">⭐ RAM 1200 Doble Cabina 0 KM ($469,900)</option>
+                <option value="ram4000">⚡ RAM 4000 Chasis Demo ($835,000)</option>
+            </select>
+
+            <!-- Selector de Vistas -->
+            <button type="button" class="btn-view-toggle active" id="btnModeMobile" onclick="setViewMode('mobile')">
+                <i class="fa-solid fa-mobile-screen"></i> Celular (390px - Texto Verificado)
+            </button>
+            <button type="button" class="btn-view-toggle" id="btnModeDesktop" onclick="setViewMode('desktop')">
+                <i class="fa-solid fa-desktop"></i> Escritorio (Completo)
+            </button>
+        </div>
+    </div>
+
+    <!-- ÁREA DE CONTENIDO -->
+    <div class="preview-stage">
+
+        <!-- Caja de Diagnóstico / Explicación -->
+        <div class="diag-box d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <strong class="text-white"><i class="fa-solid fa-check-circle text-success me-1"></i> Solución Aplicada:</strong>
+                Ahora la fila de precios usa <code style="color: #38bdf8;">flex-wrap: wrap</code> y tamaños tipográficos fluidos con <code style="color: #38bdf8;">clamp()</code>. Ninguna letra, precio ni insignia se desborda ni se corta en celulares.
+            </div>
+            <span class="badge bg-primary" id="curViewBadge">📱 Vista Celular Activa</span>
+        </div>
+
+        <!-- MODO CELULAR (MOCKUP IPHONE) -->
+        <div class="phone-mockup" id="phoneWrapper" style="display: block;">
+            <div class="phone-screen p-2 pt-0">
+                <div class="phone-notch"></div>
+                
+                <!-- Sección Destacada dentro del Celular -->
+                <div class="featured-card-wrapper p-3 my-2" id="cardMobile">
+                    <!-- Glow ambiental -->
+                    <div class="ambient-glow"></div>
+
+                    <!-- Imagen del auto -->
+                    <div class="position-relative mb-3 text-center">
+                        <img id="mImg" src="https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg" class="img-fluid rounded-3 w-100" style="max-height: 220px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15);" alt="Vehículo">
+                        <span class="position-absolute top-0 start-0 m-2 badge rounded-pill px-2 py-1 text-uppercase fw-bold shadow" id="mTagTop" style="background: #000; color: #fff; font-size: 0.68rem; border: 1px solid rgba(255,255,255,0.25);">
+                            ⚡ AUTO DEMO LIQUIDACIÓN
+                        </span>
+                    </div>
+
+                    <!-- Contenido Textual -->
+                    <div class="text-white text-center text-sm-start">
+                        
+                        <!-- Badge personalizable -->
+                        <div class="mb-2">
+                            <span class="featured-badge" id="mBadge">
+                                🔥 OPORTUNIDAD DESTACADA DEL MES
+                            </span>
+                        </div>
+
+                        <!-- Título del Auto -->
+                        <h2 class="featured-title mb-2" id="mTitle">
+                            Peugeot 2008
+                        </h2>
+
+                        <!-- Tagline -->
+                        <p class="featured-tagline" id="mTagline">
+                            ¡Aprovecha nuestro precio especial de liquidación con entrega inmediata!
+                        </p>
+
+                        <!-- Precios Adaptables sin cortes -->
+                        <div class="price-box-responsive justify-content-center justify-content-sm-start">
+                            <span class="price-list-strikethrough" id="mListPrice">$510,900</span>
+                            <span class="price-promo-huge" id="mPrice">$439,000</span>
+                            <span class="badge-exclusive">¡OFERTA EXCLUSIVA!</span>
+                        </div>
+
+                        <!-- Viñetas de Beneficios -->
+                        <ul class="benefits-list text-start" id="mBenefits">
+                            <li><i class="fa-solid fa-circle-check"></i> <span>Faros de LED y rines bi-tono 17"</span></li>
+                            <li><i class="fa-solid fa-circle-check"></i> <span>Pantalla táctil 10" con Apple CarPlay & Android Auto</span></li>
+                            <li><i class="fa-solid fa-circle-check"></i> <span>Motor PureTech 1.2L Turbo con caja automática</span></li>
+                        </ul>
+
+                        <!-- Botones de Acción -->
+                        <div class="btn-cta-group mt-3">
+                            <a href="#" class="btn-cta-primary" id="mBtnDetails">
+                                <i class="fa-solid fa-car me-2"></i> Ver Promoción y Detalles
+                            </a>
+                            <a href="#" class="btn-cta-whatsapp" id="mBtnWa">
+                                <i class="fa-brands fa-whatsapp me-2 text-success" style="font-size: 1.1rem;"></i> Cotizar por WhatsApp
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODO ESCRITORIO -->
+        <div class="desktop-container" id="desktopWrapper" style="display: none;">
+            <div class="featured-card-wrapper p-4 p-lg-5" id="cardDesktop">
+                <div class="ambient-glow"></div>
+                
+                <div class="container-fluid position-relative" style="z-index: 2;">
+                    <div class="row align-items-center g-4">
+                        
+                        <!-- Columna Foto -->
+                        <div class="col-lg-6 text-center">
+                            <div class="position-relative d-inline-block w-100" style="max-width: 520px;">
+                                <div class="overflow-hidden rounded-4 shadow-lg" style="border: 2px solid rgba(255,255,255,0.15);">
+                                    <img id="dImg" src="https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg" alt="Vehículo" class="img-fluid w-100" style="object-fit: cover; max-height: 380px; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                                </div>
+                                <span class="position-absolute top-0 start-0 m-3 badge rounded-pill px-3 py-2 text-uppercase fw-bold shadow" id="dTagTop" style="background: #000; color: #fff; font-size: 0.78rem; border: 1px solid rgba(255,255,255,0.2);">
+                                    ⚡ AUTO DEMO LIQUIDACIÓN
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Columna Info -->
+                        <div class="col-lg-6 text-white text-center text-lg-start ps-lg-4">
+                            <div class="mb-3">
+                                <span class="featured-badge" id="dBadge">
+                                    🔥 OPORTUNIDAD DESTACADA DEL MES
+                                </span>
+                            </div>
+
+                            <h2 class="featured-title mb-2" id="dTitle">
+                                Peugeot 2008
+                            </h2>
+
+                            <p class="featured-tagline" id="dTagline">
+                                ¡Aprovecha nuestro precio especial de liquidación con entrega inmediata!
+                            </p>
+
+                            <div class="price-box-responsive justify-content-center justify-content-lg-start">
+                                <span class="price-list-strikethrough" id="dListPrice">$510,900</span>
+                                <span class="price-promo-huge" id="dPrice">$439,000</span>
+                                <span class="badge-exclusive">¡OFERTA EXCLUSIVA!</span>
+                            </div>
+
+                            <ul class="benefits-list text-start" id="dBenefits">
+                                <li><i class="fa-solid fa-circle-check"></i> <span>Faros de LED y rines bi-tono 17"</span></li>
+                                <li><i class="fa-solid fa-circle-check"></i> <span>Pantalla táctil 10" con Apple CarPlay & Android Auto</span></li>
+                                <li><i class="fa-solid fa-circle-check"></i> <span>Motor PureTech 1.2L Turbo con caja automática</span></li>
+                            </ul>
+
+                            <div class="btn-cta-group mt-3">
+                                <a href="#" class="btn-cta-primary" id="dBtnDetails">
+                                    <i class="fa-solid fa-car me-2"></i> Ver Promoción y Detalles <i class="fa-solid fa-arrow-right ms-2"></i>
+                                </a>
+                                <a href="#" class="btn-cta-whatsapp" id="dBtnWa">
+                                    <i class="fa-brands fa-whatsapp me-2 text-success" style="font-size: 1.1rem;"></i> Cotizar por WhatsApp
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- DATOS DE PRUEBA -->
+    <script>
+        const vehicles = {
+            peugeot2008: {
+                brand: 'demos',
+                tagTop: '⚡ AUTO DEMO LIQUIDACIÓN',
+                badge: '🔥 OPORTUNIDAD DESTACADA DEL MES',
+                title: 'Peugeot 2008',
+                tagline: '¡Aprovecha nuestro precio especial de liquidación con entrega inmediata!',
+                listPrice: '$510,900',
+                price: '$439,000',
+                accent: '#00e5ff',
+                accentGlow: 'rgba(0, 229, 255, 0.35)',
+                img: 'https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg',
+                benefits: [
+                    'Faros de LED y rines de aluminio de 17" bi-tono',
+                    'Pantalla táctil de 10" HD inalámbrica (CarPlay & Android Auto)',
+                    'Motor PureTech 1.2L Turbo con transmisión automática AT6'
+                ]
+            },
+            ram1200: {
+                brand: 'ram',
+                tagTop: '⭐ RAM 0 KM',
+                badge: '⭐ PROMOCIÓN EXCLUSIVA 0 KM',
+                title: 'RAM 1200 Doble Cabina',
+                tagline: '¡Aprovecha las últimas unidades 2026 de RAM 1200 con precio de flotilla!',
+                listPrice: '',
+                price: 'Desde $469,900',
+                accent: '#cc4400',
+                accentGlow: 'rgba(204, 68, 0, 0.4)',
+                img: 'https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/ram1200cc_8_26_uxz0pd.jpg',
+                benefits: [
+                    '0% comisión por apertura',
+                    'O pregunta por nuestra tasa preferencial 0%',
+                    'Bono comercial incluido de hasta $40,000'
+                ]
+            },
+            ram4000: {
+                brand: 'demos',
+                tagTop: '⚡ AUTO DEMO FLOTILLA',
+                badge: '🔥 GRAN DESCUENTO DE FLOTILLA',
+                title: 'RAM 4000 Chasis Corto',
+                tagline: '¡Ahorra más de $230,000 en tu nueva RAM 4000 2027 con entrega inmediata!',
+                listPrice: '$1,058,600',
+                price: '$835,000',
+                accent: '#00e5ff',
+                accentGlow: 'rgba(0, 229, 255, 0.35)',
+                img: 'https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232488/IMG_20260830_150100446.jpg',
+                benefits: [
+                    'Motor L V8 HEMI® Upgrade HD 405 HP @ 5,500 rpm',
+                    'Capacidad de carga de 3,305 kg y arrastre de 7,094 kg',
+                    'ADAS: Control crucero adaptativo y frenado de emergencia'
+                ]
+            }
+        };
+
+        function setViewMode(mode) {
+            const btnMob = document.getElementById('btnModeMobile');
+            const btnDesk = document.getElementById('btnModeDesktop');
+            const phoneWrap = document.getElementById('phoneWrapper');
+            const deskWrap = document.getElementById('desktopWrapper');
+            const badge = document.getElementById('curViewBadge');
+
+            if (mode === 'mobile') {
+                btnMob.classList.add('active');
+                btnDesk.classList.remove('active');
+                phoneWrap.style.display = 'block';
+                deskWrap.style.display = 'none';
+                badge.textContent = '📱 Vista Celular Activa';
+                badge.className = 'badge bg-primary';
+            } else {
+                btnDesk.classList.add('active');
+                btnMob.classList.remove('active');
+                phoneWrap.style.display = 'none';
+                deskWrap.style.display = 'block';
+                badge.textContent = '💻 Vista Escritorio Activa';
+                badge.className = 'badge bg-info text-dark';
+            }
+        }
+
+        function changeVehicle(key) {
+            const v = vehicles[key];
+            if (!v) return;
+
+            // Variables de color
+            document.documentElement.style.setProperty('--cur-accent', v.accent);
+            document.documentElement.style.setProperty('--cur-accent-glow', v.accentGlow);
+
+            // Actualizar versión Móvil
+            document.getElementById('mImg').src = v.img;
+            document.getElementById('mTagTop').textContent = v.tagTop;
+            document.getElementById('mBadge').textContent = v.badge;
+            document.getElementById('mTitle').textContent = v.title;
+            document.getElementById('mTagline').textContent = v.tagline;
+            document.getElementById('mPrice').textContent = v.price;
+            
+            const mListEl = document.getElementById('mListPrice');
+            if (v.listPrice) {
+                mListEl.textContent = v.listPrice;
+                mListEl.style.display = 'inline-block';
+            } else {
+                mListEl.style.display = 'none';
+            }
+
+            document.getElementById('mBenefits').innerHTML = v.benefits.map(b => 
+                `<li><i class="fa-solid fa-circle-check"></i> <span>${b}</span></li>`
+            ).join('');
+
+            // Actualizar versión Escritorio
+            document.getElementById('dImg').src = v.img;
+            document.getElementById('dTagTop').textContent = v.tagTop;
+            document.getElementById('dBadge').textContent = v.badge;
+            document.getElementById('dTitle').textContent = v.title;
+            document.getElementById('dTagline').textContent = v.tagline;
+            document.getElementById('dPrice').textContent = v.price;
+            
+            const dListEl = document.getElementById('dListPrice');
+            if (v.listPrice) {
+                dListEl.textContent = v.listPrice;
+                dListEl.style.display = 'inline-block';
+            } else {
+                dListEl.style.display = 'none';
+            }
+
+            document.getElementById('dBenefits').innerHTML = v.benefits.map(b => 
+                `<li><i class="fa-solid fa-circle-check"></i> <span>${b}</span></li>`
+            ).join('');
+        }
+
+        // Inicializar
+        changeVehicle('peugeot2008');
+    </script>
+</body>
+</html>

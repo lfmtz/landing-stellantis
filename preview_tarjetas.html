@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa - 4 Tarjetas de Ofertas Destacadas</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --primary-glow: rgba(13, 110, 253, 0.6);
+            --accent-color: #00e5ff;
+            --dark-bg: #07101e;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0b0f19;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Barra Superior de Control */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background: rgba(11, 16, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+            padding: 12px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .toolbar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .toolbar-title span {
+            color: var(--accent-color);
+        }
+
+        .btn-view-toggle {
+            background: #151d2a;
+            border: 1px solid #233143;
+            color: #94a3b8;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-view-toggle:hover {
+            color: #fff;
+            border-color: #38bdf8;
+        }
+
+        .btn-view-toggle.active {
+            background: #0284c7;
+            color: #fff;
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+        }
+
+        .bg-picker {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #151d2a;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid #233143;
+            font-size: 0.8rem;
+        }
+
+        .bg-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .bg-btn:hover {
+            transform: scale(1.15);
+        }
+
+        /* Área de visualización */
+        .preview-stage {
+            padding: 30px 15px 60px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 70px);
+            transition: background 0.3s ease;
+        }
+
+        /* Contextos de fondo */
+        .preview-stage.bg-landing-desktop {
+            background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+        }
+
+        .preview-stage.bg-landing-mobile {
+            background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png');
+            background-size: cover;
+            background-position: center top;
+        }
+
+        .preview-stage.bg-dark {
+            background: #07101e;
+        }
+
+        .preview-stage.bg-light {
+            background: #f1f5f9;
+        }
+
+        /* Contenedores de vista */
+        .view-container-desktop {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Marco de Celular */
+        .phone-mockup {
+            width: 395px;
+            height: 820px;
+            background: #111;
+            border-radius: 44px;
+            padding: 14px 10px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 0 4px #262626, 0 0 0 6px #404040;
+            position: relative;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 34px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #07101e;
+            position: relative;
+            background-image: url('https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_telefono_imagen_2_dh2jce.png');
+            background-size: cover;
+            background-position: center top;
+        }
+
+        .phone-notch {
+            position: sticky;
+            top: 0;
+            left: 50%;
+            width: 140px;
+            height: 24px;
+            background: #000;
+            margin: 0 auto 10px auto;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 100;
+        }
+
+        /* Estilos Originales de las Tarjetas */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            border-radius: 1rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 229, 255, 0.45) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        .promo-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .glass-card:hover .promo-img {
+            transform: scale(1.04);
+        }
+
+        .heading-line {
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .scroll-hint-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: #00e5ff;
+            margin-top: 8px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+
+        /* Simulación de Carrusel Móvil */
+        .mobile-carousel-inner {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch;
+            gap: 1rem;
+            padding: 0.5rem 1rem 1.5rem 1rem;
+            scrollbar-width: none;
+        }
+
+        .mobile-carousel-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-card-col {
+            flex: 0 0 82% !important;
+            max-width: 300px;
+            scroll-snap-align: center;
+        }
+
+        /* Banner de Ayuda */
+        .info-card {
+            background: rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin-bottom: 25px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        /* Botón estilo píldora original */
+        .btn-interesa {
+            transition: all 0.25s ease;
+            font-weight: 600;
+        }
+        .btn-interesa:hover {
+            background: #000 !important;
+            color: #fff !important;
+            border-color: #000 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR DE CONTROL -->
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <i class="fa-solid fa-layer-group" style="color: #00e5ff;"></i>
+            Vista Previa: <span>4 Tarjetas de Ofertas</span>
+        </div>
+
+        <!-- Selector de Vistas -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-view-toggle active" id="btnModeDesktopCarousel" onclick="setMode('desktop-carousel')">
+                <i class="fa-solid fa-desktop"></i> Escritorio (Carrusel 2x2 Actual)
+            </button>
+            <button type="button" class="btn-view-toggle" id="btnModeDesktopGrid" onclick="setMode('desktop-grid')">
+                <i class="fa-solid fa-table-cells-large"></i> Escritorio (Las 4 juntas en 1 fila)
+            </button>
+            <button type="button" class="btn-view-toggle" id="btnModeMobile" onclick="setMode('mobile')">
+                <i class="fa-solid fa-mobile-screen"></i> Celular (Deslizable Táctil)
+            </button>
+        </div>
+
+        <!-- Selector de Fondo -->
+        <div class="bg-picker">
+            <span style="color: #94a3b8; font-size: 0.78rem;">Fondo:</span>
+            <button type="button" class="bg-btn" style="background: linear-gradient(135deg, #1e293b, #0f172a);" title="Fondo Original Landing" onclick="changeBg('landing')"></button>
+            <button type="button" class="bg-btn" style="background: #07101e;" title="Fondo Azul Oscuro Noche" onclick="changeBg('dark')"></button>
+            <button type="button" class="bg-btn" style="background: #f8fafc;" title="Fondo Claro" onclick="changeBg('light')"></button>
+        </div>
+    </div>
+
+    <!-- ÁREA DE PREVIEW -->
+    <div class="preview-stage bg-landing-desktop" id="previewStage">
+
+        <!-- VISTA ESCRITORIO (MODOS 1 Y 2) -->
+        <div class="view-container-desktop" id="desktopViewWrapper">
+            
+            <div class="info-card d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div>
+                    <i class="fa-solid fa-circle-info text-info me-2"></i>
+                    <strong>Modo Escritorio:</strong> Estás previsualizando las 4 tarjetas de ofertas exactamente como están configuradas en tu sistema sin tocar ningún archivo de producción.
+                </div>
+                <span class="badge bg-secondary">Versión de Prueba</span>
+            </div>
+
+            <!-- ENCABEZADO DE SECCIÓN -->
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark mb-2" id="secTitle" style="text-shadow: 0 1px 2px rgba(255,255,255,0.6);">Ofertas Imparables</h2>
+                <div class="heading-line mb-3"></div>
+                <p class="text-dark fw-bold mb-2" style="background: rgba(255,255,255,0.8); padding: 6px 18px; border-radius: 20px; display: inline-block; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    Las mejores oportunidades para estrenar el vehículo de tus sueños.
+                </p>
+            </div>
+
+            <!-- MODO A: CARRUSEL ESCRITORIO 2x2 (ACTUAL) -->
+            <div id="ofertasCarouselWrapper">
+                <div id="ofertasCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4500">
+                    <div class="carousel-inner pb-4">
+                        
+                        <!-- Slide 1 (Tarjetas 1 y 2) -->
+                        <div class="carousel-item active">
+                            <div class="row g-4 justify-content-center">
+                                <!-- Promo 1 -->
+                                <div class="col-md-5">
+                                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548632/RAM_CHASIS_vhuyq5.jpg" class="card-img-top promo-img" alt="RAM 1200 Chasis">
+                                        <div class="card-body p-4 text-center">
+                                            <h3 class="card-title fw-bold text-dark">RAM 1200 Chasis</h3>
+                                            <p class="card-text text-dark opacity-75">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
+                                            <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis." target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-4 py-2 btn-interesa">
+                                                <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Promo 2 -->
+                                <div class="col-md-5">
+                                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/RAM_DOBLE_CABINA_gpzsab.jpg" class="card-img-top promo-img" alt="RAM 1200 Doble Cabina">
+                                        <div class="card-body p-4 text-center">
+                                            <h3 class="card-title fw-bold text-dark">RAM 1200 Doble Cabina</h3>
+                                            <p class="card-text text-dark opacity-75">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
+                                            <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20doble%20cabina" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-4 py-2 btn-interesa">
+                                                <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 (Tarjetas 3 y 4) -->
+                        <div class="carousel-item">
+                            <div class="row g-4 justify-content-center">
+                                <!-- Promo 3 -->
+                                <div class="col-md-5">
+                                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/B10__FLOTILLA_vncjpr.jpg" class="card-img-top promo-img" alt="B10">
+                                        <div class="card-body p-4 text-center">
+                                            <h3 class="card-title fw-bold text-dark">B10</h3>
+                                            <p class="card-text text-dark opacity-75">Tecnología 100% eléctrica y máximo confort para transformar tu forma de viajar. ¡Descubre sus planes de financiamiento!</p>
+                                            <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20B10" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-4 py-2 btn-interesa">
+                                                <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Promo 4 -->
+                                <div class="col-md-5">
+                                    <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                                        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548627/AUTOS_DEMO_ul9abk.jpg" class="card-img-top promo-img" alt="Autos Demo">
+                                        <div class="card-body p-4 text-center">
+                                            <h3 class="card-title fw-bold text-dark">Autos Demo</h3>
+                                            <p class="card-text text-dark opacity-75">Tu mejor inversión con precio especial de remate, equipamiento completo y entrega inmediata.</p>
+                                            <a href="paginas_promo/promo-demos.html" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-4 py-2 btn-interesa">
+                                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Me interesa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Controles de Navegación -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="prev" style="width: 4%;">
+                        <i class="fa-solid fa-circle-chevron-left text-dark fs-1 shadow-sm"></i>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="next" style="width: 4%;">
+                        <i class="fa-solid fa-circle-chevron-right text-dark fs-1 shadow-sm"></i>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MODO B: ESCRITORIO CON LAS 4 TARJETAS EN CUADRÍCULA (COMPARATIVA) -->
+            <div id="grid4Wrapper" style="display: none;">
+                <div class="row g-3 justify-content-center">
+                    
+                    <!-- Tarjeta 1 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                            <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548632/RAM_CHASIS_vhuyq5.jpg" class="card-img-top promo-img" alt="RAM 1200 Chasis">
+                            <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="card-title fw-bold text-dark fs-5">RAM 1200 Chasis</h4>
+                                    <p class="card-text text-dark opacity-75 small">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
+                                </div>
+                                <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis." target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-3 py-1 btn-interesa small">
+                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                            <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/RAM_DOBLE_CABINA_gpzsab.jpg" class="card-img-top promo-img" alt="RAM 1200 Doble Cabina">
+                            <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="card-title fw-bold text-dark fs-5">RAM 1200 Doble Cabina</h4>
+                                    <p class="card-text text-dark opacity-75 small">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
+                                </div>
+                                <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20doble%20cabina" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-3 py-1 btn-interesa small">
+                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                            <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/B10__FLOTILLA_vncjpr.jpg" class="card-img-top promo-img" alt="B10">
+                            <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="card-title fw-bold text-dark fs-5">B10</h4>
+                                    <p class="card-text text-dark opacity-75 small">Tecnología 100% eléctrica y máximo confort para viajar.</p>
+                                </div>
+                                <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20B10" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-3 py-1 btn-interesa small">
+                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="promo-card card glass-card border-0 overflow-hidden shadow-lg h-100">
+                            <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548627/AUTOS_DEMO_ul9abk.jpg" class="card-img-top promo-img" alt="Autos Demo">
+                            <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="card-title fw-bold text-dark fs-5">Autos Demo</h4>
+                                    <p class="card-text text-dark opacity-75 small">Tu mejor inversión con precio especial de remate y entrega inmediata.</p>
+                                </div>
+                                <a href="paginas_promo/promo-demos.html" target="_blank" class="btn btn-outline-dark rounded-pill mt-2 px-3 py-1 btn-interesa small">
+                                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Me interesa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MODO C: SIMULADOR DE CELULAR (395px) -->
+        <div class="phone-mockup" id="phoneMockup">
+            <div class="phone-screen">
+                <div class="phone-notch"></div>
+                
+                <div class="p-3 text-center">
+                    <h3 class="fw-bold text-dark mb-1" style="font-size: 1.4rem;">Ofertas Imparables</h3>
+                    <div class="heading-line mb-2" style="width: 40px; height: 3px;"></div>
+                    <p class="text-dark fw-bold mb-2" style="background: rgba(255,255,255,0.8); padding: 4px 10px; border-radius: 14px; font-size: 0.72rem; display: inline-block;">
+                        Las mejores oportunidades para estrenar hoy.
+                    </p>
+                    
+                    <div class="scroll-hint-container mb-3">
+                        <i class="fa-solid fa-hand-pointer fa-bounce"></i> Desliza horizontalmente para ver más <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                    <!-- Carrusel Swipe Táctil Horizontal -->
+                    <div class="mobile-carousel-inner">
+                        
+                        <!-- Tarjeta 1 Móvil -->
+                        <div class="mobile-card-col">
+                            <div class="promo-card card glass-card border-0 overflow-hidden shadow h-100 text-center">
+                                <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548632/RAM_CHASIS_vhuyq5.jpg" class="card-img-top promo-img" alt="RAM 1200 Chasis">
+                                <div class="card-body p-3">
+                                    <h4 class="card-title fw-bold text-dark fs-6">RAM 1200 Chasis</h4>
+                                    <p class="card-text text-dark opacity-75" style="font-size: 0.8rem; line-height: 1.3;">Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.</p>
+                                    <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis." target="_blank" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-interesa" style="font-size: 0.82rem;">
+                                        <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 2 Móvil -->
+                        <div class="mobile-card-col">
+                            <div class="promo-card card glass-card border-0 overflow-hidden shadow h-100 text-center">
+                                <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/RAM_DOBLE_CABINA_gpzsab.jpg" class="card-img-top promo-img" alt="RAM 1200 Doble Cabina">
+                                <div class="card-body p-3">
+                                    <h4 class="card-title fw-bold text-dark fs-6">RAM 1200 Doble Cabina</h4>
+                                    <p class="card-text text-dark opacity-75" style="font-size: 0.8rem; line-height: 1.3;">El máximo poder para tu negocio. Descubre los beneficios exclusivos.</p>
+                                    <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20doble%20cabina" target="_blank" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-interesa" style="font-size: 0.82rem;">
+                                        <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 3 Móvil -->
+                        <div class="mobile-card-col">
+                            <div class="promo-card card glass-card border-0 overflow-hidden shadow h-100 text-center">
+                                <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548631/B10__FLOTILLA_vncjpr.jpg" class="card-img-top promo-img" alt="B10">
+                                <div class="card-body p-3">
+                                    <h4 class="card-title fw-bold text-dark fs-6">B10</h4>
+                                    <p class="card-text text-dark opacity-75" style="font-size: 0.8rem; line-height: 1.3;">Tecnología 100% eléctrica y máximo confort para transformar tu forma de viajar.</p>
+                                    <a href="https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20B10" target="_blank" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-interesa" style="font-size: 0.82rem;">
+                                        <i class="fa-brands fa-whatsapp text-success me-1"></i> Me interesa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 4 Móvil -->
+                        <div class="mobile-card-col">
+                            <div class="promo-card card glass-card border-0 overflow-hidden shadow h-100 text-center">
+                                <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548627/AUTOS_DEMO_ul9abk.jpg" class="card-img-top promo-img" alt="Autos Demo">
+                                <div class="card-body p-3">
+                                    <h4 class="card-title fw-bold text-dark fs-6">Autos Demo</h4>
+                                    <p class="card-text text-dark opacity-75" style="font-size: 0.8rem; line-height: 1.3;">Tu mejor inversión con precio especial de remate y entrega inmediata.</p>
+                                    <a href="paginas_promo/promo-demos.html" target="_blank" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-interesa" style="font-size: 0.82rem;">
+                                        <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Me interesa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function setMode(mode) {
+            // Actualizar botones
+            document.querySelectorAll('.btn-view-toggle').forEach(b => b.classList.remove('active'));
+            
+            const stage = document.getElementById('previewStage');
+            const desktopWrap = document.getElementById('desktopViewWrapper');
+            const carouselWrap = document.getElementById('ofertasCarouselWrapper');
+            const gridWrap = document.getElementById('grid4Wrapper');
+            const phone = document.getElementById('phoneMockup');
+
+            if (mode === 'desktop-carousel') {
+                document.getElementById('btnModeDesktopCarousel').classList.add('active');
+                desktopWrap.style.display = 'block';
+                carouselWrap.style.display = 'block';
+                gridWrap.style.display = 'none';
+                phone.style.display = 'none';
+                stage.className = 'preview-stage bg-landing-desktop';
+            } else if (mode === 'desktop-grid') {
+                document.getElementById('btnModeDesktopGrid').classList.add('active');
+                desktopWrap.style.display = 'block';
+                carouselWrap.style.display = 'none';
+                gridWrap.style.display = 'block';
+                phone.style.display = 'none';
+                stage.className = 'preview-stage bg-landing-desktop';
+            } else if (mode === 'mobile') {
+                document.getElementById('btnModeMobile').classList.add('active');
+                desktopWrap.style.display = 'none';
+                phone.style.display = 'block';
+                stage.className = 'preview-stage bg-dark';
+            }
+        }
+
+        function changeBg(type) {
+            const stage = document.getElementById('previewStage');
+            
+            if (type === 'landing') {
+                stage.className = 'preview-stage bg-landing-desktop';
+            } else if (type === 'dark') {
+                stage.className = 'preview-stage bg-dark';
+            } else if (type === 'light') {
+                stage.className = 'preview-stage bg-light';
+            }
+        }
+    </script>
+</body>
+</html>

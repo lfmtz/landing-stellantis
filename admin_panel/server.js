@@ -2820,7 +2820,7 @@ function generateIndexHtml(dbData) {
       let fBenefitsSnippet = '';
       const validFBenefits = (fVehicle.benefits || []).filter(b => b && b.trim()).slice(0, 3);
       if (validFBenefits.length > 0) {
-        const items = validFBenefits.map(b => `<li class="d-flex align-items-center gap-2 mb-2 text-white-50"><i class="fa-solid fa-circle-check" style="color: ${fAccent}; font-size: 0.9rem;"></i> <span class="text-white">${b}</span></li>`).join('');
+        const items = validFBenefits.map(b => `<li class="d-flex align-items-start gap-2 mb-2 text-white-50"><i class="fa-solid fa-circle-check" style="color: ${fAccent}; font-size: 0.88rem; margin-top: 3px; flex-shrink: 0;"></i> <span class="text-white" style="font-size: clamp(0.82rem, 2.8vw, 0.92rem); line-height: 1.35; word-break: break-word;">${b}</span></li>`).join('');
         fBenefitsSnippet = `<ul class="list-unstyled mb-4 p-3 rounded-3 text-start" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">${items}</ul>`;
       }
 
@@ -2828,7 +2828,7 @@ function generateIndexHtml(dbData) {
     <!-- Sección: Auto Destacado (Oferta Estrella) -->
     <section id="auto-destacado" class="py-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #07101e 0%, #0d1a30 100%); border-top: 2px solid ${fAccent}; border-bottom: 2px solid ${fAccent};">
         <div style="position: absolute; top: -40%; right: -15%; width: 500px; height: 500px; background: radial-gradient(circle, ${fAccent}25 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
-        <div class="container py-3">
+        <div class="container py-3 position-relative" style="z-index: 2;">
             <div class="row align-items-center justify-content-center g-4">
                 <div class="col-lg-6 text-center">
                     <div class="position-relative d-inline-block w-100" style="max-width: 520px;">
@@ -2842,28 +2842,28 @@ function generateIndexHtml(dbData) {
                 </div>
 
                 <div class="col-lg-6 text-white text-center text-lg-start ps-lg-4">
-                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 shadow-sm" style="background: rgba(0, 229, 255, 0.1); border: 1px solid ${fAccent}; color: ${fAccent}; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px;">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 shadow-sm" style="background: rgba(0, 229, 255, 0.1); border: 1px solid ${fAccent}; color: ${fAccent}; font-size: clamp(0.75rem, 2.8vw, 0.85rem); font-weight: 700; letter-spacing: 0.5px; max-width: 100%; white-space: normal; text-align: center;">
                         ${fBadge}
                     </div>
 
-                    <h2 class="display-5 fw-bold mb-2 text-white text-uppercase" style="font-family: 'Montserrat', sans-serif;">
+                    <h2 class="display-5 fw-bold mb-2 text-white text-uppercase" style="font-family: 'Montserrat', sans-serif; font-size: clamp(1.5rem, 4.5vw, 2.5rem); line-height: 1.2; word-break: break-word;">
                         ${fVehicle.name}
                     </h2>
 
-                    <p class="lead mb-3 text-white-50" style="font-size: 1rem;">
+                    <p class="lead mb-3 text-white-50" style="font-size: clamp(0.88rem, 3vw, 1rem); line-height: 1.45; word-break: break-word;">
                         ${fTagline}
                     </p>
 
-                    <div class="d-flex align-items-baseline justify-content-center justify-content-lg-start gap-3 mb-3">
+                    <div class="d-flex align-items-center flex-wrap justify-content-center justify-content-lg-start gap-2 gap-sm-3 mb-3">
                         ${fVehicle.listPrice ? `
-                            <span class="text-white-50 text-decoration-line-through fw-bold" style="font-size: 1.15rem;">
+                            <span class="text-white-50 text-decoration-line-through fw-bold" style="font-size: clamp(1rem, 3.5vw, 1.2rem); white-space: nowrap;">
                                 ${fVehicle.listPrice}
                             </span>
                         ` : ''}
-                        <span class="display-6 fw-bold" style="color: ${fAccent}; font-size: 2.3rem; text-shadow: 0 0 20px ${fAccent}66;">
+                        <span class="display-6 fw-bold" style="color: ${fAccent}; font-size: clamp(1.7rem, 6vw, 2.4rem); text-shadow: 0 0 20px ${fAccent}66; white-space: nowrap; line-height: 1;">
                             ${fVehicle.price}
                         </span>
-                        <span class="badge bg-success rounded-pill px-2 py-1" style="font-size: 0.75rem;">¡OFERTA EXCLUSIVA!</span>
+                        <span class="badge bg-success rounded-pill px-2 py-1" style="font-size: 0.75rem; white-space: nowrap;">¡OFERTA EXCLUSIVA!</span>
                     </div>
 
                     ${fBenefitsSnippet}
