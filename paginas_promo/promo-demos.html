@@ -506,6 +506,51 @@
       height: 12px;
     }
 
+    /* Estilos y Animaciones de Promo del Mes / Oportunidad Destacada */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes promoShimmer {
+      0% {
+        transform: translateX(-120%) rotate(25deg);
+      }
+      100% {
+        transform: translateX(250%) rotate(25deg);
+      }
+    }
+
+    .promo-banner-shimmer {
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      animation: promoShimmer 3.8s infinite linear;
+    }
+
+    .card-promo-sticker {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-promo-sticker {
+      transform: scale(1.05);
+    }
+
     .no-promos {
       grid-column: 1 / -1;
       text-align: center;
@@ -812,7 +857,8 @@
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
     <article class="card" id="auto-demos-1788125185325" data-id="demos-1788125185325" data-category="suv" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 2008', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 2008', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788125185325">
         <div class="carousel-track-wrapper">
@@ -880,6 +926,7 @@
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -992,7 +1039,8 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
     </article>
     
     <article class="card" id="auto-demos-1788213953633" data-id="demos-1788213953633" data-category="suv" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 3008', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 3008', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788213953633">
         <div class="carousel-track-wrapper">
@@ -1050,6 +1098,7 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -1182,7 +1231,8 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
     </article>
     
     <article class="card" id="auto-demos-1788217915584" data-id="demos-1788217915584" data-category="familiares" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 5008', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Peugeot 5008', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788217915584">
         <div class="carousel-track-wrapper">
@@ -1250,6 +1300,7 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -1372,7 +1423,8 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
     </article>
     
     <article class="card" id="auto-demos-1788219667089" data-id="demos-1788219667089" data-category="deportivos" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Fiat Abarth', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Fiat Abarth', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788219667089">
         <div class="carousel-track-wrapper">
@@ -1435,6 +1487,7 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -1569,7 +1622,8 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
     </article>
     
     <article class="card" id="auto-demos-1788224377875" data-id="demos-1788224377875" data-category="sedan" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Dodge Attitude', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Dodge Attitude', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788224377875">
         <div class="carousel-track-wrapper">
@@ -1637,6 +1691,7 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -1761,7 +1816,8 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
     </article>
     
     <article class="card" id="auto-demos-1788225819552" data-id="demos-1788225819552" data-category="familiares" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep Grand Cherokee L', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep Grand Cherokee L', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788225819552">
         <div class="carousel-track-wrapper">
@@ -1834,6 +1890,7 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -1962,7 +2019,8 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
     </article>
     
     <article class="card" id="auto-demos-1788228572511" data-id="demos-1788228572511" data-category="todoterreno" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep JT', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep JT', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788228572511">
         <div class="carousel-track-wrapper">
@@ -2025,6 +2083,7 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -2149,7 +2208,8 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
     </article>
     
     <article class="card" id="auto-demos-1788229220176" data-id="demos-1788229220176" data-category="pickup" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 700 Laramie', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 700 Laramie', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788229220176">
         <div class="carousel-track-wrapper">
@@ -2212,6 +2272,7 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -2332,7 +2393,8 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
     </article>
     
     <article class="card" id="auto-demos-1788230028502" data-id="demos-1788230028502" data-category="todoterreno" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep wrangler Sahara', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Jeep wrangler Sahara', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788230028502">
         <div class="carousel-track-wrapper">
@@ -2410,6 +2472,7 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -2436,7 +2499,7 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
               Precio Promoción / Liquidación
             </span>
             <div class="model-price" style="color: #00e5ff; font-size: 2.2rem; font-weight: bold; font-family: var(--fuente); line-height: 1; margin-top: 2px;">
-              $1,249,900
+              $1,260,000
             </div>
           </div>
           
@@ -2539,13 +2602,15 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
 
 Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de arrendamiento puro con beneficios fiscales. No dejes pasar este ahorro irrepetible por tiempo limitado.
 
+Color disponible: Gris Ferroso
+
 👉 Pide tu cotización personalizada aquí y recibe informes de inmediato por WhatsApp:</span>
                 </div>
               
 
               
                 <p class="legal" style="font-size: 0.75rem; color: #999; margin: 0; line-height: 1.3;">
-                  * Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.
+                  * Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas
                 </p>
               
             </div>
@@ -2566,7 +2631,8 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
     </article>
     
     <article class="card" id="auto-demos-1788291129404" data-id="demos-1788291129404" data-category="trabajo" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 Redillas', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 Redillas', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788291129404">
         <div class="carousel-track-wrapper">
@@ -2624,6 +2690,7 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -2764,7 +2831,8 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
     </article>
     
     <article class="card" id="auto-demos-1788292024575" data-id="demos-1788292024575" data-category="trabajo" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 caja', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 caja', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788292024575">
         <div class="carousel-track-wrapper">
@@ -2822,6 +2890,7 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -2962,7 +3031,8 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
     </article>
     
     <article class="card" id="auto-demos-1788306215508" data-id="demos-1788306215508" data-category="pickup" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 Crew Cab', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1200 Crew Cab', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788306215508">
         <div class="carousel-track-wrapper">
@@ -3025,6 +3095,7 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -3157,7 +3228,8 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
     </article>
     
     <article class="card" id="auto-demos-1788308764719" data-id="demos-1788308764719" data-category="suv" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1500 I6 Turbo 4X4', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 1500 I6 Turbo 4X4', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788308764719">
         <div class="carousel-track-wrapper">
@@ -3230,6 +3302,7 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN
@@ -3374,7 +3447,8 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
     </article>
     
     <article class="card" id="auto-demos-1788412278752" data-id="demos-1788412278752" data-category="suv" style="border-top: 5px solid #00e5ff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 4000', 'brand_name': 'demos' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Ram 4000', 'brand_name': 'demos' }); }">
+        
         
       <div class="carousel" id="carousel-demos-1788412278752">
         <div class="carousel-track-wrapper">
@@ -3427,6 +3501,7 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             AUTOS DEMO - LIQUIDACIÓN

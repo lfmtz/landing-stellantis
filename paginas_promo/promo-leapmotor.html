@@ -506,6 +506,51 @@
       height: 12px;
     }
 
+    /* Estilos y Animaciones de Promo del Mes / Oportunidad Destacada */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes promoShimmer {
+      0% {
+        transform: translateX(-120%) rotate(25deg);
+      }
+      100% {
+        transform: translateX(250%) rotate(25deg);
+      }
+    }
+
+    .promo-banner-shimmer {
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      animation: promoShimmer 3.8s infinite linear;
+    }
+
+    .card-promo-sticker {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-promo-sticker {
+      transform: scale(1.05);
+    }
+
     .no-promos {
       grid-column: 1 / -1;
       text-align: center;
@@ -791,12 +836,14 @@
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
     <article class="card" id="auto-leapmotor-1788121201596" data-id="leapmotor-1788121201596" data-category="electricos" style="border-top: 5px solid #3b93a9; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'B10', 'brand_name': 'leapmotor' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'B10', 'brand_name': 'leapmotor' }); }">
+        
         <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM

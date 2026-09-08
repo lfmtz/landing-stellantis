@@ -506,6 +506,51 @@
       height: 12px;
     }
 
+    /* Estilos y Animaciones de Promo del Mes / Oportunidad Destacada */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes promoShimmer {
+      0% {
+        transform: translateX(-120%) rotate(25deg);
+      }
+      100% {
+        transform: translateX(250%) rotate(25deg);
+      }
+    }
+
+    .promo-banner-shimmer {
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      animation: promoShimmer 3.8s infinite linear;
+    }
+
+    .card-promo-sticker {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-promo-sticker {
+      transform: scale(1.05);
+    }
+
     .no-promos {
       grid-column: 1 / -1;
       text-align: center;
@@ -798,12 +843,37 @@
   <div class="grid-promos" style="margin-top: 10px; margin-bottom: 40px;">
     
     <article class="card" id="auto-ram-700" data-id="ram-700" data-category="pickup" style="border-top: 5px solid #000000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 700', 'brand_name': 'ram' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 700', 'brand_name': 'ram' }); }">
+        
+        <div class="card-promo-sticker" style="position: absolute; top: 12px; right: 12px; z-index: 15; background: linear-gradient(135deg, #000000, #0b111e); color: #fff; padding: 6px 14px; border-radius: 30px; font-weight: 800; font-family: var(--fuente); font-size: 0.88rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px #00000080; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; pointer-events: none;">
+          <span style="font-size: 1.05rem;">💳</span>
+          <span>HASTA 30 MESES SIN INTERESES</span>
+        </div>
+      
         <img alt="Promoción RAM 700" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/700_8_26_v8kvej.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
+        <div class="card-special-promo-banner" style="position: relative; overflow: hidden; background: linear-gradient(135deg, #000000 0%, #0d1522 100%); border: 2px solid #000000; border-radius: 8px; padding: 12px 14px; margin-bottom: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.15), 0 0 16px #00000040;">
+          <div class="promo-banner-shimmer"></div>
+          <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
+            <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.4rem; box-shadow: inset 0 0 8px rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.3);">
+              💳
+            </div>
+            <div style="flex-grow: 1; min-width: 0;">
+              <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulseGlow 1.8s infinite;"></span>
+                <span>⭐ PROMO DEL MES</span>
+              </div>
+              <div style="font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 900; line-height: 1.15; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-family: var(--fuente); word-break: break-word;">
+                HASTA 30 MESES SIN INTERESES
+              </div>
+            </div>
+          </div>
+        </div>
+      
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM
@@ -892,12 +962,14 @@
     </article>
     
     <article class="card" id="auto-ram-1200" data-id="ram-1200" data-category="pickup" style="border-top: 5px solid #000000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 1200', 'brand_name': 'ram' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 1200', 'brand_name': 'ram' }); }">
+        
         <img alt="Promoción RAM 1200" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/ram1200cc_8_26_uxz0pd.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM
@@ -986,12 +1058,14 @@
     </article>
     
     <article class="card" id="auto-ram-1200-chasis" data-id="ram-1200-chasis" data-category="chasis" style="border-top: 5px solid #000000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 1200 Chasis', 'brand_name': 'ram' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 1200 Chasis', 'brand_name': 'ram' }); }">
+        
         <img alt="Promoción RAM 1200 Chasis" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/1200chasis_8_26_s4phoc.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM
@@ -1080,12 +1154,14 @@
     </article>
     
     <article class="card" id="auto-ram-4000" data-id="ram-4000" data-category="pickup" style="border-top: 5px solid #000000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 4000', 'brand_name': 'ram' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'RAM 4000', 'brand_name': 'ram' }); }">
+        
         <img alt="Promoción RAM 4000" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/ram4000_8_26_cyqeji.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM
@@ -1170,12 +1246,14 @@
     </article>
     
     <article class="card" id="auto-ram-promaster" data-id="ram-promaster" data-category="trabajo" style="border-top: 5px solid #000000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Promaster', 'brand_name': 'ram' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': 'Promaster', 'brand_name': 'ram' }); }">
+        
         <img alt="Promoción Promaster" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/promaster_8_26_xwawsk.jpg" width="600"/>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             TIENDA OFICIAL 0 KM

@@ -685,6 +685,65 @@
           </div>
         </div>
 
+        <!-- Sección Letrero Destacado: Promo del Mes / Oportunidad (Opcional) -->
+        <div class="form-group promo-mes-config-box" style="background: linear-gradient(135deg, rgba(204, 68, 0, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); border: 2px dashed #CC4400; border-radius: 8px; padding: 16px; margin-top: 8px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <label style="margin-bottom: 0; font-weight: bold; color: #fff; font-size: 0.98rem; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-fire" style="color: #ff5722;"></i> Letrero Destacado: Promo del Mes / Oportunidad (Opcional)
+            </label>
+            <span style="font-size: 0.78rem; color: #94a3b8; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">
+              Solo si deseas mostrar este anuncio extra
+            </span>
+          </div>
+          <p style="font-size: 0.83rem; color: #94a3b8; margin: 0 0 12px 0; line-height: 1.4;">
+            Escribe la promoción especial (ej. <b>30 MESES SIN INTERESES</b> o <b>30 MSI</b>) para que aparezca un letrero grande, vistoso y con los colores oficiales de la marca. Si lo dejas vacío, la publicación se mostrará completamente normal sin ningún anuncio extra.
+          </p>
+
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label for="promoMes" style="font-size: 0.85rem; font-weight: 600; color: #e2e8f0;">Texto Principal del Letrero</label>
+            <input type="text" id="promoMes" placeholder="Ej. HASTA 30 MESES SIN INTERESES o 30 MSI" oninput="updatePromoMesLivePreview()">
+          </div>
+
+          <!-- Botones Rápidos Preset -->
+          <div style="margin-bottom: 12px;">
+            <span style="font-size: 0.76rem; color: #94a3b8; display: block; margin-bottom: 6px; font-weight: 600;">Opciones rápidas con un clic:</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMesPreset('HASTA 30 MESES SIN INTERESES', '⭐ PROMO DEL MES', '💳')" style="font-size: 0.8rem; padding: 5px 10px;">💳 30 MSI</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMesPreset('HASTA 24 MESES SIN INTERESES', '⭐ PROMO DEL MES', '💳')" style="font-size: 0.8rem; padding: 5px 10px;">💳 24 MSI</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMesPreset('TASA DESDE 0% + 0% COMISIÓN', '🔥 TASA PREFERENCIAL', '🔥')" style="font-size: 0.8rem; padding: 5px 10px;">🔥 Tasa 0%</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMesPreset('BONO ESPECIAL DE CONTADO', '🎁 OFERTA ESPECIAL', '🎁')" style="font-size: 0.8rem; padding: 5px 10px;">🎁 Bono Especial</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMesPreset('PRECIO EXCLUSIVO DE FLOTILLA', '⚡ LIQUIDACIÓN', '⚡')" style="font-size: 0.8rem; padding: 5px 10px;">⚡ Flotilla</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="setPromoMesPreset('', '', '')" style="background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #fca5a5; font-size: 0.8rem; padding: 5px 10px;">❌ Quitar Letrero</button>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 10px;">
+            <div class="form-group col-6" style="margin-bottom: 0;">
+              <label for="promoMesTag" style="font-size: 0.85rem; font-weight: 600; color: #e2e8f0;">Etiqueta Superior (Opcional)</label>
+              <input type="text" id="promoMesTag" placeholder="⭐ PROMO DEL MES (por defecto)" oninput="updatePromoMesLivePreview()">
+            </div>
+            <div class="form-group col-6" style="margin-bottom: 0;">
+              <label for="promoMesIcon" style="font-size: 0.85rem; font-weight: 600; color: #e2e8f0;">Ícono del Letrero</label>
+              <select id="promoMesIcon" onchange="updatePromoMesLivePreview()" style="background: #0f172a; color: #fff; border: 1px solid var(--border);">
+                <option value="💳">💳 Tarjeta / Meses Sin Intereses (MSI)</option>
+                <option value="🔥">🔥 Fuego / Oportunidad Caliente</option>
+                <option value="⚡">⚡ Rayo / Oferta Relámpago</option>
+                <option value="🎁">🎁 Regalo / Bono Incluido</option>
+                <option value="⭐">⭐ Estrella / Destacado Oficial</option>
+                <option value="🏷️">🏷️ Etiqueta / Descuento</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Vista Previa en Vivo -->
+          <div id="promoMesPreviewWrapper" style="display: none; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+            <span style="font-size: 0.75rem; color: #00e5ff; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
+              <i class="fa-solid fa-eye"></i> Vista Previa en Tarjeta:
+            </span>
+            <div id="promoMesLivePreview"></div>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="imageURL">URL de la Imagen (Cloudinary / Externa) (800x600 o PNG Transparente)</label>
           <div style="display: flex; gap: 10px; width: 100%;">
@@ -1447,9 +1506,15 @@
     const accentColorHexInput = document.getElementById('accentColorHex');
     accentColorInput.addEventListener('input', (e) => {
       accentColorHexInput.value = e.target.value.toUpperCase();
+      if (typeof updatePromoMesLivePreview === 'function') updatePromoMesLivePreview();
+    });
+    accentColorHexInput.addEventListener('input', (e) => {
+      accentColorInput.value = e.target.value;
+      if (typeof updatePromoMesLivePreview === 'function') updatePromoMesLivePreview();
     });
     accentColorHexInput.addEventListener('change', (e) => {
       accentColorInput.value = e.target.value;
+      if (typeof updatePromoMesLivePreview === 'function') updatePromoMesLivePreview();
     });
 
     // Overlay Elements
@@ -1526,6 +1591,10 @@
           ? `<a href="${p.fichaTecnica.trim()}" target="_blank" rel="noopener" style="font-size: 0.75rem; background: #ef4444; color: #fff; padding: 2px 7px; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;" title="Ver Ficha Técnica"><i class="fa-solid fa-file-pdf"></i> Ficha</a>` 
           : '';
 
+        let promoMesAdminBadge = (p.promoMes && p.promoMes.trim()) 
+          ? `<div style="margin-top: 6px;"><span style="background: linear-gradient(135deg, ${p.accentColor || '#CC4400'}, #0f172a); color: #fff; border: 1px solid ${p.accentColor || '#CC4400'}; padding: 3px 8px; border-radius: 4px; font-size: 0.76rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><span style="font-size: 0.9rem;">${p.promoMesIcon || '💳'}</span> ${p.promoMes}</span></div>` 
+          : '';
+
         card.innerHTML = `
           <div class="card-image-wrapper">
             <img src="${p.image ? (p.image.startsWith('http') ? p.image : '../' + p.image) : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
@@ -1535,6 +1604,7 @@
               <div>
                 <h4 style="margin: 0; display: inline-block;">${p.name}</h4>
                 ${pdfBadge}
+                ${promoMesAdminBadge}
               </div>
               <span class="price-badge" style="background-color: ${p.accentColor || '#CC4400'}">${p.price}</span>
             </div>
@@ -2104,6 +2174,51 @@
       textarea.focus();
     };
 
+    // Promo del Mes Helper Functions
+    window.setPromoMesPreset = function(text, tag, icon) {
+      document.getElementById('promoMes').value = text;
+      if (tag) document.getElementById('promoMesTag').value = tag;
+      if (icon) document.getElementById('promoMesIcon').value = icon;
+      updatePromoMesLivePreview();
+    };
+
+    window.updatePromoMesLivePreview = function() {
+      const text = document.getElementById('promoMes').value.trim();
+      const tag = document.getElementById('promoMesTag').value.trim() || 'PROMO DEL MES';
+      const icon = document.getElementById('promoMesIcon').value.trim() || '💳';
+      const accent = document.getElementById('accentColor').value || '#CC4400';
+      const previewWrapper = document.getElementById('promoMesPreviewWrapper');
+      const livePreview = document.getElementById('promoMesLivePreview');
+
+      if (!previewWrapper || !livePreview) return;
+
+      if (!text) {
+        previewWrapper.style.display = 'none';
+        livePreview.innerHTML = '';
+        return;
+      }
+
+      previewWrapper.style.display = 'block';
+      livePreview.innerHTML = `
+        <div style="position: relative; overflow: hidden; background: linear-gradient(135deg, ${accent} 0%, #0d1522 100%); border: 2px solid ${accent}; border-radius: 8px; padding: 12px 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 14px ${accent}40;">
+          <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
+            <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.35rem; border: 1px solid rgba(255,255,255,0.3);">
+              ${icon}
+            </div>
+            <div style="flex-grow: 1; min-width: 0;">
+              <div style="font-size: 0.74rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e;"></span>
+                <span>${tag}</span>
+              </div>
+              <div style="font-size: 1.22rem; font-weight: 900; line-height: 1.15; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); word-break: break-word;">
+                ${text}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
     // Edit Promo Trigger
     window.editPromo = function(id) {
       const p = database[currentBrand].find(x => x.id === id);
@@ -2126,6 +2241,10 @@
       document.getElementById('legal').value = p.legal || '';
       document.getElementById('category').value = p.category || 'suv';
       document.getElementById('fichaTecnica').value = p.fichaTecnica || '';
+      document.getElementById('promoMes').value = p.promoMes || '';
+      document.getElementById('promoMesTag').value = p.promoMesTag || '';
+      document.getElementById('promoMesIcon').value = p.promoMesIcon || '💳';
+      updatePromoMesLivePreview();
 
       // Check if image is an external URL or local
       if (p.image && (p.image.startsWith('http://') || p.image.startsWith('https://'))) {
@@ -2185,6 +2304,10 @@
       document.getElementById('descriptionSize').value = '1.0rem';
       document.getElementById('underlineStyle').value = 'solid';
       document.getElementById('fichaTecnica').value = '';
+      document.getElementById('promoMes').value = '';
+      document.getElementById('promoMesTag').value = '';
+      document.getElementById('promoMesIcon').value = '💳';
+      updatePromoMesLivePreview();
       
       const defaultColors = {
         ram: '#000000',
@@ -2545,6 +2668,9 @@
       formData.append('legal', document.getElementById('legal').value);
       formData.append('category', document.getElementById('category').value);
       formData.append('fichaTecnica', document.getElementById('fichaTecnica').value.trim());
+      formData.append('promoMes', document.getElementById('promoMes').value.trim());
+      formData.append('promoMesTag', document.getElementById('promoMesTag').value.trim());
+      formData.append('promoMesIcon', document.getElementById('promoMesIcon').value.trim());
       
       // Benefits collection
       const benefits = [];

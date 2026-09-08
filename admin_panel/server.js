@@ -200,7 +200,10 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     legal: req.body.legal || '* Promoción válida el mes en curso.',
     accentColor: req.body.accentColor || '#CC4400',
     underlineStyle: req.body.underlineStyle || 'solid',
-    category: req.body.category || 'suv'
+    category: req.body.category || 'suv',
+    promoMes: req.body.promoMes ? req.body.promoMes.trim() : '',
+    promoMesTag: req.body.promoMesTag ? req.body.promoMesTag.trim() : '',
+    promoMesIcon: req.body.promoMesIcon ? req.body.promoMesIcon.trim() : '💳'
   };
 
   const existingIndex = data[brand].findIndex(p => p.id === newPromo.id);
@@ -603,14 +606,55 @@ function generateHtmlForBrand(brand, vehicles) {
       `;
     }
 
+    // Letrero Promocional Destacado del Mes (Opcional - solo si se configuró en el panel)
+    let promoMesBannerHtml = '';
+    let promoMesStickerHtml = '';
+    if (v.promoMes && typeof v.promoMes === 'string' && v.promoMes.trim().length > 0) {
+      const pText = v.promoMes.trim();
+      const pTag = (v.promoMesTag && typeof v.promoMesTag === 'string' && v.promoMesTag.trim().length > 0) ? v.promoMesTag.trim() : 'PROMO DEL MES';
+      const pIcon = (v.promoMesIcon && typeof v.promoMesIcon === 'string' && v.promoMesIcon.trim().length > 0) ? v.promoMesIcon.trim() : '💳';
+      const effectiveAccent = v.accentColor || accentColor;
+
+      // Distintivo compacto flotante en la esquina de la foto
+      promoMesStickerHtml = `
+        <div class="card-promo-sticker" style="position: absolute; top: 12px; right: 12px; z-index: 15; background: linear-gradient(135deg, ${effectiveAccent}, #0b111e); color: #fff; padding: 6px 14px; border-radius: 30px; font-weight: 800; font-family: var(--fuente); font-size: 0.88rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px ${effectiveAccent}80; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; pointer-events: none;">
+          <span style="font-size: 1.05rem;">${pIcon}</span>
+          <span>${pText}</span>
+        </div>
+      `;
+
+      // Letrero grande, vistoso y llamativo dentro de la tarjeta
+      promoMesBannerHtml = `
+        <div class="card-special-promo-banner" style="position: relative; overflow: hidden; background: linear-gradient(135deg, ${effectiveAccent} 0%, #0d1522 100%); border: 2px solid ${effectiveAccent}; border-radius: 8px; padding: 12px 14px; margin-bottom: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.15), 0 0 16px ${effectiveAccent}40;">
+          <div class="promo-banner-shimmer"></div>
+          <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
+            <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.4rem; box-shadow: inset 0 0 8px rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.3);">
+              ${pIcon}
+            </div>
+            <div style="flex-grow: 1; min-width: 0;">
+              <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulseGlow 1.8s infinite;"></span>
+                <span>${pTag}</span>
+              </div>
+              <div style="font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 900; line-height: 1.15; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-family: var(--fuente); word-break: break-word;">
+                ${pText}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     return `
     <article class="card" id="auto-${v.id}" data-id="${v.id}" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
-      <div class="img-container" style="cursor: pointer;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
+      <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
+        ${promoMesStickerHtml}
         ${imgContainerContent}
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
+          ${promoMesBannerHtml}
           <!-- Badge Comercial -->
           <span class="card-badge-comercial" style="background: #000; color: #fff; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 10px; font-family: var(--fuente); letter-spacing: 0.5px; text-transform: uppercase;">
             ${brand === 'demos' ? 'AUTOS DEMO - LIQUIDACIÓN' : 'TIENDA OFICIAL 0 KM'}
@@ -1455,6 +1499,51 @@ function generateHtmlForBrand(brand, vehicles) {
 
     .embed-footer {
       height: 12px;
+    }
+
+    /* Estilos y Animaciones de Promo del Mes / Oportunidad Destacada */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes promoShimmer {
+      0% {
+        transform: translateX(-120%) rotate(25deg);
+      }
+      100% {
+        transform: translateX(250%) rotate(25deg);
+      }
+    }
+
+    .promo-banner-shimmer {
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      animation: promoShimmer 3.8s infinite linear;
+    }
+
+    .card-promo-sticker {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-promo-sticker {
+      transform: scale(1.05);
     }
 
     .no-promos {
