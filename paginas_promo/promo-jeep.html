@@ -2887,6 +2887,23 @@ RUBICON', 'brand_name': 'jeep' }); }">
             targetCard.style.boxShadow = '';
             targetCard.style.transform = '';
           }, 3500);
+
+          // Registrar evento en Google Analytics (view_shared_car)
+          if (!targetCard.dataset.trackedView) {
+            targetCard.dataset.trackedView = 'true';
+            try {
+              var carNameEl = targetCard.querySelector('.model-name span') || targetCard.querySelector('.model-name');
+              var carName = carNameEl ? carNameEl.textContent.trim() : (targetCard.getAttribute('data-id') || 'Auto');
+              if (typeof gtag === 'function') {
+                gtag('event', 'view_shared_car', {
+                  'car_name': carName,
+                  'brand_name': 'jeep',
+                  'car_id': hash,
+                  'source': 'enlace_directo_cliente'
+                });
+              }
+            } catch (e) {}
+          }
         }, 350);
       }
     }
