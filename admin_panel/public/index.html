@@ -649,6 +649,28 @@
         <input type="hidden" id="promoBrand">
         <input type="hidden" id="existingImage">
 
+        <!-- Enlace Directo para Clientes (Visible al Editar) -->
+        <div id="promoShareBox" style="display: none; background: rgba(0, 229, 255, 0.08); border: 1px solid #00e5ff; border-radius: 6px; padding: 12px 14px; margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
+            <span style="font-size: 0.82rem; font-weight: 700; color: #00e5ff; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-link"></i> Enlace Directo para Clientes (enfoca este auto y abre detalles):
+            </span>
+            <span style="font-size: 0.74rem; color: #94a3b8;"><i class="fa-solid fa-eye"></i> El cliente puede explorar todo el catálogo</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="promoDirectLinkInput" readonly style="flex: 1; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 7px 10px; font-size: 0.82rem; border-radius: 4px; outline: none; font-family: monospace;" onclick="this.select()">
+            <button type="button" class="btn btn-sm" id="copyPromoDirectLinkBtn" onclick="copyPromoDirectLinkFromModal()" style="background: #00e5ff; color: #0b1019; font-weight: bold; border: none; padding: 7px 14px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; white-space: nowrap;">
+              <i class="fa-solid fa-copy"></i> Copiar Link
+            </button>
+            <a id="promoDirectLinkWaBtn" href="#" target="_blank" rel="noopener" class="btn btn-sm" style="background: #25d366; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; display: inline-flex; align-items: center; text-decoration: none;" title="Compartir por WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a id="promoDirectLinkOpenBtn" href="#" target="_blank" rel="noopener" class="btn btn-sm" style="background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 7px 10px; border-radius: 4px; display: inline-flex; align-items: center; text-decoration: none;" title="Abrir y probar enlace">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group col-6">
             <label for="name">Nombre del Auto / Modelo</label>
@@ -1610,13 +1632,26 @@
             </div>
             ${p.description ? `<p class="desc-preview">${p.description}</p>` : ''}
             ${benefitsHtml ? `<ul class="benefits-preview">${benefitsHtml}</ul>` : ''}
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-sm" onclick="editPromo('${p.id}')">
-                <i class="fa-solid fa-pen-to-square"></i> Editar
-              </button>
-              <button class="btn btn-danger btn-sm" onclick="deletePromo('${p.id}')">
-                <i class="fa-solid fa-trash-can"></i> Quitar
-              </button>
+            <div style="margin-top: auto; border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="btn btn-sm" onclick="copyCarPublicLink('${currentBrand}', '${p.id}', '${(p.name || '').replace(/'/g, "\\'")}', this)" style="flex: 1; background: #00e5ff; color: #0b1019; font-weight: 700; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 10px; border-radius: 4px; font-size: 0.82rem; cursor: pointer; transition: all 0.2s;" title="Copiar enlace directo para enviar al cliente">
+                  <i class="fa-solid fa-link"></i> Copiar Link Cliente
+                </button>
+                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('¡Hola! Te comparto la información y promoción de ' + p.name + ': https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-' + currentBrand + '.html#auto-' + p.id)}" target="_blank" rel="noopener" class="btn btn-sm" style="background: #25d366; color: #fff; border: none; padding: 7px 11px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Enviar directamente por WhatsApp">
+                  <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i>
+                </a>
+                <button type="button" class="btn btn-sm" onclick="openCarPublicLink('${currentBrand}', '${p.id}')" style="background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 7px 10px; border-radius: 4px; cursor: pointer;" title="Ver cómo lo ve el cliente en la página web">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+              </div>
+              <div class="card-actions" style="margin-top: 0; border-top: none; padding-top: 0;">
+                <button class="btn btn-secondary btn-sm" onclick="editPromo('${p.id}')">
+                  <i class="fa-solid fa-pen-to-square"></i> Editar
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="deletePromo('${p.id}')">
+                  <i class="fa-solid fa-trash-can"></i> Quitar
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -2285,6 +2320,19 @@
       }
       setCopySourceFilter(currentBrand === 'demos' ? 'demos' : 'nuevos', true);
 
+      // Populate Direct Share Box for Clients
+      const shareBox = document.getElementById('promoShareBox');
+      const linkInput = document.getElementById('promoDirectLinkInput');
+      const openBtn = document.getElementById('promoDirectLinkOpenBtn');
+      const waBtn = document.getElementById('promoDirectLinkWaBtn');
+      if (shareBox && linkInput) {
+        const publicUrl = `https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-${currentBrand}.html#auto-${p.id}`;
+        linkInput.value = publicUrl;
+        if (openBtn) openBtn.href = publicUrl;
+        if (waBtn) waBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent('¡Hola! Te comparto la información y promoción de ' + p.name + ': ' + publicUrl)}`;
+        shareBox.style.display = 'block';
+      }
+
       promoModal.classList.add('active');
     };
 
@@ -2344,6 +2392,9 @@
       }
       setCopySourceFilter(currentBrand === 'demos' ? 'demos' : 'nuevos', true);
       
+      const shareBox = document.getElementById('promoShareBox');
+      if (shareBox) shareBox.style.display = 'none';
+
       promoModal.classList.add('active');
     });
 
@@ -2616,6 +2667,63 @@
         toast.style.transform = 'translateY(10px)';
       }, 3000);
     }
+
+    // Helper functions for copying and opening public car links for clients
+    window.copyCarPublicLink = function(brand, id, carName, btnEl) {
+      const url = `https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-${brand}.html#auto-${id}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          if (btnEl) {
+            const origHtml = btnEl.innerHTML;
+            btnEl.innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
+            btnEl.style.background = '#22c55e';
+            btnEl.style.color = '#fff';
+            setTimeout(() => {
+              btnEl.innerHTML = origHtml;
+              btnEl.style.background = '#00e5ff';
+              btnEl.style.color = '#0b1019';
+            }, 2200);
+          }
+          showToast(`¡Enlace copiado de "${carName}"! Listo para pegar y enviar por WhatsApp.`);
+        }).catch(() => {
+          prompt('Copia este enlace directo para tu cliente:', url);
+        });
+      } else {
+        prompt('Copia este enlace directo para tu cliente:', url);
+      }
+    };
+
+    window.openCarPublicLink = function(brand, id) {
+      const url = `https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-${brand}.html#auto-${id}`;
+      window.open(url, '_blank');
+    };
+
+    window.copyPromoDirectLinkFromModal = function() {
+      const input = document.getElementById('promoDirectLinkInput');
+      if (!input) return;
+      input.select();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(input.value).then(() => {
+          const btn = document.getElementById('copyPromoDirectLinkBtn');
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
+            btn.style.background = '#22c55e';
+            btn.style.color = '#fff';
+            setTimeout(() => {
+              btn.innerHTML = orig;
+              btn.style.background = '#00e5ff';
+              btn.style.color = '#0b1019';
+            }, 2200);
+          }
+          showToast('¡Enlace directo copiado al portapapeles!');
+        }).catch(() => {
+          prompt('Copia este enlace directo para tu cliente:', input.value);
+        });
+      } else {
+        prompt('Copia este enlace directo para tu cliente:', input.value);
+      }
+    };
 
     // File Drop Zone handler
     dropZone.addEventListener('click', () => imageFileInput.click());
