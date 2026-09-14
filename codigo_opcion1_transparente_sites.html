@@ -1,0 +1,207 @@
+<!-- ================================================================= -->
+<!-- PORTAL SHOWROOM VIP (FONDO TRANSPARENTE PARA GOOGLE SITES)       -->
+<!-- Úsalo si subes la imagen directamente al fondo de la sección     -->
+<!-- en Google Sites (icono de paleta/imagen > "Subir imagen").       -->
+<!-- Este código creará la tarjeta flotante de cristal sobre tu fondo.-->
+<!-- ================================================================= -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Exclusivo Stellantis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-blue: #0d6efd;
+      --accent-cyan: #00e5ff;
+      --card-bg: rgba(7, 16, 30, 0.82);
+      --card-border: rgba(0, 229, 255, 0.38);
+      --btn-glow: 0 0 20px rgba(0, 229, 255, 0.6), 0 0 40px rgba(13, 110, 253, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent !important;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .portal-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: transparent;
+    }
+
+    .portal-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 229, 255, 0.15);
+    }
+
+    .vip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.45);
+      color: var(--accent-cyan);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+
+    .portal-title {
+      font-size: 1.45rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .portal-title span {
+      background: linear-gradient(135deg, #00e5ff 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .portal-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    .brands-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    .brand-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .btn-portal-primary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 12px;
+      box-shadow: var(--btn-glow);
+      transition: all 0.25s ease;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .btn-portal-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.9);
+    }
+
+    .btn-portal-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #25d366 !important;
+      text-decoration: none !important;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border-radius: 10px;
+    }
+
+    .portal-footer {
+      margin-top: 12px;
+      font-size: 0.7rem;
+      color: #718096;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-wrapper">
+    <div class="portal-card">
+      <div class="vip-badge"><i class="fa-solid fa-gem"></i> Acceso Tarjeta VIP</div>
+      <h1 class="portal-title">Portal Exclusivo <span>Stellantis</span></h1>
+      <p class="portal-desc">Has escaneado tu tarjeta de contacto VIP. Ingresa ahora a nuestro showroom digital:</p>
+      
+      <div class="brands-strip">
+        <span class="brand-pill">RAM</span>
+        <span class="brand-pill">JEEP</span>
+        <span class="brand-pill">DODGE</span>
+        <span class="brand-pill">PEUGEOT</span>
+        <span class="brand-pill">FIAT</span>
+      </div>
+
+      <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-portal-primary">
+        <span>ENTRAR AL SHOWROOM Y VER PROMOCIONES</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+
+      <a href="https://wa.me/525521787900?text=Hola,%20acabo%20de%20escanear%20tu%20tarjeta%20y%20me%20gustaria%20recibir%20asesoria%20sobre%20las%20promociones." target="_top" class="btn-portal-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Hablar con mi Asesor Directo
+      </a>
+
+      <div class="portal-footer">
+        <i class="fa-solid fa-shield-halved"></i> Conexión Segura • Asesor Certificado Stellantis
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

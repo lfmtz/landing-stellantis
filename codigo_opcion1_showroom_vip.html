@@ -1,9 +1,7 @@
 <!-- ================================================================= -->
-<!-- PORTAL SHOWROOM VIP STELLANTIS (LISTO PARA GOOGLE SITES)        -->
-<!-- Instrucciones:                                                  -->
-<!-- 1. En Google Sites da clic en "Insertar" > "Insertar código".   -->
-<!-- 2. Pega todo este código.                                       -->
-<!-- 3. ¡Listo! El fondo de showroom y los enlaces ya están activos. -->
+<!-- PORTAL SHOWROOM VIP STELLANTIS (VERSIÓN OPTIMIZADA Y COMPACTA)   -->
+<!-- Optimizada para Google Sites: encaja perfecto sin deformar la    -->
+<!-- imagen de fondo ni requerir estirar excesivamente el bloque.     -->
 <!-- ================================================================= -->
 
 <!DOCTYPE html>
@@ -12,11 +10,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acceso Exclusivo Stellantis</title>
-  <!-- Fuentes modernas -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Iconos FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -24,10 +20,9 @@
       --primary-blue: #0d6efd;
       --accent-cyan: #00e5ff;
       --dark-bg: #07101e;
-      --card-bg: rgba(13, 25, 48, 0.72);
-      --card-border: rgba(0, 229, 255, 0.35);
-      --text-glow: 0 0 20px rgba(0, 229, 255, 0.6);
-      --btn-glow: 0 0 25px rgba(0, 229, 255, 0.55), 0 0 50px rgba(13, 110, 253, 0.4);
+      --card-bg: rgba(7, 16, 30, 0.78);
+      --card-border: rgba(0, 229, 255, 0.38);
+      --btn-glow: 0 0 20px rgba(0, 229, 255, 0.6), 0 0 40px rgba(13, 110, 253, 0.4);
     }
 
     * {
@@ -39,41 +34,36 @@
 
     html, body {
       width: 100%;
-      min-height: 100vh;
+      height: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: 'Montserrat', sans-serif;
       background-color: var(--dark-bg);
       color: #ffffff;
       overflow-x: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* CONTENEDOR PRINCIPAL CON FONDO */
+    /* CONTENEDOR PRINCIPAL: SE ADAPTA A LA ALTURA QUE LE DES EN GOOGLE SITES */
     .portal-wrapper {
       position: relative;
       width: 100%;
-      min-height: 100vh;
+      min-height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      padding: 16px 14px;
       
-      /* ============================================================= */
-      /* 🖼️ FONDO OFICIAL SHOWROOM STELLANTIS (Alojado y Listo)        */
-      /* ============================================================= */
+      /* IMAGEN SHOWROOM CALIBRADA: NO SE DEFORMA NI HACE ZOOM EXAGERADO */
       background-image: 
-        radial-gradient(circle at 50% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
-        radial-gradient(circle at 50% 80%, rgba(13, 110, 253, 0.18) 0%, transparent 60%),
-        linear-gradient(180deg, rgba(7, 16, 30, 0.75) 0%, rgba(7, 16, 30, 0.88) 100%),
+        radial-gradient(ellipse at center, rgba(7, 16, 30, 0.65) 0%, rgba(7, 16, 30, 0.88) 100%),
         url('https://raw.githubusercontent.com/lfmtz/landing-stellantis/main/imagenes/fondo_portal_google_sites.jpg');
       background-size: cover;
-      background-position: center;
+      background-position: center center;
       background-repeat: no-repeat;
-      background-attachment: fixed;
     }
 
-    /* EFECTO DE LUZ SUPERIOR */
+    /* LÍNEA NEÓN SUPERIOR */
     .portal-wrapper::before {
       content: "";
       position: absolute;
@@ -85,44 +75,44 @@
       box-shadow: 0 0 15px var(--accent-cyan);
     }
 
-    /* TARJETA GLASSMORPHISM */
+    /* TARJETA COMPACTA GLASSMORPHISM */
     .portal-card {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 580px;
+      max-width: 500px;
       background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 38px 28px;
+      border-radius: 20px;
+      padding: 24px 20px;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 229, 255, 0.12);
-      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 229, 255, 0.15);
+      animation: fadeIn 0.6s ease-out;
     }
 
-    @keyframes fadeInScale {
-      0% { opacity: 0; transform: scale(0.94) translateY(20px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* BADGE VIP SUPERIOR */
+    /* BADGE VIP COMPACTO */
     .vip-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(0, 229, 255, 0.12);
-      border: 1px solid rgba(0, 229, 255, 0.4);
+      border: 1px solid rgba(0, 229, 255, 0.45);
       color: var(--accent-cyan);
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      padding: 6px 18px;
+      padding: 4px 14px;
       border-radius: 50px;
-      margin-bottom: 22px;
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+      margin-bottom: 12px;
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
     }
 
     .vip-badge i {
@@ -131,18 +121,18 @@
 
     @keyframes pulseStar {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.8; }
+      50% { transform: scale(1.25); opacity: 0.8; }
     }
 
-    /* TÍTULO Y DESCRIPCIÓN */
+    /* TÍTULO CON IMPACTO */
     .portal-title {
-      font-size: 2rem;
+      font-size: 1.55rem;
       font-weight: 900;
-      line-height: 1.18;
-      margin-bottom: 12px;
+      line-height: 1.2;
+      margin-bottom: 8px;
       color: #ffffff;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .portal-title span {
@@ -151,92 +141,87 @@
       -webkit-text-fill-color: transparent;
     }
 
+    /* DESCRIPCIÓN CONCISA */
     .portal-desc {
       font-family: 'Inter', sans-serif;
-      font-size: 0.96rem;
-      line-height: 1.55;
-      color: #b0c4de;
-      margin-bottom: 28px;
-      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+      margin-bottom: 16px;
     }
 
-    /* INSIGNIAS DE MARCAS */
+    /* MARCAS EN LÍNEA COMPACTA */
     .brands-strip {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 30px;
+      gap: 6px;
+      margin-bottom: 20px;
     }
 
     .brand-pill {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 5px 12px;
-      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       color: #e2e8f0;
       text-transform: uppercase;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
 
     .brand-pill:hover {
-      background: rgba(0, 229, 255, 0.15);
+      background: rgba(0, 229, 255, 0.18);
       border-color: var(--accent-cyan);
       color: var(--accent-cyan);
-      transform: translateY(-2px);
     }
 
-    /* BOTÓN CTA PRINCIPAL - ULTRA ATRACTIVO */
+    /* BOTÓN CTA PRINCIPAL - LLAMATIVO Y DIRECTO */
     .btn-portal-primary {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       width: 100%;
-      padding: 18px 24px;
+      padding: 15px 20px;
       background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
       color: #ffffff !important;
       text-decoration: none !important;
-      font-size: 1.05rem;
+      font-size: 0.96rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      border-radius: 16px;
+      letter-spacing: 1px;
+      border-radius: 14px;
       box-shadow: var(--btn-glow);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
       overflow: hidden;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       cursor: pointer;
       border: none;
-      animation: pulseGlow 2.5s infinite;
+      animation: pulseGlow 2.4s infinite;
     }
 
     @keyframes pulseGlow {
       0%, 100% {
-        box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), 0 0 40px rgba(13, 110, 253, 0.3);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.5), 0 0 30px rgba(13, 110, 253, 0.3);
         transform: scale(1);
       }
       50% {
-        box-shadow: 0 0 35px rgba(0, 229, 255, 0.85), 0 0 65px rgba(13, 110, 253, 0.5);
-        transform: scale(1.02);
+        box-shadow: 0 0 28px rgba(0, 229, 255, 0.85), 0 0 50px rgba(13, 110, 253, 0.5);
+        transform: scale(1.015);
       }
     }
 
     .btn-portal-primary:hover {
-      background: linear-gradient(135deg, #2ae0ff 0%, #1a75ff 100%);
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 0 45px rgba(0, 229, 255, 0.9), 0 0 80px rgba(13, 110, 253, 0.6);
+      background: linear-gradient(135deg, #30e3ff 0%, #1a75ff 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.9), 0 0 60px rgba(13, 110, 253, 0.6);
     }
 
-    .btn-portal-primary:active {
-      transform: translateY(0) scale(0.99);
-    }
-
-    /* EFECTO SHIMMER (DESTELLO PASANTE) */
+    /* DESTELLO LUMINOSO EN EL BOTÓN */
     .btn-portal-primary::after {
       content: "";
       position: absolute;
@@ -247,11 +232,11 @@
       background: linear-gradient(
         60deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.4) 50%,
         rgba(255, 255, 255, 0) 100%
       );
       transform: rotate(25deg);
-      animation: shineLoop 3.2s infinite;
+      animation: shineLoop 3s infinite;
     }
 
     @keyframes shineLoop {
@@ -264,17 +249,17 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
-      padding: 14px 20px;
+      padding: 11px 16px;
       background: rgba(37, 211, 102, 0.12);
       border: 1px solid rgba(37, 211, 102, 0.35);
       color: #25d366 !important;
       text-decoration: none !important;
-      font-size: 0.92rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      border-radius: 14px;
-      transition: all 0.25s ease;
+      border-radius: 12px;
+      transition: all 0.2s ease;
       cursor: pointer;
     }
 
@@ -282,15 +267,14 @@
       background: rgba(37, 211, 102, 0.22);
       border-color: #25d366;
       color: #ffffff !important;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(37, 211, 102, 0.25);
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25);
     }
 
-    /* PIE DE PORTAL */
+    /* PIE */
     .portal-footer {
-      margin-top: 22px;
-      font-size: 0.78rem;
-      color: #8899a6;
+      margin-top: 14px;
+      font-size: 0.72rem;
+      color: #718096;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -301,21 +285,21 @@
       color: var(--accent-cyan);
     }
 
-    /* RESPONSIVE PARA SMARTPHONES */
-    @media (max-width: 480px) {
+    /* RESPONSIVE PARA PANTALLAS PEQUEÑAS */
+    @media (max-width: 440px) {
       .portal-card {
-        padding: 28px 18px;
-        border-radius: 20px;
+        padding: 20px 14px;
+        border-radius: 16px;
       }
       .portal-title {
-        font-size: 1.6rem;
+        font-size: 1.35rem;
       }
       .portal-desc {
-        font-size: 0.88rem;
+        font-size: 0.82rem;
       }
       .btn-portal-primary {
-        font-size: 0.95rem;
-        padding: 16px 18px;
+        font-size: 0.88rem;
+        padding: 14px 16px;
       }
     }
   </style>
@@ -337,7 +321,7 @@
 
       <!-- DESCRIPCIÓN -->
       <p class="portal-desc">
-        Has escaneado tu tarjeta de contacto VIP. Ingresa ahora a nuestro showroom digital con promociones y cotizaciones directas en toda la familia:
+        Has escaneado tu tarjeta de contacto VIP. Ingresa ahora a nuestro showroom digital con promociones exclusivas:
       </p>
 
       <!-- MARCAS -->
@@ -349,15 +333,13 @@
         <span class="brand-pill"><i class="fa-solid fa-car me-1"></i> FIAT</span>
       </div>
 
-      <!-- ============================================================== -->
-      <!-- BOTÓN PRINCIPAL (IMPORTANTE: target="_top" abre en toda la página)-->
-      <!-- ============================================================== -->
+      <!-- BOTÓN PRINCIPAL (target="_top" abre tu landing completa) -->
       <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-portal-primary" id="btnEntrarShowroom">
         <span>ENTRAR AL SHOWROOM Y VER PROMOCIONES</span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
 
-      <!-- BOTÓN WHATSAPP ASESOR -->
+      <!-- BOTÓN WHATSAPP -->
       <a href="https://wa.me/525521787900?text=Hola,%20acabo%20de%20escanear%20tu%20tarjeta%20y%20me%20gustaria%20recibir%20asesoria%20sobre%20las%20promociones." target="_top" class="btn-portal-whatsapp">
         <i class="fa-brands fa-whatsapp"></i> Hablar con mi Asesor Directo
       </a>
