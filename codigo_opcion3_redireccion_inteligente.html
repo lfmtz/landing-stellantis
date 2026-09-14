@@ -1,0 +1,230 @@
+<!-- ================================================================= -->
+<!-- OPCIÓN 3: PANTALLA INTELIGENTE DE TRANSFERENCIA VIP            -->
+<!-- Instrucciones para Google Sites:                               -->
+<!-- 1. En Google Sites da clic en "Insertar" > "Insertar código".  -->
+<!-- 2. Pega todo este código.                                       -->
+<!-- 3. Cambia la variable URL_DE_TU_IMAGEN con el link de tu imagen.-->
+<!-- ================================================================= -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfiriendo a Stellantis VIP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --accent-cyan: #00e5ff;
+      --accent-blue: #0d6efd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #07101e;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      
+      /* 🖼️ FONDO DE LUJO */
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.16) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(7, 16, 30, 0.88) 0%, rgba(7, 16, 30, 0.96) 100%),
+        url('https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .redirect-card {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(13, 24, 45, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 24px;
+      padding: 40px 26px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 229, 255, 0.18);
+    }
+
+    /* SPINNER FUTURISTA */
+    .spinner-box {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 24px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 229, 255, 0.15);
+      border-top-color: var(--accent-cyan);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .spinner-icon {
+      font-size: 1.6rem;
+      color: var(--accent-cyan);
+    }
+
+    .title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .title span {
+      color: var(--accent-cyan);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* BARRA DE PROGRESO */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 10px;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 15px var(--accent-cyan);
+    }
+
+    .countdown-text {
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* BOTÓN DIRECTO */
+    .btn-enter-now {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 14px;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-enter-now:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 45px rgba(0, 229, 255, 0.8);
+    }
+
+    .notice {
+      margin-top: 18px;
+      font-size: 0.76rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="redirect-card">
+    
+    <div class="spinner-box">
+      <div class="spinner-ring"></div>
+      <i class="fa-solid fa-bolt spinner-icon"></i>
+    </div>
+
+    <h2 class="title">Conectando con <span>Stellantis</span></h2>
+    <p class="subtitle">
+      Tu tarjeta inteligente te está transfiriendo a la nueva experiencia interactiva con promociones de este mes.
+    </p>
+
+    <!-- BARRA DE CARGA -->
+    <div class="progress-bar-wrap">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="countdown-text" id="countdownText">Transfiriendo en 3 segundos...</div>
+
+    <!-- BOTÓN INMEDIATO (target="_top" garantiza salida del iframe) -->
+    <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-enter-now" id="btnDirect">
+      <span>ENTRAR DE INMEDIATO</span>
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </a>
+
+    <p class="notice">
+      Si no eres redirigido automáticamente, pulsa el botón de arriba.
+    </p>
+
+  </div>
+
+  <script>
+    var TARGET_URL = "https://lfmtz.github.io/landing-stellantis/";
+    var totalSeconds = 3;
+    var remaining = totalSeconds;
+    var fill = document.getElementById("progressFill");
+    var text = document.getElementById("countdownText");
+
+    var interval = setInterval(function() {
+      remaining -= 0.1;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        fill.style.width = "100%";
+        text.innerText = "¡Abriendo el Showroom...";
+        try {
+          window.top.location.href = TARGET_URL;
+        } catch(e) {
+          window.location.href = TARGET_URL;
+        }
+      } else {
+        var pct = ((totalSeconds - remaining) / totalSeconds) * 100;
+        fill.style.width = pct + "%";
+        text.innerText = "Transfiriendo en " + Math.ceil(remaining) + " segundos...";
+      }
+    }, 100);
+  </script>
+
+</body>
+</html>

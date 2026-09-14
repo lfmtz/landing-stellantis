@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Pre-Landings para Google Sites | Stellantis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-cyan: #00e5ff;
+      --primary-blue: #0d6efd;
+      --dark-navy: #07101e;
+      --dark-card: #0b1528;
+      --border-color: rgba(0, 229, 255, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #040810;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BARRA SUPERIOR DE CONTROL */
+    .top-bar {
+      background: rgba(11, 21, 40, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-badge {
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+      color: #040810;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 0.76rem;
+      color: var(--primary-cyan);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* SELECTOR DE OPCIONES */
+    .options-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+      color: #040810;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+
+    /* CONTROLES DE ACCIÓN */
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .device-toggle {
+      display: flex;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .device-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .device-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--primary-cyan);
+    }
+
+    .btn-copy {
+      background: #00e5ff;
+      color: #07101e;
+      border: none;
+      padding: 9px 18px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+
+    .btn-copy:hover {
+      background: #4df0ff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+    }
+
+    /* BARRA DE URL PERSONALIZADA */
+    .custom-image-bar {
+      background: #07101e;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.85rem;
+    }
+
+    .custom-image-bar label {
+      font-weight: 700;
+      color: var(--primary-cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-image-bar input {
+      flex: 1;
+      min-width: 280px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 8px 14px;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+    }
+
+    .custom-image-bar input:focus {
+      outline: none;
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    }
+
+    .btn-apply-img {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-apply-img:hover {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: var(--primary-cyan);
+    }
+
+    /* ÁREA PRINCIPAL CON IFRAME DE PREVISUALIZACIÓN */
+    .main-workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: radial-gradient(circle at 50% 50%, #081224 0%, #03060d 100%);
+      position: relative;
+    }
+
+    .preview-frame-container {
+      width: 100%;
+      height: calc(100vh - 230px);
+      min-height: 580px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* MODO SMARTPHONE */
+    .preview-frame-container.mobile-view {
+      max-width: 410px;
+      height: 720px;
+      border: 12px solid #1a2333;
+      border-radius: 36px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 229, 255, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-frame-container.desktop-view {
+      max-width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    iframe#previewFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #07101e;
+    }
+
+    /* SECCIÓN DE INSTRUCCIONES RÁPIDAS PARA GOOGLE SITES */
+    .instructions-panel {
+      background: #091222;
+      border-top: 1px solid var(--border-color);
+      padding: 24px;
+    }
+
+    .instructions-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .instructions-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instructions-title i {
+      color: var(--primary-cyan);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-cyan);
+      color: #07101e;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .step-card h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .step-card p {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      line-height: 1.45;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* MODAL DE CÓDIGO */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #0a1322;
+      border: 1px solid var(--primary-cyan);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 780px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 229, 255, 0.2);
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .code-display {
+      width: 100%;
+      height: 320px;
+      background: #040810;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 14px;
+      color: #00e5ff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.8rem;
+      resize: none;
+      white-space: pre;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* TOAST DE COPIADO */
+    .toast-msg {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #00e5ff;
+      color: #07101e;
+      font-weight: 800;
+      padding: 14px 24px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 2000;
+    }
+
+    .toast-msg.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR -->
+  <header class="top-bar">
+    <div class="brand-area">
+      <div class="brand-logo-badge"><i class="fa-solid fa-car"></i></div>
+      <div class="brand-title">
+        <h1>Pre-Landings para Google Sites</h1>
+        <p>Puerta de entrada interactiva desde tus tarjetas de contacto</p>
+      </div>
+    </div>
+
+    <!-- TABS DE DISEÑOS -->
+    <div class="options-tabs">
+      <button class="tab-btn active" onclick="loadOption('codigo_opcion1_showroom_vip.html', this)">
+        <i class="fa-solid fa-gem"></i> Opción 1: Showroom VIP
+      </button>
+      <button class="tab-btn" onclick="loadOption('codigo_opcion2_tarjeta_express.html', this)">
+        <i class="fa-solid fa-id-card"></i> Opción 2: Tarjeta Express
+      </button>
+      <button class="tab-btn" onclick="loadOption('codigo_opcion3_redireccion_inteligente.html', this)">
+        <i class="fa-solid fa-bolt"></i> Opción 3: Redirección Inteligente
+      </button>
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls-group">
+      <div class="device-toggle">
+        <button class="device-btn active" id="btnDeviceMobile" onclick="setDevice('mobile')">
+          <i class="fa-solid fa-mobile-screen"></i> Móvil
+        </button>
+        <button class="device-btn" id="btnDeviceDesktop" onclick="setDevice('desktop')">
+          <i class="fa-solid fa-desktop"></i> Escritorio
+        </button>
+      </div>
+
+      <button class="btn-copy" onclick="openCodeModal()">
+        <i class="fa-solid fa-copy"></i> Obtener Código
+      </button>
+    </div>
+  </header>
+
+  <!-- BARRA DE IMAGEN PERSONALIZADA -->
+  <div class="custom-image-bar">
+    <label><i class="fa-solid fa-image"></i> Probar con tu imagen:</label>
+    <input type="text" id="customImageUrl" placeholder="Pega aquí el enlace de tu imagen de fondo (Cloudinary, Drive o web)...">
+    <button class="btn-apply-img" onclick="applyCustomImage()">Aplicar al Fondo</button>
+  </div>
+
+  <!-- WORKSPACE DE PREVISUALIZACIÓN -->
+  <main class="main-workspace">
+    <div class="preview-frame-container mobile-view" id="frameContainer">
+      <iframe id="previewFrame" src="codigo_opcion1_showroom_vip.html"></iframe>
+    </div>
+  </main>
+
+  <!-- PANEL DE INSTRUCCIONES -->
+  <section class="instructions-panel">
+    <div class="instructions-content">
+      <div class="instructions-title">
+        <i class="fa-solid fa-circle-question"></i> ¿Cómo colocar este código en tu Google Sites?
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4>Abre tu Google Sites</h4>
+          <p>Entra a tu editor en Google Sites en la página <strong>promo_stellantis</strong>.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4>Insertar Código</h4>
+          <p>En el menú lateral derecho da clic en <strong>Insertar</strong> > <strong>Insertar</strong> (&lt;/&gt;) > pestaña <strong>Insertar código</strong>.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4>Pega el Código</h4>
+          <p>Pega el código que copiaste aquí y da clic en <strong>Siguiente</strong> y luego <strong>Insertar</strong>.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h4>Ajusta el Tamaño</h4>
+          <p>Arrastra los puntos azules del marco para expandirlo a todo el ancho y alto deseado, ¡y publica!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE CÓDIGO -->
+  <div class="modal-overlay" id="codeModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Código para Google Sites</h3>
+        <button class="modal-close" onclick="closeCodeModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.86rem; color:#94a3b8; margin-bottom: 12px;">
+          Copia todo este código y pégalo en Google Sites (Insertar &gt; Insertar código):
+        </p>
+        <textarea class="code-display" id="codeDisplay" readonly></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-apply-img" onclick="closeCodeModal()">Cerrar</button>
+        <button class="btn-copy" onclick="copyModalCode()">
+          <i class="fa-solid fa-check"></i> Copiar al Portapapeles
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIÓN -->
+  <div class="toast-msg" id="toastMsg">
+    <i class="fa-solid fa-circle-check"></i> ¡Código copiado con éxito! Listo para pegar en Google Sites.
+  </div>
+
+  <script>
+    var currentFile = 'codigo_opcion1_showroom_vip.html';
+    var customImg = '';
+
+    function loadOption(fileName, btn) {
+      currentFile = fileName;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      var frame = document.getElementById('previewFrame');
+      frame.src = fileName;
+      
+      frame.onload = function() {
+        if (customImg) {
+          applyCustomImage();
+        }
+      };
+    }
+
+    function setDevice(type) {
+      var container = document.getElementById('frameContainer');
+      var btnMob = document.getElementById('btnDeviceMobile');
+      var btnDesk = document.getElementById('btnDeviceDesktop');
+
+      if (type === 'mobile') {
+        container.className = 'preview-frame-container mobile-view';
+        btnMob.classList.add('active');
+        btnDesk.classList.remove('active');
+      } else {
+        container.className = 'preview-frame-container desktop-view';
+        btnDesk.classList.add('active');
+        btnMob.classList.remove('active');
+      }
+    }
+
+    function applyCustomImage() {
+      var url = document.getElementById('customImageUrl').value.trim();
+      if (!url) return;
+      customImg = url;
+
+      var frame = document.getElementById('previewFrame');
+      try {
+        var doc = frame.contentDocument || frame.contentWindow.document;
+        var wrapper = doc.querySelector('.portal-wrapper') || doc.querySelector('body');
+        if (wrapper) {
+          wrapper.style.backgroundImage = "radial-gradient(circle at 50% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 60%), linear-gradient(180deg, rgba(7, 16, 30, 0.82) 0%, rgba(7, 16, 30, 0.94) 100%), url('" + url + "')";
+        }
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function openCodeModal() {
+      fetch(currentFile)
+        .then(response => response.text())
+        .then(code => {
+          if (customImg) {
+            // Reemplazar la imagen por defecto con la personalizada
+            code = code.replace(/url\('[^']+'\)/g, "url('" + customImg + "')");
+          }
+          document.getElementById('codeDisplay').value = code;
+          document.getElementById('modalTitle').innerText = 'Código: ' + (
+            currentFile.includes('opcion1') ? 'Opción 1 (Showroom VIP)' :
+            currentFile.includes('opcion2') ? 'Opción 2 (Tarjeta Express)' :
+            'Opción 3 (Redirección Inteligente)'
+          );
+          document.getElementById('codeModal').style.display = 'flex';
+        })
+        .catch(err => alert('No se pudo leer el archivo de código. Abre el archivo ' + currentFile + ' directamente.'));
+    }
+
+    function closeCodeModal() {
+      document.getElementById('codeModal').style.display = 'none';
+    }
+
+    function copyModalCode() {
+      var textarea = document.getElementById('codeDisplay');
+      textarea.select();
+      navigator.clipboard.writeText(textarea.value).then(function() {
+        showToast();
+      }).catch(function() {
+        document.execCommand('copy');
+        showToast();
+      });
+    }
+
+    function showToast() {
+      var toast = document.getElementById('toastMsg');
+      toast.classList.add('show');
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+
+</body>
+</html>

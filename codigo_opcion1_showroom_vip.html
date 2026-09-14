@@ -1,0 +1,375 @@
+<!-- ================================================================= -->
+<!-- OPCIÓN 1: PORTAL SHOWROOM VIP STELLANTIS                       -->
+<!-- Instrucciones para Google Sites:                               -->
+<!-- 1. En Google Sites da clic en "Insertar" > "Insertar código".  -->
+<!-- 2. Pega todo este código.                                       -->
+<!-- 3. Cambia la variable URL_DE_TU_IMAGEN con el link de tu imagen.-->
+<!-- ================================================================= -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Exclusivo Stellantis</title>
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Iconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-blue: #0d6efd;
+      --accent-cyan: #00e5ff;
+      --dark-bg: #07101e;
+      --card-bg: rgba(13, 25, 48, 0.72);
+      --card-border: rgba(0, 229, 255, 0.35);
+      --text-glow: 0 0 20px rgba(0, 229, 255, 0.6);
+      --btn-glow: 0 0 25px rgba(0, 229, 255, 0.55), 0 0 50px rgba(13, 110, 253, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark-bg);
+      color: #ffffff;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* CONTENEDOR PRINCIPAL CON FONDO */
+    .portal-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      
+      /* ============================================================= */
+      /* 🖼️ AQUÍ PUEDES COLOCAR LA URL DE LA IMAGEN QUE ME PROPORCIONES */
+      /* Si aún no la tienes, este degradado de lujo ya se ve impecable */
+      /* ============================================================= */
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(13, 110, 253, 0.18) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(7, 16, 30, 0.82) 0%, rgba(7, 16, 30, 0.94) 100%),
+        url('https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787360198/fondo_escritorio_imagen_1_ul1thk.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* EFECTO DE LUZ SUPERIOR */
+    .portal-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--primary-blue), transparent);
+      box-shadow: 0 0 15px var(--accent-cyan);
+    }
+
+    /* TARJETA GLASSMORPHISM */
+    .portal-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 580px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 38px 28px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 229, 255, 0.12);
+      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.94) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* BADGE VIP SUPERIOR */
+    .vip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      color: var(--accent-cyan);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 22px;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    }
+
+    .vip-badge i {
+      animation: pulseStar 1.8s infinite;
+    }
+
+    @keyframes pulseStar {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.8; }
+    }
+
+    /* TÍTULO Y DESCRIPCIÓN */
+    .portal-title {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.18;
+      margin-bottom: 12px;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .portal-title span {
+      background: linear-gradient(135deg, #00e5ff 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .portal-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.96rem;
+      line-height: 1.55;
+      color: #b0c4de;
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    /* INSIGNIAS DE MARCAS */
+    .brands-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .brand-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+    }
+
+    .brand-pill:hover {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    /* BOTÓN CTA PRINCIPAL - ULTRA ATRACTIVO */
+    .btn-portal-primary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 18px 24px;
+      background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border-radius: 16px;
+      box-shadow: var(--btn-glow);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      margin-bottom: 14px;
+      cursor: pointer;
+      border: none;
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), 0 0 40px rgba(13, 110, 253, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(0, 229, 255, 0.85), 0 0 65px rgba(13, 110, 253, 0.5);
+        transform: scale(1.02);
+      }
+    }
+
+    .btn-portal-primary:hover {
+      background: linear-gradient(135deg, #2ae0ff 0%, #1a75ff 100%);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 45px rgba(0, 229, 255, 0.9), 0 0 80px rgba(13, 110, 253, 0.6);
+    }
+
+    .btn-portal-primary:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    /* EFECTO SHIMMER (DESTELLO PASANTE) */
+    .btn-portal-primary::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(25deg);
+      animation: shineLoop 3.2s infinite;
+    }
+
+    @keyframes shineLoop {
+      0% { left: -60%; }
+      30%, 100% { left: 140%; }
+    }
+
+    /* BOTÓN SECUNDARIO WHATSAPP */
+    .btn-portal-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 20px;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #25d366 !important;
+      text-decoration: none !important;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 14px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-portal-whatsapp:hover {
+      background: rgba(37, 211, 102, 0.22);
+      border-color: #25d366;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(37, 211, 102, 0.25);
+    }
+
+    /* PIE DE PORTAL */
+    .portal-footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: #8899a6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .portal-footer i {
+      color: var(--accent-cyan);
+    }
+
+    /* RESPONSIVE PARA SMARTPHONES */
+    @media (max-width: 480px) {
+      .portal-card {
+        padding: 28px 18px;
+        border-radius: 20px;
+      }
+      .portal-title {
+        font-size: 1.6rem;
+      }
+      .portal-desc {
+        font-size: 0.88rem;
+      }
+      .btn-portal-primary {
+        font-size: 0.95rem;
+        padding: 16px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-wrapper">
+    <div class="portal-card">
+      
+      <!-- BADGE VIP -->
+      <div class="vip-badge">
+        <i class="fa-solid fa-gem"></i> Acceso Tarjeta VIP
+      </div>
+
+      <!-- TÍTULO -->
+      <h1 class="portal-title">
+        Portal Exclusivo <span>Stellantis</span>
+      </h1>
+
+      <!-- DESCRIPCIÓN -->
+      <p class="portal-desc">
+        Has escaneado tu tarjeta de contacto VIP. Ingresa ahora a nuestro showroom digital con promociones y cotizaciones directas en toda la familia:
+      </p>
+
+      <!-- MARCAS -->
+      <div class="brands-strip">
+        <span class="brand-pill"><i class="fa-solid fa-truck-pickup me-1"></i> RAM</span>
+        <span class="brand-pill"><i class="fa-solid fa-mountain me-1"></i> JEEP</span>
+        <span class="brand-pill"><i class="fa-solid fa-gauge-high me-1"></i> DODGE</span>
+        <span class="brand-pill"><i class="fa-solid fa-shield me-1"></i> PEUGEOT</span>
+        <span class="brand-pill"><i class="fa-solid fa-car me-1"></i> FIAT</span>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- BOTÓN PRINCIPAL (IMPORTANTE: target="_top" abre en toda la página)-->
+      <!-- ============================================================== -->
+      <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-portal-primary" id="btnEntrarShowroom">
+        <span>ENTRAR AL SHOWROOM Y VER PROMOCIONES</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+
+      <!-- BOTÓN WHATSAPP ASESOR -->
+      <a href="https://wa.me/525521787900?text=Hola,%20acabo%20de%20escanear%20tu%20tarjeta%20y%20me%20gustaria%20recibir%20asesoria%20sobre%20las%20promociones." target="_top" class="btn-portal-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Hablar con mi Asesor Directo
+      </a>
+
+      <!-- FOOTER -->
+      <div class="portal-footer">
+        <i class="fa-solid fa-shield-halved"></i> Conexión Segura • Asesor Certificado Stellantis
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
