@@ -337,44 +337,62 @@
     {
       "id": "peugeot-2008",
       "name": "Peugeot 2008",
+      "km": "",
+      "listPrice": "",
       "price": "Desde $458,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787101159/2008_8_26_pxluch.png",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787101159/2008_8_26_pxluch.png"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
-      "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$5,999</b></span> y protección total para tu camino.\r\n<span style=\"color: red; font-weight: bold;\"><b>O tasa de interés del 0%</b></span>",
+      "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$5,999*</b></span> y protección total para tu camino.\r\n<span style=\"color: red; font-weight: bold;\"><b>O 30 MSI*</b></span>",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Incluido en el enganche: Bono hasta $52,000",
+        "Incluido en el enganche: Bono hasta $52,000**",
         "3 años de mantenimiento gratis",
         "0% comisión por apertura",
         "Incluye 4 años de garantía",
         "Incluye protección de llantas"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "suv"
+      "category": "suv",
+      "promoMes": "30 Meses sin intereses*",
+      "promoMesTag": "",
+      "promoMesIcon": "🔥"
     },
     {
       "id": "peugeot-3008",
       "name": "Peugeot 3008",
+      "km": "",
+      "listPrice": "",
       "price": "Desde $629,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/3008_8_26_nteftv.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/3008_8_26_nteftv.jpg"
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%203008",
-      "description": "Sofisticación y potencia en cada detalle. Lévatelo con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$7,999</b></span> y beneficios exclusivos de mantenimiento.",
+      "description": "Sofisticación y potencia en cada detalle. Lévatelo con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$7,999**</b></span> y beneficios exclusivos de mantenimiento.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Incluido en el enganche: Bono hasta $25,000",
+        "Incluido en el enganche: Bono hasta $25,000**",
         "3 años de mantenimiento gratis",
         "0% comisión por apertura",
         "Incluye 4 años de garantía",
         "Incluye protección de llantas"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "suv"
+      "category": "suv",
+      "promoMes": "24 meses sin intereses*",
+      "promoMesTag": "",
+      "promoMesIcon": "🔥"
     },
     {
       "id": "peugeot-rifter",
