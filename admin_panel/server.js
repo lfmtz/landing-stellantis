@@ -85,6 +85,50 @@ function optimizeCloudinaryUrl(url, brand = '') {
   return url;
 }
 
+// Optimize Cloudinary Video URLs helper
+function optimizeCloudinaryVideoUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('cloudinary.com') && url.includes('/video/upload/')) {
+    if (!url.includes('/w_') && !url.includes('/h_') && !url.includes('/c_')) {
+      return url.replace(/(video\/upload\/)(v\d+)/, '$1f_auto,q_auto,w_800,c_limit/$2');
+    } else {
+      if (!url.includes('f_auto') || !url.includes('q_auto')) {
+        return url.replace(/(video\/upload\/)([^/]+)\/(v\d+)/, (match, p1, p2, p3) => {
+          let opts = p2;
+          if (!opts.includes('f_auto')) opts += ',f_auto';
+          if (!opts.includes('q_auto')) opts += ',q_auto';
+          return p1 + opts + '/' + p3;
+        });
+      }
+    }
+  }
+  return url;
+}
+
+// Generate automatic JPG Poster for Cloudinary videos
+function getCloudinaryVideoPoster(url) {
+  if (!url || typeof url !== 'string') return '';
+  if (url.includes('cloudinary.com') && url.includes('/video/upload/')) {
+    let poster = url;
+    if (poster.includes('/video/upload/v')) {
+      poster = poster.replace(/(video\/upload\/)(v\d+)/, '$1f_auto,q_auto,so_1,w_800,c_limit/$2');
+    } else if (poster.includes('/video/upload/')) {
+      poster = poster.replace(/(video\/upload\/)([^/]+)\/(v\d+)/, (match, p1, p2, p3) => {
+        let opts = p2;
+        if (!opts.includes('so_')) opts += ',so_1';
+        if (!opts.includes('f_auto')) opts += ',f_auto';
+        if (!opts.includes('q_auto')) opts += ',q_auto';
+        if (!opts.includes('w_')) opts += ',w_800,c_limit';
+        return p1 + opts + '/' + p3;
+      });
+    }
+    // Replace extension with .jpg
+    poster = poster.replace(/\.[a-zA-Z0-9]+$/, '.jpg');
+    return poster;
+  }
+  return '';
+}
+
 // Parse CSV text respecting quoted fields (RFC 4180 compliant)
 function parseCsv(text) {
   const result = [];
@@ -183,6 +227,32 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     imgPath = finalImages[0];
   }
 
+  // Parse videos (Cloudinary / MP4)
+  let videos = [];
+  if (req.body.videos) {
+    try {
+      const parsedVideos = typeof req.body.videos === 'string' ? JSON.parse(req.body.videos) : req.body.videos;
+      if (Array.isArray(parsedVideos)) {
+        videos = parsedVideos.map(v => {
+          if (typeof v === 'string') {
+            return { url: v.trim(), title: '' };
+          }
+          return {
+            url: v.url ? v.url.trim() : '',
+            title: v.title ? v.title.trim() : ''
+          };
+        }).filter(v => v.url.length > 0);
+      }
+    } catch (e) {
+      console.error('Error parsing videos:', e);
+    }
+  } else if (req.body.id) {
+    const existing = (data[brand] || []).find(p => p.id === req.body.id);
+    if (existing && existing.videos) {
+      videos = existing.videos;
+    }
+  }
+
   const newPromo = {
     id: req.body.id || `${brand}-${Date.now()}`,
     name: req.body.name,
@@ -191,6 +261,7 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     price: req.body.price,
     image: imgPath,
     images: finalImages, // Save gallery array
+    videos: videos, // Save videos array
     whatsapp: req.body.whatsapp || `https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20gama%20${brand}`,
     description: req.body.description || '',
     descriptionSize: req.body.descriptionSize || '1.0rem',
@@ -520,22 +591,83 @@ function generateHtmlForBrand(brand, vehicles) {
       imageSrc = `../${imageSrc}`;
     }
 
-    let imgContainerContent = '';
-    if (v.images && Array.isArray(v.images) && v.images.length > 1) {
-      const slidesHtml = v.images.map((imgUrl, idx) => {
-        let src = optimizeCloudinaryUrl(imgUrl, brand);
-        if (src && !src.startsWith('http') && !src.startsWith('../')) {
-          src = `../${src}`;
+    // Prepare multimedia items (videos + gallery images)
+    const mediaItems = [];
+    if (v.videos && Array.isArray(v.videos) && v.videos.length > 0) {
+      v.videos.forEach((vid, vidIdx) => {
+        const vUrl = typeof vid === 'string' ? vid : (vid.url || '');
+        const vTitle = typeof vid === 'string' ? '' : (vid.title || '');
+        if (vUrl.trim()) {
+          mediaItems.push({
+            type: 'video',
+            url: vUrl.trim(),
+            title: vTitle.trim()
+          });
         }
-        return `
+      });
+    }
+
+    if (v.images && Array.isArray(v.images) && v.images.length > 0) {
+      v.images.forEach(imgUrl => {
+        if (imgUrl && typeof imgUrl === 'string' && imgUrl.trim()) {
+          if (!mediaItems.some(m => m.type === 'image' && m.url === imgUrl.trim())) {
+            mediaItems.push({
+              type: 'image',
+              url: imgUrl.trim()
+            });
+          }
+        }
+      });
+    } else if (v.image && typeof v.image === 'string' && v.image.trim()) {
+      mediaItems.push({
+        type: 'image',
+        url: v.image.trim()
+      });
+    }
+
+    let imgContainerContent = '';
+    if (mediaItems.length > 1) {
+      const slidesHtml = mediaItems.map((item, idx) => {
+        if (item.type === 'video') {
+          const videoSrc = optimizeCloudinaryVideoUrl(item.url);
+          const posterUrl = getCloudinaryVideoPoster(item.url);
+          const badgeHtml = item.title ? `
+          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid ${v.accentColor || accentColor}; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-circle-play" style="color: ${v.accentColor || accentColor};"></i>
+            <span>${item.title}</span>
+          </div>` : '';
+
+          return `
+        <div class="carousel-slide video-slide">
+          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+            ${badgeHtml}
+            <video class="card-video-carousel" controls playsinline preload="metadata" ${posterUrl ? `poster="${posterUrl}"` : ''} style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': '${v.name}', 'brand_name': '${brand}', 'video_title': '${item.title || 'Video'}' }); }">
+              <source src="${videoSrc}" type="video/mp4">
+              Tu navegador no soporta reproducción de video.
+            </video>
+          </div>
+        </div>`;
+        } else {
+          let src = optimizeCloudinaryUrl(item.url, brand);
+          if (src && !src.startsWith('http') && !src.startsWith('../')) {
+            src = `../${src}`;
+          }
+          return `
         <div class="carousel-slide">
           <img src="${src}" alt="${v.name} - Foto ${idx+1}" class="card-img-carousel" loading="lazy" />
         </div>`;
+        }
       }).join('');
 
-      const indicatorsHtml = v.images.map((_, idx) => `
-        <span class="indicator ${idx === 0 ? 'active' : ''}" onclick="setCarouselSlide('${v.id}', ${idx}, event)"></span>
-      `).join('');
+      const indicatorsHtml = mediaItems.map((item, idx) => {
+        const isVideo = item.type === 'video';
+        const activeClass = idx === 0 ? 'active' : '';
+        const videoClass = isVideo ? 'video-indicator' : '';
+        const titleAttr = isVideo ? (item.title || `Video ${idx+1}`) : `Foto ${idx+1}`;
+        const iconHtml = isVideo ? `<i class="fa-solid fa-play" style="font-size: 6px;"></i>` : '';
+        return `
+        <span class="indicator ${videoClass} ${activeClass}" onclick="setCarouselSlide('${v.id}', ${idx}, event)" title="${titleAttr}">${iconHtml}</span>`;
+      }).join('');
 
       imgContainerContent = `
       <div class="carousel" id="carousel-${v.id}">
@@ -544,11 +676,29 @@ function generateHtmlForBrand(brand, vehicles) {
             ${slidesHtml}
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('${v.id}', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('${v.id}', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('${v.id}', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('${v.id}', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           ${indicatorsHtml}
         </div>
+      </div>`;
+    } else if (mediaItems.length === 1 && mediaItems[0].type === 'video') {
+      const item = mediaItems[0];
+      const videoSrc = optimizeCloudinaryVideoUrl(item.url);
+      const posterUrl = getCloudinaryVideoPoster(item.url);
+      const badgeHtml = item.title ? `
+      <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid ${v.accentColor || accentColor}; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+        <i class="fa-solid fa-circle-play" style="color: ${v.accentColor || accentColor};"></i>
+        <span>${item.title}</span>
+      </div>` : '';
+
+      imgContainerContent = `
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+        ${badgeHtml}
+        <video class="card-img" controls playsinline preload="metadata" ${posterUrl ? `poster="${posterUrl}"` : ''} style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': '${v.name}', 'brand_name': '${brand}', 'video_title': '${item.title || 'Video'}' }); }">
+          <source src="${videoSrc}" type="video/mp4">
+          Tu navegador no soporta reproducción de video.
+        </video>
       </div>`;
     } else {
       imgContainerContent = `<img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>`;
@@ -1380,16 +1530,27 @@ function generateHtmlForBrand(brand, vehicles) {
       z-index: 10;
     }
     .carousel-indicators .indicator {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.6);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .carousel-indicators .indicator.active {
       background: #fff;
-      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+      transform: scale(1.15);
+    }
+    .carousel-indicators .indicator.video-indicator {
+      border-radius: 4px;
+      width: 18px;
+      height: 12px;
     }
 
     .card-header {
@@ -2817,6 +2978,17 @@ function generateHtmlForBrand(brand, vehicles) {
       var state = carouselStates[id];
       if (!state) return;
       
+      // Pausar cualquier video activo en este carrusel
+      var carouselEl = document.getElementById('carousel-' + id);
+      if (carouselEl) {
+        var vids = carouselEl.querySelectorAll('video');
+        vids.forEach(function(v) {
+          if (!v.paused) {
+            v.pause();
+          }
+        });
+      }
+
       state.currentIdx = idx;
       state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
       

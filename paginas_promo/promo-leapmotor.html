@@ -385,16 +385,27 @@
       z-index: 10;
     }
     .carousel-indicators .indicator {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.6);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .carousel-indicators .indicator.active {
       background: #fff;
-      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+      transform: scale(1.15);
+    }
+    .carousel-indicators .indicator.video-indicator {
+      border-radius: 4px;
+      width: 18px;
+      height: 12px;
     }
 
     .card-header {
@@ -843,7 +854,79 @@
           <span>Seguro Gratis + bono especial</span>
         </div>
       
-        <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
+        
+      <div class="carousel" id="carousel-leapmotor-1788121201596">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track">
+            
+        <div class="carousel-slide video-slide">
+          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+            
+          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid #3b93a9; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-circle-play" style="color: #3b93a9;"></i>
+            <span>Presentación Oficial B10</span>
+          </div>
+            <video class="card-video-carousel" controls playsinline preload="metadata" poster="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789221933/b10_1_tzhz08.jpg" style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': 'B10', 'brand_name': 'leapmotor', 'video_title': 'Presentación Oficial B10' }); }">
+              <source src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789221933/b10_1_tzhz08.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video.
+            </video>
+          </div>
+        </div>
+        <div class="carousel-slide video-slide">
+          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+            
+          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid #3b93a9; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-circle-play" style="color: #3b93a9;"></i>
+            <span>ADAS: Alerta de Colisión Frontal (FCW)</span>
+          </div>
+            <video class="card-video-carousel" controls playsinline preload="metadata" poster="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.jpg" style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': 'B10', 'brand_name': 'leapmotor', 'video_title': 'ADAS: Alerta de Colisión Frontal (FCW)' }); }">
+              <source src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video.
+            </video>
+          </div>
+        </div>
+        <div class="carousel-slide video-slide">
+          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+            
+          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid #3b93a9; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-circle-play" style="color: #3b93a9;"></i>
+            <span>ADAS: Advertencia de Colisión Trasera (RCW)</span>
+          </div>
+            <video class="card-video-carousel" controls playsinline preload="metadata" poster="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.jpg" style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': 'B10', 'brand_name': 'leapmotor', 'video_title': 'ADAS: Advertencia de Colisión Trasera (RCW)' }); }">
+              <source src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video.
+            </video>
+          </div>
+        </div>
+        <div class="carousel-slide video-slide">
+          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
+            
+          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid #3b93a9; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-circle-play" style="color: #3b93a9;"></i>
+            <span>ADAS: Monitoreo de Punto Ciego (BSD)</span>
+          </div>
+            <video class="card-video-carousel" controls playsinline preload="metadata" poster="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.jpg" style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': 'B10', 'brand_name': 'leapmotor', 'video_title': 'ADAS: Monitoreo de Punto Ciego (BSD)' }); }">
+              <source src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video.
+            </video>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" alt="B10 - Foto 5" class="card-img-carousel" loading="lazy" />
+        </div>
+          </div>
+        </div>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('leapmotor-1788121201596', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('leapmotor-1788121201596', 1, event)">&#10095;</button>
+        <div class="carousel-indicators">
+          
+        <span class="indicator video-indicator active" onclick="setCarouselSlide('leapmotor-1788121201596', 0, event)" title="Presentación Oficial B10"><i class="fa-solid fa-play" style="font-size: 6px;"></i></span>
+        <span class="indicator video-indicator " onclick="setCarouselSlide('leapmotor-1788121201596', 1, event)" title="ADAS: Alerta de Colisión Frontal (FCW)"><i class="fa-solid fa-play" style="font-size: 6px;"></i></span>
+        <span class="indicator video-indicator " onclick="setCarouselSlide('leapmotor-1788121201596', 2, event)" title="ADAS: Advertencia de Colisión Trasera (RCW)"><i class="fa-solid fa-play" style="font-size: 6px;"></i></span>
+        <span class="indicator video-indicator " onclick="setCarouselSlide('leapmotor-1788121201596', 3, event)" title="ADAS: Monitoreo de Punto Ciego (BSD)"><i class="fa-solid fa-play" style="font-size: 6px;"></i></span>
+        <span class="indicator  " onclick="setCarouselSlide('leapmotor-1788121201596', 4, event)" title="Foto 5"></span>
+        </div>
+      </div>
       </div>
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
@@ -909,6 +992,10 @@
                   <ul class="benefits-list" style="--acento-list: #3b93a9; margin: 0; padding-left: 20px;">
                     
       <li>
+        Sistemas ADAS de Asistencia Avanzada a la Conducción (Pregunta con tu asesor)
+      </li>
+    
+      <li>
         5 años de garantía
       </li>
     
@@ -929,7 +1016,7 @@
               
                 <div class="promo-main" style="font-size: 1.0rem; color: #333333; white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid #3b93a9; padding: 10px 12px; border-radius: 0 4px 4px 0;">
                   <span>El SUV 100% eléctrico del futuro, hoy.
-Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena desde <span style="color: red; font-weight: bold;"><b>$8,799</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.</span>
+Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzados de asistencia a la conducción (ADAS). Pregunta con tu asesor sobre todo el equipamiento disponible. Estrena desde <span style="color: red; font-weight: bold;"><b>$8,799</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.</span>
                 </div>
               
 
@@ -1918,6 +2005,17 @@ Vanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena
       var state = carouselStates[id];
       if (!state) return;
       
+      // Pausar cualquier video activo en este carrusel
+      var carouselEl = document.getElementById('carousel-' + id);
+      if (carouselEl) {
+        var vids = carouselEl.querySelectorAll('video');
+        vids.forEach(function(v) {
+          if (!v.paused) {
+            v.pause();
+          }
+        });
+      }
+
       state.currentIdx = idx;
       state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
       

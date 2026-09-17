@@ -385,16 +385,27 @@
       z-index: 10;
     }
     .carousel-indicators .indicator {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.6);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .carousel-indicators .indicator.active {
       background: #fff;
-      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+      transform: scale(1.15);
+    }
+    .carousel-indicators .indicator.video-indicator {
+      border-radius: 4px;
+      width: 18px;
+      height: 12px;
     }
 
     .card-header {
@@ -896,30 +907,20 @@
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788125185325', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788125185325', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788125185325', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788125185325', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788125185325', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788125185325', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788125185325', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788125185325', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -1072,26 +1073,18 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788213953633', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788213953633', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788213953633', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788213953633', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788213953633', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788213953633', 7, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788213953633', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788213953633', 7, event)" title="Foto 8"></span>
         </div>
       </div>
       </div>
@@ -1270,30 +1263,20 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788217915584', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788217915584', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788217915584', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788217915584', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788217915584', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788217915584', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788217915584', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788217915584', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -1459,28 +1442,19 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788219667089', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788219667089', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788219667089', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788219667089', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788219667089', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788219667089', 8, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788219667089', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788219667089', 8, event)" title="Foto 9"></span>
         </div>
       </div>
       </div>
@@ -1661,30 +1635,20 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788224377875', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788224377875', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788224377875', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788224377875', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788224377875', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788224377875', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788224377875', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788224377875', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -1858,32 +1822,21 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788225819552', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788225819552', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788225819552', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788225819552', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788225819552', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 9, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788225819552', 10, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788225819552', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 9, event)" title="Foto 10"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788225819552', 10, event)" title="Foto 11"></span>
         </div>
       </div>
       </div>
@@ -2055,28 +2008,19 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788228572511', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788228572511', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788228572511', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788228572511', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788228572511', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788228572511', 8, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788228572511', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788228572511', 8, event)" title="Foto 9"></span>
         </div>
       </div>
       </div>
@@ -2244,28 +2188,19 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788229220176', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788229220176', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788229220176', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788229220176', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788229220176', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788229220176', 8, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788229220176', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788229220176', 8, event)" title="Foto 9"></span>
         </div>
       </div>
       </div>
@@ -2419,53 +2354,37 @@ Llévatelo hoy mismo con opciones de financiamiento a tu medida o esquemas de ar
           <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778857/IMG_20260826_103107874_HDR.jpg" alt="Jeep wrangler Sahara - Foto 6" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778846/IMG_20260826_102846094_HDR.jpg" alt="Jeep wrangler Sahara - Foto 7" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778848/IMG_20260826_102854283_HDR.jpg" alt="Jeep wrangler Sahara - Foto 7" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778848/IMG_20260826_102854283_HDR.jpg" alt="Jeep wrangler Sahara - Foto 8" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778850/IMG_20260826_102907039_HDR.jpg" alt="Jeep wrangler Sahara - Foto 8" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778850/IMG_20260826_102907039_HDR.jpg" alt="Jeep wrangler Sahara - Foto 9" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778865/IMG_20260826_103323740_HDR.jpg" alt="Jeep wrangler Sahara - Foto 9" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778865/IMG_20260826_103323740_HDR.jpg" alt="Jeep wrangler Sahara - Foto 10" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778867/IMG_20260826_103336940_HDR.jpg" alt="Jeep wrangler Sahara - Foto 10" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778867/IMG_20260826_103336940_HDR.jpg" alt="Jeep wrangler Sahara - Foto 11" class="card-img-carousel" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778869/IMG_20260826_103429959.jpg" alt="Jeep wrangler Sahara - Foto 12" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778869/IMG_20260826_103429959.jpg" alt="Jeep wrangler Sahara - Foto 11" class="card-img-carousel" loading="lazy" />
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788230028502', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788230028502', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788230028502', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788230028502', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788230028502', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 9, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 10, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788230028502', 11, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788230028502', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 9, event)" title="Foto 10"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788230028502', 10, event)" title="Foto 11"></span>
         </div>
       </div>
       </div>
@@ -2664,26 +2583,18 @@ Color disponible: Gris Ferroso
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788291129404', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788291129404', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788291129404', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788291129404', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788291129404', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788291129404', 7, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788291129404', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788291129404', 7, event)" title="Foto 8"></span>
         </div>
       </div>
       </div>
@@ -2864,26 +2775,18 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788292024575', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788292024575', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788292024575', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788292024575', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788292024575', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788292024575', 7, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788292024575', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788292024575', 7, event)" title="Foto 8"></span>
         </div>
       </div>
       </div>
@@ -3067,28 +2970,19 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788306215508', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788306215508', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788306215508', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788306215508', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788306215508', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788306215508', 8, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788306215508', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788306215508', 8, event)" title="Foto 9"></span>
         </div>
       </div>
       </div>
@@ -3270,32 +3164,21 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788308764719', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788308764719', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788308764719', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788308764719', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788308764719', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 9, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788308764719', 10, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788308764719', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 9, event)" title="Foto 10"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788308764719', 10, event)" title="Foto 11"></span>
         </div>
       </div>
       </div>
@@ -3477,24 +3360,17 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788412278752', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788412278752', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788412278752', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788412278752', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788412278752', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788412278752', 6, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788412278752', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788412278752', 6, event)" title="Foto 7"></span>
         </div>
       </div>
       </div>
@@ -3673,30 +3549,20 @@ Precio de lista: ~~<span style="color: red; font-weight: bold;"><span style="col
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788902922079', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788902922079', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788902922079', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788902922079', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788902922079', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788902922079', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788902922079', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788902922079', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -3901,30 +3767,20 @@ Disponible con financiamiento personalizado o esquemas de arrendamiento flexible
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788905754368', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788905754368', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788905754368', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788905754368', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788905754368', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788905754368', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788905754368', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788905754368', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -4143,30 +3999,20 @@ Diseñamos el plan perfecto para ti con esquemas flexibles de financiamiento o a
         </div>
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('demos-1788906508532', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('demos-1788906508532', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('demos-1788906508532', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('demos-1788906508532', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           
-        <span class="indicator active" onclick="setCarouselSlide('demos-1788906508532', 0, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 1, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 2, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 3, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 4, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 5, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 6, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 7, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 8, event)"></span>
-      
-        <span class="indicator " onclick="setCarouselSlide('demos-1788906508532', 9, event)"></span>
-      
+        <span class="indicator  active" onclick="setCarouselSlide('demos-1788906508532', 0, event)" title="Foto 1"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 1, event)" title="Foto 2"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 2, event)" title="Foto 3"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 3, event)" title="Foto 4"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 4, event)" title="Foto 5"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 5, event)" title="Foto 6"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 6, event)" title="Foto 7"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 7, event)" title="Foto 8"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 8, event)" title="Foto 9"></span>
+        <span class="indicator  " onclick="setCarouselSlide('demos-1788906508532', 9, event)" title="Foto 10"></span>
         </div>
       </div>
       </div>
@@ -5643,6 +5489,17 @@ GAS', 'brand_name': 'demos' }); }">Cotizar</a></td><td data-label="Clasificació
       var state = carouselStates[id];
       if (!state) return;
       
+      // Pausar cualquier video activo en este carrusel
+      var carouselEl = document.getElementById('carousel-' + id);
+      if (carouselEl) {
+        var vids = carouselEl.querySelectorAll('video');
+        vids.forEach(function(v) {
+          if (!v.paused) {
+            v.pause();
+          }
+        });
+      }
+
       state.currentIdx = idx;
       state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
       

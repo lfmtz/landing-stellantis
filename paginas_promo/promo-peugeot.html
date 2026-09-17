@@ -385,16 +385,27 @@
       z-index: 10;
     }
     .carousel-indicators .indicator {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.6);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .carousel-indicators .indicator.active {
       background: #fff;
-      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+      transform: scale(1.15);
+    }
+    .carousel-indicators .indicator.video-indicator {
+      border-radius: 4px;
+      width: 18px;
+      height: 12px;
     }
 
     .card-header {
@@ -3031,6 +3042,17 @@ GAS', 'brand_name': 'peugeot' }); }">
       var state = carouselStates[id];
       if (!state) return;
       
+      // Pausar cualquier video activo en este carrusel
+      var carouselEl = document.getElementById('carousel-' + id);
+      if (carouselEl) {
+        var vids = carouselEl.querySelectorAll('video');
+        vids.forEach(function(v) {
+          if (!v.paused) {
+            v.pause();
+          }
+        });
+      }
+
       state.currentIdx = idx;
       state.track.style.transform = 'translateX(-' + (idx * 100) + '%)';
       

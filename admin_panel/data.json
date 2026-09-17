@@ -485,11 +485,30 @@
       "images": [
         "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg"
       ],
+      "videos": [
+        {
+          "url": "https://res.cloudinary.com/dbxa0pozm/video/upload/v1789221933/b10_1_tzhz08.mp4",
+          "title": "Presentación Oficial B10"
+        },
+        {
+          "url": "https://res.cloudinary.com/dbxa0pozm/video/upload/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.mp4",
+          "title": "ADAS: Alerta de Colisión Frontal (FCW)"
+        },
+        {
+          "url": "https://res.cloudinary.com/dbxa0pozm/video/upload/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.mp4",
+          "title": "ADAS: Advertencia de Colisión Trasera (RCW)"
+        },
+        {
+          "url": "https://res.cloudinary.com/dbxa0pozm/video/upload/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.mp4",
+          "title": "ADAS: Monitoreo de Punto Ciego (BSD)"
+        }
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20B10",
-      "description": "El SUV 100% eléctrico del futuro, hoy.\r\nVanguardia, autonomía extendida y tecnología inteligente a tu alcance. Estrena desde <span style=\"color: red; font-weight: bold;\"><b>$8,799</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.",
+      "description": "El SUV 100% eléctrico del futuro, hoy.\r\nVanguardia, autonomía extendida y tecnología inteligente con sistemas avanzados de asistencia a la conducción (ADAS). Pregunta con tu asesor sobre todo el equipamiento disponible. Estrena desde <span style=\"color: red; font-weight: bold;\"><b>$8,799</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
+        "Sistemas ADAS de Asistencia Avanzada a la Conducción (Pregunta con tu asesor)",
         "5 años de garantía",
         "Protección de llantas",
         "Kit de emergencia"

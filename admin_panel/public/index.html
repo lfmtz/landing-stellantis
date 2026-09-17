@@ -804,6 +804,35 @@
           </div>
         </div>
 
+        <!-- Sección de Videos del Vehículo / Sistemas ADAS -->
+        <div class="form-group" id="videosSection" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <label style="font-weight: bold; color: var(--text-primary); margin-bottom: 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-video" style="color: #00e5ff;"></i> Videos del Vehículo / Sistemas ADAS (Carrusel Multimedia)
+            </label>
+            <span style="font-size: 0.78rem; color: #94a3b8; background: rgba(0, 229, 255, 0.08); border: 1px solid rgba(0, 229, 255, 0.2); padding: 2px 8px; border-radius: 4px;">
+              Cloudinary / MP4
+            </span>
+          </div>
+          <p style="font-size: 0.83rem; color: #94a3b8; margin: 0 0 12px 0; line-height: 1.4;">
+            Pega el enlace de Cloudinary (o cualquier URL MP4) para añadir videos de demostración o sistemas ADAS al carrusel del vehículo. Se optimizan automáticamente con código de ajuste (formato y peso ligero) para clientes que abran el enlace en su celular o correo.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 6px; padding: 12px;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <input type="url" id="videoURLInput" placeholder="URL de video Cloudinary (ej. https://res.cloudinary.com/.../video.mp4)" style="flex: 2; min-width: 260px; margin-bottom: 0; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 8px 12px; border-radius: 4px;">
+              <input type="text" id="videoTitleInput" placeholder="Título / ADAS (ej. Presentación Oficial B10 o Alerta de Colisión)" style="flex: 1; min-width: 200px; margin-bottom: 0; background: #0b1019; color: #fff; border: 1px solid #233143; padding: 8px 12px; border-radius: 4px;">
+              <button type="button" class="btn btn-secondary" onclick="addPromoVideo()" style="padding: 0 18px; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border); color: #00e5ff; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border-radius: 4px;">
+                <i class="fa-solid fa-plus"></i> Añadir Video
+              </button>
+            </div>
+          </div>
+
+          <div id="videosContainer" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Lista de videos cargada dinámicamente -->
+          </div>
+        </div>
+
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; flex-wrap: wrap; gap: 5px;">
             <label for="description" style="margin-bottom: 0;">Descripción Principal / Mensaje de Contacto (CTA)</label>
@@ -1445,6 +1474,156 @@
         }
         
         container.appendChild(wrapper);
+      });
+    };
+
+    // Video & ADAS Management Support
+    let currentPromoVideos = [];
+
+    window.addPromoVideo = function() {
+      const urlInput = document.getElementById('videoURLInput');
+      const titleInput = document.getElementById('videoTitleInput');
+      const url = urlInput ? urlInput.value.trim() : '';
+      const title = titleInput ? titleInput.value.trim() : '';
+      if (!url) {
+        alert('Por favor ingresa una URL de video.');
+        return;
+      }
+      currentPromoVideos.push({ url, title });
+      if (urlInput) urlInput.value = '';
+      if (titleInput) titleInput.value = '';
+      renderPromoVideos();
+    };
+
+    window.removePromoVideo = function(index) {
+      if (index >= 0 && index < currentPromoVideos.length) {
+        currentPromoVideos.splice(index, 1);
+        renderPromoVideos();
+      }
+    };
+
+    window.movePromoVideo = function(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentPromoVideos.length) return;
+      const item = currentPromoVideos.splice(index, 1)[0];
+      currentPromoVideos.splice(newIndex, 0, item);
+      renderPromoVideos();
+    };
+
+    window.renderPromoVideos = function() {
+      const container = document.getElementById('videosContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (!currentPromoVideos || currentPromoVideos.length === 0) {
+        container.innerHTML = '<p style="color: #64748b; font-size: 0.85rem; margin: 0; padding: 12px; text-align: center; border: 1px dashed var(--border); border-radius: 4px; background: rgba(0,0,0,0.1);"><i class="fa-solid fa-video-slash" style="margin-right: 5px;"></i> No hay videos configurados para este vehículo. Pega una URL arriba para agregarlo al carrusel.</p>';
+        return;
+      }
+
+      currentPromoVideos.forEach((vid, idx) => {
+        const itemEl = document.createElement('div');
+        itemEl.style.display = 'flex';
+        itemEl.style.alignItems = 'center';
+        itemEl.style.justifyContent = 'space-between';
+        itemEl.style.padding = '8px 12px';
+        itemEl.style.background = '#0b1019';
+        itemEl.style.border = '1px solid #233143';
+        itemEl.style.borderRadius = '6px';
+        itemEl.style.gap = '10px';
+
+        const leftCol = document.createElement('div');
+        leftCol.style.display = 'flex';
+        leftCol.style.alignItems = 'center';
+        leftCol.style.gap = '10px';
+        leftCol.style.flex = '1';
+        leftCol.style.minWidth = '0';
+
+        const iconBadge = document.createElement('span');
+        iconBadge.style.background = 'rgba(0, 229, 255, 0.15)';
+        iconBadge.style.color = '#00e5ff';
+        iconBadge.style.padding = '4px 8px';
+        iconBadge.style.borderRadius = '4px';
+        iconBadge.style.fontSize = '0.78rem';
+        iconBadge.style.fontWeight = 'bold';
+        iconBadge.style.flexShrink = '0';
+        iconBadge.innerText = `Pos. ${idx + 1}`;
+
+        const textCol = document.createElement('div');
+        textCol.style.display = 'flex';
+        textCol.style.flexDirection = 'column';
+        textCol.style.overflow = 'hidden';
+
+        const titleSpan = document.createElement('span');
+        titleSpan.style.color = '#fff';
+        titleSpan.style.fontWeight = '600';
+        titleSpan.style.fontSize = '0.88rem';
+        titleSpan.innerText = vid.title ? vid.title : 'Video sin título';
+
+        const urlSpan = document.createElement('a');
+        urlSpan.href = vid.url;
+        urlSpan.target = '_blank';
+        urlSpan.rel = 'noopener';
+        urlSpan.style.color = '#64748b';
+        urlSpan.style.fontSize = '0.75rem';
+        urlSpan.style.textDecoration = 'none';
+        urlSpan.style.textOverflow = 'ellipsis';
+        urlSpan.style.overflow = 'hidden';
+        urlSpan.style.whiteSpace = 'nowrap';
+        urlSpan.title = 'Abrir enlace de video';
+        urlSpan.innerText = vid.url;
+
+        textCol.appendChild(titleSpan);
+        textCol.appendChild(urlSpan);
+
+        leftCol.appendChild(iconBadge);
+        leftCol.appendChild(textCol);
+
+        const rightCol = document.createElement('div');
+        rightCol.style.display = 'flex';
+        rightCol.style.gap = '6px';
+        rightCol.style.alignItems = 'center';
+        rightCol.style.flexShrink = '0';
+
+        // Up button
+        if (idx > 0) {
+          const upBtn = document.createElement('button');
+          upBtn.type = 'button';
+          upBtn.className = 'btn btn-secondary btn-sm';
+          upBtn.style.padding = '4px 8px';
+          upBtn.title = 'Mover arriba en el carrusel';
+          upBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+          upBtn.onclick = () => movePromoVideo(idx, -1);
+          rightCol.appendChild(upBtn);
+        }
+
+        // Down button
+        if (idx < currentPromoVideos.length - 1) {
+          const downBtn = document.createElement('button');
+          downBtn.type = 'button';
+          downBtn.className = 'btn btn-secondary btn-sm';
+          downBtn.style.padding = '4px 8px';
+          downBtn.title = 'Mover abajo en el carrusel';
+          downBtn.innerHTML = '<i class="fa-solid fa-arrow-down"></i>';
+          downBtn.onclick = () => movePromoVideo(idx, 1);
+          rightCol.appendChild(downBtn);
+        }
+
+        // Delete button
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'btn btn-danger btn-sm';
+        delBtn.style.padding = '4px 8px';
+        delBtn.style.background = 'rgba(239, 68, 68, 0.2)';
+        delBtn.style.borderColor = '#ef4444';
+        delBtn.style.color = '#fca5a5';
+        delBtn.title = 'Eliminar video';
+        delBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+        delBtn.onclick = () => removePromoVideo(idx);
+        rightCol.appendChild(delBtn);
+
+        itemEl.appendChild(leftCol);
+        itemEl.appendChild(rightCol);
+        container.appendChild(itemEl);
       });
     };
 
@@ -2314,6 +2493,14 @@
       }
       renderMultiImages();
 
+      // Populate videos list
+      if (p.videos && Array.isArray(p.videos)) {
+        currentPromoVideos = p.videos.map(v => typeof v === 'string' ? { url: v, title: '' } : { url: v.url || '', title: v.title || '' });
+      } else {
+        currentPromoVideos = [];
+      }
+      renderPromoVideos();
+
       // Refresh copy benefits dropdown with appropriate initial tab
       if (document.getElementById('copyBenefitsSearch')) {
         document.getElementById('copyBenefitsSearch').value = '';
@@ -2385,6 +2572,9 @@
       
       currentPromoImages = [];
       renderMultiImages();
+
+      currentPromoVideos = [];
+      renderPromoVideos();
 
       // Refresh copy benefits dropdown with appropriate initial tab
       if (document.getElementById('copyBenefitsSearch')) {
@@ -2800,6 +2990,9 @@
         }
       });
       formData.append('imagesData', JSON.stringify(imagesData));
+      
+      // Videos collection
+      formData.append('videos', JSON.stringify(currentPromoVideos));
       
       if (imageFileInput.files[0]) {
         formData.append('image', imageFileInput.files[0]);
