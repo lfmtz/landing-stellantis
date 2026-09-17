@@ -591,83 +591,22 @@ function generateHtmlForBrand(brand, vehicles) {
       imageSrc = `../${imageSrc}`;
     }
 
-    // Prepare multimedia items (videos + gallery images)
-    const mediaItems = [];
-    if (v.videos && Array.isArray(v.videos) && v.videos.length > 0) {
-      v.videos.forEach((vid, vidIdx) => {
-        const vUrl = typeof vid === 'string' ? vid : (vid.url || '');
-        const vTitle = typeof vid === 'string' ? '' : (vid.title || '');
-        if (vUrl.trim()) {
-          mediaItems.push({
-            type: 'video',
-            url: vUrl.trim(),
-            title: vTitle.trim()
-          });
-        }
-      });
-    }
-
-    if (v.images && Array.isArray(v.images) && v.images.length > 0) {
-      v.images.forEach(imgUrl => {
-        if (imgUrl && typeof imgUrl === 'string' && imgUrl.trim()) {
-          if (!mediaItems.some(m => m.type === 'image' && m.url === imgUrl.trim())) {
-            mediaItems.push({
-              type: 'image',
-              url: imgUrl.trim()
-            });
-          }
-        }
-      });
-    } else if (v.image && typeof v.image === 'string' && v.image.trim()) {
-      mediaItems.push({
-        type: 'image',
-        url: v.image.trim()
-      });
-    }
-
     let imgContainerContent = '';
-    if (mediaItems.length > 1) {
-      const slidesHtml = mediaItems.map((item, idx) => {
-        if (item.type === 'video') {
-          const videoSrc = optimizeCloudinaryVideoUrl(item.url);
-          const posterUrl = getCloudinaryVideoPoster(item.url);
-          const badgeHtml = item.title ? `
-          <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid ${v.accentColor || accentColor}; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-            <i class="fa-solid fa-circle-play" style="color: ${v.accentColor || accentColor};"></i>
-            <span>${item.title}</span>
-          </div>` : '';
-
-          return `
-        <div class="carousel-slide video-slide">
-          <div style="position: relative; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
-            ${badgeHtml}
-            <video class="card-video-carousel" controls playsinline preload="metadata" ${posterUrl ? `poster="${posterUrl}"` : ''} style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': '${v.name}', 'brand_name': '${brand}', 'video_title': '${item.title || 'Video'}' }); }">
-              <source src="${videoSrc}" type="video/mp4">
-              Tu navegador no soporta reproducción de video.
-            </video>
-          </div>
-        </div>`;
-        } else {
-          let src = optimizeCloudinaryUrl(item.url, brand);
-          if (src && !src.startsWith('http') && !src.startsWith('../')) {
-            src = `../${src}`;
-          }
-          return `
+    if (v.images && Array.isArray(v.images) && v.images.length > 1) {
+      const slidesHtml = v.images.map((imgUrl, idx) => {
+        let src = optimizeCloudinaryUrl(imgUrl, brand);
+        if (src && !src.startsWith('http') && !src.startsWith('../')) {
+          src = `../${src}`;
+        }
+        return `
         <div class="carousel-slide">
           <img src="${src}" alt="${v.name} - Foto ${idx+1}" class="card-img-carousel" loading="lazy" />
         </div>`;
-        }
       }).join('');
 
-      const indicatorsHtml = mediaItems.map((item, idx) => {
-        const isVideo = item.type === 'video';
-        const activeClass = idx === 0 ? 'active' : '';
-        const videoClass = isVideo ? 'video-indicator' : '';
-        const titleAttr = isVideo ? (item.title || `Video ${idx+1}`) : `Foto ${idx+1}`;
-        const iconHtml = isVideo ? `<i class="fa-solid fa-play" style="font-size: 6px;"></i>` : '';
-        return `
-        <span class="indicator ${videoClass} ${activeClass}" onclick="setCarouselSlide('${v.id}', ${idx}, event)" title="${titleAttr}">${iconHtml}</span>`;
-      }).join('');
+      const indicatorsHtml = v.images.map((_, idx) => `
+        <span class="indicator ${idx === 0 ? 'active' : ''}" onclick="setCarouselSlide('${v.id}', ${idx}, event)"></span>
+      `).join('');
 
       imgContainerContent = `
       <div class="carousel" id="carousel-${v.id}">
@@ -676,32 +615,57 @@ function generateHtmlForBrand(brand, vehicles) {
             ${slidesHtml}
           </div>
         </div>
-        <button class="carousel-control prev" aria-label="Anterior" onclick="moveCarousel('${v.id}', -1, event)">&#10094;</button>
-        <button class="carousel-control next" aria-label="Siguiente" onclick="moveCarousel('${v.id}', 1, event)">&#10095;</button>
+        <button class="carousel-control prev" aria-label="Foto anterior" onclick="moveCarousel('${v.id}', -1, event)">&#10094;</button>
+        <button class="carousel-control next" aria-label="Siguiente foto" onclick="moveCarousel('${v.id}', 1, event)">&#10095;</button>
         <div class="carousel-indicators">
           ${indicatorsHtml}
         </div>
       </div>`;
-    } else if (mediaItems.length === 1 && mediaItems[0].type === 'video') {
-      const item = mediaItems[0];
-      const videoSrc = optimizeCloudinaryVideoUrl(item.url);
-      const posterUrl = getCloudinaryVideoPoster(item.url);
-      const badgeHtml = item.title ? `
-      <div class="video-slide-badge" style="position: absolute; top: 12px; left: 12px; z-index: 12; background: rgba(11, 17, 30, 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-left: 3px solid ${v.accentColor || accentColor}; padding: 5px 12px; border-radius: 4px; font-family: var(--fuente); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-        <i class="fa-solid fa-circle-play" style="color: ${v.accentColor || accentColor};"></i>
-        <span>${item.title}</span>
-      </div>` : '';
-
-      imgContainerContent = `
-      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;">
-        ${badgeHtml}
-        <video class="card-img" controls playsinline preload="metadata" ${posterUrl ? `poster="${posterUrl}"` : ''} style="width: 100%; height: 100%; object-fit: contain; background: #000; display: block;" onplay="if(typeof gtag==='function'){ gtag('event', 'play_car_video', { 'car_name': '${v.name}', 'brand_name': '${brand}', 'video_title': '${item.title || 'Video'}' }); }">
-          <source src="${videoSrc}" type="video/mp4">
-          Tu navegador no soporta reproducción de video.
-        </video>
-      </div>`;
     } else {
       imgContainerContent = `<img alt="Promoción ${v.name}" class="card-img" decoding="async" height="450" loading="lazy" src="${imageSrc}" width="600"/>`;
+    }
+
+    // Video buttons list (compact pills with thumbnails below the car image)
+    let videoListBarHtml = '';
+    if (v.videos && Array.isArray(v.videos) && v.videos.length > 0) {
+      const validVideos = v.videos.filter(vid => {
+        const u = typeof vid === 'string' ? vid : (vid.url || '');
+        return u.trim().length > 0;
+      });
+
+      if (validVideos.length > 0) {
+        const videoButtons = validVideos.map((vid, vIdx) => {
+          const rawUrl = typeof vid === 'string' ? vid.trim() : (vid.url || '').trim();
+          const title = (typeof vid === 'string' ? '' : (vid.title || '')).trim() || `Video ${vIdx + 1}`;
+          const optUrl = optimizeCloudinaryVideoUrl(rawUrl);
+          const poster = getCloudinaryVideoPoster(rawUrl);
+          const isAdas = title.toUpperCase().includes('ADAS') || title.toUpperCase().includes('ALERTA') || title.toUpperCase().includes('COLISIÓN') || title.toUpperCase().includes('COLISION') || title.toUpperCase().includes('PUNTO CIEGO');
+          const badgeText = vIdx === 0 && !isAdas ? '▶ Presentación' : (isAdas ? '⚡ ADAS' : `▶ Video ${vIdx + 1}`);
+
+          return `
+          <button type="button" class="btn-video-item" onclick="openVideoModal('${optUrl}', '${title.replace(/'/g, "\\'")}', '${brand}', '${v.name.replace(/'/g, "\\'")}', event)" title="Ver video completo: ${title}">
+            <div class="video-item-thumb-box">
+              ${poster ? `<img src="${poster}" alt="${title}" class="video-item-thumb" loading="lazy">` : `<div class="video-item-thumb-placeholder"><i class="fa-solid fa-play"></i></div>`}
+              <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
+            </div>
+            <div class="video-item-text">
+              <span class="video-item-badge">${badgeText}</span>
+              <span class="video-item-title">${title}</span>
+            </div>
+          </button>`;
+        }).join('');
+
+        videoListBarHtml = `
+        <div class="card-video-strip">
+          <div class="video-strip-header">
+            <span class="video-strip-label"><i class="fa-solid fa-circle-play" style="color: ${v.accentColor || accentColor};"></i> Videos y Sistemas ADAS (${validVideos.length}):</span>
+            <span class="video-strip-hint">Toca para reproducir <i class="fa-solid fa-arrow-right" style="font-size: 0.65rem;"></i></span>
+          </div>
+          <div class="video-strip-list">
+            ${videoButtons}
+          </div>
+        </div>`;
+      }
     }
 
     // Check if there are any details to display in the accordion
@@ -801,6 +765,7 @@ function generateHtmlForBrand(brand, vehicles) {
         ${promoMesStickerHtml}
         ${imgContainerContent}
       </div>
+      ${videoListBarHtml}
       
       <div class="card-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff;">
         <div>
@@ -1966,6 +1931,247 @@ function generateHtmlForBrand(brand, vehicles) {
       transform: translateY(-3px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
+
+    /* Estilos para la barra compacta de botones de video */
+    .card-video-strip {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      font-family: var(--fuente);
+    }
+    .video-strip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .video-strip-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .video-strip-hint {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .video-strip-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    .video-strip-list::-webkit-scrollbar {
+      height: 4px;
+    }
+    .video-strip-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .btn-video-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 4px 10px 4px 4px;
+      cursor: pointer;
+      text-align: left;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      outline: none;
+      font-family: var(--fuente);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .btn-video-item:hover {
+      border-color: var(--acento);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      background: #fff;
+    }
+    .video-item-thumb-box {
+      position: relative;
+      width: 60px;
+      height: 38px;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+    }
+    .video-item-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-item-thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e293b;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+    .video-item-play-icon {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 0.75rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-video-item:hover .video-item-play-icon {
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--acento);
+      transform: scale(1.15);
+    }
+    .video-item-text {
+      display: flex;
+      flex-direction: column;
+      max-width: 140px;
+    }
+    .video-item-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--acento);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .video-item-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 135px;
+    }
+
+    /* Modal / Lightbox Reproductor de Video */
+    .video-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 25, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .video-modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .video-modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 860px;
+      background: #0f172a;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.15);
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .video-modal-overlay.show .video-modal-content {
+      transform: scale(1);
+    }
+    .video-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: #090d16;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 12px;
+    }
+    .video-modal-title-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #f8fafc;
+      font-family: var(--fuente);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .video-modal-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .video-modal-close {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 26px;
+      line-height: 1;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      outline: none;
+      flex-shrink: 0;
+      font-family: Arial, sans-serif;
+    }
+    .video-modal-close:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #ffffff;
+      transform: rotate(90deg) scale(1.05);
+    }
+    .video-modal-body {
+      position: relative;
+      width: 100%;
+      background: #000;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-modal-body video {
+      width: 100%;
+      height: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      outline: none;
+      display: block;
+    }
   </style>
  </head>
  <body>
@@ -2031,6 +2237,25 @@ function generateHtmlForBrand(brand, vehicles) {
       <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': '${brand}' }); }">
         <img src="${leasingPopupImgSrc}" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
       </a>
+    </div>
+  </div>
+
+  <!-- Modal / Lightbox Reproductor de Video en Pantalla Completa -->
+  <div id="videoPlayerModal" class="video-modal-overlay" style="display: none;" onclick="closeVideoModal(event)">
+    <div class="video-modal-content" onclick="event.stopPropagation()">
+      <div class="video-modal-header">
+        <div class="video-modal-title-box">
+          <i class="fa-solid fa-circle-play" style="color: var(--acento); font-size: 1.1rem;"></i>
+          <span id="videoModalTitle" class="video-modal-title">Reproduciendo video</span>
+        </div>
+        <button class="video-modal-close" id="closeVideoModalBtn" onclick="closeVideoModal(event)" aria-label="Cerrar video">&times;</button>
+      </div>
+      <div class="video-modal-body">
+        <video id="videoModalPlayer" controls playsinline preload="metadata">
+          <source id="videoModalSource" src="" type="video/mp4">
+          Tu navegador no soporta reproducción de video HTML5.
+        </video>
+      </div>
     </div>
   </div>
 
@@ -3050,6 +3275,62 @@ function generateHtmlForBrand(brand, vehicles) {
     }
     window.addEventListener('DOMContentLoaded', checkHashAndFocus);
     window.addEventListener('hashchange', checkHashAndFocus);
+
+    // Video Lightbox Modal functions
+    window.openVideoModal = function(url, title, brandName, carName, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var modal = document.getElementById('videoPlayerModal');
+      var player = document.getElementById('videoModalPlayer');
+      var source = document.getElementById('videoModalSource');
+      var titleEl = document.getElementById('videoModalTitle');
+      if (!modal || !player) return;
+
+      if (titleEl) titleEl.textContent = title || 'Video del Vehículo';
+      if (source) source.src = url;
+      player.load();
+      modal.style.display = 'flex';
+      setTimeout(function() {
+        modal.classList.add('show');
+        player.play().catch(function(err) { console.log('Autoplay notice:', err); });
+      }, 30);
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'play_video_modal', {
+          'video_title': title,
+          'car_name': carName,
+          'brand_name': brandName
+        });
+      }
+    };
+
+    window.closeVideoModal = function(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var modal = document.getElementById('videoPlayerModal');
+      var player = document.getElementById('videoModalPlayer');
+      var source = document.getElementById('videoModalSource');
+      if (!modal) return;
+
+      if (player) {
+        player.pause();
+        if (source) source.src = '';
+      }
+      modal.classList.remove('show');
+      setTimeout(function() {
+        modal.style.display = 'none';
+      }, 300);
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.closeVideoModal(e);
+      }
+    });
 
     // Initialize carousels
     if (document.readyState === 'loading') {
