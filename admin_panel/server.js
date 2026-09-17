@@ -643,7 +643,7 @@ function generateHtmlForBrand(brand, vehicles) {
           const badgeText = vIdx === 0 && !isAdas ? '▶ Presentación' : (isAdas ? '⚡ ADAS' : `▶ Video ${vIdx + 1}`);
 
           return `
-          <button type="button" class="btn-video-item" onclick="openVideoModal('${optUrl}', '${title.replace(/'/g, "\\'")}', '${brand}', '${v.name.replace(/'/g, "\\'")}', event)" title="Ver video completo: ${title}">
+          <button type="button" class="btn-video-item" onclick="openVideoModal('${optUrl}', '${title.replace(/'/g, "\\'")}', '${brand}', '${v.name.replace(/'/g, "\\'")}', '${(poster || '').replace(/'/g, "\\'")}', event)" title="Ver video completo: ${title}">
             <div class="video-item-thumb-box">
               ${poster ? `<img src="${poster}" alt="${title}" class="video-item-thumb" loading="lazy">` : `<div class="video-item-thumb-placeholder"><i class="fa-solid fa-play"></i></div>`}
               <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
@@ -1122,6 +1122,7 @@ function generateHtmlForBrand(brand, vehicles) {
 
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <title>Promociones ${brand.toUpperCase()}</title>
@@ -2172,6 +2173,20 @@ function generateHtmlForBrand(brand, vehicles) {
       outline: none;
       display: block;
     }
+    .video-modal-loader {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
   </style>
  </head>
  <body>
@@ -2251,8 +2266,11 @@ function generateHtmlForBrand(brand, vehicles) {
         <button class="video-modal-close" id="closeVideoModalBtn" onclick="closeVideoModal(event)" aria-label="Cerrar video">&times;</button>
       </div>
       <div class="video-modal-body">
-        <video id="videoModalPlayer" controls playsinline preload="metadata">
-          <source id="videoModalSource" src="" type="video/mp4">
+        <div id="videoModalLoader" class="video-modal-loader" style="display: none;">
+          <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2.4rem; color: var(--acento);"></i>
+          <span style="color: #fff; font-family: var(--fuente); font-size: 1.05rem; margin-top: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Cargando video...</span>
+        </div>
+        <video id="videoModalPlayer" controls playsinline preload="auto">
           Tu navegador no soporta reproducción de video HTML5.
         </video>
       </div>
@@ -3277,24 +3295,36 @@ function generateHtmlForBrand(brand, vehicles) {
     window.addEventListener('hashchange', checkHashAndFocus);
 
     // Video Lightbox Modal functions
-    window.openVideoModal = function(url, title, brandName, carName, event) {
+    window.openVideoModal = function(url, title, brandName, carName, posterUrl, event) {
       if (event) {
         event.preventDefault();
         event.stopPropagation();
       }
       var modal = document.getElementById('videoPlayerModal');
       var player = document.getElementById('videoModalPlayer');
-      var source = document.getElementById('videoModalSource');
       var titleEl = document.getElementById('videoModalTitle');
+      var loader = document.getElementById('videoModalLoader');
       if (!modal || !player) return;
 
       if (titleEl) titleEl.textContent = title || 'Video del Vehículo';
-      if (source) source.src = url;
+      if (posterUrl) {
+        player.poster = posterUrl;
+      } else {
+        player.removeAttribute('poster');
+      }
+
+      if (loader) loader.style.display = 'flex';
+
+      // Asignación directa en el elemento para arranque inmediato de buffer
+      player.src = url;
       player.load();
       modal.style.display = 'flex';
       setTimeout(function() {
         modal.classList.add('show');
-        player.play().catch(function(err) { console.log('Autoplay notice:', err); });
+        var playPromise = player.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function(err) { console.log('Autoplay notice:', err); });
+        }
       }, 30);
 
       if (typeof gtag === 'function') {
@@ -3306,6 +3336,18 @@ function generateHtmlForBrand(brand, vehicles) {
       }
     };
 
+    // Eventos de estado de carga para el reproductor
+    document.addEventListener('DOMContentLoaded', function() {
+      var playerEl = document.getElementById('videoModalPlayer');
+      var loaderEl = document.getElementById('videoModalLoader');
+      if (playerEl && loaderEl) {
+        playerEl.addEventListener('playing', function() { loaderEl.style.display = 'none'; });
+        playerEl.addEventListener('canplay', function() { loaderEl.style.display = 'none'; });
+        playerEl.addEventListener('waiting', function() { loaderEl.style.display = 'flex'; });
+        playerEl.addEventListener('error', function() { loaderEl.style.display = 'none'; });
+      }
+    });
+
     window.closeVideoModal = function(event) {
       if (event) {
         event.preventDefault();
@@ -3313,13 +3355,16 @@ function generateHtmlForBrand(brand, vehicles) {
       }
       var modal = document.getElementById('videoPlayerModal');
       var player = document.getElementById('videoModalPlayer');
-      var source = document.getElementById('videoModalSource');
+      var loader = document.getElementById('videoModalLoader');
       if (!modal) return;
 
       if (player) {
         player.pause();
-        if (source) source.src = '';
+        player.removeAttribute('src');
+        player.removeAttribute('poster');
+        player.load();
       }
+      if (loader) loader.style.display = 'none';
       modal.classList.remove('show');
       setTimeout(function() {
         modal.style.display = 'none';

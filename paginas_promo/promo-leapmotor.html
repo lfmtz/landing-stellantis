@@ -12,6 +12,7 @@
 
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <title>Promociones LEAPMOTOR</title>
@@ -1062,6 +1063,20 @@
       outline: none;
       display: block;
     }
+    .video-modal-loader {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
   </style>
  </head>
  <body>
@@ -1105,7 +1120,7 @@
           </div>
           <div class="video-strip-list">
             
-          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789221933/b10_1_tzhz08.mp4', 'Presentación Oficial B10', 'leapmotor', 'B10', event)" title="Ver video completo: Presentación Oficial B10">
+          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789221933/b10_1_tzhz08.mp4', 'Presentación Oficial B10', 'leapmotor', 'B10', 'https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789221933/b10_1_tzhz08.jpg', event)" title="Ver video completo: Presentación Oficial B10">
             <div class="video-item-thumb-box">
               <img src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789221933/b10_1_tzhz08.jpg" alt="Presentación Oficial B10" class="video-item-thumb" loading="lazy">
               <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
@@ -1115,7 +1130,7 @@
               <span class="video-item-title">Presentación Oficial B10</span>
             </div>
           </button>
-          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.mp4', 'ADAS: Alerta de Colisión Frontal (FCW)', 'leapmotor', 'B10', event)" title="Ver video completo: ADAS: Alerta de Colisión Frontal (FCW)">
+          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.mp4', 'ADAS: Alerta de Colisión Frontal (FCW)', 'leapmotor', 'B10', 'https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.jpg', event)" title="Ver video completo: ADAS: Alerta de Colisión Frontal (FCW)">
             <div class="video-item-thumb-box">
               <img src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_alerta_de_colision_frontal_pmf2uu.jpg" alt="ADAS: Alerta de Colisión Frontal (FCW)" class="video-item-thumb" loading="lazy">
               <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
@@ -1125,7 +1140,7 @@
               <span class="video-item-title">ADAS: Alerta de Colisión Frontal (FCW)</span>
             </div>
           </button>
-          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.mp4', 'ADAS: Advertencia de Colisión Trasera (RCW)', 'leapmotor', 'B10', event)" title="Ver video completo: ADAS: Advertencia de Colisión Trasera (RCW)">
+          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.mp4', 'ADAS: Advertencia de Colisión Trasera (RCW)', 'leapmotor', 'B10', 'https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.jpg', event)" title="Ver video completo: ADAS: Advertencia de Colisión Trasera (RCW)">
             <div class="video-item-thumb-box">
               <img src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222576/b10_Advertencia_de_colisi%C3%B3n_trasera_RCW_gapgug.jpg" alt="ADAS: Advertencia de Colisión Trasera (RCW)" class="video-item-thumb" loading="lazy">
               <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
@@ -1135,7 +1150,7 @@
               <span class="video-item-title">ADAS: Advertencia de Colisión Trasera (RCW)</span>
             </div>
           </button>
-          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.mp4', 'ADAS: Monitoreo de Punto Ciego (BSD)', 'leapmotor', 'B10', event)" title="Ver video completo: ADAS: Monitoreo de Punto Ciego (BSD)">
+          <button type="button" class="btn-video-item" onclick="openVideoModal('https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.mp4', 'ADAS: Monitoreo de Punto Ciego (BSD)', 'leapmotor', 'B10', 'https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.jpg', event)" title="Ver video completo: ADAS: Monitoreo de Punto Ciego (BSD)">
             <div class="video-item-thumb-box">
               <img src="https://res.cloudinary.com/dbxa0pozm/video/upload/f_auto,q_auto,so_1,w_800,c_limit/v1789222573/b10_Monitoreo_de_punto_ciego_BSD_tynjhd.jpg" alt="ADAS: Monitoreo de Punto Ciego (BSD)" class="video-item-thumb" loading="lazy">
               <span class="video-item-play-icon"><i class="fa-solid fa-play"></i></span>
@@ -1291,8 +1306,11 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
         <button class="video-modal-close" id="closeVideoModalBtn" onclick="closeVideoModal(event)" aria-label="Cerrar video">&times;</button>
       </div>
       <div class="video-modal-body">
-        <video id="videoModalPlayer" controls playsinline preload="metadata">
-          <source id="videoModalSource" src="" type="video/mp4">
+        <div id="videoModalLoader" class="video-modal-loader" style="display: none;">
+          <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2.4rem; color: var(--acento);"></i>
+          <span style="color: #fff; font-family: var(--fuente); font-size: 1.05rem; margin-top: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Cargando video...</span>
+        </div>
+        <video id="videoModalPlayer" controls playsinline preload="auto">
           Tu navegador no soporta reproducción de video HTML5.
         </video>
       </div>
@@ -2317,24 +2335,36 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
     window.addEventListener('hashchange', checkHashAndFocus);
 
     // Video Lightbox Modal functions
-    window.openVideoModal = function(url, title, brandName, carName, event) {
+    window.openVideoModal = function(url, title, brandName, carName, posterUrl, event) {
       if (event) {
         event.preventDefault();
         event.stopPropagation();
       }
       var modal = document.getElementById('videoPlayerModal');
       var player = document.getElementById('videoModalPlayer');
-      var source = document.getElementById('videoModalSource');
       var titleEl = document.getElementById('videoModalTitle');
+      var loader = document.getElementById('videoModalLoader');
       if (!modal || !player) return;
 
       if (titleEl) titleEl.textContent = title || 'Video del Vehículo';
-      if (source) source.src = url;
+      if (posterUrl) {
+        player.poster = posterUrl;
+      } else {
+        player.removeAttribute('poster');
+      }
+
+      if (loader) loader.style.display = 'flex';
+
+      // Asignación directa en el elemento para arranque inmediato de buffer
+      player.src = url;
       player.load();
       modal.style.display = 'flex';
       setTimeout(function() {
         modal.classList.add('show');
-        player.play().catch(function(err) { console.log('Autoplay notice:', err); });
+        var playPromise = player.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function(err) { console.log('Autoplay notice:', err); });
+        }
       }, 30);
 
       if (typeof gtag === 'function') {
@@ -2346,6 +2376,18 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
       }
     };
 
+    // Eventos de estado de carga para el reproductor
+    document.addEventListener('DOMContentLoaded', function() {
+      var playerEl = document.getElementById('videoModalPlayer');
+      var loaderEl = document.getElementById('videoModalLoader');
+      if (playerEl && loaderEl) {
+        playerEl.addEventListener('playing', function() { loaderEl.style.display = 'none'; });
+        playerEl.addEventListener('canplay', function() { loaderEl.style.display = 'none'; });
+        playerEl.addEventListener('waiting', function() { loaderEl.style.display = 'flex'; });
+        playerEl.addEventListener('error', function() { loaderEl.style.display = 'none'; });
+      }
+    });
+
     window.closeVideoModal = function(event) {
       if (event) {
         event.preventDefault();
@@ -2353,13 +2395,16 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
       }
       var modal = document.getElementById('videoPlayerModal');
       var player = document.getElementById('videoModalPlayer');
-      var source = document.getElementById('videoModalSource');
+      var loader = document.getElementById('videoModalLoader');
       if (!modal) return;
 
       if (player) {
         player.pause();
-        if (source) source.src = '';
+        player.removeAttribute('src');
+        player.removeAttribute('poster');
+        player.load();
       }
+      if (loader) loader.style.display = 'none';
       modal.classList.remove('show');
       setTimeout(function() {
         modal.style.display = 'none';
