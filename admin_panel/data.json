@@ -101,8 +101,14 @@
     {
       "id": "dodge-attitude",
       "name": "Dodge Attitude SXT",
-      "price": "Desde $353,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $364,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/5521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
       "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades de <span style=\"color: red; font-weight: bold;\"><b>$5,759</b></span>, incluyendo un bono exclusivo para la versión SXT con solo el 44% de enganche.",
       "descriptionSize": "1.0rem",
@@ -114,11 +120,12 @@
         "Protección de llantas",
         "ó 0% tasa, pregunta las bases"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#cc4400",
       "underlineStyle": "solid",
       "category": "sedan",
-      "promoMes": "HASTA 30 MESES SIN INTERESES",
+      "promoMes": "",
       "promoMesTag": "⭐ PROMO DEL MES",
       "promoMesIcon": "💳"
     },

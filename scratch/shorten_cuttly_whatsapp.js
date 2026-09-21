@@ -1,0 +1,128 @@
+const fs = require('fs');
+const path = require('path');
+const XLSX = require('./node_modules/xlsx');
+
+const apiKey = 'c34272d2a3bf1dcc8c8c2e886dc52c0c93595';
+const resultsFile = path.resolve('scratch/cuttly_wa_results.json');
+const excelPath = path.resolve('links_utm_stellantis.xlsx');
+
+const items = [
+  { id: 'ram-700', modelo: 'RAM 700', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-ram.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_ram_700#auto-ram-700' },
+  { id: 'ram-1200', modelo: 'RAM 1200', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-ram.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_ram_1200#auto-ram-1200' },
+  { id: 'ram-1200-chasis', modelo: 'RAM 1200 Chasis', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-ram.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_ram_1200_chasis#auto-ram-1200-chasis' },
+  { id: 'ram-4000', modelo: 'RAM 4000', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-ram.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_ram_4000#auto-ram-4000' },
+  { id: 'ram-promaster', modelo: 'Promaster', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-ram.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_promaster#auto-ram-promaster' },
+  { id: 'dodge-attitude', modelo: 'Dodge Attitude SXT', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-dodge.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_attitude#auto-dodge-attitude' },
+  { id: 'dodge-charger', modelo: 'Dodge Charger', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-dodge.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_charger#auto-dodge-1787102237711' },
+  { id: 'dodge-durango', modelo: 'Dodge Durango', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-dodge.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_durango#auto-dodge-1787109067140' },
+  { id: 'jeep-renegade', modelo: 'Jeep Renegade', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-jeep.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_renegade#auto-jeep-renegade' },
+  { id: 'jeep-compass', modelo: 'Jeep Compass', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-jeep.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_compass#auto-jeep-compass' },
+  { id: 'jeep-grand-cherokee', modelo: 'Grand Cherokee Altitude 4x2', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-jeep.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_grand_cherokee#auto-jeep-grand-cherokee' },
+  { id: 'jeep-rubicon', modelo: 'Rubicon Unlimited', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-jeep.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_rubicon#auto-jeep-rubicon' },
+  { id: 'jeep-jt', modelo: 'JT Rubicon', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-jeep.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_jt_rubicon#auto-jeep-jt' },
+  { id: 'fiat-pulse', modelo: 'Fiat PULSE', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-fiat.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_pulse#auto-fiat-pulse' },
+  { id: 'fiat-fastback', modelo: 'Fiat Fastback', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-fiat.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_fastback#auto-fiat-fastback' },
+  { id: 'fiat-abarth', modelo: 'Fiat Abarth', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-fiat.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_abarth#auto-fiat-abarth' },
+  { id: 'peugeot-2008', modelo: 'Peugeot 2008', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_2008#auto-peugeot-2008' },
+  { id: 'peugeot-3008', modelo: 'Peugeot 3008', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_3008#auto-peugeot-3008' },
+  { id: 'peugeot-rifter', modelo: 'Rifter', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_rifter#auto-peugeot-rifter' },
+  { id: 'peugeot-expert', modelo: 'Expert Furgon', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_expert#auto-peugeot-expert' },
+  { id: 'peugeot-partner-maxi', modelo: 'Partner maxi', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_partner_maxi#auto-peugeot-partner-maxi' },
+  { id: 'peugeot-manager', modelo: 'Manager', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-peugeot.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_manager#auto-peugeot-manager' },
+  { id: 'leapmotor-b10', modelo: 'Leapmotor B10', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-leapmotor.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_b10#auto-leapmotor-1788121201596' },
+  { id: 'demos', modelo: 'Área General de Demos', url: 'https://lfmtz.github.io/landing-stellantis/paginas_promo/promo-demos.html?utm_source=whatsapp&utm_medium=whatsapp&utm_campaign=lead_demos' }
+];
+
+// Load existing results if any
+let results = {};
+if (fs.existsSync(resultsFile)) {
+  try {
+    results = JSON.parse(fs.readFileSync(resultsFile, 'utf-8'));
+  } catch (e) {}
+}
+
+// Known already created
+results['jeep-renegade'] = 'https://cutt.ly/QycLM5cr';
+
+async function shortenUrl(url) {
+  const apiUrl = `https://cutt.ly/api/api.php?key=${apiKey}&short=${encodeURIComponent(url)}`;
+  const res = await fetch(apiUrl);
+  const data = await res.json();
+  if (data && data.url && data.url.status === 7) {
+    return data.url.shortLink;
+  } else if (data && data.url && data.url.status === 1) {
+    // Already shortened
+    return data.url.shortLink;
+  } else {
+    throw new Error(`Cuttly error status ${data?.url?.status}: ${JSON.stringify(data)}`);
+  }
+}
+
+async function updateExcel() {
+  const wb = XLSX.readFile(excelPath);
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet);
+
+  rows.forEach(row => {
+    if (row['Medio (utm_medium)'] === 'whatsapp') {
+      const modelo = row['Modelo / Sección'];
+      const item = items.find(i => i.modelo === modelo);
+      if (item && results[item.id]) {
+        const shortUrl = results[item.id];
+        row['Enlace Corto (Cuttly / Acortador)'] = shortUrl;
+        row['Copy / Mensaje Sugerido'] = `¡Hola! Conoce las promociones exclusivas que tenemos para ti en el ${modelo}: ${shortUrl}`;
+      }
+    }
+  });
+
+  const updatedWs = XLSX.utils.json_to_sheet(rows);
+  updatedWs['!cols'] = [
+    { wch: 14 },
+    { wch: 28 },
+    { wch: 18 },
+    { wch: 18 },
+    { wch: 22 },
+    { wch: 80 },
+    { wch: 35 },
+    { wch: 80 }
+  ];
+  wb.Sheets[wb.SheetNames[0]] = updatedWs;
+  XLSX.writeFile(wb, excelPath);
+}
+
+async function main() {
+  console.log('Iniciando proceso de acortado en Cutt.ly para WhatsApp...');
+  console.log('Total a procesar: 24 enlaces.');
+  console.log('Velocidad programada: 1 solicitud cada 21 segundos (respetando límite de Cutt.ly Free: 3/minuto).\n');
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (results[item.id]) {
+      console.log(`[${i+1}/24] ${item.modelo} ya existe: ${results[item.id]}`);
+      continue;
+    }
+
+    try {
+      console.log(`[${i+1}/24] Acortando ${item.modelo}...`);
+      const shortUrl = await shortenUrl(item.url);
+      results[item.id] = shortUrl;
+      fs.writeFileSync(resultsFile, JSON.stringify(results, null, 2));
+      console.log(` -> [OK] ${item.modelo}: ${shortUrl}`);
+      await updateExcel();
+    } catch (err) {
+      console.error(` -> [ERROR] en ${item.modelo}:`, err.message);
+    }
+
+    // Esperar 21 segundos antes de la siguiente llamada para respetar el límite de 3/60s
+    if (i < items.length - 1) {
+      console.log('Esperando 21 segundos para respetar el límite de Cutt.ly...');
+      await new Promise(r => setTimeout(r, 21000));
+    }
+  }
+
+  await updateExcel();
+  console.log('\n=== ¡PROCESO FINALIZADO CON ÉXITO! ===');
+  console.log('Los 24 enlaces de WhatsApp fueron acortados con Cutt.ly y guardados en links_utm_stellantis.xlsx');
+}
+
+main();
