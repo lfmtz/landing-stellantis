@@ -1144,6 +1144,12 @@
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232499/IMG_20260830_150135476_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788232694/IMG_20260830_150257254_HDR.jpg"
       ],
+      "videos": [
+        {
+          "url": "https://res.cloudinary.com/bfxvgiaz/video/upload/v1790368841/Video_ram_4000.mp4",
+          "title": "Conóceme!!"
+        }
+      ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%204000",
       "description": "¡Ahorra más de <span style=\"color: red; font-weight: bold;\"><b>$230,000</b> </span>en tu nueva RAM 4000 Chasis Corto 2027!\r\n\r\nPrecio de lista: ~~<span style=\"color: red; font-weight: bold;\"><span style=\"color: red; font-weight: bold;\"><b>$1,033,600</b></span></span>~~ ➔ Promoción: <span style=\"color: red; font-weight: bold;\"><b>$799,000</b></span>. Estrena con planes flexibles de financiamiento o arrendamiento puro deducible.\r\n\r\n[Cotizar por WhatsApp aquí]",
       "descriptionSize": "1.0rem",
@@ -1165,7 +1171,10 @@
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
-      "category": "suv"
+      "category": "suv",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "demos-1788902922079",
