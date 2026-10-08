@@ -346,13 +346,14 @@
       "name": "Peugeot 2008",
       "km": "",
       "listPrice": "",
-      "price": "Desde $458,900",
+      "price": "Desde $468,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787101159/2008_8_26_pxluch.png",
       "images": [
         "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787101159/2008_8_26_pxluch.png"
       ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%202008",
-      "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$5,999*</b></span> y protección total para tu camino.\r\n<span style=\"color: red; font-weight: bold;\"><b>O 30 MSI*</b></span>",
+      "description": "El SUV compacto con diseño audaz. Estrena hoy con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,499*</b></span> y protección total para tu camino.\r\n<span style=\"color: red; font-weight: bold;\"><b>O 30 MSI*</b></span>",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
@@ -367,8 +368,8 @@
       "accentColor": "#001e62",
       "underlineStyle": "solid",
       "category": "suv",
-      "promoMes": "30 Meses sin intereses*",
-      "promoMesTag": "",
+      "promoMes": "30 meses sin intereses + 0% cxa",
+      "promoMesTag": "🔥 TASA PREFERENCIAL",
       "promoMesIcon": "🔥"
     },
     {
@@ -400,6 +401,37 @@
       "promoMes": "24 meses sin intereses*",
       "promoMesTag": "",
       "promoMesIcon": "🔥"
+    },
+    {
+      "id": "peugeot-1791488094945",
+      "name": "Peugeot 5008",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $749,900",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1791487328/wtrig5kyjujhzpi4ayxc.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1791487328/wtrig5kyjujhzpi4ayxc.jpg"
+      ],
+      "videos": [],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Peugeot%205008",
+      "description": "El SUV para 7 pasajeros que redefine el lujo europeo. Faros Pixel LED, pantalla curva panorámica de 21\" HD y motor Turbo de 180 hp. Estrena la nueva Peugeot 5008 con mensualidades exclusivas de <span style=\"color: red; font-weight: bold;\"><b>$9,890</b></span> o hasta 24 MSI*. ¡El confort supremo que tu familia merece!",
+      "descriptionSize": "1.0rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Diseño Exterior:Escultura SUV/Fastback con tecnología de faros Pixel LED y rines de aluminio bi-tono de 19\".",
+        "Peugeot Panoramic i-Cockpit®:Doble pantalla curva flotante de 21\" HD con panel táctil i-Toggles de 10 accesos directos.",
+        "Espacio y Confort:Capacidad para 7 pasajeros con climatización automática Tri-zona, sistema Cabin Clean y techo panorámico eléctrico.",
+        "Motor y Transmisión:Motor 1.6L THP Turbo de 180 hp y 300 Nm de torque con transmisión automática de 6 velocidades.",
+        "Seguridad ADAS y VisioPark:Suite de 10 asistencias ADAS con frenado autónomo, cámara de visión 360°, sensores perimetrales y 6 bolsas de aire"
+      ],
+      "fichaTecnica": "",
+      "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.Consulte terminos y condiciones con el asesor de ventas",
+      "accentColor": "#001e62",
+      "underlineStyle": "solid",
+      "category": "familiares",
+      "promoMes": "24 meses sin intereses + 0% cxa",
+      "promoMesTag": "",
+      "promoMesIcon": "🏷️"
     },
     {
       "id": "peugeot-rifter",
@@ -554,7 +586,7 @@
       {
         "id": "lp-1",
         "name": "RAM 1200 Chasis",
-        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787548632/RAM_CHASIS_vhuyq5.jpg",
+        "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1791490858/clgxwejlkgbqpilvrg0e.jpg",
         "description": "Fuerza y capacidad sin límites. Aprovecha esta oferta por tiempo limitado.",
         "whatsapp": "https://wa.me/525521787900?text=Hola,%20me%20interesa%20la%20promoción%20de%20la%20RAM%201200%20Chasis."
       },

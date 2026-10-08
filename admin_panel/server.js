@@ -281,15 +281,74 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
   if (existingIndex > -1) {
     data[brand][existingIndex] = newPromo; // Edit
   } else {
-    data[brand].push(newPromo); // Add new
+    // Check if a specific insert position was requested
+    const insertPosition = req.body.insertPosition || 'end';
+    if (insertPosition === 'start') {
+      data[brand].unshift(newPromo);
+    } else if (insertPosition.startsWith('after:')) {
+      const targetId = insertPosition.slice(6);
+      const targetIdx = data[brand].findIndex(p => p.id === targetId);
+      if (targetIdx > -1) {
+        data[brand].splice(targetIdx + 1, 0, newPromo);
+      } else {
+        data[brand].push(newPromo);
+      }
+    } else if (insertPosition.startsWith('before:')) {
+      const targetId = insertPosition.slice(7);
+      const targetIdx = data[brand].findIndex(p => p.id === targetId);
+      if (targetIdx > -1) {
+        data[brand].splice(targetIdx, 0, newPromo);
+      } else {
+        data[brand].push(newPromo);
+      }
+    } else {
+      data[brand].push(newPromo); // Add new at the end
+    }
   }
 
   writeData(data);
 
-  // Re-generate the HTML file for this brand
+  // Re-generate the HTML files for this brand and main landing
   generateHtmlForBrand(brand, data[brand]);
+  generateIndexHtml(data);
+  generatePortalHtml(data);
 
   res.json({ success: true, promo: newPromo });
+});
+
+// Reorder promotions for a brand
+app.post('/api/promos/:brand/reorder', (req, res) => {
+  const { brand } = req.params;
+  const { orderedIds } = req.body;
+  const data = readData();
+
+  if (!data[brand] || !Array.isArray(orderedIds)) {
+    return res.status(400).json({ error: 'Parámetros inválidos' });
+  }
+
+  const existingMap = new Map();
+  data[brand].forEach(p => existingMap.set(p.id, p));
+
+  const reordered = [];
+  orderedIds.forEach(id => {
+    if (existingMap.has(id)) {
+      reordered.push(existingMap.get(id));
+      existingMap.delete(id);
+    }
+  });
+
+  // Preserve any promo that was not in the orderedIds list
+  existingMap.forEach(p => reordered.push(p));
+
+  data[brand] = reordered;
+  writeData(data);
+
+  // Re-generate the HTML files for this brand and main landing
+  generateHtmlForBrand(brand, data[brand]);
+  generateIndexHtml(data);
+  generatePortalHtml(data);
+
+  res.json({ success: true, count: data[brand].length });
 });
 
 // Delete a promotion
@@ -301,6 +360,8 @@ app.delete('/api/promos/:brand/:id', (req, res) => {
     data[brand] = data[brand].filter(p => p.id !== id);
     writeData(data);
     generateHtmlForBrand(brand, data[brand]);
+    generateIndexHtml(data);
+    generatePortalHtml(data);
     return res.json({ success: true });
   }
 

@@ -112,6 +112,14 @@
           </button>
         </div>
 
+        <!-- Banner Explicativo de Reordenamiento -->
+        <div class="reorder-info-banner" style="background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #cbd5e1;">
+            <i class="fa-solid fa-arrows-up-down-left-right" style="color: #00e5ff; font-size: 0.95rem;"></i>
+            <span><strong>Reordenar autos:</strong> Arrastra cualquier tarjeta con el mouse o usa los botones <span style="color: #00e5ff; font-weight: 700;">[🔝 ⬆️ ⬇️ 🔚]</span> en la tarjeta para moverla al lugar que desees. Los cambios se guardan y se publican automáticamente en la landing.</span>
+          </div>
+        </div>
+
         <!-- Cars Gallery -->
         <div id="promosGrid" class="promos-grid">
           <!-- Dynamic content will be rendered here -->
@@ -669,6 +677,20 @@
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
           </div>
+        </div>
+
+        <!-- Selector de Posición en la Lista al Agregar Auto -->
+        <div id="insertPositionGroup" style="background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 6px; padding: 12px; margin-bottom: 16px;">
+          <label for="insertPosition" style="color: #00e5ff; font-weight: bold; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem;">
+            <i class="fa-solid fa-arrow-down-short-wide"></i> ¿Dónde colocar este auto en la lista?
+          </label>
+          <select id="insertPosition" style="background: #0b1019; color: #fff; border: 1px solid #233143; padding: 8px 12px; border-radius: 4px; width: 100%; font-size: 0.88rem;">
+            <option value="end">Al final de la lista (predeterminado)</option>
+            <option value="start">Al principio de la lista (1º lugar)</option>
+          </select>
+          <small style="color: #94a3b8; font-size: 0.77rem; display: block; margin-top: 5px;">
+            💡 Puedes colocarlo al inicio, al final o junto a otro modelo específico de esta marca.
+          </small>
         </div>
 
         <div class="form-row">
@@ -1780,11 +1802,44 @@
         return;
       }
 
-      promos.forEach(p => {
+      promos.forEach((p, index) => {
         const card = document.createElement('div');
         card.className = 'promo-admin-card';
         card.style.borderTopColor = p.accentColor || '#CC4400';
-        
+        card.setAttribute('draggable', 'true');
+        card.dataset.id = p.id;
+        card.dataset.index = index;
+
+        const isFirst = index === 0;
+        const isLast = index === promos.length - 1;
+
+        const orderBarHtml = `
+          <div class="card-order-bar">
+            <div class="card-order-info">
+              <span class="card-drag-handle" title="Arrastra esta tarjeta para cambiarla de lugar">
+                <i class="fa-solid fa-grip-vertical"></i>
+              </span>
+              <span class="card-pos-badge" title="Posición #${index + 1} de ${promos.length}">
+                #${index + 1} de ${promos.length}
+              </span>
+            </div>
+            <div class="card-order-actions">
+              <button type="button" class="btn-order-nav" title="Mover al principio (1º lugar)" onclick="movePromoOrder('${p.id}', 'top')" ${isFirst ? 'disabled' : ''}>
+                <i class="fa-solid fa-angles-up"></i>
+              </button>
+              <button type="button" class="btn-order-nav" title="Subir un lugar" onclick="movePromoOrder('${p.id}', 'up')" ${isFirst ? 'disabled' : ''}>
+                <i class="fa-solid fa-arrow-up"></i>
+              </button>
+              <button type="button" class="btn-order-nav" title="Bajar un lugar" onclick="movePromoOrder('${p.id}', 'down')" ${isLast ? 'disabled' : ''}>
+                <i class="fa-solid fa-arrow-down"></i>
+              </button>
+              <button type="button" class="btn-order-nav" title="Mover al final (último lugar)" onclick="movePromoOrder('${p.id}', 'bottom')" ${isLast ? 'disabled' : ''}>
+                <i class="fa-solid fa-angles-down"></i>
+              </button>
+            </div>
+          </div>
+        `;
+
         const validBenefits = (p.benefits || []).filter(b => b && b.trim());
         let benefitsHtml = validBenefits.map(b => `<li><i class="fa-solid fa-check"></i> ${b}</li>`).join('');
         
@@ -1797,6 +1852,7 @@
           : '';
 
         card.innerHTML = `
+          ${orderBarHtml}
           <div class="card-image-wrapper">
             <img src="${p.image ? (p.image.startsWith('http') ? p.image : '../' + p.image) : 'placeholder.jpg'}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400?text=${p.name}'">
           </div>
@@ -1834,6 +1890,42 @@
             </div>
           </div>
         `;
+
+        // Drag & drop event listeners
+        card.addEventListener('dragstart', (e) => {
+          draggedPromoId = p.id;
+          card.classList.add('is-dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', p.id);
+        });
+
+        card.addEventListener('dragend', () => {
+          card.classList.remove('is-dragging');
+          document.querySelectorAll('.promo-admin-card').forEach(c => c.classList.remove('drag-over'));
+        });
+
+        card.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          if (draggedPromoId && draggedPromoId !== p.id) {
+            card.classList.add('drag-over');
+          }
+        });
+
+        card.addEventListener('dragleave', () => {
+          card.classList.remove('drag-over');
+        });
+
+        card.addEventListener('drop', (e) => {
+          e.preventDefault();
+          card.classList.remove('drag-over');
+          const sourceId = e.dataTransfer.getData('text/plain') || draggedPromoId;
+          const targetId = p.id;
+          if (sourceId && targetId && sourceId !== targetId) {
+            reorderPromosByDrop(sourceId, targetId);
+          }
+        });
+
         promosGrid.appendChild(card);
       });
     }
@@ -2362,6 +2454,95 @@
       }
     }
 
+    // Dragged promo state variable
+    let draggedPromoId = null;
+
+    // Toast notification helper
+    function showToast(message, icon = 'fa-circle-check') {
+      const existingToast = document.querySelector('.admin-toast');
+      if (existingToast) existingToast.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'admin-toast';
+      toast.innerHTML = `<i class="fa-solid ${icon}" style="color: #00e5ff; font-size: 1.1rem;"></i> <span>${message}</span>`;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(15px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Move single promo: up, down, top, bottom
+    window.movePromoOrder = async function(id, direction) {
+      const list = database[currentBrand] || [];
+      const idx = list.findIndex(x => x.id === id);
+      if (idx === -1) return;
+
+      const [item] = list.splice(idx, 1);
+      let targetIdx = idx;
+
+      if (direction === 'up') {
+        targetIdx = Math.max(0, idx - 1);
+      } else if (direction === 'down') {
+        targetIdx = Math.min(list.length, idx + 1);
+      } else if (direction === 'top') {
+        targetIdx = 0;
+      } else if (direction === 'bottom') {
+        targetIdx = list.length;
+      }
+
+      list.splice(targetIdx, 0, item);
+      database[currentBrand] = list;
+
+      // Re-render immediately so user sees the change instantaneously
+      renderCurrentBrand();
+
+      // Persist to backend and regenerate landing HTML
+      await saveCurrentBrandOrder(item.name, targetIdx + 1);
+    };
+
+    // Reorder by drag & drop
+    async function reorderPromosByDrop(sourceId, targetId) {
+      const list = database[currentBrand] || [];
+      const sourceIdx = list.findIndex(x => x.id === sourceId);
+      const targetIdx = list.findIndex(x => x.id === targetId);
+      if (sourceIdx === -1 || targetIdx === -1 || sourceIdx === targetIdx) return;
+
+      const [item] = list.splice(sourceIdx, 1);
+      list.splice(targetIdx, 0, item);
+      database[currentBrand] = list;
+
+      // Re-render immediately
+      renderCurrentBrand();
+
+      // Persist to backend and regenerate landing HTML
+      await saveCurrentBrandOrder(item.name, targetIdx + 1);
+    }
+
+    // Save order in database and recompile landing
+    async function saveCurrentBrandOrder(carName, newPos) {
+      try {
+        const orderedIds = (database[currentBrand] || []).map(x => x.id);
+        const res = await fetch(`/api/promos/${currentBrand}/reorder`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderedIds })
+        });
+        const result = await res.json();
+        if (result.success) {
+          showToast(`¡${carName || 'Auto'} movido a la posición #${newPos}! Landing actualizada.`);
+        } else {
+          showToast('Error al guardar el nuevo orden en el servidor', 'fa-triangle-exclamation');
+        }
+      } catch (e) {
+        console.error('Error reordering promos:', e);
+        showToast('Error de conexión al guardar el orden', 'fa-triangle-exclamation');
+      }
+    }
+
     // Format description text selection
     window.formatDescription = function(action) {
       const textarea = document.getElementById('description');
@@ -2520,6 +2701,10 @@
         shareBox.style.display = 'block';
       }
 
+      // Hide insert position selector when editing existing promo
+      const insertPosGroup = document.getElementById('insertPositionGroup');
+      if (insertPosGroup) insertPosGroup.style.display = 'none';
+
       promoModal.classList.add('active');
     };
 
@@ -2543,6 +2728,35 @@
       document.getElementById('promoMesTag').value = '';
       document.getElementById('promoMesIcon').value = '💳';
       updatePromoMesLivePreview();
+
+      // Populate position selector when adding new promo
+      const insertPosGroup = document.getElementById('insertPositionGroup');
+      const insertPosSelect = document.getElementById('insertPosition');
+      if (insertPosGroup && insertPosSelect) {
+        insertPosGroup.style.display = 'block';
+        insertPosSelect.innerHTML = `
+          <option value="end">Al final de la lista (último auto)</option>
+          <option value="start">Al principio de la lista (1º lugar)</option>
+        `;
+        const currentList = database[currentBrand] || [];
+        if (currentList.length > 0) {
+          const optGroup = document.createElement('optgroup');
+          optGroup.label = 'Colocar junto a otro modelo:';
+          currentList.forEach(c => {
+            const optAfter = document.createElement('option');
+            optAfter.value = `after:${c.id}`;
+            optAfter.textContent = `Después de: ${c.name}`;
+            optGroup.appendChild(optAfter);
+
+            const optBefore = document.createElement('option');
+            optBefore.value = `before:${c.id}`;
+            optBefore.textContent = `Antes de: ${c.name}`;
+            optGroup.appendChild(optBefore);
+          });
+          insertPosSelect.appendChild(optGroup);
+        }
+        insertPosSelect.value = 'end';
+      }
       
       const defaultColors = {
         ram: '#000000',
@@ -2969,6 +3183,11 @@
       formData.append('promoMes', document.getElementById('promoMes').value.trim());
       formData.append('promoMesTag', document.getElementById('promoMesTag').value.trim());
       formData.append('promoMesIcon', document.getElementById('promoMesIcon').value.trim());
+
+      const insertPos = document.getElementById('insertPosition');
+      if (insertPos && !document.getElementById('promoId').value) {
+        formData.append('insertPosition', insertPos.value);
+      }
       
       // Benefits collection
       const benefits = [];

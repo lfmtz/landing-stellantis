@@ -690,3 +690,138 @@ input[type="color"] {
   display: none;
   border-top: 1px solid var(--border);
 }
+
+/* ========================================================
+   CARD ORDER CONTROLS & DRAG-AND-DROP STYLES
+   ======================================================== */
+.card-order-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  background: rgba(11, 16, 25, 0.85);
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+
+.card-order-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-drag-handle {
+  cursor: grab;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.card-drag-handle:hover {
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+}
+
+.card-drag-handle:active {
+  cursor: grabbing;
+}
+
+.card-pos-badge {
+  background: var(--bg-tertiary);
+  color: #00e5ff;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.card-order-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.btn-order-nav {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  width: 27px;
+  height: 27px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  padding: 0;
+}
+
+.btn-order-nav:hover:not(:disabled) {
+  background: #00e5ff;
+  color: #0b1019;
+  border-color: #00e5ff;
+  transform: translateY(-1px);
+}
+
+.btn-order-nav:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* DRAG & DROP STATES */
+.promo-admin-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.promo-admin-card.is-dragging {
+  opacity: 0.35 !important;
+  transform: scale(0.97) !important;
+  border: 2px dashed #00e5ff !important;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3) !important;
+}
+
+.promo-admin-card.drag-over {
+  border: 2px solid #00e5ff !important;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.5) !important;
+  transform: translateY(-4px) scale(1.02) !important;
+}
+
+/* QUICK FLOATING TOAST NOTIFICATION */
+.admin-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #fff;
+  border: 1px solid #00e5ff;
+  border-left: 5px solid #00e5ff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
