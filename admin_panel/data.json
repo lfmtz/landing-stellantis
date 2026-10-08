@@ -236,13 +236,14 @@
       "name": "Grand Cherokee Altitude 4x2",
       "km": "",
       "listPrice": "",
-      "price": "Desde $1,134,900",
+      "price": "Desde $1,094,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg",
       "images": [
         "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/grand_cherokee_vkpfac.jpg"
       ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20Grand%20Cherokee",
-      "description": "Disfruta la distinción y el confort inigualable que solo una Grand Cherokee Altitude 4x2 puede ofrecerte por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$14,999</b></span> o tenemos <span style=\"color: red; font-weight: bold;\"><b>24 msi 0% comisión</b></span>",
+      "description": "Disfruta la distinción y el confort inigualable que solo una Grand Cherokee Altitude 4x2 puede ofrecerte por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$14,999</b></span> o tenemos <span style=\"color: red; font-weight: bold;\"><b>36 msi 0% comisión</b></span>",
       "descriptionSize": "1.1rem",
       "descriptionColor": "#333333",
       "benefits": [
@@ -254,7 +255,10 @@
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#4a7729",
       "underlineStyle": "solid",
-      "category": "suv"
+      "category": "suv",
+      "promoMes": "36 meses sin intereses + 0% cxa",
+      "promoMesTag": "",
+      "promoMesIcon": "⭐"
     },
     {
       "id": "jeep-rubicon",
@@ -277,20 +281,30 @@
     {
       "id": "jeep-jt",
       "name": "JT Rubicon",
+      "km": "",
+      "listPrice": "",
       "price": "Desde $1,580,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/jt_euowfk.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/w_600,q_auto,f_auto/jt_euowfk.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20JT%20Rubicon",
-      "description": "Combina la potencia de un todoterreno con la utilidad del Jeep JT para cualquier aventura por mensualidades desde $21,769, incluye bono en el enganche.*\r\nO tasa <span style=\"color: red; font-weight: bold;\"><b>0% a 24 meses</b></span>",
+      "description": "Combina la potencia de un todoterreno con la utilidad del Jeep JT para cualquier aventura por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$21,769</b></span>, incluye bono en el enganche.*\r\nO tasa <span style=\"color: red; font-weight: bold;\"><b>0% a 24 meses</b></span>",
       "descriptionSize": "1.1rem",
       "descriptionColor": "#333333",
       "benefits": [
         "0% comisión por apertura*",
         "Tasa hasta del 13.99*"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#4a7729",
       "underlineStyle": "solid",
-      "category": "todoterreno"
+      "category": "todoterreno",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     }
   ],
   "fiat": [
