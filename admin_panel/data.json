@@ -620,7 +620,7 @@
         }
       ],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20B10",
-      "description": "El SUV 100% eléctrico del futuro, hoy.\r\nVanguardia, autonomía extendida y tecnología inteligente con sistemas avanzados de asistencia a la conducción (ADAS). Pregunta con tu asesor sobre todo el equipamiento disponible. Estrena desde <span style=\"color: red; font-weight: bold;\"><b>$8,799</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.",
+      "description": "El SUV 100% eléctrico del futuro, hoy.\r\nVanguardia, autonomía extendida y tecnología inteligente con sistemas avanzados de asistencia a la conducción (ADAS). Pregunta con tu asesor sobre todo el equipamiento disponible. Estrena desde <span style=\"color: red; font-weight: bold;\"><b>$7,750</b></span> al mes con planes de financiamiento o arrendamiento diseñados a tu medida.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
@@ -634,7 +634,7 @@
       "accentColor": "#3b93a9",
       "underlineStyle": "solid",
       "category": "electricos",
-      "promoMes": "Seguro Gratis + bono especial",
+      "promoMes": "Seguro Gratis",
       "promoMesTag": "",
       "promoMesIcon": "🎁"
     }
