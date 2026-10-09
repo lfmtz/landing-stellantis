@@ -31,9 +31,15 @@
     },
     {
       "id": "ram-1200",
-      "name": "RAM 1200",
+      "name": "Ram 1200 Crew Cab",
+      "km": "",
+      "listPrice": "",
       "price": "Desde $469,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/ram1200cc_8_26_uxz0pd.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/ram1200cc_8_26_uxz0pd.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%201200",
       "description": "Aprovecha las últimas unidades 2026 de RAM 1200 Tradesman doble cabina y pregunta por existencia antes de que se agoten por precio de flotilla <span style=\"color: red; font-weight: bold;\"><b>$430,000</b></span> o mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,990</b></span>",
       "descriptionSize": "1.1rem",
@@ -43,10 +49,14 @@
         "O pregunta por nuestra tasa 0%",
         "Bono hasta de $40,000"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#000000",
       "underlineStyle": "solid",
-      "category": "pickup"
+      "category": "pickup",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "ram-1200-chasis",
