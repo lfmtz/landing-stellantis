@@ -495,8 +495,14 @@
     {
       "id": "peugeot-rifter",
       "name": "Rifter",
-      "price": "Desde $469,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $479,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995377/rifter_8_26_dnnkon.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995377/rifter_8_26_dnnkon.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Rifter",
       "description": "Versatilidad sin límites para tu familia o negocio. Mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,990</b></span>",
       "descriptionSize": "1.0rem",
@@ -506,52 +512,64 @@
         "4 años de garantía",
         "Protección de llantas"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "familiares"
+      "category": "familiares",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "peugeot-expert",
       "name": "Expert Furgon",
       "km": "",
       "listPrice": "",
-      "price": "Desde $658,900",
+      "price": "Desde $708,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/expert_8_26_a5zm9n.jpg",
       "images": [
         "https://res.cloudinary.com/dbxa0pozm/image/upload/v1786995376/expert_8_26_a5zm9n.jpg"
       ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Expert%20Furgon",
       "description": "La herramienta de trabajo más eficiente. Aprovecha un bono histórico y mensualidades de <span style=\"color: red; font-weight: bold;\"><b>$8,899</b></span>",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
-      "benefits": [
-        "Incluye en el enganche: Bono hasta $50,000",
-        "0% comisión por apertura"
-      ],
+      "benefits": [],
       "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "trabajo"
+      "category": "trabajo",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "peugeot-partner-maxi",
       "name": "Partner maxi",
-      "price": "Desde $473,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $474,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/partner_8_26_u5bdbu.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/partner_8_26_u5bdbu.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Partner%20maxi",
       "description": "Capacidad máxima para tus proyectos. Estrena con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$6,999</b></span>",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
-      "benefits": [
-        "0% comisión por apertura",
-        "2 años de mantenimiento gratis"
-      ],
+      "benefits": [],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones. Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "trabajo"
+      "category": "trabajo",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "peugeot-manager",
