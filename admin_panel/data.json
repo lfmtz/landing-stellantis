@@ -597,7 +597,7 @@
       "name": "Partner maxi",
       "km": "",
       "listPrice": "",
-      "price": "Desde $474,900",
+      "price": "Desde $483,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/partner_8_26_u5bdbu.jpg",
       "images": [
         "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/partner_8_26_u5bdbu.jpg"
@@ -620,20 +620,27 @@
     {
       "id": "peugeot-manager",
       "name": "Manager",
-      "price": "Desde $727,900",
+      "km": "",
+      "listPrice": "",
+      "price": "Desde $833,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/manager_8_26_fomr0w.jpg",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/manager_8_26_fomr0w.jpg"
+      ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Manager",
-      "description": "Grande en espacio, grande en beneficios. La solución logística ideal con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$10,499*</b></span>.\r\n<span style=\"color: red; font-weight: bold;\"><b>O tasa de interés 0%*</b></span>",
+      "description": "Grande en espacio, grande en beneficios. La solución logística ideal con mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$10,555*</b></span>.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
-      "benefits": [
-        "las mensualidades Incluyen bono de : Bono hasta $100,000*",
-        "0% comisión por apertura*"
-      ],
+      "benefits": [],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#001e62",
       "underlineStyle": "solid",
-      "category": "trabajo"
+      "category": "trabajo",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     }
   ],
   "leapmotor": [
