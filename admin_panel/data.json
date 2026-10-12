@@ -383,7 +383,7 @@
       "accentColor": "#b30000",
       "underlineStyle": "solid",
       "category": "crossover",
-      "promoMes": "30 meses sin intereses + 0% cxa",
+      "promoMes": "30 msi + 0% COMISIÓN + bono",
       "promoMesTag": "",
       "promoMesIcon": "🔥"
     },
@@ -399,21 +399,19 @@
       ],
       "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Fiat%20Fastback",
-      "description": "Experimenta la potencia y el diseño deportivo del Fastback Impetus 2026 elevando tu presencia en el camino por mensualidades desde $6,900.",
+      "description": "Experimenta la potencia y el diseño deportivo del Fastback Impetus 2026 elevando tu presencia en el camino por mensualidades desde <span style=\"color: red; font-weight: bold;\"><b>$7,199</b></span>.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
-        "Incluye:",
         "Garantía de 4 años",
-        "0% comisión de apertura",
-        "Bono de $72,000"
+        "0% comisión de apertura"
       ],
       "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles.",
       "accentColor": "#b30000",
       "underlineStyle": "solid",
       "category": "crossover",
-      "promoMes": "30 meses sin intereses + 0% cxa",
+      "promoMes": "30 msi + 0% COMISIÓN + bono",
       "promoMesTag": "",
       "promoMesIcon": "⚡"
     },
@@ -435,17 +433,16 @@
       "benefits": [
         "Incluye:",
         "Garantía de 4 años",
-        "0% comisión de apertura",
-        "Tasa de interés preferencial"
+        "0% comisión de apertura*"
       ],
       "fichaTecnica": "",
       "legal": "* Vigencia al cierre del mes. Aplica restricciones.",
       "accentColor": "#b30000",
       "underlineStyle": "solid",
       "category": "deportivos",
-      "promoMes": "",
-      "promoMesTag": "",
-      "promoMesIcon": "💳"
+      "promoMes": "30 msi + 0% COMISIÓN + bono",
+      "promoMesTag": "🔥 TASA PREFERENCIAL",
+      "promoMesIcon": "🔥"
     }
   ],
   "peugeot": [
