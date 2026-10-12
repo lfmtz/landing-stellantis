@@ -473,7 +473,7 @@
       "accentColor": "#001e62",
       "underlineStyle": "solid",
       "category": "suv",
-      "promoMes": "30 meses sin intereses + 0% cxa",
+      "promoMes": "30 meses sin intereses*",
       "promoMesTag": "🔥 TASA PREFERENCIAL",
       "promoMesIcon": "🔥"
     },
@@ -534,7 +534,7 @@
       "accentColor": "#001e62",
       "underlineStyle": "solid",
       "category": "familiares",
-      "promoMes": "24 meses sin intereses + 0% cxa",
+      "promoMes": "24 meses sin intereses*",
       "promoMesTag": "",
       "promoMesIcon": "🏷️"
     },
