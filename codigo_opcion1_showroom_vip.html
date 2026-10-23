@@ -237,6 +237,7 @@
       );
       transform: rotate(25deg);
       animation: shineLoop 3s infinite;
+      pointer-events: none;
     }
 
     @keyframes shineLoop {
@@ -333,14 +334,14 @@
         <span class="brand-pill"><i class="fa-solid fa-car me-1"></i> FIAT</span>
       </div>
 
-      <!-- BOTÓN PRINCIPAL (target="_top" abre tu landing completa) -->
-      <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-portal-primary" id="btnEntrarShowroom">
+      <!-- BOTÓN PRINCIPAL (target="_blank" abre tu landing completa sin ser bloqueado por Google Sites) -->
+      <a href="https://lfmtz.github.io/landing-stellantis/" target="_blank" rel="noopener noreferrer" class="btn-portal-primary" id="btnEntrarShowroom">
         <span>ENTRAR AL SHOWROOM Y VER PROMOCIONES</span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
 
       <!-- BOTÓN WHATSAPP -->
-      <a href="https://wa.me/525521787900?text=Hola,%20acabo%20de%20escanear%20tu%20tarjeta%20y%20me%20gustaria%20recibir%20asesoria%20sobre%20las%20promociones." target="_top" class="btn-portal-whatsapp">
+      <a href="https://wa.me/525521787900?text=Hola,%20acabo%20de%20escanear%20tu%20tarjeta%20y%20me%20gustaria%20recibir%20asesoria%20sobre%20las%20promociones." target="_blank" rel="noopener noreferrer" class="btn-portal-whatsapp">
         <i class="fa-brands fa-whatsapp"></i> Hablar con mi Asesor Directo
       </a>
 

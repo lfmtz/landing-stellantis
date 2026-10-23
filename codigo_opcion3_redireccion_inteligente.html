@@ -188,8 +188,8 @@
     </div>
     <div class="countdown-text" id="countdownText">Transfiriendo en 3 segundos...</div>
 
-    <!-- BOTÓN INMEDIATO (target="_top" garantiza salida del iframe) -->
-    <a href="https://lfmtz.github.io/landing-stellantis/" target="_top" class="btn-enter-now" id="btnDirect">
+    <!-- BOTÓN INMEDIATO -->
+    <a href="https://lfmtz.github.io/landing-stellantis/" target="_blank" rel="noopener noreferrer" class="btn-enter-now" id="btnDirect">
       <span>ENTRAR DE INMEDIATO</span>
       <i class="fa-solid fa-arrow-up-right-from-square"></i>
     </a>
@@ -214,7 +214,7 @@
         fill.style.width = "100%";
         text.innerText = "¡Abriendo el Showroom...";
         try {
-          window.top.location.href = TARGET_URL;
+          window.open(TARGET_URL, '_blank');
         } catch(e) {
           window.location.href = TARGET_URL;
         }

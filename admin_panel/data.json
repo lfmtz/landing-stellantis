@@ -54,9 +54,9 @@
       "accentColor": "#000000",
       "underlineStyle": "solid",
       "category": "pickup",
-      "promoMes": "",
-      "promoMesTag": "",
-      "promoMesIcon": "💳"
+      "promoMes": "PRECIO EXCLUSIVO DE FLOTILLA $394,000*",
+      "promoMesTag": "⚡ LIQUIDACIÓN",
+      "promoMesIcon": "⚡"
     },
     {
       "id": "ram-1200-chasis",
@@ -111,9 +111,9 @@
       "accentColor": "#000000",
       "underlineStyle": "solid",
       "category": "trabajo",
-      "promoMes": "",
-      "promoMesTag": "",
-      "promoMesIcon": "💳"
+      "promoMes": "PRECIO EXCLUSIVO DE FLOTILLA $839,000*",
+      "promoMesTag": "⚡ LIQUIDACIÓN",
+      "promoMesIcon": "⚡"
     },
     {
       "id": "ram-promaster",
@@ -956,7 +956,7 @@
       "id": "demos-1788225819552",
       "name": "Jeep Grand Cherokee L",
       "km": "Demo",
-      "listPrice": "$1,463,900",
+      "listPrice": "$1,550,900",
       "price": "$1,199,900",
       "image": "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778502/IMG_20260826_111315074_HDR.jpg",
       "images": [
@@ -972,6 +972,7 @@
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778494/IMG_20260826_111134422_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1787778500/IMG_20260826_111200968_HDR.jpg"
       ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Jeep%20Grand%20Cherokee%20L",
       "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
       "descriptionSize": "1.0rem",
@@ -988,10 +989,14 @@
         "Sistema de tracción 4x4",
         "Sistema de visión 360° con limpiador de cámara trasera"
       ],
+      "fichaTecnica": "",
       "legal": "* Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.",
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
-      "category": "familiares"
+      "category": "familiares",
+      "promoMes": "",
+      "promoMesTag": "",
+      "promoMesIcon": "💳"
     },
     {
       "id": "demos-1788228572511",
@@ -1223,6 +1228,7 @@
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233609/IMG_20260829_113220512_HDR.jpg",
         "https://res.cloudinary.com/bfxvgiaz/image/upload/v1788233610/IMG_20260829_113339040_HDR.jpg"
       ],
+      "videos": [],
       "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20el%20Ram%201200%20Crew%20Cab",
       "description": "Gran liquidación: estrena con precio de descuento.\r\n\r\nDisponible con financiamiento personalizado o esquemas de arrendamiento flexible. ¡Asegura tu bono antes de que se agote!\r\n\r\n👉 Pide tu cotización aquí y recibe atención inmediata por WhatsApp:",
       "descriptionSize": "1.0rem",
@@ -1240,10 +1246,14 @@
         "Capacidad de Pasajeros: 5 pasajeros (Doble Cabina)",
         "Rines de acero de 17\" con neumáticos 265/65 R17 y llanta de repuesto de tamaño completo con rin de acero"
       ],
+      "fichaTecnica": "",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
-      "category": "pickup"
+      "category": "pickup",
+      "promoMes": "PRECIO EXCLUSIVO DE FLOTILLA $394,000*",
+      "promoMesTag": "⚡ LIQUIDACIÓN",
+      "promoMesIcon": "⚡"
     },
     {
       "id": "demos-1788308764719",
@@ -1334,9 +1344,9 @@
       "accentColor": "#00e5ff",
       "underlineStyle": "solid",
       "category": "suv",
-      "promoMes": "",
-      "promoMesTag": "",
-      "promoMesIcon": "💳"
+      "promoMes": "PRECIO EXCLUSIVO DE FLOTILLA $839,000*",
+      "promoMesTag": "⚡ LIQUIDACIÓN",
+      "promoMesIcon": "⚡"
     },
     {
       "id": "demos-1788902922079",
