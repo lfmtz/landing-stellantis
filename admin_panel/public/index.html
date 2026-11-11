@@ -775,7 +775,62 @@
                 <option value="🎁">🎁 Regalo / Bono Incluido</option>
                 <option value="⭐">⭐ Estrella / Destacado Oficial</option>
                 <option value="🏷️">🏷️ Etiqueta / Descuento</option>
+                <option value="🎄">🎄 Pino / Especial Fin de Año</option>
+                <option value="🎉">🎉 Fiesta / Año Nuevo</option>
               </select>
+            </div>
+          </div>
+
+          <!-- 2.º Letrero Alternativo (Promoción de Fin de Año / 2.ª Imagen del Carrusel) -->
+          <div style="background: rgba(0, 229, 255, 0.05); border: 1px dashed rgba(0, 229, 255, 0.35); border-radius: 8px; padding: 14px; margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+              <label for="promoMes2" style="margin-bottom: 0; font-size: 0.9rem; font-weight: 700; color: #00e5ff; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-rotate"></i> 2.º Letrero Alternativo / Promo Fin de Año (Opcional)
+              </label>
+              <span style="font-size: 0.73rem; color: #38bdf8; background: rgba(0, 229, 255, 0.12); padding: 2px 8px; border-radius: 4px; font-weight: 600;">
+                Alterna con la 2.ª imagen o con el Timer
+              </span>
+            </div>
+            <p style="font-size: 0.79rem; color: #94a3b8; margin: 0 0 10px 0; line-height: 1.35;">
+              Si agregas una segunda promoción aquí, cuando el carrusel pase a la 2.ª imagen (automáticamente con el timer o cuando el usuario dé clic) el letrero también cambiará a esta segunda promoción.
+            </p>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+              <label for="promoMes2" style="font-size: 0.82rem; font-weight: 600; color: #e2e8f0;">Texto del 2.º Letrero (Ej. Bono Fin de Año)</label>
+              <input type="text" id="promoMes2" placeholder="Ej. PROMO ESPECIAL DE FIN DE AÑO (Déjalo vacío si solo usas 1 letrero)" oninput="updatePromoMesLivePreview()">
+            </div>
+
+            <!-- Botones Rápidos Preset 2 -->
+            <div style="margin-bottom: 10px;">
+              <span style="font-size: 0.74rem; color: #94a3b8; display: block; margin-bottom: 5px; font-weight: 600;">Opciones rápidas para el 2.º Letrero:</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMes2Preset('PROMO ESPECIAL DE FIN DE AÑO', '🎄 ESPECIAL FIN DE AÑO', '🎄')" style="font-size: 0.78rem; padding: 4px 9px;">🎄 Promo Fin de Año</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMes2Preset('BONO ESPECIAL DE FIN DE AÑO', '🎁 CIERRE DE AÑO', '🎁')" style="font-size: 0.78rem; padding: 4px 9px;">🎁 Bono Fin de Año</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMes2Preset('1 AÑO DE SEGURO GRATIS', '🔥 PROMO FIN DE AÑO', '🎁')" style="font-size: 0.78rem; padding: 4px 9px;">🛡️ Seguro Gratis</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMes2Preset('EMPIEZA A PAGAR EN ENERO', '🎉 ESTRENA HOY', '🎉')" style="font-size: 0.78rem; padding: 4px 9px;">🎉 Paga en Enero</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="setPromoMes2Preset('HASTA 30 MESES SIN INTERESES', '⭐ PROMO DEL MES', '💳')" style="font-size: 0.78rem; padding: 4px 9px;">💳 30 MSI</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="setPromoMes2Preset('', '', '')" style="background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #fca5a5; font-size: 0.78rem; padding: 4px 9px;">❌ Quitar 2.º Letrero</button>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 0;">
+              <div class="form-group col-6" style="margin-bottom: 0;">
+                <label for="promoMes2Tag" style="font-size: 0.82rem; font-weight: 600; color: #e2e8f0;">Etiqueta Superior 2.º Letrero</label>
+                <input type="text" id="promoMes2Tag" placeholder="🎄 PROMO FIN DE AÑO (por defecto)" oninput="updatePromoMesLivePreview()">
+              </div>
+              <div class="form-group col-6" style="margin-bottom: 0;">
+                <label for="promoMes2Icon" style="font-size: 0.82rem; font-weight: 600; color: #e2e8f0;">Ícono del 2.º Letrero</label>
+                <select id="promoMes2Icon" onchange="updatePromoMesLivePreview()" style="background: #0f172a; color: #fff; border: 1px solid var(--border);">
+                  <option value="🎄">🎄 Pino / Especial Fin de Año</option>
+                  <option value="🎁">🎁 Regalo / Bono Incluido</option>
+                  <option value="🎉">🎉 Fiesta / Año Nuevo</option>
+                  <option value="💳">💳 Tarjeta / Meses Sin Intereses (MSI)</option>
+                  <option value="🔥">🔥 Fuego / Oportunidad Caliente</option>
+                  <option value="⚡">⚡ Rayo / Oferta Relámpago</option>
+                  <option value="⭐">⭐ Estrella / Destacado Oficial</option>
+                  <option value="🏷️">🏷️ Etiqueta / Descuento</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -784,7 +839,7 @@
             <span style="font-size: 0.75rem; color: #00e5ff; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
               <i class="fa-solid fa-eye"></i> Vista Previa en Tarjeta:
             </span>
-            <div id="promoMesLivePreview"></div>
+            <div id="promoMesLivePreview" style="display: flex; flex-direction: column; gap: 8px;"></div>
           </div>
         </div>
 
@@ -823,6 +878,41 @@
 
           <div id="multiImagesContainer" style="display: flex; flex-wrap: wrap; gap: 10px; border: 1px dashed var(--border); padding: 10px; border-radius: 4px; background: rgba(0,0,0,0.1); min-height: 80px; align-items: center; justify-content: flex-start; width: 100%;">
             <!-- Miniaturas cargadas dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Control de Timer / Auto-rotación del Carrusel (dentro de Galería de Fotos) -->
+        <div class="form-group" style="margin-top: -5px; margin-bottom: 15px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 8px; padding: 12px 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
+            <div>
+              <label for="carouselInterval" style="margin-bottom: 2px; font-size: 0.88rem; font-weight: 700; color: #00e5ff; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-stopwatch"></i> Timer para el Carrusel (Cambio Automático de Promoción / Imagen)
+              </label>
+              <span style="font-size: 0.77rem; color: #94a3b8; display: block;">
+                Avanza solo de la promoción actual a la siguiente sin que el cliente tenga que dar clic (el cliente también puede moverlo manualmente).
+              </span>
+            </div>
+            <select id="carouselInterval" onchange="syncCarouselIntervalPills()" style="background: #0b1019; color: #fff; border: 1px solid #00e5ff; padding: 7px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; min-width: 230px; cursor: pointer;">
+              <option value="0">⏸️ Desactivado (Solo clic manual)</option>
+              <option value="1.5">⚡ Cada 1.5 segundos</option>
+              <option value="2">⏱️ Cada 2 segundos</option>
+              <option value="2.5">⏱️ Cada 2.5 segundos</option>
+              <option value="3">⏱️ Cada 3 segundos (Recomendado)</option>
+              <option value="4">⏱️ Cada 4 segundos</option>
+              <option value="5">⏱️ Cada 5 segundos</option>
+              <option value="6">⏱️ Cada 6 segundos</option>
+              <option value="8">⏱️ Cada 8 segundos</option>
+            </select>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 0.74rem; color: #94a3b8; font-weight: 600;">Opciones rápidas:</span>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="0" onclick="setCarouselIntervalValue('0')" style="font-size: 0.75rem; padding: 3px 9px;">⏸️ Manual</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="1.5" onclick="setCarouselIntervalValue('1.5')" style="font-size: 0.75rem; padding: 3px 9px;">⚡ 1.5 seg</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="2" onclick="setCarouselIntervalValue('2')" style="font-size: 0.75rem; padding: 3px 9px;">⏱️ 2 seg</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="2.5" onclick="setCarouselIntervalValue('2.5')" style="font-size: 0.75rem; padding: 3px 9px;">⏱️ 2.5 seg</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="3" onclick="setCarouselIntervalValue('3')" style="font-size: 0.75rem; padding: 3px 9px;">⏱️ 3 seg</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="4" onclick="setCarouselIntervalValue('4')" style="font-size: 0.75rem; padding: 3px 9px;">⏱️ 4 seg</button>
+            <button type="button" class="btn btn-secondary btn-sm carousel-timer-pill" data-sec="5" onclick="setCarouselIntervalValue('5')" style="font-size: 0.75rem; padding: 3px 9px;">⏱️ 5 seg</button>
           </div>
         </div>
 
@@ -1850,6 +1940,12 @@
         let promoMesAdminBadge = (p.promoMes && p.promoMes.trim()) 
           ? `<div style="margin-top: 6px;"><span style="background: linear-gradient(135deg, ${p.accentColor || '#CC4400'}, #0f172a); color: #fff; border: 1px solid ${p.accentColor || '#CC4400'}; padding: 3px 8px; border-radius: 4px; font-size: 0.76rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><span style="font-size: 0.9rem;">${p.promoMesIcon || '💳'}</span> ${p.promoMes}</span></div>` 
           : '';
+        if (p.promoMes2 && p.promoMes2.trim()) {
+          promoMesAdminBadge += `<div style="margin-top: 4px;"><span style="background: linear-gradient(135deg, #0284c7, #0f172a); color: #fff; border: 1px solid #38bdf8; padding: 3px 8px; border-radius: 4px; font-size: 0.74rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><span style="font-size: 0.88rem;">${p.promoMes2Icon || '🎄'}</span> 2.ª Promo: ${p.promoMes2}</span></div>`;
+        }
+        if (p.carouselInterval && Number(p.carouselInterval) > 0) {
+          promoMesAdminBadge += `<div style="margin-top: 4px;"><span style="background: rgba(0, 229, 255, 0.12); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.4); padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-stopwatch"></i> Carrusel Auto: cada ${p.carouselInterval}s</span></div>`;
+        }
 
         card.innerHTML = `
           ${orderBarHtml}
@@ -2572,30 +2668,51 @@
     // Promo del Mes Helper Functions
     window.setPromoMesPreset = function(text, tag, icon) {
       document.getElementById('promoMes').value = text;
-      if (tag) document.getElementById('promoMesTag').value = tag;
+      if (tag !== undefined) document.getElementById('promoMesTag').value = tag;
       if (icon) document.getElementById('promoMesIcon').value = icon;
       updatePromoMesLivePreview();
     };
 
-    window.updatePromoMesLivePreview = function() {
-      const text = document.getElementById('promoMes').value.trim();
-      const tag = document.getElementById('promoMesTag').value.trim() || 'PROMO DEL MES';
-      const icon = document.getElementById('promoMesIcon').value.trim() || '💳';
-      const accent = document.getElementById('accentColor').value || '#CC4400';
-      const previewWrapper = document.getElementById('promoMesPreviewWrapper');
-      const livePreview = document.getElementById('promoMesLivePreview');
+    window.setPromoMes2Preset = function(text, tag, icon) {
+      const el2 = document.getElementById('promoMes2');
+      const tag2 = document.getElementById('promoMes2Tag');
+      const icon2 = document.getElementById('promoMes2Icon');
+      if (el2) el2.value = text;
+      if (tag2 && tag !== undefined) tag2.value = tag;
+      if (icon2 && icon) icon2.value = icon;
+      updatePromoMesLivePreview();
+    };
 
-      if (!previewWrapper || !livePreview) return;
-
-      if (!text) {
-        previewWrapper.style.display = 'none';
-        livePreview.innerHTML = '';
-        return;
+    window.setCarouselIntervalValue = function(val) {
+      const sel = document.getElementById('carouselInterval');
+      if (sel) {
+        sel.value = String(val);
+        syncCarouselIntervalPills();
       }
+    };
 
-      previewWrapper.style.display = 'block';
-      livePreview.innerHTML = `
+    window.syncCarouselIntervalPills = function() {
+      const sel = document.getElementById('carouselInterval');
+      const val = sel ? String(sel.value) : '0';
+      document.querySelectorAll('.carousel-timer-pill').forEach(btn => {
+        if (btn.getAttribute('data-sec') === val) {
+          btn.style.background = '#00e5ff';
+          btn.style.color = '#0b1019';
+          btn.style.borderColor = '#00e5ff';
+          btn.style.fontWeight = '800';
+        } else {
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+          btn.style.fontWeight = '';
+        }
+      });
+    };
+
+    function buildSinglePromoPreviewCard(text, tag, icon, accent, labelBadge) {
+      return `
         <div style="position: relative; overflow: hidden; background: linear-gradient(135deg, ${accent} 0%, #0d1522 100%); border: 2px solid ${accent}; border-radius: 8px; padding: 12px 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 14px ${accent}40;">
+          ${labelBadge ? `<span style="position: absolute; top: 6px; right: 8px; font-size: 0.65rem; background: rgba(0,0,0,0.55); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 1px 6px; border-radius: 4px; font-weight: 700;">${labelBadge}</span>` : ''}
           <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
             <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.35rem; border: 1px solid rgba(255,255,255,0.3);">
               ${icon}
@@ -2612,6 +2729,39 @@
           </div>
         </div>
       `;
+    }
+
+    window.updatePromoMesLivePreview = function() {
+      const text = document.getElementById('promoMes').value.trim();
+      const tag = document.getElementById('promoMesTag').value.trim() || 'PROMO DEL MES';
+      const icon = document.getElementById('promoMesIcon').value.trim() || '💳';
+      const text2El = document.getElementById('promoMes2');
+      const tag2El = document.getElementById('promoMes2Tag');
+      const icon2El = document.getElementById('promoMes2Icon');
+      const text2 = text2El ? text2El.value.trim() : '';
+      const tag2 = (tag2El && tag2El.value.trim()) ? tag2El.value.trim() : 'PROMO FIN DE AÑO';
+      const icon2 = (icon2El && icon2El.value.trim()) ? icon2El.value.trim() : '🎄';
+      const accent = document.getElementById('accentColor').value || '#CC4400';
+      const previewWrapper = document.getElementById('promoMesPreviewWrapper');
+      const livePreview = document.getElementById('promoMesLivePreview');
+
+      if (!previewWrapper || !livePreview) return;
+
+      if (!text && !text2) {
+        previewWrapper.style.display = 'none';
+        livePreview.innerHTML = '';
+        return;
+      }
+
+      previewWrapper.style.display = 'block';
+      let html = '';
+      if (text) {
+        html += buildSinglePromoPreviewCard(text, tag, icon, accent, text2 ? '1.ª Promo (Foto 1)' : '');
+      }
+      if (text2) {
+        html += buildSinglePromoPreviewCard(text2, tag2, icon2, accent, '2.ª Promo (Foto 2 / Timer)');
+      }
+      livePreview.innerHTML = html;
     };
 
     // Edit Promo Trigger
@@ -2639,6 +2789,13 @@
       document.getElementById('promoMes').value = p.promoMes || '';
       document.getElementById('promoMesTag').value = p.promoMesTag || '';
       document.getElementById('promoMesIcon').value = p.promoMesIcon || '💳';
+      if (document.getElementById('promoMes2')) document.getElementById('promoMes2').value = p.promoMes2 || '';
+      if (document.getElementById('promoMes2Tag')) document.getElementById('promoMes2Tag').value = p.promoMes2Tag || '';
+      if (document.getElementById('promoMes2Icon')) document.getElementById('promoMes2Icon').value = p.promoMes2Icon || '🎄';
+      if (document.getElementById('carouselInterval')) {
+        document.getElementById('carouselInterval').value = p.carouselInterval ? String(p.carouselInterval) : '0';
+        syncCarouselIntervalPills();
+      }
       updatePromoMesLivePreview();
 
       // Check if image is an external URL or local
@@ -2727,6 +2884,13 @@
       document.getElementById('promoMes').value = '';
       document.getElementById('promoMesTag').value = '';
       document.getElementById('promoMesIcon').value = '💳';
+      if (document.getElementById('promoMes2')) document.getElementById('promoMes2').value = '';
+      if (document.getElementById('promoMes2Tag')) document.getElementById('promoMes2Tag').value = '';
+      if (document.getElementById('promoMes2Icon')) document.getElementById('promoMes2Icon').value = '🎄';
+      if (document.getElementById('carouselInterval')) {
+        document.getElementById('carouselInterval').value = '0';
+        syncCarouselIntervalPills();
+      }
       updatePromoMesLivePreview();
 
       // Populate position selector when adding new promo
@@ -3183,6 +3347,10 @@
       formData.append('promoMes', document.getElementById('promoMes').value.trim());
       formData.append('promoMesTag', document.getElementById('promoMesTag').value.trim());
       formData.append('promoMesIcon', document.getElementById('promoMesIcon').value.trim());
+      if (document.getElementById('promoMes2')) formData.append('promoMes2', document.getElementById('promoMes2').value.trim());
+      if (document.getElementById('promoMes2Tag')) formData.append('promoMes2Tag', document.getElementById('promoMes2Tag').value.trim());
+      if (document.getElementById('promoMes2Icon')) formData.append('promoMes2Icon', document.getElementById('promoMes2Icon').value.trim());
+      if (document.getElementById('carouselInterval')) formData.append('carouselInterval', document.getElementById('carouselInterval').value);
 
       const insertPos = document.getElementById('insertPosition');
       if (insertPos && !document.getElementById('promoId').value) {

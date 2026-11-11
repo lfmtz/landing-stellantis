@@ -274,7 +274,11 @@ app.post('/api/promos/:brand', upload.fields([{ name: 'image', maxCount: 1 }, { 
     category: req.body.category || 'suv',
     promoMes: req.body.promoMes ? req.body.promoMes.trim() : '',
     promoMesTag: req.body.promoMesTag ? req.body.promoMesTag.trim() : '',
-    promoMesIcon: req.body.promoMesIcon ? req.body.promoMesIcon.trim() : '💳'
+    promoMesIcon: req.body.promoMesIcon ? req.body.promoMesIcon.trim() : '💳',
+    promoMes2: req.body.promoMes2 ? req.body.promoMes2.trim() : '',
+    promoMes2Tag: req.body.promoMes2Tag ? req.body.promoMes2Tag.trim() : '',
+    promoMes2Icon: req.body.promoMes2Icon ? req.body.promoMes2Icon.trim() : '🎄',
+    carouselInterval: req.body.carouselInterval !== undefined ? (parseFloat(req.body.carouselInterval) || 0) : 0
   };
 
   const existingIndex = data[brand].findIndex(p => p.id === newPromo.id);
@@ -669,8 +673,10 @@ function generateHtmlForBrand(brand, vehicles) {
         <span class="indicator ${idx === 0 ? 'active' : ''}" onclick="setCarouselSlide('${v.id}', ${idx}, event)"></span>
       `).join('');
 
+      const intervalMs = (v.carouselInterval && Number(v.carouselInterval) > 0) ? Math.round(Number(v.carouselInterval) * 1000) : 0;
+
       imgContainerContent = `
-      <div class="carousel" id="carousel-${v.id}">
+      <div class="carousel" id="carousel-${v.id}" data-interval="${intervalMs}">
         <div class="carousel-track-wrapper">
           <div class="carousel-track">
             ${slidesHtml}
@@ -781,37 +787,61 @@ function generateHtmlForBrand(brand, vehicles) {
       `;
     }
 
-    // Letrero Promocional Destacado del Mes (Opcional - solo si se configuró en el panel)
+    // Letrero Promocional Destacado del Mes (Opcional - soporta 1 o 2 promociones alternables)
     let promoMesBannerHtml = '';
     let promoMesStickerHtml = '';
+    const promoBannersList = [];
     if (v.promoMes && typeof v.promoMes === 'string' && v.promoMes.trim().length > 0) {
-      const pText = v.promoMes.trim();
-      const pTag = (v.promoMesTag && typeof v.promoMesTag === 'string' && v.promoMesTag.trim().length > 0) ? v.promoMesTag.trim() : 'PROMO DEL MES';
-      const pIcon = (v.promoMesIcon && typeof v.promoMesIcon === 'string' && v.promoMesIcon.trim().length > 0) ? v.promoMesIcon.trim() : '💳';
+      promoBannersList.push({
+        text: v.promoMes.trim(),
+        tag: (v.promoMesTag && typeof v.promoMesTag === 'string' && v.promoMesTag.trim().length > 0) ? v.promoMesTag.trim() : 'PROMO DEL MES',
+        icon: (v.promoMesIcon && typeof v.promoMesIcon === 'string' && v.promoMesIcon.trim().length > 0) ? v.promoMesIcon.trim() : '💳'
+      });
+    }
+    if (v.promoMes2 && typeof v.promoMes2 === 'string' && v.promoMes2.trim().length > 0) {
+      promoBannersList.push({
+        text: v.promoMes2.trim(),
+        tag: (v.promoMes2Tag && typeof v.promoMes2Tag === 'string' && v.promoMes2Tag.trim().length > 0) ? v.promoMes2Tag.trim() : 'PROMO FIN DE AÑO',
+        icon: (v.promoMes2Icon && typeof v.promoMes2Icon === 'string' && v.promoMes2Icon.trim().length > 0) ? v.promoMes2Icon.trim() : '🎄'
+      });
+    }
+
+    const encodedPromosAttr = promoBannersList.length > 1
+      ? `data-promos="${encodeURIComponent(JSON.stringify(promoBannersList))}" data-promo-interval="${(v.carouselInterval && Number(v.carouselInterval) > 0) ? Math.round(Number(v.carouselInterval) * 1000) : 3000}"`
+      : '';
+
+    if (promoBannersList.length > 0) {
+      const firstPromo = promoBannersList[0];
+      const pText = firstPromo.text;
+      const pTag = firstPromo.tag;
+      const pIcon = firstPromo.icon;
       const effectiveAccent = v.accentColor || accentColor;
 
       // Distintivo compacto flotante en la esquina de la foto
       promoMesStickerHtml = `
-        <div class="card-promo-sticker" style="position: absolute; top: 12px; right: 12px; z-index: 15; background: linear-gradient(135deg, ${effectiveAccent}, #0b111e); color: #fff; padding: 6px 14px; border-radius: 30px; font-weight: 800; font-family: var(--fuente); font-size: 0.88rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px ${effectiveAccent}80; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; pointer-events: none;">
-          <span style="font-size: 1.05rem;">${pIcon}</span>
-          <span>${pText}</span>
+        <div class="card-promo-sticker" id="sticker-${v.id}" style="position: absolute; top: 12px; right: 12px; z-index: 15; background: linear-gradient(135deg, ${effectiveAccent}, #0b111e); color: #fff; padding: 6px 14px; border-radius: 30px; font-weight: 800; font-family: var(--fuente); font-size: 0.88rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px ${effectiveAccent}80; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;">
+          <span class="sticker-icon" style="font-size: 1.05rem;">${pIcon}</span>
+          <span class="sticker-text">${pText}</span>
         </div>
       `;
 
       // Letrero grande, vistoso y llamativo dentro de la tarjeta
       promoMesBannerHtml = `
-        <div class="card-special-promo-banner" style="position: relative; overflow: hidden; background: linear-gradient(135deg, ${effectiveAccent} 0%, #0d1522 100%); border: 2px solid ${effectiveAccent}; border-radius: 8px; padding: 12px 14px; margin-bottom: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.15), 0 0 16px ${effectiveAccent}40;">
+        <div class="card-special-promo-banner" id="banner-${v.id}" ${promoBannersList.length > 1 ? `onclick="cycleCardPromoBanner('${v.id}', event)" title="Haz clic para ver la otra promoción"` : ''} style="position: relative; overflow: hidden; background: linear-gradient(135deg, ${effectiveAccent} 0%, #0d1522 100%); border: 2px solid ${effectiveAccent}; border-radius: 8px; padding: 12px 14px; margin-bottom: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.15), 0 0 16px ${effectiveAccent}40; ${promoBannersList.length > 1 ? 'cursor: pointer;' : ''} transition: opacity 0.25s ease, transform 0.25s ease;">
           <div class="promo-banner-shimmer"></div>
           <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
-            <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.4rem; box-shadow: inset 0 0 8px rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.3);">
+            <div class="banner-icon" style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.4rem; box-shadow: inset 0 0 8px rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.3);">
               ${pIcon}
             </div>
             <div style="flex-grow: 1; min-width: 0;">
-              <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulseGlow 1.8s infinite;"></span>
-                <span>${pTag}</span>
+              <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px;">
+                  <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulseGlow 1.8s infinite;"></span>
+                  <span class="banner-tag">${pTag}</span>
+                </span>
+                ${promoBannersList.length > 1 ? `<span class="banner-step-pill" style="font-size: 0.68rem; background: rgba(255,255,255,0.2); padding: 1px 7px; border-radius: 10px; font-weight: 700;">1/2</span>` : ''}
               </div>
-              <div style="font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 900; line-height: 1.15; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-family: var(--fuente); word-break: break-word;">
+              <div class="banner-text" style="font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 900; line-height: 1.15; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-family: var(--fuente); word-break: break-word;">
                 ${pText}
               </div>
             </div>
@@ -821,7 +851,7 @@ function generateHtmlForBrand(brand, vehicles) {
     }
 
     return `
-    <article class="card" id="auto-${v.id}" data-id="${v.id}" data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+    <article class="card" id="auto-${v.id}" data-id="${v.id}" ${encodedPromosAttr} data-category="${v.category || 'suv'}" style="border-top: 5px solid ${v.accentColor || accentColor}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
       <div class="img-container" style="cursor: pointer; position: relative;" onclick="if(typeof gtag==='function') { gtag('event', 'click_car_card', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
         ${promoMesStickerHtml}
         ${imgContainerContent}
@@ -3194,22 +3224,120 @@ function generateHtmlForBrand(brand, vehicles) {
       initChat();
     });
 
-    // Slider Carousel Script for Multi-Photos
+    // Slider Carousel Script for Multi-Photos & Auto-Timer + Promo Alternation
     var carouselStates = {};
+    var promoBannerStates = {};
+
+    window.syncCardPromoBanner = function(id, slideIdx) {
+      var pState = promoBannerStates[id];
+      if (!pState || !pState.promos || pState.promos.length <= 1) return;
+      var targetIdx = slideIdx % pState.promos.length;
+      if (pState.currentIdx === targetIdx) return;
+      pState.currentIdx = targetIdx;
+      var promo = pState.promos[targetIdx];
+
+      var stickerEl = document.getElementById('sticker-' + id);
+      if (stickerEl) {
+        stickerEl.style.opacity = '0.3';
+        setTimeout(function() {
+          var sIcon = stickerEl.querySelector('.sticker-icon');
+          var sText = stickerEl.querySelector('.sticker-text');
+          if (sIcon) sIcon.textContent = promo.icon;
+          if (sText) sText.textContent = promo.text;
+          stickerEl.style.opacity = '1';
+        }, 120);
+      }
+
+      var bannerEl = document.getElementById('banner-' + id);
+      if (bannerEl) {
+        bannerEl.style.opacity = '0.35';
+        setTimeout(function() {
+          var bIcon = bannerEl.querySelector('.banner-icon');
+          var bTag = bannerEl.querySelector('.banner-tag');
+          var bText = bannerEl.querySelector('.banner-text');
+          var bStep = bannerEl.querySelector('.banner-step-pill');
+          if (bIcon) bIcon.textContent = promo.icon;
+          if (bTag) bTag.textContent = promo.tag;
+          if (bText) bText.textContent = promo.text;
+          if (bStep) bStep.textContent = (targetIdx + 1) + '/' + pState.promos.length;
+          bannerEl.style.opacity = '1';
+        }, 120);
+      }
+    };
+
+    window.cycleCardPromoBanner = function(id, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var cState = carouselStates[id];
+      if (cState && cState.totalSlides > 1) {
+        moveCarousel(id, 1, event);
+        return;
+      }
+      var pState = promoBannerStates[id];
+      if (!pState || !pState.promos || pState.promos.length <= 1) return;
+      var nextIdx = (pState.currentIdx + 1) % pState.promos.length;
+      syncCardPromoBanner(id, nextIdx);
+    };
+
+    function startCarouselTimer(id) {
+      var state = carouselStates[id];
+      if (!state || !state.intervalMs || state.intervalMs <= 0 || state.totalSlides <= 1) return;
+      if (state.timer) clearInterval(state.timer);
+      state.timer = setInterval(function() {
+        moveCarousel(id, 1, null, true);
+      }, state.intervalMs);
+    }
+
+    function stopCarouselTimer(id) {
+      var state = carouselStates[id];
+      if (state && state.timer) {
+        clearInterval(state.timer);
+        state.timer = null;
+      }
+    }
 
     window.initCarousels = function() {
+      // Inicializar estados de letreros dobles (Promo 1 / Promo 2)
+      document.querySelectorAll('.card[data-promos]').forEach(function(cardEl) {
+        var id = cardEl.getAttribute('data-id');
+        var rawPromos = cardEl.getAttribute('data-promos');
+        var promoInterval = parseInt(cardEl.getAttribute('data-promo-interval') || '3000', 10);
+        if (id && rawPromos) {
+          try {
+            var parsedPromos = JSON.parse(decodeURIComponent(rawPromos));
+            if (Array.isArray(parsedPromos) && parsedPromos.length > 1) {
+              promoBannerStates[id] = {
+                promos: parsedPromos,
+                currentIdx: 0,
+                intervalMs: promoInterval,
+                timer: null
+              };
+            }
+          } catch (e) {}
+        }
+      });
+
       document.querySelectorAll('.carousel').forEach(function(el) {
         var id = el.id.replace('carousel-', '');
         var track = el.querySelector('.carousel-track');
         var slides = el.querySelectorAll('.carousel-slide');
         var indicators = el.querySelectorAll('.indicator');
+        var intervalMs = parseInt(el.getAttribute('data-interval') || '0', 10);
         
         carouselStates[id] = {
           currentIdx: 0,
           totalSlides: slides.length,
           track: track,
-          indicators: indicators
+          indicators: indicators,
+          intervalMs: intervalMs,
+          timer: null
         };
+
+        if (intervalMs > 0 && slides.length > 1) {
+          startCarouselTimer(id);
+        }
         
         // Touch/Swipe support
         var startX = 0;
@@ -3218,6 +3346,7 @@ function generateHtmlForBrand(brand, vehicles) {
         el.addEventListener('touchstart', function(e) {
           startX = e.touches[0].clientX;
           isDragging = true;
+          stopCarouselTimer(id);
         }, { passive: true });
         
         el.addEventListener('touchend', function(e) {
@@ -3230,6 +3359,8 @@ function generateHtmlForBrand(brand, vehicles) {
             } else {
               moveCarousel(id, -1);
             }
+          } else {
+            startCarouselTimer(id);
           }
           isDragging = false;
         }, { passive: true });
@@ -3238,6 +3369,7 @@ function generateHtmlForBrand(brand, vehicles) {
         el.addEventListener('mousedown', function(e) {
           startX = e.clientX;
           isDragging = true;
+          stopCarouselTimer(id);
         });
         
         el.addEventListener('mouseup', function(e) {
@@ -3250,13 +3382,27 @@ function generateHtmlForBrand(brand, vehicles) {
             } else {
               moveCarousel(id, -1);
             }
+          } else {
+            startCarouselTimer(id);
           }
           isDragging = false;
         });
       });
+
+      // Si una tarjeta tiene 2 letreros promocionales pero solo 1 foto (sin carrusel activo), alternar el letrero con timer
+      Object.keys(promoBannerStates).forEach(function(id) {
+        var cState = carouselStates[id];
+        var pState = promoBannerStates[id];
+        if ((!cState || !cState.intervalMs || cState.totalSlides <= 1) && pState && pState.intervalMs > 0) {
+          pState.timer = setInterval(function() {
+            var nextIdx = (pState.currentIdx + 1) % pState.promos.length;
+            syncCardPromoBanner(id, nextIdx);
+          }, pState.intervalMs);
+        }
+      });
     };
 
-    window.moveCarousel = function(id, dir, event) {
+    window.moveCarousel = function(id, dir, event, isAuto) {
       if (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -3271,10 +3417,10 @@ function generateHtmlForBrand(brand, vehicles) {
         nextIdx = 0;
       }
       
-      setCarouselSlide(id, nextIdx);
+      setCarouselSlide(id, nextIdx, event, isAuto);
     };
 
-    window.setCarouselSlide = function(id, idx, event) {
+    window.setCarouselSlide = function(id, idx, event, isAuto) {
       if (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -3303,6 +3449,14 @@ function generateHtmlForBrand(brand, vehicles) {
           ind.classList.remove('active');
         }
       });
+
+      // Sincronizar el letrero promocional si tiene 2 promociones configuradas
+      syncCardPromoBanner(id, idx);
+
+      // Si el cambio fue manual por el usuario, reiniciar el reloj del timer para darle tiempo completo de lectura
+      if (!isAuto && state.intervalMs > 0) {
+        startCarouselTimer(id);
+      }
     };
 
     // Auto-focus and highlight car when arriving with #auto-[id]
