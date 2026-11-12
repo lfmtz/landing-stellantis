@@ -158,13 +158,15 @@
       ],
       "videos": [],
       "whatsapp": "https://wa.me/5521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
-      "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades de <span style=\"color: red; font-weight: bold;\"><b>$5,999</b></span>, incluyendo un bono exclusivo para la versión SXT con solo el 44% de enganche.",
+      "description": "¡Domina la ciudad con el sedán más eficiente! Estrena un Dodge Attitude con mensualidades de <span style=\"color: red; font-weight: bold;\"><b>$6,470</b></span>, incluyendo un bono exclusivo para la versión SXT con solo el 44% de enganche.",
       "descriptionSize": "1.0rem",
       "descriptionColor": "#333333",
       "benefits": [
         "4 años de garantia",
         "Protección de llantas",
-        "ó 0% tasa a 48 msi, pregunta las bases"
+        "ó 0% tasa a 48 msi, pregunta las bases",
+        "Autorelevo",
+        "Kit de seguridad"
       ],
       "fichaTecnica": "fichas/ficha-attitude-2026.html?v=sxt",
       "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
@@ -177,7 +179,7 @@
       "promoMes2": "",
       "promoMes2Tag": "",
       "promoMes2Icon": "🎄",
-      "carouselInterval": 1.5
+      "carouselInterval": 2
     },
     {
       "id": "dodge-1787102237711",
