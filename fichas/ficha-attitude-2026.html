@@ -254,13 +254,23 @@ dl.kv dd { margin: 0; font-weight: 500; text-align: right; }
 .film.vid .layer, .film.vid .fcap { display: none; }
 .vwrap .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; filter: blur(34px) brightness(.55); will-change: transform; transform: translateZ(0); }
 @media (min-width: 961px) {
-  .vwrap .bg { filter: none; background-color: #05080f; opacity: .85; }
+  .vwrap .bg { filter: none; inset: 0; background-color: #05080f; opacity: .4; will-change: auto; }
 }
 .vwrap video { position: relative; height: min(88dvh, 920px); width: auto; max-height: 100%; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; background: #000; border-radius: 16px; box-shadow: 0 24px 80px rgba(0,0,0,.75); }
 .vload { position: absolute; z-index: 2; padding: 9px 16px; border-radius: 999px; background: rgba(5,8,15,.74); border: 1px solid rgba(255,255,255,.22); font: 600 11px/1 var(--f-b); letter-spacing: .14em; text-transform: uppercase; color: #fff; opacity: 0; pointer-events: none; transition: opacity .25s; }
 .film.vloading .vload { opacity: 1; }
 @media (max-width: 560px) { .film .vwrap { padding: 0; } .vwrap video { width: 100%; height: 100%; max-height: 100dvh; border-radius: 0; aspect-ratio: auto; } }
-.fbar .seg.vp i { width: 0; animation: none; }
+.fbar .seg.vp i { width: 100%; animation: none; transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+
+/* Rendimiento en escritorio: mientras corre el video, la página de atrás se oculta (sin animaciones ni pintado)
+   y la capa del video queda limpia: sin degradado encima, sin sombra grande ni esquinas redondeadas sobre el <video>. */
+body.vidplay .app, body.vidplay .shade, body.vidplay .drawer, body.vidplay .sel { visibility: hidden !important; animation: none !important; }
+.vwrap video { transform: translateZ(0); }
+@media (min-width: 961px) {
+  .film.vid::after { display: none; }
+  .vwrap video { border-radius: 0; box-shadow: none; outline: 1px solid rgba(255,255,255,.08); }
+  .film.vid { transition: none; }
+}
 .fctl .x.mute { width: auto; padding: 0 16px; font: 600 11px/1 var(--f-b); letter-spacing: .14em; text-transform: uppercase; color: #fff; }
 .fend h2 { margin: 0; font-family: var(--f-d); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: clamp(40px, 8vw, 96px); line-height: .95; }
 .fend p { margin: 14px auto 0; max-width: 40ch; color: #d3d8e3; }
@@ -416,6 +426,7 @@ var ASSETS = {
    y por eso usa copias en la carpeta img/. Agrega #cdn al link para forzar Cloudinary donde sí se permita. */
 var USE_CDN = CONFIG.SOURCE === "cloudinary" || location.hash === "#cdn";
 function VIDEO_URL() { return CLOUD.VIDEO ? "https://res.cloudinary.com/" + CLOUD.NAME + "/video/upload/" + CLOUD.TX_VIDEO + "/" + CLOUD.VIDEO : ""; }
+function POSTER_TINY() { return CLOUD.VIDEO ? "https://res.cloudinary.com/" + CLOUD.NAME + "/video/upload/so_1,f_auto,q_auto:eco,w_24/" + CLOUD.VIDEO + ".jpg" : ""; }
 function POSTER_URL() { return CLOUD.VIDEO ? "https://res.cloudinary.com/" + CLOUD.NAME + "/video/upload/" + CLOUD.TX_POSTER + "/" + CLOUD.VIDEO + ".jpg" : ""; }
 function IMG(slot, txOverride) {
   if (!USE_CDN) return /^car-/.test(slot) ? "img/cut/" + slot.slice(4) + ".webp" : "img/" + slot + ".webp";
@@ -768,14 +779,14 @@ function vWarm() {
   if (v.getAttribute("src") === url) return;
   v.poster = POSTER_URL(); v.src = url;
 }
-function vStop() { var v = $("fvideo"); clearTimeout(F.vt); $("film").classList.remove("vloading"); try { v.pause(); } catch (e) {} }
-function vFail() { vStop(); F.vid = false; $("film").classList.remove("vid"); $("fmute").hidden = true; fPhotos(); }
+function vStop() { var v = $("fvideo"); clearTimeout(F.vt); document.body.classList.remove("vidplay"); $("film").classList.remove("vloading"); try { v.pause(); } catch (e) {} }
+function vFail() { vStop(); document.body.classList.remove("vidplay"); F.vid = false; $("film").classList.remove("vid"); $("fmute").hidden = true; fPhotos(); }
 function fOpenVideo() {
   var v = $("fvideo"), url = VIDEO_URL(), film = $("film");
-  F.vid = true; F.paused = false; film.classList.remove("paused", "ended"); film.classList.add("vid");
+  F.vid = true; F.paused = false; film.classList.remove("paused", "ended"); film.classList.add("vid"); document.body.classList.add("vidplay");
   film.classList.toggle("vloading", v.readyState < 3);
   $("fbar").innerHTML = '<span class="seg vp"><i id="vprog"></i></span>';
-  $("vbg").style.backgroundImage = "url(" + POSTER_URL() + ")"; v.poster = POSTER_URL();
+  $("vbg").style.backgroundImage = "url(" + (isDesktop() ? POSTER_TINY() : POSTER_URL()) + ")"; v.poster = POSTER_URL();
   v.muted = true; $("fmute").textContent = "Sin sonido"; $("fmute").hidden = false;
   if (v.getAttribute("src") !== url) { v.src = url; v.load(); } else { v.currentTime = 0; }
   document.body.classList.add("open-f"); closeDrawer(); $("fclose").focus();
@@ -800,7 +811,7 @@ if (VIDEO_URL()) window.addEventListener("load", function () { setTimeout(vWarm,
   v.addEventListener("canplay", function () { film.classList.remove("vloading"); });
   v.addEventListener("playing", function () { film.classList.remove("vloading"); });
   v.addEventListener("waiting", function () { if (F.vid) film.classList.add("vloading"); });
-  v.addEventListener("timeupdate", function () { if (v.duration) $("vprog").style.width = (v.currentTime / v.duration * 100) + "%"; });
+  v.addEventListener("timeupdate", function () { if (v.duration) $("vprog").style.transform = "scaleX(" + (v.currentTime / v.duration) + ")"; });
   v.addEventListener("ended", function () { film.classList.add("ended"); });
   $("fmute").onclick = function () { v.muted = !v.muted; this.textContent = v.muted ? "Sin sonido" : "Con sonido"; };
 })();
