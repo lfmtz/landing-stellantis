@@ -204,7 +204,7 @@ dl.kv dd { margin: 0; font-weight: 500; text-align: right; }
 @keyframes drive { from { opacity: 0; transform: translateX(-9%) scale(.96); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes riseIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes ghostIn { from { opacity: 0; letter-spacing: .25em; } to { opacity: 1; letter-spacing: 0; } }
-.intro .carbox > img.car { animation: drive 1.3s cubic-bezier(.2,.7,.2,1) both .15s; }
+.intro .carbox img.car { animation: drive 1.3s cubic-bezier(.2,.7,.2,1) both .15s; }
 .intro .vname { animation: riseIn .9s cubic-bezier(.2,.7,.2,1) both .05s; }
 .intro .ghost span { animation: ghostIn 1.8s ease both; }
 .ghost span { display: inline-block; }
@@ -736,7 +736,16 @@ function renderCards() {
   });
 }
 function openSel() { renderCards(); document.body.classList.add("open-s"); $("close-s").focus(); }
-function closeSel() { document.body.classList.remove("open-s"); }
+function closeSel() {
+  document.body.classList.remove("open-s");
+  var appEl = document.getElementById("app");
+  appEl.classList.remove("intro");
+  void appEl.offsetWidth;
+  appEl.classList.add("intro");
+  sweepGo();
+  clearTimeout(S.introT);
+  S.introT = setTimeout(function () { appEl.classList.remove("intro"); }, 1800);
+}
 
 function setVersion(v) {
   if (v === S.v) return;
