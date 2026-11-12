@@ -88,6 +88,16 @@ function writeData(data) {
 function optimizeCloudinaryUrl(url, brand = '') {
   if (!url || typeof url !== 'string') return url;
   if (url.includes('cloudinary.com') && url.includes('/image/upload/') && !url.includes('e_background_removal')) {
+    // Para fondos de pantalla, banners panorámicos y popups: NO recortar a 800x600 ni forzar g_auto (eso descoloca y recorta el fondo)
+    if (brand === 'background' || brand === 'banner') {
+      let cleaned = url.replace(/\/w_\d+,h_\d+,c_[^/]+,g_[^/]+/, '');
+      cleaned = cleaned.replace(/image\/upload\/[^/]+\/(v\d+)/, (m, v) => `image/upload/f_auto,q_auto/${v}`);
+      if (!cleaned.includes('f_auto,q_auto')) {
+        cleaned = cleaned.replace('image/upload/', 'image/upload/f_auto,q_auto/');
+      }
+      return cleaned;
+    }
+
     const hasResize = /\/(?:[^/]*,)?(w_|h_|c_)/.test(url);
     if (!hasResize) {
       const targetOpts = brand === 'demos'
@@ -4077,19 +4087,19 @@ function generateIndexHtml(dbData) {
   const carousel = landing.carousel || [];
   const carouselMobile = landing.carouselMobile || [];
   for (let i = 0; i < 4; i++) {
-    const val = optimizeCloudinaryUrl(carousel[i] || `imagenes/carrusel_${i + 1}.jpg`);
-    const valMobile = optimizeCloudinaryUrl(carouselMobile[i] || val); // Fallback to desktop if mobile is empty
+    const val = optimizeCloudinaryUrl(carousel[i] || `imagenes/carrusel_${i + 1}.jpg`, 'banner');
+    const valMobile = optimizeCloudinaryUrl(carouselMobile[i] || val, 'banner');
     html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}\\}\\}`, 'g'), val);
     html = html.replace(new RegExp(`\\{\\{CAROUSEL_${i + 1}_MOBILE\\}\\}`, 'g'), valMobile);
   }
   
   // Newsletter registration popup
-  const popupImg = optimizeCloudinaryUrl(landing.newsletterPopupImage || '');
+  const popupImg = optimizeCloudinaryUrl(landing.newsletterPopupImage || '', 'banner');
   html = html.replace(/\{\{NEWSLETTER_POPUP_IMAGE\}\}/g, popupImg);
 
   // Dynamic Backgrounds (Cloudinary or local fallback)
-  const bodyBg = optimizeCloudinaryUrl(landing.bodyBg || 'imagenes/fondo_escritorio.png');
-  const bodyBgMobile = optimizeCloudinaryUrl(landing.bodyBgMobile || 'imagenes/fondo_movil.png');
+  const bodyBg = optimizeCloudinaryUrl(landing.bodyBg || 'imagenes/fondo_escritorio.png', 'background');
+  const bodyBgMobile = optimizeCloudinaryUrl(landing.bodyBgMobile || 'imagenes/fondo_movil.png', 'background');
   html = html.replace(/\{\{BODY_BG\}\}/g, bodyBg);
   html = html.replace(/\{\{BODY_BG_MOBILE\}\}/g, bodyBgMobile);
   
