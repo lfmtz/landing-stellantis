@@ -1279,7 +1279,7 @@
           <span class="sticker-text">Seguro Gratis</span>
         </div>
       
-        <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
+        <img alt="Promoción B10" class="card-img" decoding="async" height="450" loading="lazy" src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_800,h_600,c_fill,g_auto,f_auto,q_auto/v1788118055/B10_26_wkfvje.jpg" width="600"/>
       </div>
       
         <div class="card-video-strip">
@@ -1464,7 +1464,7 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
     <div class="leasing-popup-content" onclick="event.stopPropagation()">
       <button class="leasing-popup-close" id="closeLeasingPopup" onclick="closeLeasingPopupOverlay(event)" aria-label="Cerrar">&times;</button>
       <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': 'leapmotor' }); }">
-        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787610610/ARREN_4_taedg6.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_800,h_600,c_fill,g_auto,f_auto,q_auto/v1787610610/ARREN_4_taedg6.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
       </a>
     </div>
   </div>
@@ -2806,6 +2806,9 @@ Vanguardia, autonomía extendida y tecnología inteligente con sistemas avanzado
     window.addEventListener('message', function(e) {
       if (e && e.data && e.data.type === 'CLOSE_FICHA_MODAL') {
         window.closeFichaModal();
+      } else if (e && e.data && e.data.type === 'FICHA_READY') {
+        var loader = document.getElementById('fichaModalLoader');
+        if (loader) loader.style.display = 'none';
       }
     });
 

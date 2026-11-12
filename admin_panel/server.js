@@ -87,13 +87,17 @@ function writeData(data) {
 // Optimize Cloudinary URLs helper
 function optimizeCloudinaryUrl(url, brand = '') {
   if (!url || typeof url !== 'string') return url;
-  if (url.includes('cloudinary.com')) {
-    if (!url.includes('/w_') && !url.includes('/h_') && !url.includes('/c_')) {
-      if (brand === 'demos') {
-        return url.replace(/(image\/upload\/)(v\d+)/, '$1w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/$2');
-      } else {
-        return url.replace(/(image\/upload\/)(v\d+)/, '$1w_800,h_600,c_fill,g_auto,f_auto,q_auto/$2');
+  if (url.includes('cloudinary.com') && url.includes('/image/upload/') && !url.includes('e_background_removal')) {
+    const hasResize = /\/(?:[^/]*,)?(w_|h_|c_)/.test(url);
+    if (!hasResize) {
+      const targetOpts = brand === 'demos'
+        ? 'w_1080,h_1080,c_fill,g_auto,f_auto,q_auto'
+        : 'w_800,h_600,c_fill,g_auto,f_auto,q_auto';
+      // Replace either image/upload/v123... or image/upload/f_auto,q_auto/v123...
+      if (/image\/upload\/(?:[^/]+\/)?(v\d+\/)/.test(url)) {
+        return url.replace(/(image\/upload\/)(?:[^/]+\/)?(v\d+\/)/, `$1${targetOpts}/$2`);
       }
+      return url.replace('image/upload/', `image/upload/${targetOpts}/`);
     } else {
       if (!url.includes('f_auto') || !url.includes('q_auto')) {
         return url.replace(/(image\/upload\/)([^/]+)\/(v\d+)/, (match, p1, p2, p3) => {
@@ -3969,6 +3973,9 @@ function generateHtmlForBrand(brand, vehicles) {
     window.addEventListener('message', function(e) {
       if (e && e.data && e.data.type === 'CLOSE_FICHA_MODAL') {
         window.closeFichaModal();
+      } else if (e && e.data && e.data.type === 'FICHA_READY') {
+        var loader = document.getElementById('fichaModalLoader');
+        if (loader) loader.style.display = 'none';
       }
     });
 

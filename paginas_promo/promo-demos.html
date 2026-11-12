@@ -1301,10 +1301,10 @@
           <div class="carousel-track">
             
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg" alt="Peugeot 2008 - Foto 1" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778740/IMG_20260826_104201903_HDR.jpg" alt="Peugeot 2008 - Foto 1" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
-          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/f_auto,q_auto/v1787778756/IMG_20260826_104621934.jpg" alt="Peugeot 2008 - Foto 2" class="card-img-carousel" loading="lazy" />
+          <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778756/IMG_20260826_104621934.jpg" alt="Peugeot 2008 - Foto 2" class="card-img-carousel" loading="lazy" />
         </div>
         <div class="carousel-slide">
           <img src="https://res.cloudinary.com/bfxvgiaz/image/upload/w_1080,h_1080,c_fill,g_auto,f_auto,q_auto/v1787778766/IMG_20260826_105029479_HDR.jpg" alt="Peugeot 2008 - Foto 3" class="card-img-carousel" loading="lazy" />
@@ -5270,7 +5270,7 @@ GAS', 'brand_name': 'demos' }); }">Cotizar</a></td><td data-label="Clasificació
     <div class="leasing-popup-content" onclick="event.stopPropagation()">
       <button class="leasing-popup-close" id="closeLeasingPopup" onclick="closeLeasingPopupOverlay(event)" aria-label="Cerrar">&times;</button>
       <a href="https://wa.me/525521787900?text=Hola,%20solicito%20información%20sobre%20el%20arrendamiento" target="_blank" id="leasingPopupLink" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_leasing', { 'brand_name': 'demos' }); }">
-        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1787610610/ARREN_4_taedg6.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
+        <img src="https://res.cloudinary.com/dbxa0pozm/image/upload/w_800,h_600,c_fill,g_auto,f_auto,q_auto/v1787610610/ARREN_4_taedg6.jpg" class="leasing-popup-img" alt="Promoción Especial Arrendamiento" onerror="this.onerror=null; this.src='../imagenes/carrusel_1.jpg';">
       </a>
     </div>
   </div>
@@ -6612,6 +6612,9 @@ GAS', 'brand_name': 'demos' }); }">Cotizar</a></td><td data-label="Clasificació
     window.addEventListener('message', function(e) {
       if (e && e.data && e.data.type === 'CLOSE_FICHA_MODAL') {
         window.closeFichaModal();
+      } else if (e && e.data && e.data.type === 'FICHA_READY') {
+        var loader = document.getElementById('fichaModalLoader');
+        if (loader) loader.style.display = 'none';
       }
     });
 
