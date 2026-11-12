@@ -248,12 +248,15 @@ dl.kv dd { margin: 0; font-weight: 500; text-align: right; }
 .fend { position: absolute; z-index: 6; inset: 0; display: none; place-items: center; text-align: center; background: rgba(5,8,15,.72); padding: 24px; }
 .film.ended .fend { display: grid; animation: riseIn .8s ease both; }
 /* Modo video (si CLOUD.VIDEO tiene un video; si falla la carga, se usa la película de fotos) */
-.film .vwrap { position: absolute; inset: 0; display: none; place-items: center; z-index: 1; background: #05080f; overflow: hidden; }
-.film.vid .vwrap { display: grid; }
+.film.vid::after { background: linear-gradient(0deg, rgba(5,8,15,.48) 0%, rgba(5,8,15,0) 20%), linear-gradient(180deg, rgba(5,8,15,.42) 0%, rgba(5,8,15,0) 16%); }
+.film .vwrap { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1; background: #05080f; overflow: hidden; }
+.film.vid .vwrap { display: flex; }
 .film.vid .layer, .film.vid .fcap { display: none; }
 .vwrap .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; filter: blur(34px) brightness(.55); }
-.vwrap video { position: relative; height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain !important; background: #000; box-shadow: 0 0 80px rgba(0,0,0,.6); }
-@media (max-width: 560px) { .vwrap video { width: 100%; aspect-ratio: auto; } }
+.vwrap video { position: relative; height: min(88dvh, 920px); width: auto; max-height: 100%; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; background: #000; border-radius: 16px; box-shadow: 0 24px 80px rgba(0,0,0,.75); }
+.vload { position: absolute; z-index: 2; padding: 9px 16px; border-radius: 999px; background: rgba(5,8,15,.74); border: 1px solid rgba(255,255,255,.22); font: 600 11px/1 var(--f-b); letter-spacing: .14em; text-transform: uppercase; color: #fff; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.film.vloading .vload { opacity: 1; }
+@media (max-width: 560px) { .film .vwrap { padding: 0; } .vwrap video { width: 100%; height: 100%; max-height: 100dvh; border-radius: 0; aspect-ratio: auto; } }
 .fbar .seg.vp i { width: 0; animation: none; }
 .fctl .x.mute { width: auto; padding: 0 16px; font: 600 11px/1 var(--f-b); letter-spacing: .14em; text-transform: uppercase; color: #fff; }
 .fend h2 { margin: 0; font-family: var(--f-d); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: clamp(40px, 8vw, 96px); line-height: .95; }
@@ -350,7 +353,7 @@ dl.kv dd { margin: 0; font-weight: 500; text-align: right; }
 
 
 <div class="film" id="film" role="dialog" aria-modal="true" aria-label="La Attitude en movimiento">
-  <div class="vwrap" id="vwrap"><div class="bg" id="vbg"></div><video id="fvideo" playsinline muted preload="none" aria-label="Video de la Dodge Attitude 2026"></video></div>
+  <div class="vwrap" id="vwrap"><div class="bg" id="vbg"></div><span class="vload" id="vload">Cargando video…</span><video id="fvideo" playsinline muted preload="metadata" aria-label="Video de la Dodge Attitude 2026"></video></div>
   <div class="layer" id="fa"><img alt=""></div><div class="layer" id="fb"><img alt=""></div>
   <div class="fctl"><button class="x mute" id="fmute" type="button" hidden>Sin sonido</button><button class="x" id="fpause" aria-label="Pausar"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button><button class="x" id="fclose" aria-label="Cerrar">×</button></div>
   <div class="fcap"><div class="lbl" id="fnum"></div><h2 id="fcap"></h2></div>
@@ -386,8 +389,8 @@ var CLOUD = {
   TX_PHOTO: "f_auto,q_auto:good,w_1200",
   TX_RAIL: "f_auto,q_auto:eco,w_800",
   VIDEO: "attitude_web",                    // public_id del video en Cloudinary ("" = solo película de fotos)
-  TX_VIDEO: "f_auto,q_auto,w_720",
-  TX_POSTER: "so_1,f_jpg,q_auto,w_720",
+  TX_VIDEO: "f_auto,q_auto:eco,vc_auto,w_540",
+  TX_POSTER: "so_1,f_auto,q_auto:eco,w_540",
   TX_CAR: "e_background_removal/c_pad,w_2880,h_1613,b_transparent/c_crop,w_1900,h_1064,g_center/f_auto,q_auto,w_1400"
 };
 var ASSETS = {
@@ -754,17 +757,23 @@ function fShow(i) {
 }
 function fNext() { if (F.i + 1 >= FILM.length) { fEnd(); } else fShow(F.i + 1); }
 function fEnd() { clearTimeout(F.t); $("film").classList.add("ended"); document.querySelectorAll("#fbar .seg").forEach(function (s) { s.className = "seg done"; }); }
-function vStop() { var v = $("fvideo"); clearTimeout(F.vt); try { v.pause(); } catch (e) {} }
+function vWarm() {
+  var v = $("fvideo"), url = VIDEO_URL();
+  if (!url || v.getAttribute("src") === url) return;
+  v.poster = POSTER_URL(); v.src = url;
+}
+function vStop() { var v = $("fvideo"); clearTimeout(F.vt); $("film").classList.remove("vloading"); try { v.pause(); } catch (e) {} }
 function vFail() { vStop(); F.vid = false; $("film").classList.remove("vid"); $("fmute").hidden = true; fPhotos(); }
 function fOpenVideo() {
   var v = $("fvideo"), url = VIDEO_URL(), film = $("film");
   F.vid = true; F.paused = false; film.classList.remove("paused", "ended"); film.classList.add("vid");
+  film.classList.toggle("vloading", v.readyState < 3);
   $("fbar").innerHTML = '<span class="seg vp"><i id="vprog"></i></span>';
   $("vbg").style.backgroundImage = "url(" + POSTER_URL() + ")"; v.poster = POSTER_URL();
   v.muted = true; $("fmute").textContent = "Sin sonido"; $("fmute").hidden = false;
   if (v.getAttribute("src") !== url) { v.src = url; v.load(); } else { v.currentTime = 0; }
   document.body.classList.add("open-f"); closeDrawer(); $("fclose").focus();
-  clearTimeout(F.vt); F.vt = setTimeout(function () { if (v.readyState < 1) vFail(); }, 9000);
+  clearTimeout(F.vt); F.vt = setTimeout(function () { if (v.readyState < 1 && v.networkState !== 2) vFail(); }, 12000);
   var p = v.play(); if (p && p.catch) p.catch(function () {});
 }
 function fOpen() { if (VIDEO_URL()) fOpenVideo(); else fPhotos(); }
@@ -774,13 +783,19 @@ function fPhotos() {
   document.body.classList.add("open-f"); closeDrawer(); fShow(0); $("fclose").focus();
 }
 function fClose() { document.body.classList.remove("open-f"); clearTimeout(F.t); vStop(); }
-$("play").onclick = fOpen; $("fclose").onclick = fClose; $("freplay").onclick = fOpen;
+$("play").onclick = fOpen; $("play").addEventListener("pointerenter", vWarm, { passive: true }); $("play").addEventListener("focus", vWarm, { passive: true });
+$("fclose").onclick = fClose; $("freplay").onclick = fOpen;
+if (VIDEO_URL()) window.addEventListener("load", function () { setTimeout(vWarm, 2500); }, { once: true });
 (function () {
-  var v = $("fvideo");
+  var v = $("fvideo"), film = $("film");
   v.addEventListener("error", function () { if (F.vid) vFail(); });
   v.addEventListener("loadedmetadata", function () { clearTimeout(F.vt); });
+  v.addEventListener("loadeddata", function () { film.classList.remove("vloading"); });
+  v.addEventListener("canplay", function () { film.classList.remove("vloading"); });
+  v.addEventListener("playing", function () { film.classList.remove("vloading"); });
+  v.addEventListener("waiting", function () { if (F.vid) film.classList.add("vloading"); });
   v.addEventListener("timeupdate", function () { if (v.duration) $("vprog").style.width = (v.currentTime / v.duration * 100) + "%"; });
-  v.addEventListener("ended", function () { $("film").classList.add("ended"); });
+  v.addEventListener("ended", function () { film.classList.add("ended"); });
   $("fmute").onclick = function () { v.muted = !v.muted; this.textContent = v.muted ? "Sin sonido" : "Con sonido"; };
 })();
 $("fpause").onclick = function () {
