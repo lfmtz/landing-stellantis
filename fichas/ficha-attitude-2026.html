@@ -252,7 +252,10 @@ dl.kv dd { margin: 0; font-weight: 500; text-align: right; }
 .film .vwrap { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1; background: #05080f; overflow: hidden; }
 .film.vid .vwrap { display: flex; }
 .film.vid .layer, .film.vid .fcap { display: none; }
-.vwrap .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; filter: blur(34px) brightness(.55); }
+.vwrap .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; filter: blur(34px) brightness(.55); will-change: transform; transform: translateZ(0); }
+@media (min-width: 961px) {
+  .vwrap .bg { filter: none; background-color: #05080f; opacity: .85; }
+}
 .vwrap video { position: relative; height: min(88dvh, 920px); width: auto; max-height: 100%; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; background: #000; border-radius: 16px; box-shadow: 0 24px 80px rgba(0,0,0,.75); }
 .vload { position: absolute; z-index: 2; padding: 9px 16px; border-radius: 999px; background: rgba(5,8,15,.74); border: 1px solid rgba(255,255,255,.22); font: 600 11px/1 var(--f-b); letter-spacing: .14em; text-transform: uppercase; color: #fff; opacity: 0; pointer-events: none; transition: opacity .25s; }
 .film.vloading .vload { opacity: 1; }
@@ -757,9 +760,12 @@ function fShow(i) {
 }
 function fNext() { if (F.i + 1 >= FILM.length) { fEnd(); } else fShow(F.i + 1); }
 function fEnd() { clearTimeout(F.t); $("film").classList.add("ended"); document.querySelectorAll("#fbar .seg").forEach(function (s) { s.className = "seg done"; }); }
+function isDesktop() { return window.matchMedia("(min-width: 961px)").matches; }
 function vWarm() {
   var v = $("fvideo"), url = VIDEO_URL();
-  if (!url || v.getAttribute("src") === url) return;
+  if (!url) return;
+  if (isDesktop() && !navigator.connection?.saveData) v.preload = "auto";
+  if (v.getAttribute("src") === url) return;
   v.poster = POSTER_URL(); v.src = url;
 }
 function vStop() { var v = $("fvideo"); clearTimeout(F.vt); $("film").classList.remove("vloading"); try { v.pause(); } catch (e) {} }
