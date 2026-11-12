@@ -3,3 +3,11 @@ admin_panel/node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# Archivos temporales de Office / Excel
+~$*
+
+# Respaldos y versiones de trabajo temporal
+*respaldo*
+*-fluido.html
+
