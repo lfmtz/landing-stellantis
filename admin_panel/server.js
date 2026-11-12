@@ -693,7 +693,6 @@ function generateHtmlForBrand(brand, vehicles) {
     `).join('');
 
     // Ficha Técnica (Interactiva HTML en Modal o Descarga PDF) - Solo aparece si está cargada
-    let fichaTecnicaHtml = '';
     let fichaTecnicaCardBtnHtml = '';
     if (v.fichaTecnica && typeof v.fichaTecnica === 'string' && v.fichaTecnica.trim().length > 0) {
       let ftUrl = v.fichaTecnica.trim();
@@ -734,13 +733,6 @@ function generateHtmlForBrand(brand, vehicles) {
             </button>
           </div>
         `;
-        fichaTecnicaHtml = `
-          <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
-            <button type="button" class="btn-ficha-tecnica" onclick="openFichaModal('${safeFtUrl}', '${safeCarName}', '${brand}', event)" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #0a1424; border: 1px solid ${effectiveAccent}; color: #ffffff; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.92rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;">
-              <i class="fa-solid fa-wand-magic-sparkles" style="color: ${effectiveAccent}; font-size: 1.05rem;"></i> Explorar Ficha Técnica Interactiva (360° / PDF)
-            </button>
-          </div>
-        `;
       } else {
         fichaTecnicaCardBtnHtml = `
           <div class="ficha-card-cta-box" style="margin-top: 14px;">
@@ -750,13 +742,6 @@ function generateHtmlForBrand(brand, vehicles) {
                 <span>Ver / Descargar Ficha Técnica</span>
               </span>
               <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; color: #64748b;"></i>
-            </a>
-          </div>
-        `;
-        fichaTecnicaHtml = `
-          <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
-            <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;" onclick="if(typeof gtag==='function') { gtag('event', 'download_ficha_tecnica', { 'car_name': '${safeCarName}', 'brand_name': '${brand}' }); }">
-              <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i> Descargar Ficha Técnica
             </a>
           </div>
         `;
@@ -858,7 +843,6 @@ function generateHtmlForBrand(brand, vehicles) {
     const hasDetails = Boolean(
       (v.km && v.km.trim()) ||
       validBenefits.length > 0 ||
-      fichaTecnicaHtml ||
       (v.description && v.description.trim()) ||
       (v.legal && v.legal.trim())
     );
@@ -887,8 +871,6 @@ function generateHtmlForBrand(brand, vehicles) {
                   </ul>
                 </div>
               ` : ''}
-
-              ${fichaTecnicaHtml}
 
               ${v.description && v.description.trim() ? `
                 <div class="promo-main" style="${textStyle} white-space: pre-line; line-height: 1.4; margin-bottom: 12px; background: #fafafa; border-left: 3px solid ${v.accentColor || accentColor}; padding: 10px 12px; border-radius: 0 4px 4px 0;">
