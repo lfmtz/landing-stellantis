@@ -17,6 +17,10 @@ const baseImgDir = path.join(__dirname, '..', 'imagenes');
 if (!fs.existsSync(baseImgDir)) {
   fs.mkdirSync(baseImgDir, { recursive: true });
 }
+const baseFichasDir = path.join(__dirname, '..', 'fichas');
+if (!fs.existsSync(baseFichasDir)) {
+  fs.mkdirSync(baseFichasDir, { recursive: true });
+}
 
 // Config Multer for image uploads
 const storage = multer.diskStorage({
@@ -36,6 +40,25 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 const csvUpload = multer({ storage: multer.memoryStorage() });
+
+// Config Multer for Ficha Técnica (HTML / PDF) uploads
+const fichaStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (!fs.existsSync(baseFichasDir)) {
+      fs.mkdirSync(baseFichasDir, { recursive: true });
+    }
+    cb(null, baseFichasDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.html';
+    const baseName = path.basename(file.originalname, path.extname(file.originalname))
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || ('ficha-' + Date.now());
+    cb(null, `${baseName}${ext}`);
+  }
+});
+const fichaUpload = multer({ storage: fichaStorage });
 
 const DATA_FILE = path.join(__dirname, 'data.json');
 
@@ -372,6 +395,40 @@ app.delete('/api/promos/:brand/:id', (req, res) => {
   res.status(404).json({ error: 'Brand not found' });
 });
 
+// List available Fichas Técnicas in /fichas folder
+app.get('/api/fichas', (req, res) => {
+  try {
+    if (!fs.existsSync(baseFichasDir)) {
+      return res.json({ files: [] });
+    }
+    const files = fs.readdirSync(baseFichasDir)
+      .filter(f => /\.(html?|pdf)$/i.test(f))
+      .map(f => ({
+        name: f,
+        path: `fichas/${f}`,
+        type: /\.html?$/i.test(f) ? 'html' : 'pdf'
+      }));
+    res.json({ files });
+  } catch (err) {
+    console.error('Error listing fichas:', err);
+    res.status(500).json({ error: 'No se pudo leer la carpeta de fichas' });
+  }
+});
+
+// Upload an HTML or PDF Ficha Técnica file to /fichas
+app.post('/api/upload-ficha', fichaUpload.single('fichaFile'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se subió ningún archivo de ficha técnica' });
+  }
+  const relPath = `fichas/${req.file.filename}`;
+  res.json({
+    success: true,
+    filename: req.file.filename,
+    path: relPath,
+    type: /\.html?$/i.test(req.file.filename) ? 'html' : 'pdf'
+  });
+});
+
 // CSV Mass Price Upload Endpoint (Excel generated CSV)
 app.post('/api/upload-csv', csvUpload.single('csvFile'), (req, res) => {
   if (!req.file) {
@@ -631,17 +688,75 @@ function generateHtmlForBrand(brand, vehicles) {
       </li>
     `).join('');
 
-    // Ficha Técnica Download Link
+    // Ficha Técnica (Interactiva HTML en Modal o Descarga PDF) - Solo aparece si está cargada
     let fichaTecnicaHtml = '';
+    let fichaTecnicaCardBtnHtml = '';
     if (v.fichaTecnica && typeof v.fichaTecnica === 'string' && v.fichaTecnica.trim().length > 0) {
-      const ftUrl = v.fichaTecnica.trim();
-      fichaTecnicaHtml = `
-        <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
-          <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;" onclick="if(typeof gtag==='function') { gtag('event', 'download_ficha_tecnica', { 'car_name': '${v.name}', 'brand_name': '${brand}' }); }">
-            <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i> Descargar Ficha Técnica
-          </a>
-        </div>
-      `;
+      let ftUrl = v.fichaTecnica.trim();
+      const isHtmlFicha = /\.html?(\?.*|#.*)?$/i.test(ftUrl);
+      if (!ftUrl.startsWith('http://') && !ftUrl.startsWith('https://') && !ftUrl.startsWith('../') && !ftUrl.startsWith('/')) {
+        ftUrl = `../${ftUrl}`;
+      }
+      if (isHtmlFicha && !/[?&]v=/i.test(ftUrl)) {
+        const upperName = (v.name || '').toUpperCase();
+        let detectedVer = '';
+        if (/\bGT\b/.test(upperName)) detectedVer = 'gt';
+        else if (/\bSPORT\b/.test(upperName)) detectedVer = 'sport';
+        else if (/\bSXT\b/.test(upperName)) detectedVer = 'sxt';
+        if (detectedVer) {
+          ftUrl += (ftUrl.includes('?') ? '&' : '?') + `v=${detectedVer}`;
+        }
+      }
+      const safeFtUrl = ftUrl.replace(/'/g, "\\'");
+      const safeCarName = (v.name || '').replace(/'/g, "\\'");
+      const effectiveAccent = v.accentColor || accentColor;
+
+      if (isHtmlFicha) {
+        fichaTecnicaCardBtnHtml = `
+          <div class="ficha-card-cta-box" style="margin-top: 14px;">
+            <button type="button" class="btn-ficha-interactiva-card" onclick="openFichaModal('${safeFtUrl}', '${safeCarName}', '${brand}', event)" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: linear-gradient(135deg, #0a1424 0%, #162642 100%); color: #ffffff; border: 1.5px solid ${effectiveAccent}; padding: 11px 14px; border-radius: 8px; cursor: pointer; font-family: var(--fuente); font-weight: 800; font-size: 0.94rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(10, 20, 36, 0.22); transition: all 0.22s ease; text-align: left;">
+              <span style="display: inline-flex; align-items: center; gap: 10px; min-width: 0;">
+                <span style="width: 30px; height: 30px; border-radius: 6px; background: ${effectiveAccent}; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 0.92rem; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                  <i class="fa-solid fa-layer-group"></i>
+                </span>
+                <span style="display: flex; flex-direction: column; line-height: 1.15;">
+                  <span>Ver Ficha Técnica Interactiva</span>
+                  <small style="font-size: 0.68rem; color: #cbd5e1; font-weight: 600; letter-spacing: 0.4px; text-transform: none;">Explorar versiones, colores, video y PDF</small>
+                </span>
+              </span>
+              <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; background: rgba(255,255,255,0.14); padding: 4px 9px; border-radius: 999px; color: #fff; font-weight: 700; flex-shrink: 0;">
+                Abrir <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size: 0.68rem;"></i>
+              </span>
+            </button>
+          </div>
+        `;
+        fichaTecnicaHtml = `
+          <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
+            <button type="button" class="btn-ficha-tecnica" onclick="openFichaModal('${safeFtUrl}', '${safeCarName}', '${brand}', event)" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #0a1424; border: 1px solid ${effectiveAccent}; color: #ffffff; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.92rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;">
+              <i class="fa-solid fa-wand-magic-sparkles" style="color: ${effectiveAccent}; font-size: 1.05rem;"></i> Explorar Ficha Técnica Interactiva (360° / PDF)
+            </button>
+          </div>
+        `;
+      } else {
+        fichaTecnicaCardBtnHtml = `
+          <div class="ficha-card-cta-box" style="margin-top: 14px;">
+            <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-pdf-card" onclick="if(typeof gtag==='function') { gtag('event', 'download_ficha_tecnica', { 'car_name': '${safeCarName}', 'brand_name': '${brand}' }); }" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #f8fafc; color: #0f172a; border: 1.5px solid #cbd5e1; padding: 10px 14px; border-radius: 8px; text-decoration: none; font-family: var(--fuente); font-weight: 800; font-size: 0.92rem; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.2s ease;">
+              <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i>
+                <span>Ver / Descargar Ficha Técnica</span>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; color: #64748b;"></i>
+            </a>
+          </div>
+        `;
+        fichaTecnicaHtml = `
+          <div class="ficha-tecnica-container" style="margin-top: 12px; margin-bottom: 12px;">
+            <a href="${ftUrl}" target="_blank" rel="noopener" class="btn-ficha-tecnica" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: #1e293b; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente); transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;" onclick="if(typeof gtag==='function') { gtag('event', 'download_ficha_tecnica', { 'car_name': '${safeCarName}', 'brand_name': '${brand}' }); }">
+              <i class="fa-solid fa-file-pdf" style="color: #ef4444; font-size: 1.15rem;"></i> Descargar Ficha Técnica
+            </a>
+          </div>
+        `;
+      }
     }
 
     // Highlight style for description
@@ -890,6 +1005,8 @@ function generateHtmlForBrand(brand, vehicles) {
               ${v.price}
             </div>
           </div>
+
+          ${fichaTecnicaCardBtnHtml}
           
           ${detailsAccordionHtml}
         </div>
@@ -2278,6 +2395,175 @@ function generateHtmlForBrand(brand, vehicles) {
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
+
+    /* Botón y Modal Lightbox de Ficha Técnica Interactiva */
+    .btn-ficha-interactiva-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(10, 20, 36, 0.35) !important;
+      filter: brightness(1.08);
+    }
+    .btn-ficha-pdf-card:hover {
+      background: #f1f5f9 !important;
+      border-color: var(--acento) !important;
+      transform: translateY(-1px);
+    }
+    .ficha-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(5, 10, 20, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+    .ficha-modal-overlay.show {
+      opacity: 1;
+    }
+    .ficha-modal-content {
+      width: min(96vw, 1460px);
+      height: min(94vh, 920px);
+      background: #0a1424;
+      border-radius: 14px;
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.78);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.97) translateY(10px);
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .ficha-modal-overlay.show .ficha-modal-content {
+      transform: scale(1) translateY(0);
+    }
+    .ficha-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 18px;
+      background: linear-gradient(90deg, #070e1a 0%, #0f1c33 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      flex-shrink: 0;
+    }
+    .ficha-modal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+    .ficha-modal-badge {
+      background: var(--acento);
+      color: #fff;
+      font-family: var(--fuente);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.8px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .ficha-modal-title {
+      color: #f8fafc;
+      font-family: var(--fuente);
+      font-weight: 800;
+      font-size: 1.08rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ficha-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .ficha-modal-ext-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--fuente);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .ficha-modal-ext-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+    .ficha-modal-close-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ef4444;
+      border: 1px solid #f87171;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--fuente);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+    }
+    .ficha-modal-close-btn:hover {
+      background: #dc2626;
+      transform: scale(1.04);
+    }
+    .ficha-modal-body {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      background: #0a1424;
+    }
+    .ficha-modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #0a1424;
+    }
+    @media (max-width: 768px) {
+      .ficha-modal-overlay {
+        padding: 0;
+      }
+      .ficha-modal-content {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+        border: 0;
+      }
+      .ficha-modal-header {
+        padding: 8px 12px;
+      }
+      .ficha-modal-badge {
+        display: none;
+      }
+      .ficha-modal-ext-btn span {
+        display: none;
+      }
+    }
   </style>
  </head>
  <body>
@@ -2364,6 +2650,33 @@ function generateHtmlForBrand(brand, vehicles) {
         <video id="videoModalPlayer" controls playsinline preload="auto">
           Tu navegador no soporta reproducción de video HTML5.
         </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal / Lightbox de Ficha Técnica Interactiva -->
+  <div id="fichaTecnicaModal" class="ficha-modal-overlay" style="display: none;" onclick="closeFichaModal(event)">
+    <div class="ficha-modal-content" onclick="event.stopPropagation()">
+      <div class="ficha-modal-header">
+        <div class="ficha-modal-title-group">
+          <span class="ficha-modal-badge"><i class="fa-solid fa-layer-group"></i> Ficha Interactiva</span>
+          <span id="fichaModalTitle" class="ficha-modal-title">Ficha Técnica</span>
+        </div>
+        <div class="ficha-modal-actions">
+          <a id="fichaModalExternalLink" href="#" target="_blank" rel="noopener" class="ficha-modal-ext-btn" title="Abrir ficha en una pestaña completa">
+            <i class="fa-solid fa-up-right-from-square"></i> <span>Pantalla Completa</span>
+          </a>
+          <button type="button" class="ficha-modal-close-btn" id="closeFichaModalBtn" onclick="closeFichaModal(event)" aria-label="Cerrar Ficha Técnica">
+            <i class="fa-solid fa-xmark" style="font-size: 1rem;"></i> Cerrar
+          </button>
+        </div>
+      </div>
+      <div class="ficha-modal-body">
+        <div id="fichaModalLoader" class="video-modal-loader" style="display: flex;">
+          <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2.4rem; color: var(--acento);"></i>
+          <span style="color: #fff; font-family: var(--fuente); font-size: 1.05rem; margin-top: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Cargando Ficha Técnica Interactiva...</span>
+        </div>
+        <iframe id="fichaModalIframe" class="ficha-modal-iframe" title="Ficha Técnica Interactiva" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -3589,6 +3902,73 @@ function generateHtmlForBrand(brand, vehicles) {
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         window.closeVideoModal(e);
+        if (typeof window.closeFichaModal === 'function') {
+          window.closeFichaModal(e);
+        }
+      }
+    });
+
+    // Ficha Técnica Interactiva Lightbox Modal functions
+    window.openFichaModal = function(url, carName, brandName, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var modal = document.getElementById('fichaTecnicaModal');
+      var iframe = document.getElementById('fichaModalIframe');
+      var titleEl = document.getElementById('fichaModalTitle');
+      var extLink = document.getElementById('fichaModalExternalLink');
+      var loader = document.getElementById('fichaModalLoader');
+      if (!modal || !iframe) {
+        window.open(url, '_blank');
+        return;
+      }
+
+      if (titleEl) titleEl.textContent = carName ? ('Ficha Técnica · ' + carName) : 'Ficha Técnica Interactiva';
+      if (extLink) extLink.href = url;
+      if (loader) loader.style.display = 'flex';
+
+      iframe.onload = function() {
+        if (loader) loader.style.display = 'none';
+      };
+      iframe.src = url;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        modal.classList.add('show');
+      }, 25);
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'open_ficha_interactiva', {
+          'car_name': carName || '',
+          'brand_name': brandName || '',
+          'ficha_url': url
+        });
+      }
+    };
+
+    window.closeFichaModal = function(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      var modal = document.getElementById('fichaTecnicaModal');
+      var iframe = document.getElementById('fichaModalIframe');
+      var loader = document.getElementById('fichaModalLoader');
+      if (!modal || modal.style.display === 'none') return;
+
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        modal.style.display = 'none';
+        if (iframe) iframe.src = 'about:blank';
+        if (loader) loader.style.display = 'none';
+      }, 280);
+    };
+
+    window.addEventListener('message', function(e) {
+      if (e && e.data && e.data.type === 'CLOSE_FICHA_MODAL') {
+        window.closeFichaModal();
       }
     });
 

@@ -1002,12 +1002,36 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="fichaTecnica">
-            <i class="fa-solid fa-file-pdf" style="color: #ef4444; margin-right: 4px;"></i> Enlace de Ficha Técnica (PDF / URL) 
-            <small style="color: var(--text-secondary); font-weight: normal;">(Opcional - Si lo dejas vacío no se mostrará nada al cliente)</small>
-          </label>
-          <input type="url" id="fichaTecnica" placeholder="https://res.cloudinary.com/... o enlace a la ficha técnica en PDF">
+        <div class="form-group" style="background: rgba(239, 68, 68, 0.04); border: 1px solid rgba(239, 68, 68, 0.25); padding: 14px; border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+            <label for="fichaTecnica" style="margin-bottom: 0;">
+              <i class="fa-solid fa-layer-group" style="color: #ef4444; margin-right: 4px;"></i> Ficha Técnica Interactiva (HTML) o PDF 
+              <small style="color: var(--text-secondary); font-weight: normal;">(Opcional - Si está vacío no aparece en la tarjeta)</small>
+            </label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <input type="file" id="fichaFileUploadInput" accept=".html,.htm,.pdf" style="display: none;" onchange="uploadFichaFile(this)">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('fichaFileUploadInput').click()" style="font-size: 0.76rem; padding: 4px 10px; background: #1e293b; border: 1px solid #334155; color: #f8fafc; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+                <i class="fa-solid fa-upload" style="color: #38bdf8;"></i> Subir HTML / PDF
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="previewCurrentFicha()" style="font-size: 0.76rem; padding: 4px 10px; background: #1e293b; border: 1px solid #334155; color: #f8fafc; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+                <i class="fa-solid fa-eye" style="color: #22c55e;"></i> Probar
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('fichaTecnica').value=''; updateFichaStatusBadge();" style="font-size: 0.76rem; padding: 4px 8px; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; border-radius: 4px; cursor: pointer;" title="Quitar ficha de esta tarjeta">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+          <input type="text" id="fichaTecnica" oninput="updateFichaStatusBadge()" placeholder="Ej: fichas/ficha-attitude-2026.html?v=sxt o https://res.cloudinary.com/.../ficha.pdf">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
+              <span style="font-size: 0.74rem; color: var(--text-secondary); font-weight: 600;">Asignación rápida:</span>
+              <button type="button" onclick="setQuickFicha('fichas/ficha-attitude-2026.html?v=sxt')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; border: 1px solid #3b82f6; background: rgba(59,130,246,0.14); color: #93c5fd; cursor: pointer; font-weight: 700;">✨ Attitude 2026 · SXT</button>
+              <button type="button" onclick="setQuickFicha('fichas/ficha-attitude-2026.html?v=sport')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; border: 1px solid #3b82f6; background: rgba(59,130,246,0.14); color: #93c5fd; cursor: pointer; font-weight: 700;">✨ Attitude 2026 · Sport</button>
+              <button type="button" onclick="setQuickFicha('fichas/ficha-attitude-2026.html?v=gt')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; border: 1px solid #3b82f6; background: rgba(59,130,246,0.14); color: #93c5fd; cursor: pointer; font-weight: 700;">✨ Attitude 2026 · GT</button>
+              <span id="dynamicFichasList" style="display: inline-flex; flex-wrap: wrap; gap: 6px;"></span>
+            </div>
+            <span id="fichaStatusBadge" style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Sin ficha asignada</span>
+          </div>
         </div>
 
         <div class="form-group" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 15px; border-radius: 6px;">
@@ -1933,9 +1957,15 @@
         const validBenefits = (p.benefits || []).filter(b => b && b.trim());
         let benefitsHtml = validBenefits.map(b => `<li><i class="fa-solid fa-check"></i> ${b}</li>`).join('');
         
-        let pdfBadge = (p.fichaTecnica && p.fichaTecnica.trim()) 
-          ? `<a href="${p.fichaTecnica.trim()}" target="_blank" rel="noopener" style="font-size: 0.75rem; background: #ef4444; color: #fff; padding: 2px 7px; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;" title="Ver Ficha Técnica"><i class="fa-solid fa-file-pdf"></i> Ficha</a>` 
-          : '';
+        let pdfBadge = '';
+        if (p.fichaTecnica && p.fichaTecnica.trim()) {
+          const rawFt = p.fichaTecnica.trim();
+          const resolvedAdminFt = (rawFt.startsWith('http://') || rawFt.startsWith('https://') || rawFt.startsWith('../') || rawFt.startsWith('/')) ? rawFt : `../${rawFt}`;
+          const isHtmlFt = /\.html?(\?.*|#.*)?$/i.test(rawFt);
+          pdfBadge = isHtmlFt
+            ? `<a href="${resolvedAdminFt}" target="_blank" rel="noopener" style="font-size: 0.74rem; background: linear-gradient(135deg, #2563eb, #0a1424); border: 1px solid #60a5fa; color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;" title="Abrir Ficha Técnica Interactiva"><i class="fa-solid fa-layer-group"></i> Ficha Interactiva</a>`
+            : `<a href="${resolvedAdminFt}" target="_blank" rel="noopener" style="font-size: 0.75rem; background: #ef4444; color: #fff; padding: 2px 7px; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;" title="Ver Ficha Técnica PDF"><i class="fa-solid fa-file-pdf"></i> Ficha PDF</a>`;
+        }
 
         let promoMesAdminBadge = (p.promoMes && p.promoMes.trim()) 
           ? `<div style="margin-top: 6px;"><span style="background: linear-gradient(135deg, ${p.accentColor || '#CC4400'}, #0f172a); color: #fff; border: 1px solid ${p.accentColor || '#CC4400'}; padding: 3px 8px; border-radius: 4px; font-size: 0.76rem; font-weight: 800; display: inline-flex; align-items: center; gap: 5px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><span style="font-size: 0.9rem;">${p.promoMesIcon || '💳'}</span> ${p.promoMes}</span></div>` 
@@ -2786,6 +2816,8 @@
       document.getElementById('legal').value = p.legal || '';
       document.getElementById('category').value = p.category || 'suv';
       document.getElementById('fichaTecnica').value = p.fichaTecnica || '';
+      if (typeof updateFichaStatusBadge === 'function') updateFichaStatusBadge();
+      if (typeof loadAvailableFichas === 'function') loadAvailableFichas();
       document.getElementById('promoMes').value = p.promoMes || '';
       document.getElementById('promoMesTag').value = p.promoMesTag || '';
       document.getElementById('promoMesIcon').value = p.promoMesIcon || '💳';
@@ -2881,6 +2913,8 @@
       document.getElementById('descriptionSize').value = '1.0rem';
       document.getElementById('underlineStyle').value = 'solid';
       document.getElementById('fichaTecnica').value = '';
+      if (typeof updateFichaStatusBadge === 'function') updateFichaStatusBadge();
+      if (typeof loadAvailableFichas === 'function') loadAvailableFichas();
       document.getElementById('promoMes').value = '';
       document.getElementById('promoMesTag').value = '';
       document.getElementById('promoMesIcon').value = '💳';
@@ -3724,8 +3758,85 @@
       return val;
     }
 
+    // Helpers for Ficha Técnica Interactiva / PDF in Admin Panel
+    window.setQuickFicha = function(val) {
+      const input = document.getElementById('fichaTecnica');
+      if (input) {
+        input.value = val;
+        updateFichaStatusBadge();
+      }
+    };
+
+    window.updateFichaStatusBadge = function() {
+      const input = document.getElementById('fichaTecnica');
+      const badge = document.getElementById('fichaStatusBadge');
+      if (!input || !badge) return;
+      const val = input.value.trim();
+      if (!val) {
+        badge.textContent = 'Sin ficha asignada (no se mostrará botón en tarjeta)';
+        badge.style.color = 'var(--text-secondary)';
+      } else if (/\.html?(\?.*|#.*)?$/i.test(val)) {
+        badge.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Ficha Interactiva HTML (se abrirá en ventana modal)';
+        badge.style.color = '#60a5fa';
+      } else {
+        badge.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Ficha PDF / Enlace externo';
+        badge.style.color = '#f87171';
+      }
+    };
+
+    window.previewCurrentFicha = function() {
+      const input = document.getElementById('fichaTecnica');
+      if (!input || !input.value.trim()) {
+        showToast('Primero ingresa o selecciona una Ficha Técnica', true);
+        return;
+      }
+      const raw = input.value.trim();
+      const url = (raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('/')) ? raw : '/' + raw.replace(/^\.\.\//, '');
+      window.open(url, '_blank');
+    };
+
+    window.uploadFichaFile = async function(fileInput) {
+      if (!fileInput || !fileInput.files || !fileInput.files[0]) return;
+      const file = fileInput.files[0];
+      const fd = new FormData();
+      fd.append('fichaFile', file);
+      try {
+        const res = await fetch('/api/upload-ficha', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data && data.success && data.path) {
+          document.getElementById('fichaTecnica').value = data.path;
+          updateFichaStatusBadge();
+          loadAvailableFichas();
+          showToast('Ficha subida y asignada: ' + data.filename);
+        } else {
+          showToast((data && data.error) || 'Error al subir la ficha', true);
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error al subir el archivo de ficha', true);
+      } finally {
+        fileInput.value = '';
+      }
+    };
+
+    window.loadAvailableFichas = async function() {
+      const container = document.getElementById('dynamicFichasList');
+      if (!container) return;
+      try {
+        const res = await fetch('/api/fichas');
+        const data = await res.json();
+        if (data && Array.isArray(data.files)) {
+          const extra = data.files.filter(f => f.name !== 'ficha-attitude-2026.html');
+          container.innerHTML = extra.map(f =>
+            `<button type="button" onclick="setQuickFicha('${f.path}')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; border: 1px solid #475569; background: rgba(71,85,105,0.25); color: #e2e8f0; cursor: pointer; font-weight: 600;">${f.type === 'html' ? '✨' : '📄'} ${f.name}</button>`
+          ).join('');
+        }
+      } catch (e) {}
+    };
+
     // Init
     loadPromos();
+    loadAvailableFichas();
   </script>
 </body>
 </html>
