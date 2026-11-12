@@ -153,7 +153,8 @@
       "price": "Desde $364,900",
       "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg",
       "images": [
-        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg"
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1786995376/attitude_8_26_uhds1g.jpg",
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/v1794522303/attitude_web_bi3blr.png"
       ],
       "videos": [],
       "whatsapp": "https://wa.me/5521787900?text=Hola%2C%20me%20interesa%20el%20Dodge%20Attitude",
@@ -174,7 +175,11 @@
       "category": "sedan",
       "promoMes": "TASA 0% a 48 meses*",
       "promoMesTag": "🔥 TASA PREFERENCIAL",
-      "promoMesIcon": "🔥"
+      "promoMesIcon": "🔥",
+      "promoMes2": "",
+      "promoMes2Tag": "",
+      "promoMes2Icon": "🎄",
+      "carouselInterval": 1.5
     },
     {
       "id": "dodge-1787102237711",
