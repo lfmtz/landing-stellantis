@@ -4053,14 +4053,14 @@ function generateIndexHtml(dbData) {
       let fBenefitsSnippet = '';
       const validFBenefits = (fVehicle.benefits || []).filter(b => b && b.trim()).slice(0, 3);
       if (validFBenefits.length > 0) {
-        const items = validFBenefits.map(b => `<li class="d-flex align-items-start gap-2 mb-2 text-white-50"><i class="fa-solid fa-circle-check" style="color: ${fAccent}; font-size: 0.88rem; margin-top: 3px; flex-shrink: 0;"></i> <span class="text-white" style="font-size: clamp(0.82rem, 2.8vw, 0.92rem); line-height: 1.35; word-break: break-word;">${b}</span></li>`).join('');
+        const items = validFBenefits.map(b => `<li class="d-flex align-items-start gap-2 mb-2 text-white-50"><i class="fa-solid fa-circle-check" style="color: #00e5ff; font-size: 0.88rem; margin-top: 3px; flex-shrink: 0;"></i> <span class="text-white" style="font-size: clamp(0.82rem, 2.8vw, 0.92rem); line-height: 1.35; word-break: break-word;">${b}</span></li>`).join('');
         fBenefitsSnippet = `<ul class="list-unstyled mb-4 p-3 rounded-3 text-start" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">${items}</ul>`;
       }
 
       featuredCarHtml = `
     <!-- Sección: Auto Destacado (Oferta Estrella) -->
-    <section id="auto-destacado" class="py-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #07101e 0%, #0d1a30 100%); border-top: 2px solid ${fAccent}; border-bottom: 2px solid ${fAccent};">
-        <div style="position: absolute; top: -40%; right: -15%; width: 500px; height: 500px; background: radial-gradient(circle, ${fAccent}25 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
+    <section id="auto-destacado" class="py-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #07101e 0%, #0d1a30 100%); border-top: 2px solid #00e5ff; border-bottom: 2px solid #00e5ff;">
+        <div style="position: absolute; top: -40%; right: -15%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 229, 255, 0.16) 0%, transparent 70%); filter: blur(60px); pointer-events: none;"></div>
         <div class="container py-3 position-relative" style="z-index: 2;">
             <div class="row align-items-center justify-content-center g-4">
                 <div class="col-lg-6 text-center">
@@ -4075,7 +4075,7 @@ function generateIndexHtml(dbData) {
                 </div>
 
                 <div class="col-lg-6 text-white text-center text-lg-start ps-lg-4">
-                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 shadow-sm" style="background: rgba(0, 229, 255, 0.1); border: 1px solid ${fAccent}; color: ${fAccent}; font-size: clamp(0.75rem, 2.8vw, 0.85rem); font-weight: 700; letter-spacing: 0.5px; max-width: 100%; white-space: normal; text-align: center;">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 shadow-sm" style="background: rgba(0, 229, 255, 0.12); border: 1px solid rgba(0, 229, 255, 0.45); color: #ffffff; font-size: clamp(0.75rem, 2.8vw, 0.85rem); font-weight: 700; letter-spacing: 0.5px; max-width: 100%; white-space: normal; text-align: center;">
                         ${fBadge}
                     </div>
 
@@ -4089,11 +4089,11 @@ function generateIndexHtml(dbData) {
 
                     <div class="d-flex align-items-center flex-wrap justify-content-center justify-content-lg-start gap-2 gap-sm-3 mb-3">
                         ${fVehicle.listPrice ? `
-                            <span class="text-white-50 text-decoration-line-through fw-bold" style="font-size: clamp(1rem, 3.5vw, 1.2rem); white-space: nowrap;">
+                            <span class="fw-bold" style="color: #ffffff; text-decoration: line-through; text-decoration-color: #ef4444; text-decoration-thickness: 2.5px; font-size: clamp(1rem, 3.5vw, 1.25rem); white-space: nowrap;">
                                 ${fVehicle.listPrice}
                             </span>
                         ` : ''}
-                        <span class="display-6 fw-bold" style="color: ${fAccent}; font-size: clamp(1.7rem, 6vw, 2.4rem); text-shadow: 0 0 20px ${fAccent}66; white-space: nowrap; line-height: 1;">
+                        <span class="display-6 fw-bold" style="color: #ffffff; font-size: clamp(1.7rem, 6vw, 2.4rem); text-shadow: 0 0 20px rgba(255, 255, 255, 0.25); white-space: nowrap; line-height: 1;">
                             ${fVehicle.price}
                         </span>
                         <span class="badge bg-success rounded-pill px-2 py-1" style="font-size: 0.75rem; white-space: nowrap;">¡OFERTA EXCLUSIVA!</span>
@@ -4102,7 +4102,7 @@ function generateIndexHtml(dbData) {
                     ${fBenefitsSnippet}
 
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start mt-3">
-                        <a href="${fTargetUrl}" class="btn btn-glow btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none shadow" style="background-color: ${fAccent}; color: #07101e; border: none; font-size: 0.95rem;" onclick="if(typeof gtag==='function') { gtag('event', 'click_featured_car', { 'car_name': '${fVehicle.name}', 'brand_name': '${fBrand}' }); }">
+                        <a href="${fTargetUrl}" class="btn btn-glow btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none shadow" style="color: #ffffff; border: none; font-size: 0.95rem;" onclick="if(typeof gtag==='function') { gtag('event', 'click_featured_car', { 'car_name': '${fVehicle.name}', 'brand_name': '${fBrand}' }); }">
                             <i class="fa-solid fa-car me-2"></i> ${fBtnText} <i class="fa-solid fa-arrow-right ms-2"></i>
                         </a>
                         <a href="${fVehicle.whatsapp}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold text-uppercase text-decoration-none" style="font-size: 0.95rem; border-color: rgba(255,255,255,0.3);" onclick="if(typeof gtag==='function') { gtag('event', 'click_whatsapp_cotizar', { 'car_name': '${fVehicle.name}', 'brand_name': '${fBrand}' }); }">
