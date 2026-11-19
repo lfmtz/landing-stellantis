@@ -30,6 +30,38 @@
       "promoMesIcon": "💳"
     },
     {
+      "id": "ram-1795061361645",
+      "name": "RAM 700 Laramie",
+      "km": "",
+      "listPrice": "$521,500",
+      "price": "Desde $415,000",
+      "image": "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1795061650/crdq114rzfuhz31ntczb.png",
+      "images": [
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1795061650/crdq114rzfuhz31ntczb.png",
+        "https://res.cloudinary.com/dbxa0pozm/image/upload/f_auto,q_auto/v1795061682/e0vvkhsx0uaqawidbhf0.jpg"
+      ],
+      "videos": [],
+      "whatsapp": "https://wa.me/525521787900?text=Hola%2C%20me%20interesa%20la%20RAM%20700",
+      "description": "Lleva tu productividad al siguiente nivel con la versatilidad and resistencia que ofrece la RAM 700 con un pagoinicial de  <span style=\"color: red; font-weight: bold;\"><span style=\"color: red; font-weight: bold;\"><b>$15,931</b></span></span>, aplica para ram 700 laramie",
+      "descriptionSize": "1.1rem",
+      "descriptionColor": "#333333",
+      "benefits": [
+        "Bonos de Buen Fin incluido en crédito"
+      ],
+      "fichaTecnica": "",
+      "legal": "* Imágenes ilustrativas. Consulta versiones disponibles. Aplica términos y condiciones.Pregunta con tu asesor de ventas",
+      "accentColor": "#000000",
+      "underlineStyle": "solid",
+      "category": "pickup",
+      "promoMes": "BONO ESPECIAL DE $106,500*",
+      "promoMesTag": "🎁 OFERTA ESPECIAL",
+      "promoMesIcon": "🎁",
+      "promoMes2": "",
+      "promoMes2Tag": "",
+      "promoMes2Icon": "🎄",
+      "carouselInterval": 2
+    },
+    {
       "id": "ram-1200",
       "name": "Ram 1200 Crew Cab",
       "km": "",

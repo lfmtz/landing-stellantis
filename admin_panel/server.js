@@ -409,6 +409,41 @@ app.delete('/api/promos/:brand/:id', (req, res) => {
   res.status(404).json({ error: 'Brand not found' });
 });
 
+// Duplicate a promotion
+app.post('/api/promos/:brand/:id/duplicate', (req, res) => {
+  const { brand, id } = req.params;
+  const data = readData();
+
+  if (!data[brand]) {
+    return res.status(404).json({ error: 'Marca no encontrada' });
+  }
+
+  const promoIndex = data[brand].findIndex(p => p.id === id);
+  if (promoIndex === -1) {
+    return res.status(404).json({ error: 'Vehículo no encontrado' });
+  }
+
+  const originalPromo = data[brand][promoIndex];
+  const duplicatedPromo = JSON.parse(JSON.stringify(originalPromo));
+  duplicatedPromo.id = `${brand}-${Date.now()}`;
+  
+  // Custom suffix or default (Copia)
+  const suffix = req.body && req.body.suffix !== undefined ? req.body.suffix : ' (Copia)';
+  duplicatedPromo.name = originalPromo.name ? `${originalPromo.name}${suffix}` : 'Vehículo Copia';
+
+  // Insert immediately after original promo
+  data[brand].splice(promoIndex + 1, 0, duplicatedPromo);
+
+  writeData(data);
+
+  // Re-generate pages
+  generateHtmlForBrand(brand, data[brand]);
+  generateIndexHtml(data);
+  generatePortalHtml(data);
+
+  res.json({ success: true, promo: duplicatedPromo });
+});
+
 // List available Fichas Técnicas in /fichas folder
 app.get('/api/fichas', (req, res) => {
   try {

@@ -1105,9 +1105,16 @@
           <input type="text" id="legal" placeholder="Ej. * Promoción válida el mes en curso. Sujeta a cambios sin previo aviso.">
         </div>
 
-        <div class="modal-footer">
-          <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div>
+            <button type="button" id="duplicateFromModalBtn" class="btn btn-duplicate btn-sm" style="display: none;" onclick="duplicateCurrentPromoFromModal()" title="Crear una copia independiente de este auto con una nueva promoción">
+              <i class="fa-solid fa-copy"></i> Duplicar como Nuevo
+            </button>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+          </div>
         </div>
       </form>
     </div>
@@ -2009,6 +2016,9 @@
                 <button class="btn btn-secondary btn-sm" onclick="editPromo('${p.id}')">
                   <i class="fa-solid fa-pen-to-square"></i> Editar
                 </button>
+                <button class="btn btn-duplicate btn-sm" onclick="duplicatePromo('${p.id}')" title="Duplicar este auto para otra promoción sin modificar el original">
+                  <i class="fa-solid fa-copy"></i> Duplicar
+                </button>
                 <button class="btn btn-danger btn-sm" onclick="deletePromo('${p.id}')">
                   <i class="fa-solid fa-trash-can"></i> Quitar
                 </button>
@@ -2580,6 +2590,39 @@
       }
     }
 
+    // Duplicate Promotion
+    async function duplicatePromo(id) {
+      const promo = (database[currentBrand] || []).find(x => x.id === id);
+      const carName = promo ? promo.name : 'este vehículo';
+
+      if (!confirm(`¿Deseas duplicar el vehículo "${carName}"?\n\nSe creará una copia con todas sus fotos, galería, ficha técnica y beneficios para que puedas asignarle una nueva promoción sin perder la actual.`)) {
+        return;
+      }
+
+      showOverlay('Duplicando...', 'Generando copia del auto y compilando páginas...');
+      try {
+        const res = await fetch(`/api/promos/${currentBrand}/${id}/duplicate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showOverlay('Completado', `Auto "${data.promo.name}" duplicado correctamente.`, true);
+          await loadPromos();
+
+          setTimeout(() => {
+            if (confirm(`El auto se duplicó con éxito como "${data.promo.name}".\n\n¿Deseas abrir el editor ahora para cambiarle el precio o promoción?`)) {
+              editPromo(data.promo.id);
+            }
+          }, 400);
+        } else {
+          showOverlay('Error', data.error || 'No se pudo duplicar el auto.', false);
+        }
+      } catch (err) {
+        showOverlay('Error', 'Ocurrió un error de red al intentar duplicar.', false);
+      }
+    }
+
     // Dragged promo state variable
     let draggedPromoId = null;
 
@@ -2894,6 +2937,10 @@
       const insertPosGroup = document.getElementById('insertPositionGroup');
       if (insertPosGroup) insertPosGroup.style.display = 'none';
 
+      // Show duplicate from modal button when editing
+      const dupModalBtn = document.getElementById('duplicateFromModalBtn');
+      if (dupModalBtn) dupModalBtn.style.display = 'inline-flex';
+
       promoModal.classList.add('active');
     };
 
@@ -2997,8 +3044,60 @@
       const shareBox = document.getElementById('promoShareBox');
       if (shareBox) shareBox.style.display = 'none';
 
+      // Hide duplicate from modal button when adding fresh promo
+      const dupModalBtn = document.getElementById('duplicateFromModalBtn');
+      if (dupModalBtn) dupModalBtn.style.display = 'none';
+
       promoModal.classList.add('active');
     });
+
+    // Duplicate Current Promo from inside the Edit Modal
+    window.duplicateCurrentPromoFromModal = function() {
+      const nameInput = document.getElementById('name');
+      const currentName = nameInput.value.trim();
+      document.getElementById('promoId').value = '';
+      nameInput.value = currentName ? `${currentName} (Copia)` : 'Vehículo (Copia)';
+      document.getElementById('modalTitle').textContent = `Duplicar Promoción: ${nameInput.value}`;
+
+      // Update WhatsApp link based on new name
+      const whatsappInput = document.getElementById('whatsapp');
+      if (whatsappInput) {
+        whatsappInput.value = `https://wa.me/525521787900?text=${encodeURIComponent('Hola, me interesa el ' + nameInput.value)}`;
+      }
+
+      // Hide the duplicate button now that we are in copy/new mode
+      const dupModalBtn = document.getElementById('duplicateFromModalBtn');
+      if (dupModalBtn) dupModalBtn.style.display = 'none';
+
+      // Hide shareBox since it is now an unsaved copy
+      const shareBox = document.getElementById('promoShareBox');
+      if (shareBox) shareBox.style.display = 'none';
+
+      // Populate position selector when converting to new promo
+      const insertPosGroup = document.getElementById('insertPositionGroup');
+      const insertPosSelect = document.getElementById('insertPosition');
+      if (insertPosGroup && insertPosSelect) {
+        insertPosGroup.style.display = 'block';
+        insertPosSelect.innerHTML = `
+          <option value="end">Al final de la lista (último auto)</option>
+          <option value="start">Al principio de la lista (1º lugar)</option>
+        `;
+        const currentList = database[currentBrand] || [];
+        if (currentList.length > 0) {
+          const optGroup = document.createElement('optgroup');
+          optGroup.label = 'Colocar después de un modelo específico:';
+          currentList.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = `after:${p.id}`;
+            opt.textContent = `Después de: ${p.name}`;
+            optGroup.appendChild(opt);
+          });
+          insertPosSelect.appendChild(optGroup);
+        }
+      }
+
+      showToast('Modo duplicar activo: al pulsar "Guardar Promoción" se creará un nuevo auto sin modificar el original.', 'fa-copy');
+    };
 
     // Auto-generate WhatsApp link based on car name input
     const nameInput = document.getElementById('name');
